@@ -4,9 +4,9 @@
    text-overflow: ellipsis;
 }
 
-@mixin centerFlexItems($direction: 'row', $JCtype: 'center', $AIType: 'center') {
+@mixin centerFlexItems($direction: row, $JCtype: center, $AIType: center) {
    display: flex;
    flex-direction: $direction;
-   justify-content: $type;
-   align-items: center;
+   justify-content: $JCtype;
+   align-items: $AIType;
 }

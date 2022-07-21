@@ -1,6 +1,90 @@
 @import 'variable';
 @import 'mixi';
 
-* {
-   color: red;
+// @import './utils/header';
+@import './utils/footer';
+
+.header {
+   &__container {
+      padding-top: 12px;
+      padding-bottom: 6px;
+      min-height: 50px;
+      background-color: $color-white;
+      box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.03);
+   }
+   &__logobar {
+      .logo-wrapper {
+         @include centerFlexItems;
+         & a {
+            display: inline-block;
+         }
+         & img {
+            max-height: 50px;
+         }
+      }
+      .nav-wrapper {
+         height: 100%;
+         @include centerFlexItems(row, flex-end, center);
+         .nav-list {
+            .nav-item {
+               .nav-link {
+                  color: $color-black;
+                  & > i {
+                     font-size: 2rem;
+                  }
+               }
+            }
+         }
+      }
+   }
+   &__menu {
+      margin-top: 0.2rem;
+      .menu {
+         &-wrapper {
+            padding: 0 2rem;
+         }
+         &-list {
+            @include centerFlexItems;
+         }
+         &-item {
+         }
+         &-link {
+            position: relative;
+            display: inline-block;
+            padding: 1rem 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: $color-black;
+            &::after {
+               content: '';
+               position: absolute;
+               background-color: $color-black;
+               width: 90%;
+               height: 3px;
+               top: 100%;
+               left: 50%;
+               transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
+               transform: translate(-50%, 200%);
+               visibility: hidden;
+               opacity: 0;
+            }
+            &:hover::after {
+               visibility: visible;
+               opacity: 1;
+               transform: translate(-50%, 0);
+            }
+            &--sale {
+               background-color: red;
+               padding: 0.3rem 1.4rem;
+               margin: 0 0.5rem;
+               font-weight: 600;
+               clip-path: polygon(10% 0%, 100% 0, 90% 100%, 0% 100%);
+               color: white;
+               &::after {
+                  display: none;
+               }
+            }
+         }
+      }
+   }
 }

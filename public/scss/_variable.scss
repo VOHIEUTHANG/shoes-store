@@ -8,3 +8,11 @@ $color-palette-dark: #3d3c42;
 $color-palette-purple: #7f5283;
 $color-palette-lightBlue: #a6d1e6;
 $color-palette-pink: #fefbf6;
+
+$container-max-widths: (
+   sm: 540px,
+   md: 720px,
+   lg: 960px,
+   xl: 1140px,
+   xxl: 1320px,
+);

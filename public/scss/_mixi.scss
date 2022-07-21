@@ -1,0 +1,12 @@
+@mixin textOverFlow() {
+   overflow: hidden;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+}
+
+@mixin centerFlexItems($direction: row, $JCtype: center, $AIType: center) {
+   display: flex;
+   flex-direction: $direction;
+   justify-content: $JCtype;
+   align-items: $AIType;
+}

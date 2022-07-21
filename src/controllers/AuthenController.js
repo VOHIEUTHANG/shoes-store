@@ -14,11 +14,11 @@ class AuthenController {
             }
             let token = jwt.sign(data,'manhnenene');
             res.cookie('token',token,options);
-            res.status(200).send(token).toString();
+            res.json({token});
         }).catch((err)=>{
-            res.status(200).send({data:`${err}`}).toString();
+            res.json({data:`${err}`});
         });
-        next();
+        //next();
     }
 }
 module.exports = new AuthenController;

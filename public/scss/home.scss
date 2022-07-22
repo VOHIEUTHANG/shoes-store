@@ -3,3 +3,70 @@
 
 @import './utils/header';
 @import './utils/footer';
+
+#main {
+   .banner-container {
+      height: 50vh;
+      .glide {
+         height: 100%;
+         .glide__slide {
+            & a {
+               display: block;
+               width: 100%;
+               height: 100%;
+               overflow: hidden;
+               & > img {
+                  width: 100%;
+                  height: 50vh;
+                  object-fit: cover;
+               }
+            }
+         }
+         .glide__arrow {
+            height: 100%;
+            border: none;
+            background-color: transparent;
+            backdrop-filter: blur(2px);
+            padding: 0 3rem;
+            border-radius: 0;
+            border-top: none;
+            border-bottom: none;
+            box-shadow: none;
+            @include transition;
+            &--left {
+            }
+            &--right {
+            }
+            &:hover {
+               background-color: rgba(200, 200, 200, 0.1);
+               & > i {
+                  opacity: 1;
+               }
+            }
+            & > i {
+               color: $color-palette-pink;
+               transition: inherit;
+               opacity: 0.5;
+               font-size: 3rem;
+            }
+         }
+         .glide__bullet {
+            width: 12px;
+            height: 12px;
+            margin: 0 0.7rem;
+            &:hover {
+               background-color: $color-white;
+            }
+            &:focus {
+               border: none;
+               background-color: $color-white;
+            }
+         }
+      }
+   }
+   .main-container {
+      height: 1000px;
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+   }
+}

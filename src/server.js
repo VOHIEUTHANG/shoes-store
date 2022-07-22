@@ -16,16 +16,16 @@ app.set('views', './src/views');
 
 const port = process.env.PORT || 8017;
 
+
+initWebRoutes(app);
 app.get('/', (req, res) => {
    res.render('pages/home');
 });
-
-initWebRoutes(app);
 
 // app.use((req, res) => {
 //   res.render("pages/404");
 // });
 
 app.listen(port, () => {
-   console.log(`Starting server on port ${port}`);
+   console.log(`Starting server on http://127.0.0.1:${port}`);
 });

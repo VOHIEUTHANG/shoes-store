@@ -1,13 +1,18 @@
 .header {
   position: sticky;
   top: 0;
-  left: 0; }
+  left: 0;
+  z-index: 1000; }
   .header__container {
     padding-top: 12px;
     padding-bottom: 6px;
     min-height: 50px;
-    background-color: #fff;
-    box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.03); }
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease-in-out; }
+    .header__container:hover {
+      background-color: #fff !important; }
   .header__logobar .logo-wrapper {
     display: flex;
     flex-direction: row;
@@ -68,6 +73,49 @@
         color: white; }
         .header__menu .menu-link--sale::after {
           display: none; }
+
+#main .banner-container {
+  height: 50vh; }
+  #main .banner-container .glide {
+    height: 100%; }
+    #main .banner-container .glide .glide__slide a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: hidden; }
+      #main .banner-container .glide .glide__slide a > img {
+        width: 100%;
+        height: 50vh;
+        object-fit: cover; }
+    #main .banner-container .glide .glide__arrow {
+      height: 100%;
+      border: none;
+      background-color: transparent;
+      backdrop-filter: blur(2px);
+      padding: 0 3rem;
+      border-radius: 0;
+      border-top: none;
+      border-bottom: none;
+      box-shadow: none;
+      transition: all 0.3s ease-in-out; }
+      #main .banner-container .glide .glide__arrow:hover {
+        background-color: rgba(200, 200, 200, 0.1); }
+        #main .banner-container .glide .glide__arrow:hover > i {
+          opacity: 1; }
+      #main .banner-container .glide .glide__arrow > i {
+        color: #fefbf6;
+        transition: inherit;
+        opacity: 0.5;
+        font-size: 3rem; }
+    #main .banner-container .glide .glide__bullet {
+      width: 12px;
+      height: 12px;
+      margin: 0 0.7rem; }
+      #main .banner-container .glide .glide__bullet:hover {
+        background-color: #fff; }
+      #main .banner-container .glide .glide__bullet:focus {
+        border: none;
+        background-color: #fff; }
 
 #main .main-container {
   height: 1000px;

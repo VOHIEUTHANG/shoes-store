@@ -140,6 +140,10 @@
             padding: 0.3rem 1.6rem;
             border-radius: 25px;
             border: 1px solid $color-gray;
+            @include transition;
+            &:hover {
+               border-color: $color-palette-lightBlue;
+            }
          }
          &__name {
             font-size: larger;

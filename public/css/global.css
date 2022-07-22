@@ -126,3 +126,12 @@ body::-webkit-scrollbar-thumb {
 .text-title {
   font-family: "Space Mono", monospace;
   font-size: 1.8rem; }
+
+.input-custom {
+  outline: none;
+  background-color: transparent;
+  padding: 0 0.8rem;
+  font-family: 'Montserrat', sans-serif;
+  border: none;
+  text-transform: initial;
+  width: 16rem; }

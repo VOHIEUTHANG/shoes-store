@@ -1,0 +1,41 @@
+@import '../variable';
+@import '../mixi';
+
+#footer {
+   color: $color-text-primary;
+   .footer-top {
+      background-color: $color-bg-dark;
+      padding: 5rem 0;
+   }
+   .footer-bottom {
+      background-color: $color-white;
+      font-size: 1.5rem;
+      color: $color-text-secondary;
+      letter-spacing: 1px;
+      a.author {
+         display: inline-block;
+         margin: 0 4px;
+         font-family: $font-space-mono;
+         font-size: 1.8rem;
+         color: $color-text-primary;
+      }
+   }
+   .footer-widget-title {
+      color: $color-white;
+      margin-bottom: 1.3rem;
+      font-size: 2rem;
+   }
+   .footer-newsletter {
+      color: $color-text-light;
+   }
+   .subscribe-form {
+      input {
+         background-color: $color-white;
+         color: $color-text-primary;
+      }
+      button.btn {
+         font-size: 1.6rem;
+         margin-top: 1rem;
+      }
+   }
+}

@@ -39,6 +39,38 @@
                      font-size: 2rem;
                   }
                }
+               &.nav-item__search {
+                  margin: 0 0.5rem;
+                  .search-wrapper {
+                     @include centerFlexItems;
+                     border-radius: 2px;
+                     border: 1px solid $color-gray;
+                     .search-input {
+                        outline: none;
+                        background-color: transparent;
+                        padding: 0 0.8rem;
+                        font-family: $font-montserrat;
+                        border: none;
+                        text-transform: initial;
+                        width: 16rem;
+                     }
+                     .search-btn {
+                        cursor: pointer;
+                        padding: 0.6rem;
+                        border-right: 1px solid $color-gray;
+                        &:hover {
+                           background-color: $color-palette-pink;
+                           & > i {
+                              color: black;
+                           }
+                        }
+                        & > i {
+                           @include transition;
+                           color: $color-text-primary;
+                        }
+                     }
+                  }
+               }
             }
          }
       }

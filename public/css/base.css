@@ -16,6 +16,8 @@
 
 html {
    font-family: 'Montserrat', sans-serif;
+   text-rendering: optimizeLegibility;
+   scroll-behavior: smooth;
    font-size: 10px;
 }
 

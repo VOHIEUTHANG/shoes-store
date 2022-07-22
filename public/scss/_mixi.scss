@@ -10,3 +10,6 @@
    justify-content: $JCtype;
    align-items: $AIType;
 }
+@mixin transition($target: all, $duration: 0.3s, $motionType: ease-in-out) {
+   transition: all $duration $motionType;
+}

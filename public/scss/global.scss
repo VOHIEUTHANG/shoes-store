@@ -1,3 +1,4 @@
+@import './variable';
 // GlideJs library for slider and carousel
 @import 'node_modules/@glidejs/glide/src/assets/sass/glide.core';
 @import 'node_modules/@glidejs/glide/src/assets/sass/glide.theme';
@@ -14,3 +15,9 @@ body::-webkit-scrollbar-thumb {
    background-image: linear-gradient(to bottom, #a6d1e6, #eea4f5);
 }
 // Customize scrollbar ================>
+
+// Text styles ==================>
+.text-title {
+   font-family: $font-space-mono;
+   font-size: 1.8rem;
+}

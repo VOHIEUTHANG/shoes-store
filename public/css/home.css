@@ -118,6 +118,73 @@
         background-color: #fff; }
 
 #main .main-container {
-  height: 1000px;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc; }
+  height: 1000px; }
+  #main .main-container .category {
+    margin: 5rem 0; }
+    #main .main-container .category .glide__track {
+      overflow-x: hidden;
+      overflow-y: visible; }
+    #main .main-container .category .glide__arrows .glide__arrow {
+      top: 0;
+      padding: 2rem 4rem;
+      border: 1px solid #aaaaaa;
+      background-color: rgba(0, 0, 0, 0.9);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.01);
+      border-radius: 0;
+      transform: none;
+      transition: all 0.3s ease-in-out; }
+      #main .main-container .category .glide__arrows .glide__arrow--left {
+        border-bottom-right-radius: 6px;
+        left: 0; }
+        #main .main-container .category .glide__arrows .glide__arrow--left:hover {
+          transform: translateX(-10px); }
+      #main .main-container .category .glide__arrows .glide__arrow--right {
+        border-bottom-left-radius: 6px;
+        right: 0; }
+        #main .main-container .category .glide__arrows .glide__arrow--right:hover {
+          transform: translateX(10px); }
+      #main .main-container .category .glide__arrows .glide__arrow:hover {
+        box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 20px; }
+      #main .main-container .category .glide__arrows .glide__arrow > i {
+        color: #fefbf6;
+        font-size: 3rem; }
+    #main .main-container .category__title {
+      margin-bottom: 3rem;
+      font-size: 2.8rem; }
+    #main .main-container .category-item {
+      border: 1px solid #aaaaaa;
+      border-radius: 4px;
+      overflow: hidden;
+      width: 100%; }
+    #main .main-container .category__image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden; }
+      #main .main-container .category__image > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; }
+    #main .main-container .category__desc {
+      border-top: 1px solid #aaaaaa;
+      color: #222;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 2rem;
+      gap: 1.5rem; }
+    #main .main-container .category__brand {
+      padding: 0.3rem 1.6rem;
+      border-radius: 25px;
+      border: 1px solid #aaaaaa; }
+    #main .main-container .category__name {
+      font-size: larger;
+      text-align: center;
+      color: #222;
+      font-weight: 600; }
+    #main .main-container .category__price {
+      color: #00000073;
+      font-size: 1.8rem; }
+      #main .main-container .category__price > span {
+        color: #222; }

@@ -134,4 +134,47 @@ body::-webkit-scrollbar-thumb {
   font-family: 'Montserrat', sans-serif;
   border: none;
   text-transform: initial;
-  width: 16rem; }
+  width: 20rem; }
+
+.fon-size-sm {
+  font-size: small; }
+
+input.input-feild {
+  padding: 1rem 1.7rem;
+  outline: none;
+  border: 1px solid #d7d6d6;
+  color: #5e5c5c;
+  text-transform: initial; }
+
+.text--underline {
+  text-decoration: underline; }
+
+.denind-uppercase {
+  text-transform: initial; }
+
+.button {
+  position: relative;
+  padding: 0.8rem 2rem;
+  letter-spacing: 0.13rem;
+  font-size: 1.6rem;
+  outline: none;
+  background-color: #202228;
+  color: #fff;
+  border: 1px solid #202228;
+  z-index: 1; }
+  .button::after {
+    position: absolute;
+    display: block;
+    content: '';
+    width: 0;
+    height: 100%;
+    left: 50%;
+    top: 0;
+    background-color: #fff;
+    z-index: -1;
+    transition: all 0.3s ease-in-out;
+    transform: translateX(-50%); }
+  .button:hover {
+    color: #000; }
+    .button:hover::after {
+      width: 100%; }

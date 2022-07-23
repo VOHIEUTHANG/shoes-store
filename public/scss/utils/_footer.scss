@@ -11,7 +11,10 @@
       background-color: $color-white;
       font-size: 1.5rem;
       color: $color-text-secondary;
-      letter-spacing: 1px;
+      border-bottom: 1px solid $color-gray;
+      p {
+         margin: 0.7rem 0;
+      }
       a.author {
          display: inline-block;
          margin: 0 4px;
@@ -28,14 +31,20 @@
    .footer-newsletter {
       color: $color-text-light;
    }
+   .footer-contact {
+      margin-top: 2rem;
+   }
    .subscribe-form {
       input {
-         background-color: $color-white;
-         color: $color-text-primary;
+         color: $color-white;
+         border-bottom: 2px solid $color-white;
       }
-      button.btn {
+      button.button {
          font-size: 1.6rem;
-         margin-top: 1rem;
+         border: 1px solid $color-white;
+         text-transform: uppercase;
+         margin-left: 2rem;
+         margin-top: 0.2rem;
       }
    }
 }

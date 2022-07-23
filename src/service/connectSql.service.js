@@ -1,21 +1,20 @@
-const mysql = require('mysql2');
-const dotenv = require('dotenv');
+import mysql from 'mysql2';
+import dotenv from 'dotenv';
 dotenv.config();
-var con = mysql.createConnection({
-    host: process.env.HostDB,
-    user: process.env.userDB,
-    password: process.env.passwordDB,
-    database: process.env.database
-  });
-function query(sql){
-  return new Promise((resolve,reject)=>{
-   con.query(sql,(err,result)=>{
-    if(err) reject(err);
-    resolve(result);
-   })
-})
-}
-module.exports = {
-  query,
-  con
-};
+
+const pool = mysql.createPool({
+   host: process.env.HostDB,
+   user: process.env.userDB,
+   database: process.env.database,
+   password: process.env.passwordDB,
+   waitForConnections: true,
+   connectionLimit: 10,
+   queueLimit: 0,
+});
+
+pool.getConnection((err) => {
+   if (err) throw err;
+   console.log('Connected!');
+});
+
+export default pool;

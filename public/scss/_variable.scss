@@ -1,11 +1,13 @@
 $color-text-primary: #222;
 $color-text-secondary: #333;
+$color-text-gray: #5e5c5c;
 $color-text-light-gray: #00000073;
 $color-text-light: #ccc;
 $color-white: #fff;
 $color-black: #000;
 $color-gray: rgb(170, 170, 170);
 $color-bg-dark: #202228;
+$color-border-gray: #d7d6d6;
 
 // Palette colors
 $color-palette-dark: #3d3c42;
@@ -16,3 +18,6 @@ $color-palette-pink: #fefbf6;
 // FONTS
 $font-space-mono: 'Space Mono', monospace;
 $font-montserrat: 'Montserrat', sans-serif;
+
+// DISTANCES
+$banner-height: 60vh;

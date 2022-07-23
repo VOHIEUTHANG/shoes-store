@@ -1,10 +1,51 @@
 <html lang="en">
    <head>
       <%- include('../partials/head'); %>
+      <link rel="stylesheet" href="css/login.css" />
    </head>
    <body>
       <%- include('../partials/header') %>
-      <div id="root"></div>
+      <div id="root">
+         <div class="login">
+            <div class="container">
+               <div class="login-wrapper">
+                  <div class="login-title">LOGIN</div>
+                  <div class="login-method-wrapper d-flex justify-content-center">
+                     <div class="login-method-item">
+                        <a href="#">
+                           <i class="fa-brands fa-google"></i>
+                        </a>
+                     </div>
+                     <div class="login-method-item">
+                        <a href="#">
+                           <i class="fa-brands fa-facebook"></i>
+                        </a>
+                     </div>
+                  </div>
+                  <div class="divider">
+                     <div class="line"></div>
+                     <div class="or">OR</div>
+                  </div>
+                  <div style="text-transform: initial">Sign in with email:</div>
+                  <form action="" method="post">
+                     <input class="input-feild" placeholder="Email" type="email" name="email" />
+                     <input class="input-feild" placeholder="Password" type="password" name="password" />
+                     <div class="text--underline">FORGOT YOUR PASSWORD?</div>
+                     <!-- <div class="denind-uppercase fon-size-sm">
+                        Click "Login" to agree to KICKSCREW's
+                        <span class="text--underline">Terms of Service</span> and acknowledge that KICKSCREW's
+                        <span class="text--underline"> Privacy Policy</span> applies to you.
+                     </div> -->
+                     <button type="submit" class="button button-full">LOGIN</button>
+                  </form>
+                  <div class="more-options">
+                     <a href="#" class="text--underline">CREATE ACCOUNT</a>
+                     <a href="/" class="text--underline">RETURN TO STORE</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
       <%- include('../partials/footer') %>
    </body>
 </html>

@@ -79,4 +79,12 @@
          padding: 1.8rem 3rem;
       }
    }
+   .more-options {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      a {
+         color: inherit;
+      }
+   }
 }

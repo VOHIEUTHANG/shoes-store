@@ -201,3 +201,9 @@
     .login form .button[type='submit'] {
       margin-top: 2rem;
       padding: 1.8rem 3rem; }
+  .login .more-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; }
+    .login .more-options a {
+      color: inherit; }

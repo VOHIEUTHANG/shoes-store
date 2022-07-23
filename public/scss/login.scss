@@ -1,0 +1,82 @@
+@import 'variable';
+@import 'mixi';
+
+@import './utils/header';
+@import './utils/footer';
+
+.login {
+   color: $color-text-gray;
+   &-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 6rem;
+      text-align: center;
+   }
+   &-title {
+      color: $color-black;
+      position: relative;
+      margin-bottom: 1rem;
+      font-size: 3rem;
+      letter-spacing: 2px;
+      &::after {
+         content: '';
+         position: absolute;
+         top: 110%;
+         left: 50%;
+         transform: translatex(-50%);
+         width: 6rem;
+         height: 2px;
+         background-color: $color-black;
+      }
+   }
+   &-method-wrapper {
+      @include centerFlexItems;
+      gap: 0.8rem;
+      margin-top: 3rem;
+   }
+
+   &-method-item {
+      padding: 0.6rem;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      @include transition;
+      &:hover {
+         background-color: $color-palette-pink;
+      }
+      & i {
+         font-size: 2rem;
+         color: $color-bg-dark;
+      }
+   }
+   .divider {
+      margin: 3rem 0;
+      position: relative;
+      .line {
+         height: 1px;
+         background-color: $color-black;
+      }
+      .or {
+         position: absolute;
+         padding: 0 2rem;
+         background-color: $color-white;
+         left: 50%;
+         top: 50%;
+         transform: translate(-50%, -50%);
+      }
+   }
+
+   form {
+      max-width: 500px;
+      margin: 2rem auto;
+      gap: 2rem;
+      display: flex;
+      flex-direction: column;
+      input {
+         width: 100%;
+      }
+      .button[type='submit'] {
+         margin-top: 2rem;
+         padding: 1.8rem 3rem;
+      }
+   }
+}

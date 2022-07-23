@@ -14,11 +14,3 @@ class AuthenService {
     }
 }
 module.exports= new AuthenService;
-// var saltRounds =10;
-// var pass = 'ducmanh01'
-// bcrypt.hash(pass, saltRounds, function(err, hash) {
-//   con.query(`Insert into taikhoan(tendn,email,matkhau,quyen) values ('ducmanh','ducmanhlai22@gmail.com','${hash}',1)`,(err,result )=>{
-//     if (err) throw err.errno;
-//       console.log(result);
-//     });
-// });

@@ -11,5 +11,5 @@ configs(app);
 initWebRoutes(app);
 
 app.listen(port, () => {
-   console.log(`Starting server on http://127.0.0.1:${port}`);
+   console.log(`Starting server on http://localhost:${port}`);
 });

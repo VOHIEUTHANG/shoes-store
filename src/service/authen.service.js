@@ -3,8 +3,13 @@ import passwordHanler from '../utils/passwordHandler';
 
 class AuthenService {
    async login(userName, password) {
-      const result = await pool.execute('select userName,password from account where userName = ?', [userName]);
-      console.log('🚀 ~ file: authen.service.js ~ line 8 ~ AuthenService ~ result', result);
+      console.log({ userName, password });
+      const [rows] = await pool.execute('select userName,password from account where userName = ?', [userName]);
+      if (rows.length > 0) {
+         const { hashPassword } = rows[0];
+         return hashPassword;
+      }
+      return {};
    }
 }
 export default new AuthenService();

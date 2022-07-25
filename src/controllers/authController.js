@@ -5,7 +5,6 @@ import authenService from '../service/authen.service';
 const authenController = () => ({
    login(req, res, next) {
       const { userName, password } = req.body;
-
       if (userName && password) authenService.login(userName, password);
       else console.log('Missing userName of password !');
 

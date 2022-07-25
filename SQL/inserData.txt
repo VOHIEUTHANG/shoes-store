@@ -1,0 +1,9 @@
+insert into role (roleName, permissionCode) values 
+('admin', 'YWRtaW4='),
+('employee', 'ZW1wbG95ZWU='),   
+('customer', 'Y3VzdG9tZXI=');
+
+insert into account(userName,password,ROLE_ID,avatar) 
+values('devostack2000_admin','$2b$10$0VYAsiGbvRy7bVhQGR3J5uU4I5cUSPdjSDK4jRKwL.BbF73Pp1tcG',1,'https://images.wallpaperscraft.com/image/single/dog_husky_look_spotted_muzzle_40227_1920x1080.jpg'),
+('devostack2000_employee','$2b$10$0VYAsiGbvRy7bVhQGR3J5uU4I5cUSPdjSDK4jRKwL.BbF73Pp1tcG',2,'https://images.wallpaperscraft.com/image/single/dog_husky_look_spotted_muzzle_40227_1920x1080.jpg'),
+('devostack2000_customer','$2b$10$0VYAsiGbvRy7bVhQGR3J5uU4I5cUSPdjSDK4jRKwL.BbF73Pp1tcG',3,'https://images.wallpaperscraft.com/image/single/dog_husky_look_spotted_muzzle_40227_1920x1080.jpg');

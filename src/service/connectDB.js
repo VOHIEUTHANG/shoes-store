@@ -1,12 +1,14 @@
 import mysql from 'mysql2';
 import dotenv from 'dotenv';
+import * as mysqlInfo from '../constants';
 dotenv.config();
 
 const pool = mysql.createPool({
-   host: process.env.HostDB,
-   user: process.env.userDB,
-   database: process.env.database,
-   password: process.env.passwordDB,
+   host: mysqlInfo.host,
+   user: mysqlInfo.user,
+   database: mysqlInfo.database,
+   password: mysqlInfo.password,
+
    waitForConnections: true,
    connectionLimit: 10,
    queueLimit: 0,
@@ -14,7 +16,7 @@ const pool = mysql.createPool({
 
 pool.getConnection((err) => {
    if (err) throw err;
-   console.log('Connected!');
+   console.log('Connect database successfully!');
 });
 
 export default pool;

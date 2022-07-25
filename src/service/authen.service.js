@@ -9,7 +9,7 @@ class AuthenService {
          const { hashPassword } = rows[0];
          return hashPassword;
       }
-      return {};
+      return undefined;
    }
 }
 export default new AuthenService();

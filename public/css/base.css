@@ -7,6 +7,7 @@
 * {
    margin: 0;
    padding: 0;
+   text-transform: uppercase;
 }
 
 :root {
@@ -15,6 +16,8 @@
 
 html {
    font-family: 'Montserrat', sans-serif;
+   text-rendering: optimizeLegibility;
+   scroll-behavior: smooth;
    font-size: 10px;
 }
 

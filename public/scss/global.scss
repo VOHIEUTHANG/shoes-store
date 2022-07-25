@@ -1,3 +1,5 @@
+@import './variable';
+@import './mixi';
 // GlideJs library for slider and carousel
 @import 'node_modules/@glidejs/glide/src/assets/sass/glide.core';
 @import 'node_modules/@glidejs/glide/src/assets/sass/glide.theme';
@@ -14,3 +16,70 @@ body::-webkit-scrollbar-thumb {
    background-image: linear-gradient(to bottom, #a6d1e6, #eea4f5);
 }
 // Customize scrollbar ================>
+
+// Text styles ==================>
+.text-title {
+   font-family: $font-space-mono;
+   font-size: 1.8rem;
+}
+
+// Common components ===============>
+.input-custom {
+   outline: none;
+   background-color: transparent;
+   padding: 0 0.8rem;
+   font-family: 'Montserrat', sans-serif;
+   border: none;
+   text-transform: initial;
+   width: 20rem;
+}
+
+.fon-size-sm {
+   font-size: small;
+}
+
+input.input-feild {
+   padding: 1rem 1.7rem;
+   outline: none;
+   border: 1px solid $color-border-gray;
+   color: $color-text-gray;
+   text-transform: initial;
+}
+
+.text--underline {
+   text-decoration: underline;
+}
+.denind-uppercase {
+   text-transform: initial;
+}
+
+.button {
+   position: relative;
+   padding: 0.8rem 2rem;
+   letter-spacing: 0.13rem;
+   font-size: 1.6rem;
+   outline: none;
+   background-color: $color-bg-dark;
+   color: $color-white;
+   border: 1px solid $color-bg-dark;
+   z-index: 1;
+   &::after {
+      position: absolute;
+      display: block;
+      content: '';
+      width: 0;
+      height: 100%;
+      left: 50%;
+      top: 0;
+      background-color: $color-white;
+      z-index: -1;
+      @include transition;
+      transform: translateX(-50%);
+   }
+   &:hover {
+      &::after {
+         width: 100%;
+      }
+      color: $color-black;
+   }
+}

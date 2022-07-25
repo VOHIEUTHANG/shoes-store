@@ -1,16 +1,15 @@
-const {query,connect}= require('./connectSql.service');
-const bcrypt = require('bcrypt');
+import pool from './connectDB';
+import passwordHanler from '../utils/passwordHandler';
+
 class AuthenService {
-   async Login(user,pass){
-       let saltRounds = 10;
-       let check = await query(`call checkLogin('${user}')`);
-       let match = await bcrypt.compare(pass,check[0][0].matkhau);
-       if(match)
-       {
-         let data = await query(`call getAccount('${user}')`);
-         return data[0][0];
-       }
-       else return 'Sai tên đăng nhập hoặc mật khẩu';
-    }
+   async login(userName, password) {
+      console.log({ userName, password });
+      const [rows] = await pool.execute('select userName,password from account where userName = ?', [userName]);
+      if (rows.length > 0) {
+         const { hashPassword } = rows[0];
+         return hashPassword;
+      }
+      return undefined;
+   }
 }
-module.exports= new AuthenService;
+export default new AuthenService();

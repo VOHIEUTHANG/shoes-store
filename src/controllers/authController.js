@@ -1,3 +1,4 @@
+import { info } from 'node-sass';
 import authService from '../service/auth.service';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/tokenHandler';
 
@@ -12,22 +13,33 @@ const authenController = () => ({
             };
             const accessToken = generateAccessToken({ userName });
             const refreshToken = generateRefreshToken({ userName });
-
+            const insertRefreshTokenResult = await authService.insertRefreshTokens(refreshToken, userName);
             res.cookie('token', accessToken, options);
-            res.send({ info: 'thành công', accessToken, refreshToken });
-         } else console.log('User name or pass is incorrect !');
-      } else console.log('Missing userName of password !');
+            res.send({ info: 'success', accessToken, refreshToken });
+         } else res.json({ info: 'failed', message: 'User name or pass is incorrect !' });
+      } else res.json({ info: 'failed', message: 'Missing userName of password !' });
    },
    async getNewAccessToken(req, res, next) {
       const refreshToken = req.body.refreshToken;
-      if (!refreshToken) return res.status(401);
+      if (!refreshToken) return res.render('pages/401');
       const refreshTokens = await authService.getAllRefreshTokens();
-      if (!refreshTokens.includes(refreshToken)) return res.status(403);
+      if (!refreshTokens?.includes(refreshToken)) return res.render('pages/403');
       verifyRefreshToken(refreshToken, (err, user) => {
          console.log('🚀 ~ file: authController.js ~ line 27 ~ user', user);
-         if (err) res.status(403);
+         if (err) res.render('pages/403');
          const accessToken = generateAccessToken({ userName: user?.userName });
          res.json({ accessToken });
+      });
+   },
+   async logout(req, res, next) {
+      const { refreshToken } = req.body;
+      if (!refreshToken) res.json({ info: 'missing refreshToken !' });
+      verifyRefreshToken(refreshToken, async (err, user) => {
+         const userName = user?.userName;
+         if (!userName) res.json({ info: 'missing userName !' });
+         const deleteRefreshTokensResult = await authService.deleteRefreshTokensByUserName(userName);
+         if (deleteRefreshTokensResult) res.json({ info: 'logout successfully!' });
+         else res.json({ info: 'logout failed!' });
       });
    },
 });

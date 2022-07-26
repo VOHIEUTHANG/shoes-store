@@ -1,4 +1,8 @@
 CREATE TABLE refresh_tokens (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    refreshToken VARCHAR(500)
+    refreshToken VARCHAR(500),
+    userName varchar(30),
+	FOREIGN KEY (userName)
+	REFERENCES user(userName)
+	ON DELETE CASCADE
 ) ENGINE=InnoDB;

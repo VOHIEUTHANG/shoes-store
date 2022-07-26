@@ -1,10 +1,10 @@
-import { info } from 'node-sass';
 import authService from '../service/auth.service';
-import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/tokenHandler';
+import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../helpers/tokenHandler';
 
 const authenController = () => ({
    async login(req, res, next) {
       const { userName, password } = req.body;
+
       if (userName && password) {
          const acc = await authService.login(userName, password);
          if (acc) {

@@ -1,5 +1,5 @@
 import pool from './connectDB';
-import PasswordHandler from '../utils/passwordHandler';
+import PasswordHandler from '../helpers/passwordHandler';
 
 class AuthenService {
    async login(userName, password) {

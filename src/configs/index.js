@@ -1,12 +1,15 @@
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import express from 'express';
-
+const cookie_parser = require('cookie-parser');
 export default function configs(app) {
    (() => {
       return {
          staticFile() {
             app.use(express.static('public'));
+         },
+         cookie(){
+            app.use(cookie_parser());
          },
          convertDataType() {
             app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,6 +27,7 @@ export default function configs(app) {
             this.convertDataType();
             this.logger();
             this.setViewEngine();
+            this.cookie();
          },
       };
    })().run();

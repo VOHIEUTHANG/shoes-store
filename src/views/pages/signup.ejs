@@ -1,0 +1,41 @@
+<html lang="en">
+   <head>
+      <%- include('../partials/head'); %>
+      <link rel="stylesheet" href="/css/login.css" />
+      <link rel="stylesheet" href="/css/signup.css" />
+   </head>
+   <body>
+      <%- include('../partials/header') %>
+      <div id="root">
+         <div class="login signup">
+            <div class="container">
+               <div class="login-wrapper">
+                  <div class="login-title">CREATE ACCOUNT</div>
+                  <form action="/api/v1/auth/signup" method="post">
+                     <div class="divider">
+                        <div class="line"></div>
+                        <div class="or">PERSOINAL INFO</div>
+                     </div>
+                     <input class="input-feild" placeholder="Full name" type="text" name="fullName" />
+                     <input class="input-feild" placeholder="Email" type="text" name="email" />
+                     <input class="input-feild" placeholder="Phone Number" type="text" name="phoneNumber" />
+                     <div class="divider">
+                        <div class="line"></div>
+                        <div class="or">ACCOUNT INFO</div>
+                     </div>
+                     <input class="input-feild" placeholder="Username" type="text" name="userName" />
+                     <input class="input-feild" placeholder="Password" type="password" name="password" />
+                     <input class="input-feild" placeholder="Configm password" type="password" name="confignPassword" />
+                     <button type="submit" class="button button-full">REGISTER</button>
+                  </form>
+                  <div class="more-options">
+                     <a href="/login" class="text--underline">LOGIN WITH EXITED ACCOUNT</a>
+                     <a href="/" class="text--underline">RETURN TO STORE</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <%- include('../partials/footer') %>
+   </body>
+</html>

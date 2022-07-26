@@ -19,17 +19,9 @@ const authenController = () => ({
          } else res.json({ info: 'failed', message: 'User name or pass is incorrect !' });
       } else res.json({ info: 'failed', message: 'Missing userName of password !' });
    },
-   async getNewAccessToken(req, res, next) {
-      const refreshToken = req.body.refreshToken;
-      if (!refreshToken) return res.render('pages/401');
-      const refreshTokens = await authService.getAllRefreshTokens();
-      if (!refreshTokens?.includes(refreshToken)) return res.render('pages/403');
-      verifyRefreshToken(refreshToken, (err, user) => {
-         console.log('🚀 ~ file: authController.js ~ line 27 ~ user', user);
-         if (err) res.render('pages/403');
-         const accessToken = generateAccessToken({ userName: user?.userName });
-         res.json({ accessToken });
-      });
+   async signup(req, res, next) {
+      const userInfor = req.body;
+      res.json({ userInfor });
    },
    async logout(req, res, next) {
       const { refreshToken } = req.body;
@@ -40,6 +32,18 @@ const authenController = () => ({
          const deleteRefreshTokensResult = await authService.deleteRefreshTokensByUserName(userName);
          if (deleteRefreshTokensResult) res.json({ info: 'logout successfully!' });
          else res.json({ info: 'logout failed!' });
+      });
+   },
+   async getNewAccessToken(req, res, next) {
+      const refreshToken = req.body.refreshToken;
+      if (!refreshToken) return res.render('pages/401');
+      const refreshTokens = await authService.getAllRefreshTokens();
+      if (!refreshTokens?.includes(refreshToken)) return res.render('pages/403');
+      verifyRefreshToken(refreshToken, (err, user) => {
+         console.log('🚀 ~ file: authController.js ~ line 27 ~ user', user);
+         if (err) res.render('pages/403');
+         const accessToken = generateAccessToken({ userName: user?.userName });
+         res.json({ accessToken });
       });
    },
 });

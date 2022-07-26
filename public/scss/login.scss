@@ -13,6 +13,7 @@
       text-align: center;
    }
    &-title {
+      display: inline-block;
       color: $color-black;
       position: relative;
       margin-bottom: 1rem;
@@ -24,9 +25,9 @@
          top: 110%;
          left: 50%;
          transform: translatex(-50%);
-         width: 6rem;
+         width: 80%;
          height: 2px;
-         background-color: $color-black;
+         background-color: $color-gray;
       }
    }
    &-method-wrapper {

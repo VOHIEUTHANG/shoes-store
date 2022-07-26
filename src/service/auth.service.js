@@ -14,5 +14,13 @@ class AuthenService {
       }
       return null;
    }
+   async getAllRefreshTokens() {
+      const [rows] = await pool.execute('select refreshToken from refresh_tokens');
+      if (rows.length > 0) {
+         const refreshTokens = rows.map((tokenObject) => tokenObject.refreshToken);
+         return refreshTokens;
+      }
+      return null;
+   }
 }
 export default new AuthenService();

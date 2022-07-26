@@ -1,0 +1,4 @@
+CREATE TABLE refresh_tokens (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    refreshToken VARCHAR(500)
+) ENGINE=InnoDB;

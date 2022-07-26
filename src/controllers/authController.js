@@ -1,6 +1,6 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import authenService from '../service/authen.service';
+import authenService from '../service/auth.service';
 
 const authenController = () => ({
    login(req, res, next) {

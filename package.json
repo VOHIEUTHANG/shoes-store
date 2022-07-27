@@ -32,7 +32,8 @@
       "just-validate": "^3.8.1",
       "method-override": "^3.0.0",
       "mysql2": "^2.3.3",
-      "npm": "^8.15.0"
+      "npm": "^8.15.0",
+      "tippy.js": "^6.3.7"
    },
    "devDependencies": {
       "@babel/cli": "^7.18.9",

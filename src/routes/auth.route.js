@@ -10,4 +10,6 @@ router.post('/register', authController.register);
 router.delete('/logout', authController.logout);
 router.post('/token', authController.getNewAccessToken);
 
+const router = express.Router();
+router.post('/login',authController.login);
 export default router;

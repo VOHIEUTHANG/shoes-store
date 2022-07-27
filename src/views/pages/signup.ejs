@@ -16,29 +16,53 @@
                         <div class="line"></div>
                         <div class="or">PERSOINAL INFO</div>
                      </div>
-                     <input
-                        type="text"
-                        class="input-feild"
-                        placeholder="Full name"
-                        autocomplete="off"
-                        name="fullName"
-                        id="fullName"
-                     />
-                     <input class="input-feild" placeholder="Email" id="email" type="email" name="email" />
-                     <input
-                        class="input-feild"
-                        placeholder="Phone Number"
-                        id="phoneNumber"
-                        type="text"
-                        name="phoneNumber"
-                     />
-                     <div class="divider">
-                        <div class="line"></div>
-                        <div class="or">ACCOUNT INFO</div>
+                     <div class="row form-container">
+                        <div class="col-12">
+                           <input
+                              type="text"
+                              class="input-feild"
+                              placeholder="Full name"
+                              autocomplete="off"
+                              name="fullName"
+                              id="fullName"
+                           />
+                        </div>
+                        <div class="col-12">
+                           <input class="input-feild" placeholder="Email" id="email" type="email" name="email" />
+                        </div>
+                        <div class="col-12">
+                           <input
+                              class="input-feild"
+                              placeholder="Phone Number"
+                              id="phoneNumber"
+                              type="text"
+                              name="phoneNumber"
+                           />
+                        </div>
+                        <div class="divider">
+                           <div class="line"></div>
+                           <div class="or">ACCOUNT INFO</div>
+                        </div>
+                        <div class="col-12">
+                           <input
+                              class="input-feild"
+                              placeholder="Username"
+                              type="text"
+                              id="userName"
+                              name="userName"
+                           />
+                        </div>
+                        <div class="col">
+                           <input
+                              class="input-feild"
+                              placeholder="Password"
+                              type="password"
+                              id="password"
+                              name="password"
+                           />
+                        </div>
+                        <button type="submit" class="button button-full">REGISTER</button>
                      </div>
-                     <input class="input-feild" placeholder="Username" type="text" id="userName" name="userName" />
-                     <input class="input-feild" placeholder="Password" type="password" id="password" name="password" />
-                     <button type="submit" class="button button-full">REGISTER</button>
                   </form>
                   <div class="more-options">
                      <a href="/login" class="text--underline">LOGIN WITH EXITED ACCOUNT</a>
@@ -49,11 +73,15 @@
          </div>
       </div>
       <%- include('../partials/footer') %>
-      <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
+      <script src="/js/library/justValidate.js"></script>
       <script>
          const validate = new window.JustValidate('#form-register');
          validate
             .addField('#fullName', [
+               {
+                  rule: 'required',
+                  errorMessage: 'fullName is required',
+               },
                {
                   rule: 'minLength',
                   value: 3,
@@ -85,6 +113,10 @@
             ])
             .addField('#userName', [
                {
+                  rule: 'required',
+                  errorMessage: 'UserName is required',
+               },
+               {
                   rule: 'minLength',
                   value: 6,
                   errorMessage: 'Username must contain at least six characters!',
@@ -103,7 +135,10 @@
                   rule: 'password',
                   errorMessage: 'Password must conatin minimum eight characters, at least one letter and one number',
                },
-            ]);
+            ])
+            .onSuccess((event) => {
+               $('#form-register').submit();
+            });
       </script>
    </body>
 </html>

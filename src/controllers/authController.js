@@ -1,6 +1,5 @@
-import { info } from 'node-sass';
 import authService from '../service/auth.service';
-import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/tokenHandler';
+import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../helpers/tokenHandler';
 
 const authenController = () => ({
    async login(req, res, next) {
@@ -19,7 +18,7 @@ const authenController = () => ({
          } else res.json({ info: 'failed', message: 'User name or pass is incorrect !' });
       } else res.json({ info: 'failed', message: 'Missing userName of password !' });
    },
-   async signup(req, res, next) {
+   async register(req, res, next) {
       const userInfor = req.body;
       res.json({ userInfor });
    },

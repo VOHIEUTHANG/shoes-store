@@ -1,0 +1,154 @@
+<html lang="en">
+   <head>
+      <%- include('../partials/head'); %>
+      <link rel="stylesheet" href="/css/login.css" />
+      <link rel="stylesheet" href="/css/signup.css" />
+   </head>
+   <body>
+      <%- include('../partials/header') %>
+      <div id="root">
+         <div class="login signup">
+            <div class="container">
+               <div class="login-wrapper">
+                  <div class="login-title">CREATE ACCOUNT</div>
+                  <form id="form-register" action="/api/v1/auth/signup" method="post">
+                     <div class="divider">
+                        <div class="line"></div>
+                        <div class="or">PERSOINAL INFO</div>
+                     </div>
+                     <div class="row form-container">
+                        <div class="col-12">
+                           <input
+                              type="text"
+                              class="input-feild"
+                              placeholder="Full name"
+                              autocomplete="off"
+                              name="fullName"
+                              id="fullName"
+                           />
+                        </div>
+                        <div class="col-12">
+                           <input class="input-feild" placeholder="Email" id="email" type="email" name="email" />
+                        </div>
+                        <div class="col-12">
+                           <input
+                              class="input-feild"
+                              placeholder="Phone Number"
+                              id="phoneNumber"
+                              type="text"
+                              name="phoneNumber"
+                           />
+                        </div>
+                        <div class="divider">
+                           <div class="line"></div>
+                           <div class="or">ACCOUNT INFO</div>
+                        </div>
+                        <div class="col-12">
+                           <input
+                              class="input-feild"
+                              placeholder="Username"
+                              type="text"
+                              id="userName"
+                              name="userName"
+                           />
+                        </div>
+                        <div class="col">
+                           <input
+                              class="input-feild"
+                              placeholder="Password"
+                              type="password"
+                              id="password"
+                              name="password"
+                           />
+                        </div>
+                        <button type="submit" class="button button-full">REGISTER</button>
+                     </div>
+                  </form>
+                  <div class="more-options">
+                     <a href="/login" class="text--underline">LOGIN WITH EXITED ACCOUNT</a>
+                     <a href="/" class="text--underline">RETURN TO STORE</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <%- include('../partials/footer') %> <%- include('../partials/foot'); %>
+      <script>
+         const validate = new window.JustValidate('#form-register');
+         validate
+            .addField('#fullName', [
+               {
+                  rule: 'required',
+                  errorMessage: 'fullName is required',
+               },
+               {
+                  rule: 'minLength',
+                  value: 3,
+               },
+               {
+                  rule: 'maxLength',
+                  value: 30,
+               },
+            ])
+            .addField('#email', [
+               {
+                  rule: 'required',
+                  errorMessage: 'Email is required',
+               },
+               {
+                  rule: 'email',
+                  errorMessage: 'Email is invalid!',
+               },
+            ])
+            .addField('#phoneNumber', [
+               {
+                  rule: 'minLength',
+                  value: 10,
+               },
+               {
+                  rule: 'maxLength',
+                  value: 12,
+               },
+            ])
+            .addField('#userName', [
+               {
+                  rule: 'required',
+                  errorMessage: 'UserName is required',
+               },
+               {
+                  rule: 'minLength',
+                  value: 6,
+                  errorMessage: 'Username must contain at least six characters!',
+               },
+               {
+                  rule: 'maxLength',
+                  value: 30,
+               },
+            ])
+            .addField('#password', [
+               {
+                  rule: 'required',
+                  errorMessage: 'Pawword is required',
+               },
+               {
+                  rule: 'password',
+                  errorMessage: 'Password must conatin minimum eight characters, at least one letter and one number',
+               },
+            ])
+            .onSuccess(async (event) => {
+               const formData = {
+                  userName: 'Fred',
+                  password: 'Flintstone',
+               };
+               // $('#form-register').submit();
+               try {
+                  const { data, status } = await axios.post('/api/v1/auth/register', formData);
+                  console.log('🚀 ~ file: register.ejs ~ line 146 ~ status', status);
+                  console.log('🚀 ~ file: register.ejs ~ line 146 ~ data', data);
+               } catch (error) {
+                  console.log('has error !');
+               }
+            });
+      </script>
+   </body>
+</html>

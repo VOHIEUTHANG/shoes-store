@@ -131,6 +131,7 @@ body {
 
 .notfound .notfound-404 h1 {
    font-family: 'Oswald', sans-serif;
+   user-select: none;
    font-size: 188px;
    font-weight: 700;
    color: white;
@@ -141,6 +142,7 @@ body {
 .notfound h2 {
    font-family: 'Oswald', sans-serif;
    font-size: 42px;
+   user-select: none;
    font-weight: 700;
    margin-top: 2rem;
    text-transform: uppercase;

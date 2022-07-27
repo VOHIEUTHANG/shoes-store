@@ -3,7 +3,10 @@
 // GlideJs library for slider and carousel
 @import 'node_modules/@glidejs/glide/src/assets/sass/glide.core';
 @import 'node_modules/@glidejs/glide/src/assets/sass/glide.theme';
+@import './utils/validate';
+
 // Customize scrollbar ================>
+
 body::-webkit-scrollbar-track {
    background-color: #f5f5f5;
 }
@@ -36,6 +39,12 @@ body::-webkit-scrollbar-thumb {
 
 .fon-size-sm {
    font-size: small;
+}
+
+.form-container {
+   display: flex;
+   flex-direction: column;
+   gap: 2rem;
 }
 
 input.input-feild {

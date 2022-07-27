@@ -10,18 +10,18 @@
          <div class="login signup">
             <div class="container">
                <div class="login-wrapper">
-                  <div class="login-title">CREATE ACCOUNT</div>
+                  <div class="login-title">Đăng ký tài khoản</div>
                   <form id="form-register" action="/api/v1/auth/signup" method="post">
                      <div class="divider">
                         <div class="line"></div>
-                        <div class="or">PERSOINAL INFO</div>
+                        <div class="or">Thông tin cá nhân</div>
                      </div>
                      <div class="row form-container">
                         <div class="col-12">
                            <input
                               type="text"
                               class="input-feild"
-                              placeholder="Full name"
+                              placeholder="Họ và tên"
                               autocomplete="off"
                               name="fullName"
                               id="fullName"
@@ -33,7 +33,7 @@
                         <div class="col-12">
                            <input
                               class="input-feild"
-                              placeholder="Phone Number"
+                              placeholder="Số điện thoại"
                               id="phoneNumber"
                               type="text"
                               name="phoneNumber"
@@ -41,12 +41,12 @@
                         </div>
                         <div class="divider">
                            <div class="line"></div>
-                           <div class="or">ACCOUNT INFO</div>
+                           <div class="or">Thông tin tài khoản</div>
                         </div>
                         <div class="col-12">
                            <input
                               class="input-feild"
-                              placeholder="Username"
+                              placeholder="Tên đăng nhập"
                               type="text"
                               id="userName"
                               name="userName"
@@ -55,7 +55,7 @@
                         <div class="col">
                            <input
                               class="input-feild"
-                              placeholder="Password"
+                              placeholder="Mật khẩu"
                               type="password"
                               id="password"
                               name="password"
@@ -65,88 +65,91 @@
                      </div>
                   </form>
                   <div class="more-options">
-                     <a href="/login" class="text--underline">LOGIN WITH EXITED ACCOUNT</a>
-                     <a href="/" class="text--underline">RETURN TO STORE</a>
+                     <a href="/login" class="text--underline">Đăng nhập với tài khoản có sẵn</a>
+                     <a href="/" class="text--underline">Trở về cửa hàng</a>
                   </div>
                </div>
             </div>
          </div>
       </div>
       <%- include('../partials/footer') %> <%- include('../partials/foot'); %>
-      <script>
+      <script type="module">
+         import { getFormData } from '/js/utils/formDataHandler.js';
          const validate = new window.JustValidate('#form-register');
          validate
             .addField('#fullName', [
                {
                   rule: 'required',
-                  errorMessage: 'fullName is required',
+                  errorMessage: 'Không được để trống họ tên',
                },
                {
                   rule: 'minLength',
                   value: 3,
+                  errorMessage: 'Họ và tên phải có ít nhất 3 ký tự',
                },
                {
                   rule: 'maxLength',
                   value: 30,
+                  errorMessage: 'Họ và tên chỉ được có tối đa 30 ký tự',
                },
             ])
             .addField('#email', [
                {
                   rule: 'required',
-                  errorMessage: 'Email is required',
+                  errorMessage: 'Không được để trống email !',
                },
                {
                   rule: 'email',
-                  errorMessage: 'Email is invalid!',
+                  errorMessage: 'Không đúng định dạng email !',
                },
             ])
             .addField('#phoneNumber', [
                {
                   rule: 'minLength',
                   value: 10,
+                  errorMessage: 'Số điện thoại phải có ít nhất 10 chữ số!',
                },
                {
                   rule: 'maxLength',
                   value: 12,
+                  errorMessage: 'Số điện thoại chỉ được có tối đa 12 chữ số!',
                },
             ])
             .addField('#userName', [
                {
                   rule: 'required',
-                  errorMessage: 'UserName is required',
+                  errorMessage: 'Vui lòng điền tên đăng nhập !',
                },
                {
                   rule: 'minLength',
                   value: 6,
-                  errorMessage: 'Username must contain at least six characters!',
+                  errorMessage: 'Tên đăng nhập phải có ít nhất 6 ký tự !',
                },
                {
                   rule: 'maxLength',
-                  value: 30,
+                  value: 20,
+                  errorMessage: 'Tên đăng nhập chỉ được có nhiều nhất 20 ký tự !',
                },
             ])
             .addField('#password', [
                {
                   rule: 'required',
-                  errorMessage: 'Pawword is required',
+                  errorMessage: 'Vui lòng điền mật khẩu !',
                },
                {
                   rule: 'password',
-                  errorMessage: 'Password must conatin minimum eight characters, at least one letter and one number',
+                  errorMessage: 'Mật khẩu phải có ít nhất 8 ký tự, trong đó có ít nhất một ký tự chữ và một ký tự số !',
                },
             ])
             .onSuccess(async (event) => {
-               const formData = {
-                  userName: 'Fred',
-                  password: 'Flintstone',
-               };
-               // $('#form-register').submit();
+               const formData = getFormData(event.target);
                try {
                   const { data, status } = await axios.post('/api/v1/auth/register', formData);
                   console.log('🚀 ~ file: register.ejs ~ line 146 ~ status', status);
                   console.log('🚀 ~ file: register.ejs ~ line 146 ~ data', data);
+                  toastr.success('Lưu thông tin thành công !');
                } catch (error) {
-                  console.log('has error !');
+                  toastr.error('Xảy ra lỗi khi gửi request về server !', error);
                }
             });
       </script>

@@ -64,7 +64,7 @@
             <div class="container">
                <div class="main-container">
                   <div class="category">
-                     <h3 class="category__title text-title">LATEST DROPS</h3>
+                     <h3 class="category__title text-title">Sản phẩm mới nhất</h3>
                      <div class="category__container">
                         <div class="glide category-product">
                            <div class="glide__track" data-glide-el="track">
@@ -82,7 +82,7 @@
                                              <div class="category__brand">Jordan</div>
                                              <div class="category__name">Air Jordan 1 Low SE New Emerald</div>
                                              <div class="category__price">
-                                                FROM
+                                                GIÁ
                                                 <span>$204.00</span>
                                              </div>
                                           </div>
@@ -103,7 +103,7 @@
                                              <div class="category__brand">NIKE</div>
                                              <div class="category__name">Air Jordan 1 Low SE True Blue</div>
                                              <div class="category__price">
-                                                FROM
+                                                GIÁ
                                                 <span>$166.00</span>
                                              </div>
                                           </div>
@@ -127,9 +127,22 @@
                </div>
             </div>
          </div>
-         <footer id="footer"><%- include('../partials/footer'); %></footer>
       </div>
+      <%- include('../partials/footer'); %> <%- include('../partials/foot'); %>
+
       <script src="js/library/glide.min.js"></script>
-      <script type="module" src="js/glide.js"></script>
+      <script>
+         new Glide('.glide', {
+            type: 'carousel',
+            autoplay: 5000,
+            hoverpause: true,
+         }).mount();
+
+         new Glide('.glide.category-product', {
+            type: 'carousel',
+            perView: 4,
+            gap: 20,
+         }).mount();
+      </script>
    </body>
 </html>

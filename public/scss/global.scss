@@ -3,7 +3,9 @@
 // GlideJs library for slider and carousel
 @import 'node_modules/@glidejs/glide/src/assets/sass/glide.core';
 @import 'node_modules/@glidejs/glide/src/assets/sass/glide.theme';
-@import './utils/validate';
+
+@import './library/validate';
+@import './library/toastr';
 
 // Customize scrollbar ================>
 
@@ -22,7 +24,6 @@ body::-webkit-scrollbar-thumb {
 
 // Text styles ==================>
 .text-title {
-   font-family: $font-space-mono;
    font-size: 1.8rem;
 }
 

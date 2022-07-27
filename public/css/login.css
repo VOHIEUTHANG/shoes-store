@@ -146,6 +146,7 @@
     padding: 6rem;
     text-align: center; }
   .login-title {
+    display: inline-block;
     color: #000;
     position: relative;
     margin-bottom: 1rem;
@@ -157,9 +158,9 @@
       top: 110%;
       left: 50%;
       transform: translatex(-50%);
-      width: 6rem;
+      width: 80%;
       height: 2px;
-      background-color: #000; }
+      background-color: #aaaaaa; }
   .login-method-wrapper {
     display: flex;
     flex-direction: row;

@@ -1,6 +1,6 @@
 import mainRouter from './main.route';
 import mainController from '../controllers/mainController';
-import authRoute from './authen.route';
+import authRoute from './auth.route';
 
 import express from 'express';
 export default function initWebRoutes(app) {

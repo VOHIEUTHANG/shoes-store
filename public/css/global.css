@@ -146,6 +146,9 @@ input.input-feild {
   color: #5e5c5c;
   text-transform: initial; }
 
+.glide__slide {
+  margin-bottom: 1px; }
+
 .text--underline {
   text-decoration: underline; }
 

@@ -1,7 +1,7 @@
 <html lang="en">
    <head>
       <%- include('../partials/head'); %>
-      <link rel="stylesheet" href="css/login.css" />
+      <link rel="stylesheet" href="/css/login.css" />
    </head>
    <body>
       <%- include('../partials/header') %>
@@ -26,7 +26,7 @@
                      <div class="line"></div>
                      <div class="or">OR</div>
                   </div>
-                  <div style="text-transform: initial">Sign in with email:</div>
+                  <div style="text-transform: initial">Sign in with account:</div>
                   <form action="/api/v1/auth/login" method="post">
                      <input class="input-feild" placeholder="username" type="text" name="userName" />
                      <input class="input-feild" placeholder="Password" type="password" name="password" />
@@ -34,7 +34,7 @@
                      <button type="submit" class="button button-full">LOGIN</button>
                   </form>
                   <div class="more-options">
-                     <a href="#" class="text--underline">CREATE ACCOUNT</a>
+                     <a href="/signup" class="text--underline">CREATE ACCOUNT</a>
                      <a href="/" class="text--underline">RETURN TO STORE</a>
                   </div>
                </div>

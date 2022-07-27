@@ -1,10 +1,9 @@
 import express from 'express';
 const router = express.Router();
 import mainController from '../controllers/mainController';
-const md = require('../service/middleWare')
+const md = require('../middlewares/checkRole')
 router.get('/', mainController.getHomePage);
-router.get('/login',mainController.getLoginPage);
-router.get('/test', md.checkCustomer,(req,res)=>{
-    res.send({data:'xong'});
-})
+router.get('/login', mainController.getLoginPage);
+router.get('/signup', mainController.getSignUpPage);
+
 export default router;

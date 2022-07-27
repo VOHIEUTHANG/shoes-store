@@ -1,6 +1,7 @@
 import express from 'express';
 import initWebRoutes from './routes';
 import configs from './configs';
+import axios from 'axios';
 require('dotenv').config();
 
 const app = express();

@@ -5,8 +5,8 @@ const mainController = () => ({
    getLoginPage: (req, res) => {
       res.render('pages/login');
    },
-   getSignUpPage: (req, res) => {
-      res.render('pages/signup');
+   getRegisterPage: (req, res) => {
+      res.render('pages/register');
    },
    get404Page: (req, res) => {
       res.render('pages/404');

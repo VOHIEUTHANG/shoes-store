@@ -72,8 +72,7 @@
             </div>
          </div>
       </div>
-      <%- include('../partials/footer') %>
-      <script src="/js/library/justValidate.js"></script>
+      <%- include('../partials/footer') %> <%- include('../partials/foot'); %>
       <script>
          const validate = new window.JustValidate('#form-register');
          validate
@@ -136,8 +135,14 @@
                   errorMessage: 'Password must conatin minimum eight characters, at least one letter and one number',
                },
             ])
-            .onSuccess((event) => {
-               $('#form-register').submit();
+            .onSuccess(async (event) => {
+               const data = {
+                  userName: 'Fred',
+                  password: 'Flintstone',
+               };
+               // $('#form-register').submit();
+               const result = await axios.post('/api/v1/auth/register', data);
+               console.log(result.data);
             });
       </script>
    </body>

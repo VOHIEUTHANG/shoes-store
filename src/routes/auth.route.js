@@ -6,7 +6,7 @@ const router = express.Router();
 // prefix: /api/v1/auth/
 router.post('/login', authController.login);
 
-router.post('/signup', authController.signup);
+router.post('/register', authController.register);
 router.delete('/logout', authController.logout);
 router.post('/token', authController.getNewAccessToken);
 

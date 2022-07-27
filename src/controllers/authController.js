@@ -4,7 +4,6 @@ import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '.
 const authenController = () => ({
    async login(req, res, next) {
       const { userName, password } = req.body;
-
       if (userName && password) {
          const acc = await authService.login(userName, password);
          if (acc) {
@@ -19,7 +18,7 @@ const authenController = () => ({
          } else res.json({ info: 'failed', message: 'User name or pass is incorrect !' });
       } else res.json({ info: 'failed', message: 'Missing userName of password !' });
    },
-   async signup(req, res, next) {
+   async register(req, res, next) {
       const userInfor = req.body;
       res.json({ userInfor });
    },

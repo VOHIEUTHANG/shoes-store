@@ -10,5 +10,4 @@ class roleHandler{
         return role[0] ? role : null;
     }
 }
-
 module.exports = new roleHandler;

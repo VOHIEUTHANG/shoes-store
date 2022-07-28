@@ -14,6 +14,7 @@ const authenController = () => ({
             const accessToken = generateAccessToken({ userName });
             const refreshToken = generateRefreshToken({ userName });
             const insertRefreshTokenResult = await authService.insertRefreshTokens(refreshToken, userName);
+
             res.cookie('token', accessToken, options);
             res.status(200).json({
                title: 'success',

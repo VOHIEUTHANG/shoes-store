@@ -18,9 +18,7 @@
    "dependencies": {
       "@babel/runtime": "^7.18.9",
       "@glidejs/glide": "^3.5.2",
-
       "axios": "^0.27.2",
-
       "bcrypt": "^5.0.1",
       "body-parser": "^1.20.0",
       "cookie-parser": "^1.4.6",
@@ -28,17 +26,17 @@
       "dotenv": "^16.0.1",
       "ejs": "^3.1.8",
       "express": "^4.18.1",
-
-
+      "express-session": "^1.17.3",
       "express-validator": "^6.14.2",
       "googleapis": "^105.0.0",
       "install": "^0.13.0",
       "jsonwebtoken": "^8.5.1",
       "just-validate": "^3.8.1",
-
       "method-override": "^3.0.0",
       "mysql2": "^2.3.3",
       "npm": "^8.15.0",
+      "passport": "^0.6.0",
+      "passport-jwt": "^4.0.0",
       "tippy.js": "^6.3.7"
    },
    "devDependencies": {

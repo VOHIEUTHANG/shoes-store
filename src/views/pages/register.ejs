@@ -76,6 +76,7 @@
       <script type="module">
          import { getFormData } from '/js/utils/formDataHandler.js';
          const validate = new window.JustValidate('#form-register');
+
          validate
             .addField('#fullName', [
                {
@@ -145,11 +146,12 @@
                const formData = getFormData(event.target);
                try {
                   const { data, status } = await axios.post('/api/v1/auth/register', formData);
-                  console.log('🚀 ~ file: register.ejs ~ line 146 ~ status', status);
-                  console.log('🚀 ~ file: register.ejs ~ line 146 ~ data', data);
-                  toastr.success('Lưu thông tin thành công !');
+                  if (status === 200) {
+                     const { status, message } = data;
+                     toastr[status](message);
+                  }
                } catch (error) {
-                  toastr.error('Xảy ra lỗi khi gửi request về server !', error);
+                  toastr.error('Xảy ra lỗi khi gửi request về server !');
                }
             });
       </script>

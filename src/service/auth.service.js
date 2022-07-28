@@ -14,6 +14,22 @@ class AuthenService {
       }
       return null;
    }
+   async register({ fullName, email, phoneNumber, userName, password }) {
+      const hashPassword = PasswordHandler.getHashPassword(password);
+      try {
+         const [insertAccountHeaderResult] = await pool.query(
+            'INSERT INTO account (userName,password,ROLE_ID,isVerify,isLocked) VALUES (?,?,3,0,0)',
+            [userName, hashPassword],
+         );
+         const [insertUserHeaderResult] = await pool.query(
+            'INSERT INTO user (userName,fullName,email,phoneNumber) VALUES (?,?,?,?)',
+            [userName, fullName, email, phoneNumber],
+         );
+         return insertAccountHeaderResult.affectedRows > 0 && insertUserHeaderResult.affectedRows > 0 ? true : false;
+      } catch (error) {
+         return false;
+      }
+   }
    async getAllRefreshTokens() {
       const [rows] = await pool.execute('select refreshToken from refresh_tokens');
       if (rows.length > 0) {

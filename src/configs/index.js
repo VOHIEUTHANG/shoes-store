@@ -1,18 +1,19 @@
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import express from 'express';
+import session from 'express-session';
 import passport from 'passport';
+import Redis from 'ioredis';
+let RedisStore = require('connect-redis')(session);
+const redisClient = new Redis();
+
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 
-const cookie_parser = require('cookie-parser');
 export default function configs(app) {
    (() => {
       return {
          staticFile() {
             app.use(express.static('public'));
-         },
-         cookie() {
-            app.use(cookie_parser());
          },
          convertDataType() {
             app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,6 +25,18 @@ export default function configs(app) {
          setViewEngine() {
             app.set('view engine', 'ejs');
             app.set('views', './src/views');
+         },
+         expressSession() {
+            app.set('trust proxy', 1);
+            app.use(
+               session({
+                  secret: 'keyboard cat',
+                  store: new RedisStore({ client: redisClient }),
+                  resave: false,
+                  saveUninitialized: true,
+                  cookie: { secure: false, httpOnly: true, maxAge: 5 * 60 * 1000 },
+               }),
+            );
          },
          passport() {
             const jwtOptions = {};
@@ -43,7 +56,7 @@ export default function configs(app) {
             this.convertDataType();
             this.logger();
             this.setViewEngine();
-            this.cookie();
+            this.expressSession();
             this.passport();
          },
       };

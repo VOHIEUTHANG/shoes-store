@@ -2,15 +2,17 @@ import pool from './connectDB';
 import PasswordHandler from '../helpers/passwordHandler';
 
 class AuthenService {
-   async login(userName, password) {
-      console.log({ userName, password });
+   async login(username, password) {
+      console.log({ username, password });
       const [rows] = await pool.execute(
-         'select userName,password,permissioncode as role_code from account,role where userName = ? and account.role_id= role.id',
-         [userName],
+         'select userName,password,avatar,permissioncode from account,role where userName = ? and account.role_id= role.id',
+         [username],
       );
       if (rows.length > 0) {
-         let account = rows[0];
-         return PasswordHandler.checkMatch(password, account.password) ? account : null;
+         const { password, ...user } = rows[0];
+         console.log(rows[0].password);
+         console.log('check match', PasswordHandler.checkMatch(password, rows[0].password));
+         return PasswordHandler.checkMatch(password, rows[0].password) ? user : null;
       }
       return null;
    }

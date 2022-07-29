@@ -1,3 +1,4 @@
+ALTER TABLE product ADD COLUMN specifications VARCHAR(100);
 CREATE TABLE refresh_tokens (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     refreshToken VARCHAR(500),

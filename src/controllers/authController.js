@@ -5,22 +5,25 @@ import { createResponse } from '../helpers/responseCreator';
 const authenController = () => ({
    async login(req, res, next) {
       const { userName, password } = req.body;
+      console.log({ userName, password });
       if (userName && password) {
          const acc = await authService.login(userName, password);
          if (acc) {
-            const options = {
-               maxAge: 1000 * 60 * 15, // would expire after 15 minutes
-            };
             const accessToken = generateAccessToken({ userName });
             const refreshToken = generateRefreshToken({ userName });
             const insertRefreshTokenResult = await authService.insertRefreshTokens(refreshToken, userName);
-
-            res.cookie('token', accessToken, options);
-            res.status(200).json({
-               title: 'success',
-               message: 'Đăng nhập thành công !',
-               payload: { accessToken, refreshToken },
-            });
+            if (insertRefreshTokenResult) {
+               res.status(200).json({
+                  title: 'success',
+                  message: 'Đăng nhập thành công !',
+                  payload: { accessToken, refreshToken },
+               });
+            } else {
+               res.status(200).json({
+                  title: 'error',
+                  message: 'Insert refresh token failed',
+               });
+            }
          } else res.status(200).json({ title: 'warning', message: 'Tên đăng nhập hoặc mật khẩu không đúng !' });
       } else res.status(200).json({ title: 'warning', message: 'Thiếu thông tin tài khoản !' });
    },
@@ -35,6 +38,7 @@ const authenController = () => ({
       const { refreshToken } = req.body;
       if (!refreshToken) res.json({ info: 'missing refreshToken !' });
       verifyRefreshToken(refreshToken, async (err, user) => {
+         if (err) res.status(403).json({ status: 403, message: err.message });
          const userName = user?.userName;
          if (!userName) res.json({ info: 'missing userName !' });
          const deleteRefreshTokensResult = await authService.deleteRefreshTokensByUserName(userName);
@@ -43,16 +47,22 @@ const authenController = () => ({
       });
    },
    async getNewAccessToken(req, res, next) {
-      const refreshToken = req.body.refreshToken;
-      if (!refreshToken) return res.render('pages/401');
+      const { refreshToken } = req.body;
+      if (!refreshToken) res.status(401).json({ status: 401, message: 'Missing refresh token !' });
       const refreshTokens = await authService.getAllRefreshTokens();
-      if (!refreshTokens?.includes(refreshToken)) return res.render('pages/403');
-      verifyRefreshToken(refreshToken, (err, user) => {
-         console.log('🚀 ~ file: authController.js ~ line 27 ~ user', user);
-         if (err) res.render('pages/403');
-         const accessToken = generateAccessToken({ userName: user?.userName });
-         res.json({ accessToken });
-      });
+      if (!refreshTokens?.includes(refreshToken)) {
+         res.status(403).json({ status: 403, message: 'Forbidden' });
+      } else {
+         verifyRefreshToken(refreshToken, async (err, user) => {
+            if (err) res.status(403).json({ status: 403, message: err.message });
+            const newAccessToken = generateAccessToken({ userName: user?.userName });
+            const newRefreshToken = generateRefreshToken({ userName: user?.userName });
+            const insertRefreshTokenResult = await authService.insertRefreshTokens(refreshToken, user?.userName);
+            insertRefreshTokenResult &&
+               res.json(createResponse('success', 'Refresh token successfully !', { newAccessToken, newRefreshToken }));
+            insertRefreshTokenResult || res.json(createResponse('error', 'Insert refresh token failed !'));
+         });
+      }
    },
 });
 

@@ -1,6 +1,6 @@
 const mainController = () => ({
    getHomePage: (req, res) => {
-      res.render('pages/home');
+      res.render('pages/home', { user: 'Thang113' });
    },
    getLoginPage: (req, res) => {
       res.render('pages/login');

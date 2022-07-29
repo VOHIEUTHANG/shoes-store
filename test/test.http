@@ -1,0 +1,14 @@
+POST http://localhost:3333/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "123"
+}
+
+###
+
+GET http://localhost:3333/api/v1/auth/profile
+
+
+### 

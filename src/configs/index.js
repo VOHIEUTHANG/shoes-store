@@ -5,9 +5,12 @@ import session from 'express-session';
 import passport from 'passport';
 import Redis from 'ioredis';
 let RedisStore = require('connect-redis')(session);
-const redisClient = new Redis();
 
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import { Strategy as LocalStrategy } from 'passport-local';
+const redisClient = new Redis();
+
+import authService from '../service/auth.service';
 
 export default function configs(app) {
    (() => {
@@ -27,14 +30,14 @@ export default function configs(app) {
             app.set('views', './src/views');
          },
          expressSession() {
-            app.set('trust proxy', 1);
+            // app.set('trust proxy', 1);
             app.use(
                session({
                   secret: 'keyboard cat',
                   store: new RedisStore({ client: redisClient }),
                   resave: false,
                   saveUninitialized: true,
-                  cookie: { secure: false, httpOnly: true, maxAge: 5 * 60 * 1000 },
+                  cookie: { secure: false, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 },
                }),
             );
          },
@@ -42,14 +45,39 @@ export default function configs(app) {
             const jwtOptions = {};
             jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken('Authorization');
             jwtOptions.secretOrKey = process.env.ACCESS_TOKEN_SECRET;
-            var strategy = new JwtStrategy(jwtOptions, (payload, done) => {
+            const JWTstrategy = new JwtStrategy(jwtOptions, (payload, done) => {
                try {
                   console.log('payload >>', payload);
                   done(null, { userName: payload.userName });
                } catch (error) {}
             });
-            passport.use(strategy);
+            const localStraregy = new LocalStrategy((username, password, done) => {
+               console.log('username', username);
+               if (username === 'admin' && password === '123') {
+                  return done(null, { username });
+               }
+               done(null, false);
+            });
+
+            passport.use(JWTstrategy);
+            passport.use(localStraregy);
+
             app.use(passport.initialize());
+            app.use(passport.authenticate('session'));
+
+            passport.serializeUser(function (user, done) {
+               console.log('🚀 ~ file: index.js ~ line 68 ~ user', user);
+               process.nextTick(function () {
+                  done(null, user);
+               });
+            });
+
+            passport.deserializeUser(function (user, done) {
+               console.log('user', user);
+               process.nextTick(function () {
+                  return done(null, user);
+               });
+            });
          },
          run() {
             this.staticFile();

@@ -5,12 +5,11 @@ import session from 'express-session';
 import passport from 'passport';
 import Redis from 'ioredis';
 let RedisStore = require('connect-redis')(session);
-
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
-const redisClient = new Redis();
-
 import authService from '../service/auth.service';
+import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../helpers/tokenHandler';
+const redisClient = new Redis();
 
 export default function configs(app) {
    (() => {
@@ -45,18 +44,37 @@ export default function configs(app) {
             const jwtOptions = {};
             jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken('Authorization');
             jwtOptions.secretOrKey = process.env.ACCESS_TOKEN_SECRET;
+
             const JWTstrategy = new JwtStrategy(jwtOptions, (payload, done) => {
                try {
                   console.log('payload >>', payload);
                   done(null, { userName: payload.userName });
                } catch (error) {}
             });
-            const localStraregy = new LocalStrategy((username, password, done) => {
-               console.log('username', username);
-               if (username === 'admin' && password === '123') {
-                  return done(null, { username });
+
+            const localStraregy = new LocalStrategy(async (username, password, done) => {
+               console.log(username);
+               console.log(password);
+               if (username && password) {
+                  try {
+                     const userInfo = await authService.login(username, password);
+                     console.log('🚀 ~ file: index.js ~ line 61 ~ userInfo', userInfo);
+                     if (userInfo) {
+                        console.log('🚀 ~ file: index.js ~ line 60 ~ userInfo', userInfo);
+                        return done(null, userInfo, { message: 'Logged in Successfully' });
+                        // const accessToken = generateAccessToken({ username });
+                        // const refreshToken = generateRefreshToken({ username });
+                        // const insertRefreshTokenResult = await authService.insertRefreshTokens(refreshToken, username);
+                        // insertRefreshTokenResult && done(null, false);
+                     } else {
+                        done(null, false, { message: 'User not found' });
+                     }
+                  } catch (error) {
+                     done(null, false, { message: 'select user at database occured error !' });
+                  }
+               } else {
+                  done(null, false, { message: 'Missing username or password !' });
                }
-               done(null, false);
             });
 
             passport.use(JWTstrategy);

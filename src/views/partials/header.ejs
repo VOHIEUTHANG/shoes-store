@@ -16,7 +16,7 @@
                </div>
                <div class="col">
                   <div class="nav-wrapper">
-                     <ul class="nav-list d-flex">
+                     <ul class="nav-list">
                         <li class="nav-item nav-item__search">
                            <div class="search-wrapper">
                               <div class="search-btn">
@@ -25,15 +25,34 @@
                               <input type="text" class="search-input" />
                            </div>
                         </li>
-                        <!-- <li class="nav-item user-section">
+
+                        <% if(isLoggedIn){ %>
+                        <li class="nav-item user-info">
+                           <div class="nav-item__avatar">
+                              <img
+                                 src="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iyRWcdIqVMks/v0/1200x-1.jpg"
+                                 alt=""
+                              />
+                           </div>
+                           <div class="user-options">
+                              <div class="user-options__item info">
+                                 <i class="fa-regular fa-user"></i>
+                                 <span>Thông tin</span>
+                              </div>
+                              <div class="user-options__item logout">
+                                 <i class="fa-solid fa-right-from-bracket"></i>
+                                 <span>Đăng xuất</span>
+                              </div>
+                           </div>
+                        </li>
+                        <% } else { %>
+                        <li class="nav-item user-section">
                            <a class="nav-link" href="/login"><i class="fa-regular fa-user"></i></a>
                         </li>
                         <li class="nav-item wishlist">
                            <a class="nav-link" href="#"> <i class="fa-regular fa-heart"></i></a>
-                        </li> -->
-                        <li class="nav-item nav-item__avatar">
-                           <a class="nav-link" href="#"> <i class="fa-regular fa-heart"></i></a>
                         </li>
+                        <% } %>
                      </ul>
                   </div>
                </div>

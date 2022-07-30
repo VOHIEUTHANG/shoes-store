@@ -10,10 +10,18 @@ const mainController = () => ({
    getLoginPage: (req, res) => {
       const user = req.user;
       if (user) {
-         res.render('pages/login', { user, isLoggedIn: true });
+         res.redirect('/');
       } else {
          res.render('pages/login', { user: {}, isLoggedIn: false });
       }
+   },
+   logout: (req, res) => {
+      req.logout(function (err) {
+         if (err) {
+            return next(err);
+         }
+         res.redirect('/');
+      });
    },
    getRegisterPage: (req, res) => {
       const user = req.user;

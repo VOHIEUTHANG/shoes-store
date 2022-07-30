@@ -5,6 +5,7 @@ import validateTokenMiddleware from '../middlewares/validateToken';
 
 router.get('/', mainController.getHomePage);
 router.get('/login', mainController.getLoginPage);
+router.get('/logout', mainController.logout);
 router.get('/register', mainController.getRegisterPage);
 router.get('/set-session', (req, res) => {
    req.session.user = {

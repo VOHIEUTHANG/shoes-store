@@ -27,6 +27,9 @@
                         </li>
 
                         <% if(isLoggedIn){ %>
+                        <li class="nav-item user-cart">
+                           <a class="nav-link" href="/login"><i class="ti-shopping-cart"></i></a>
+                        </li>
                         <li class="nav-item user-info">
                            <div class="nav-item__avatar">
                               <img src="<%= user.avatar %>" alt="" />
@@ -40,11 +43,14 @@
                                  <i class="fa-regular fa-heart"></i>
                                  <span>Wishlist</span>
                               </div>
-                              <div class="user-options__item logout">
-                                 <!-- <i class="fa-regular fa-arrow-right-from-bracket"></i> -->
-                                 <i class="fa-solid fa-key"></i>
-                                 <span>Đăng xuất</span>
+                              <div class="user-options__item">
+                                 <i class="fa-brands fa-gg"></i>
+                                 <span>Đơn mua</span>
                               </div>
+                              <a href="/logout" class="user-options__item logout">
+                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                 <span>Đăng xuất</span>
+                              </a>
                            </div>
                         </li>
                         <% } else { %>
@@ -66,18 +72,46 @@
             <ul class="menu-list">
                <li class="menu-item">
                   <a href="#" class="menu-link">air jordan</a>
+                  <ul class="dropdown-menu">
+                     <li><a class="dropdown-item" href="#">air jordan 1</a></li>
+                     <li><a class="dropdown-item" href="#">air jordan 2</a></li>
+                     <li><a class="dropdown-item" href="#">air jordan 3 </a></li>
+                     <li><a class="dropdown-item" href="#">air jordan 4 </a></li>
+                     <li><a class="dropdown-item" href="#">air jordan 5 </a></li>
+                     <li><a class="dropdown-item" href="#">air jordan 6 </a></li>
+                     <li><a class="dropdown-item" href="#">air jordan 7 </a></li>
+                  </ul>
                </li>
                <li class="menu-item">
                   <a href="#" class="menu-link">nike</a>
+                  <ul class="dropdown-menu">
+                     <li><a class="dropdown-item" href="#">air max</a></li>
+                     <li><a class="dropdown-item" href="#">air force</a></li>
+                     <li><a class="dropdown-item" href="#">NIKE BASKETBALL </a></li>
+                     <li><a class="dropdown-item" href="#">NIKE SPORTSWEAR </a></li>
+                  </ul>
                </li>
                <li class="menu-item">
                   <a href="#" class="menu-link">adidas</a>
+                  <ul class="dropdown-menu">
+                     <li><a class="dropdown-item" href="#">ORIGINALS </a></li>
+                     <li><a class="dropdown-item" href="#">ADIDAS BASKETBALL </a></li>
+                  </ul>
                </li>
                <li class="menu-item">
                   <a href="#" class="menu-link">vans</a>
+                  <ul class="dropdown-menu">
+                     <li><a class="dropdown-item" href="#">OLD SKOOL </a></li>
+                     <li><a class="dropdown-item" href="#">VANS AUTHENTIC </a></li>
+                  </ul>
                </li>
                <li class="menu-item">
                   <a href="#" class="menu-link">converse</a>
+                  <ul class="dropdown-menu">
+                     <li><a class="dropdown-item" href="#">CHUCK TAYLOR </a></li>
+                     <li><a class="dropdown-item" href="#">CHUCK 70 </a></li>
+                     <li><a class="dropdown-item" href="#">ONE STAR </a></li>
+                  </ul>
                </li>
                <li class="menu-item">
                   <a href="#" class="menu-link">Danh mục</a>

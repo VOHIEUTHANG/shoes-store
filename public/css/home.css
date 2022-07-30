@@ -31,6 +31,8 @@
     .header__logobar .nav-wrapper .nav-list {
       display: flex;
       align-items: center; }
+      .header__logobar .nav-wrapper .nav-list .nav-item.user-cart i {
+        font-size: 2.5rem !important; }
       .header__logobar .nav-wrapper .nav-list .nav-item .nav-link {
         color: #000; }
         .header__logobar .nav-wrapper .nav-list .nav-item .nav-link > i {
@@ -67,8 +69,8 @@
         cursor: pointer;
         position: relative; }
         .header__logobar .nav-wrapper .nav-list .nav-item.user-info > .nav-item__avatar {
-          width: 50px;
-          height: 50px;
+          width: 46px;
+          height: 46px;
           margin-left: 8px;
           border-radius: 50%;
           overflow: hidden; }
@@ -92,6 +94,8 @@
           border-radius: 12px;
           box-shadow: rgba(149, 157, 165, 0.3) 8px 8px 24px; }
           .header__logobar .nav-wrapper .nav-list .nav-item.user-info > .user-options .user-options__item {
+            display: block;
+            color: #222;
             padding: 1rem 2rem;
             transition: all 0.3s ease-in-out; }
             .header__logobar .nav-wrapper .nav-list .nav-item.user-info > .user-options .user-options__item.logout:hover {
@@ -115,6 +119,34 @@
       flex-direction: row;
       justify-content: center;
       align-items: center; }
+    .header__menu .menu-item {
+      position: relative; }
+      .header__menu .menu-item .dropdown-menu {
+        border: none;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        border-radius: 0;
+        min-width: 20rem;
+        top: calc(100% + 6px);
+        padding: 1rem 0;
+        font-size: 1.6rem;
+        transition: all 0.3s ease-in-out;
+        display: block;
+        transform: translateY(-10%);
+        opacity: 0;
+        visibility: hidden; }
+        .header__menu .menu-item .dropdown-menu::after {
+          content: '';
+          position: absolute;
+          height: 6px;
+          width: 100%;
+          bottom: 100%;
+          left: 0; }
+        .header__menu .menu-item .dropdown-menu .dropdown-item {
+          padding: 1rem 3rem; }
+      .header__menu .menu-item:hover > .dropdown-menu {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible; }
     .header__menu .menu-link {
       position: relative;
       display: inline-block;
@@ -125,7 +157,7 @@
       .header__menu .menu-link::after {
         content: '';
         position: absolute;
-        background-color: #000;
+        background-color: #222;
         width: 90%;
         height: 3px;
         top: 100%;

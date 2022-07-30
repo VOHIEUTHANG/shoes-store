@@ -1,31 +1,47 @@
 import authService from '../service/auth.service';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../helpers/tokenHandler';
 import { createResponse } from '../helpers/responseCreator';
+import passport from 'passport';
+import { ExtractJwt } from 'passport-jwt';
 
 const authenController = () => ({
    async login(req, res, next) {
-      const { userName, password } = req.body;
-      console.log({ userName, password });
-      if (userName && password) {
-         const acc = await authService.login(userName, password);
-         if (acc) {
-            const accessToken = generateAccessToken({ userName });
-            const refreshToken = generateRefreshToken({ userName });
-            const insertRefreshTokenResult = await authService.insertRefreshTokens(refreshToken, userName);
-            if (insertRefreshTokenResult) {
-               res.status(200).json({
-                  title: 'success',
-                  message: 'Đăng nhập thành công !',
-                  payload: { accessToken, refreshToken },
-               });
-            } else {
-               res.status(200).json({
+      passport.authenticate('local', async (err, user, info) => {
+         try {
+            if (!err && user === 'null') {
+               return res.status(200).json({
                   title: 'error',
-                  message: 'Insert refresh token failed',
+                  message: 'Tên đăng nhập hoặc mật khẩu không đúng !',
                });
             }
-         } else res.status(200).json({ title: 'warning', message: 'Tên đăng nhập hoặc mật khẩu không đúng !' });
-      } else res.status(200).json({ title: 'warning', message: 'Thiếu thông tin tài khoản !' });
+            if (err || user === false) {
+               const error = new Error('An error occurred.');
+               return next(error);
+            }
+            req.login(user, { session: true }, async (error) => {
+               if (error) return next(error);
+               if (!!user) {
+                  const accessToken = generateAccessToken(user);
+                  const refreshToken = generateRefreshToken(user);
+                  const insertRefreshTokenResult = await authService.insertRefreshTokens(refreshToken, user.userName);
+                  if (insertRefreshTokenResult) {
+                     res.status(200).json({
+                        title: 'success',
+                        message: 'Đăng nhập thành công !',
+                        payload: { accessToken, refreshToken },
+                     });
+                  } else {
+                     res.status(200).json({
+                        title: 'error',
+                        message: 'Insert refresh token failed',
+                     });
+                  }
+               }
+            });
+         } catch (error) {
+            return next(error);
+         }
+      })(req, res, next);
    },
    async register(req, res, next) {
       const userInfo = req.body;

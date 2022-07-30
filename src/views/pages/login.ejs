@@ -4,7 +4,7 @@
       <link rel="stylesheet" href="/css/login.css" />
    </head>
    <body>
-      <%- include('../partials/header') %>
+      <%- include('../partials/header',{user,isLoggedIn}) %>
       <div id="root">
          <div class="login">
             <div class="container">
@@ -33,7 +33,7 @@
                            <input
                               class="input-feild"
                               id="username"
-                              name="userName"
+                              name="username"
                               placeholder="Tên đăng nhập"
                               type="text"
                            />
@@ -84,10 +84,14 @@
                   console.log({ data, status });
                   if (status === 200) {
                      const { title, message } = data;
-                     toastr[title](message);
                      if (title === 'success') {
-                        const tokens = data.payload;
-                        setLocal(tokens);
+                        window.location.href = '/';
+                     } else {
+                        toastr[title](message);
+                        if (title === 'success') {
+                           const tokens = data.payload;
+                           setLocal(tokens);
+                        }
                      }
                   }
                } catch (error) {

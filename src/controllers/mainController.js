@@ -1,12 +1,27 @@
 const mainController = () => ({
    getHomePage: (req, res) => {
-      res.render('pages/home', { isLoggedIn: true });
+      const user = req.user;
+      if (user) {
+         res.render('pages/home', { user, isLoggedIn: true });
+      } else {
+         res.render('pages/home', { user: {}, isLoggedIn: false });
+      }
    },
    getLoginPage: (req, res) => {
-      res.render('pages/login');
+      const user = req.user;
+      if (user) {
+         res.render('pages/login', { user, isLoggedIn: true });
+      } else {
+         res.render('pages/login', { user: {}, isLoggedIn: false });
+      }
    },
    getRegisterPage: (req, res) => {
-      res.render('pages/register');
+      const user = req.user;
+      if (user) {
+         res.render('pages/register', { user, isLoggedIn: true });
+      } else {
+         res.render('pages/register', { user: {}, isLoggedIn: false });
+      }
    },
    get404Page: (req, res) => {
       res.render('pages/404');

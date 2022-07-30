@@ -53,27 +53,21 @@ export default function configs(app) {
             });
 
             const localStraregy = new LocalStrategy(async (username, password, done) => {
-               console.log(username);
-               console.log(password);
                if (username && password) {
                   try {
                      const userInfo = await authService.login(username, password);
-                     console.log('🚀 ~ file: index.js ~ line 61 ~ userInfo', userInfo);
                      if (userInfo) {
-                        console.log('🚀 ~ file: index.js ~ line 60 ~ userInfo', userInfo);
                         return done(null, userInfo, { message: 'Logged in Successfully' });
-                        // const accessToken = generateAccessToken({ username });
-                        // const refreshToken = generateRefreshToken({ username });
-                        // const insertRefreshTokenResult = await authService.insertRefreshTokens(refreshToken, username);
-                        // insertRefreshTokenResult && done(null, false);
                      } else {
-                        done(null, false, { message: 'User not found' });
+                        done(null, 'null', { message: 'User not found' });
                      }
                   } catch (error) {
-                     done(null, false, { message: 'select user at database occured error !' });
+                     done(error, false, { message: 'select user at database occured error !' });
                   }
                } else {
-                  done(null, false, { message: 'Missing username or password !' });
+                  done(null, false, {
+                     message: 'Missing username or password !',
+                  });
                }
             });
 
@@ -90,8 +84,8 @@ export default function configs(app) {
                });
             });
 
-            passport.deserializeUser(function (user, done) {
-               console.log('user', user);
+            passport.deserializeUser((user, done) => {
+               console.log('🚀 ~ file: index.js ~ line 86 ~ user', user);
                process.nextTick(function () {
                   return done(null, user);
                });

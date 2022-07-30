@@ -29,18 +29,20 @@
                         <% if(isLoggedIn){ %>
                         <li class="nav-item user-info">
                            <div class="nav-item__avatar">
-                              <img
-                                 src="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iyRWcdIqVMks/v0/1200x-1.jpg"
-                                 alt=""
-                              />
+                              <img src="<%= user.avatar %>" alt="" />
                            </div>
                            <div class="user-options">
                               <div class="user-options__item info">
                                  <i class="fa-regular fa-user"></i>
                                  <span>Thông tin</span>
                               </div>
+                              <div class="user-options__item">
+                                 <i class="fa-regular fa-heart"></i>
+                                 <span>Wishlist</span>
+                              </div>
                               <div class="user-options__item logout">
-                                 <i class="fa-solid fa-right-from-bracket"></i>
+                                 <!-- <i class="fa-regular fa-arrow-right-from-bracket"></i> -->
+                                 <i class="fa-solid fa-key"></i>
                                  <span>Đăng xuất</span>
                               </div>
                            </div>

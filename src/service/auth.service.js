@@ -3,16 +3,15 @@ import PasswordHandler from '../helpers/passwordHandler';
 
 class AuthenService {
    async login(username, password) {
-      console.log({ username, password });
       const [rows] = await pool.execute(
-         'select userName,password,avatar,permissioncode from account,role where userName = ? and account.role_id= role.id',
+         'SELECT userName,password,avatar,permissionCode FROM account,role WHERE userName = ? AND ROLE_ID = role.id;',
          [username],
       );
       if (rows.length > 0) {
-         const { password, ...user } = rows[0];
-         console.log(rows[0].password);
-         console.log('check match', PasswordHandler.checkMatch(password, rows[0].password));
-         return PasswordHandler.checkMatch(password, rows[0].password) ? user : null;
+         const checkMatchPassword = PasswordHandler.checkMatch(password, rows[0].password);
+         const user = rows[0];
+         delete user.password;
+         return checkMatchPassword ? user : null;
       }
       return null;
    }

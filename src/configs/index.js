@@ -8,7 +8,6 @@ let RedisStore = require('connect-redis')(session);
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
 import authService from '../service/auth.service';
-import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../helpers/tokenHandler';
 const redisClient = new Redis();
 
 export default function configs(app) {
@@ -85,7 +84,6 @@ export default function configs(app) {
             });
 
             passport.deserializeUser((user, done) => {
-               console.log('🚀 ~ file: index.js ~ line 86 ~ user', user);
                process.nextTick(function () {
                   return done(null, user);
                });

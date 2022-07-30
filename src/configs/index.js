@@ -59,13 +59,15 @@ export default function configs(app) {
                      if (userInfo) {
                         return done(null, userInfo, { message: 'Logged in Successfully' });
                      } else {
-                        done(null, false, { message: 'User not found' });
+                        done(null, 'null', { message: 'User not found' });
                      }
                   } catch (error) {
-                     done(null, false, { message: 'select user at database occured error !' });
+                     done(error, false, { message: 'select user at database occured error !' });
                   }
                } else {
-                  done(null, false, { message: 'Missing username or password !' });
+                  done(null, false, {
+                     message: 'Missing username or password !',
+                  });
                }
             });
 

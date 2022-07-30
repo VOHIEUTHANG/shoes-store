@@ -5,26 +5,18 @@ import passport from 'passport';
 
 import authService from '../service/auth.service';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../helpers/tokenHandler';
-
 import { ExtractJwt } from 'passport-jwt';
-
-// router.post('/login', authController.login);
-
-// router.post(
-//    '/login',
-//    passport.authenticate('local', {
-//       successRedirect: '/',
-//       failureRedirect: '/login',
-//    }),
-//    (req, res) => {
-//       console.log(req);
-//    },
-// );
 
 router.post('/login', async (req, res, next) => {
    passport.authenticate('local', async (err, user, info) => {
       try {
-         if (err || !user) {
+         if (!err && user === 'null') {
+            return res.status(200).json({
+               title: 'error',
+               message: 'Tên đăng nhập hoặc mật khẩu không đúng !',
+            });
+         }
+         if (err || user === false) {
             const error = new Error('An error occurred.');
             return next(error);
          }
@@ -56,8 +48,7 @@ router.post('/login', async (req, res, next) => {
 
 router.get('/profile', (req, res) => {
    console.log('isAuthenticated', req.isAuthenticated());
-   console.log(req.user);
-   // console.log('profile page ====>', req);
+   console.log('user login info', req.user);
 });
 
 router.post('/register', authController.register);

@@ -11,7 +11,7 @@
       padding-bottom: 6px;
       min-height: 50px;
       backdrop-filter: blur(10px);
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: $color-bg-primary;
       box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.03);
       @include transition;
       &:hover {
@@ -151,6 +151,37 @@
             @include centerFlexItems;
          }
          &-item {
+            position: relative;
+            .dropdown-menu {
+               border: none;
+               box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+               border-radius: 0;
+               min-width: 20rem;
+               top: calc(100% + 6px);
+               padding: 1rem 0;
+               font-size: 1.6rem;
+               @include transition;
+               display: block;
+               transform: translateY(-10%);
+               opacity: 0;
+               visibility: hidden;
+               &::after {
+                  content: '';
+                  position: absolute;
+                  height: 6px;
+                  width: 100%;
+                  bottom: 100%;
+                  left: 0;
+               }
+               .dropdown-item {
+                  padding: 1rem 3rem;
+               }
+            }
+            &:hover > .dropdown-menu {
+               transform: translateY(0);
+               opacity: 1;
+               visibility: visible;
+            }
          }
          &-link {
             position: relative;
@@ -162,7 +193,7 @@
             &::after {
                content: '';
                position: absolute;
-               background-color: $color-black;
+               background-color: $color-text-primary;
                width: 90%;
                height: 3px;
                top: 100%;

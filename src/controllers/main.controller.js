@@ -5,13 +5,9 @@ import categoryService from '../service/category.service';
 const mainController = () => ({
    getHomePage: async (req, res) => {
       const user = req.user;
+      const payloadInfo = req.payload;
       try {
-         const brands = await brandService.getAllBrands();
-         const categorys = await categoryService.getAllCategory();
-         console.log(categorys);
-         const brandNameList = brands.map((brand) => brand.brandName);
-         const categoryNameList = categorys.map((category) => category.name);
-         const payload = { user: {}, isLoggedIn: false, brandNameList, categoryNameList };
+         const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
          if (user) {
             payload.user = user;
             payload.isLoggedIn = true;
@@ -25,10 +21,11 @@ const mainController = () => ({
    },
    getLoginPage: (req, res) => {
       const user = req.user;
+      const payloadInfo = req.payload;
       if (user) {
          res.redirect('/');
       } else {
-         res.render('pages/login', { user: {}, isLoggedIn: false });
+         res.render('pages/login', { user: {}, isLoggedIn: false, ...payloadInfo });
       }
    },
    logout: (req, res) => {

@@ -115,9 +115,23 @@
                </li>
                <li class="menu-item">
                   <a href="#" class="menu-link">Danh mục</a>
+                  <% if(categoryNameList) { %>
+                  <ul class="dropdown-menu">
+                     <% categoryNameList.forEach((name)=>{ %>
+                     <li><a class="dropdown-item" href="#"><%= name %></a></li>
+                     <% }) %>
+                  </ul>
+                  <% } %>
                </li>
                <li class="menu-item">
                   <a href="#" class="menu-link">Brand</a>
+                  <% if(brandNameList) { %>
+                  <ul class="dropdown-menu">
+                     <% brandNameList.forEach((name)=>{ %>
+                     <li><a class="dropdown-item" href="#"><%= name %></a></li>
+                     <% }) %>
+                  </ul>
+                  <% } %>
                </li>
                <li class="menu-item">
                   <a href="#" class="wow tada menu-link menu-link--sale">sale</a>

@@ -1,5 +1,5 @@
 const express = require('express');
-import authController from '../controllers/authController';
+import authController from '../controllers/auth.controller';
 const router = express.Router();
 import passport from 'passport';
 

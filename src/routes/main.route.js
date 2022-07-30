@@ -1,6 +1,6 @@
 import express, { response } from 'express';
 const router = express.Router();
-import mainController from '../controllers/mainController';
+import mainController from '../controllers/main.controller';
 import validateTokenMiddleware from '../middlewares/validateToken';
 
 router.get('/', mainController.getHomePage);

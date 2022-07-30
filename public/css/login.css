@@ -131,7 +131,7 @@
         font-size: 1.6rem;
         transition: all 0.3s ease-in-out;
         display: block;
-        transform: translateY(-10%);
+        transform: translateY(-20px);
         opacity: 0;
         visibility: hidden; }
         .header__menu .menu-item .dropdown-menu::after {

@@ -77,7 +77,6 @@ export default function configs(app) {
             app.use(passport.authenticate('session'));
 
             passport.serializeUser(function (user, done) {
-               console.log('🚀 ~ file: index.js ~ line 68 ~ user', user);
                process.nextTick(function () {
                   done(null, user);
                });

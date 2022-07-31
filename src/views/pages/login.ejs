@@ -27,7 +27,7 @@
                      <div class="or">OR</div>
                   </div>
                   <div style="text-transform: initial">Đăng nhập với tài khoản:</div>
-                  <form action="/api/v1/auth/login" id="form-login" method="post">
+                  <form action="/api/user/login" id="form-login" method="post">
                      <div class="row form-container">
                         <div class="col-12">
                            <input
@@ -52,7 +52,7 @@
                      <button type="submit" class="button button-full">LOGIN</button>
                   </form>
                   <div class="more-options">
-                     <a href="/register" class="text--underline">Tạo tại khoản</a>
+                     <a href="/api/user/register" class="text--underline">Tạo tại khoản</a>
                      <a href="/" class="text--underline">Trở về cửa hàng</a>
                   </div>
                </div>
@@ -62,7 +62,7 @@
       <%- include('../partials/footer') %> <%- include('../partials/foot') %>
       <script type="module">
          import { getFormData } from '/js/utils/formDataHandler.js';
-         import setLocal from '/js/localstorage.js';
+         import localStorage from '/js/localStorage.js';
          const validate = new window.JustValidate('#form-login');
          validate
             .addField('#username', [
@@ -80,7 +80,7 @@
             .onSuccess(async (event) => {
                const formData = getFormData(event.target);
                try {
-                  const { data, status } = await axios.post('/api/v1/auth/login', formData);
+                  const { data, status } = await axios.post('/api/user/login', formData);
                   console.log({ data, status });
                   if (status === 200) {
                      const { title, message } = data;
@@ -90,7 +90,7 @@
                         toastr[title](message);
                         if (title === 'success') {
                            const tokens = data.payload;
-                           setLocal(tokens);
+                           localStorage.setStore(tokens);
                         }
                      }
                   }

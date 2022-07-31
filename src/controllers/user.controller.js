@@ -1,4 +1,4 @@
-import authService from '../service/auth.service';
+import userService from '../service/user.service';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../helpers/tokenHandler';
 import { createResponse } from '../helpers/responseCreator';
 import passport from 'passport';
@@ -22,7 +22,7 @@ const authenController = () => ({
                if (!!user) {
                   const accessToken = generateAccessToken(user);
                   const refreshToken = generateRefreshToken(user);
-                  const insertRefreshTokenResult = await authService.insertRefreshTokens(refreshToken, user.userName);
+                  const insertRefreshTokenResult = await userService.insertRefreshTokens(refreshToken, user.userName);
                   if (insertRefreshTokenResult) {
                      res.status(200).json({
                         title: 'success',
@@ -44,7 +44,7 @@ const authenController = () => ({
    },
    async register(req, res, next) {
       const userInfo = req.body;
-      const result = await authService.register(userInfo);
+      const result = await userService.register(userInfo);
       console.log('🚀 ~ file: authController.js ~ line 29 ~ result', result);
       if (result) res.status(200).json(createResponse('success', 'Đăng ký tài khoản thành công !'));
       else res.status(200).json(createResponse('error', 'Đăng ký tài khoản không thành công !'));
@@ -78,7 +78,7 @@ const authenController = () => ({
             if (err) return res.status(403).json(createResponse('error', 'Invalid refreshToken !'));
             const userName = user?.userName;
             if (!userName) return res.json({ info: 'missing userName !' });
-            const deleteRefreshTokensResult = await authService.deleteRefreshTokensByUserName(userName);
+            const deleteRefreshTokensResult = await userService.deleteRefreshTokensByUserName(userName);
             if (deleteRefreshTokensResult) res.json(createResponse('success', 'Login successfully !'));
             else res.json({ info: 'logout failed!' });
          });
@@ -87,7 +87,7 @@ const authenController = () => ({
    async getNewAccessToken(req, res, next) {
       const { refreshToken } = req.body;
       if (!refreshToken) res.status(401).json({ status: 401, message: 'Missing refresh token !' });
-      const refreshTokens = await authService.getAllRefreshTokens();
+      const refreshTokens = await userService.getAllRefreshTokens();
       if (!refreshTokens?.includes(refreshToken)) {
          res.status(403).json({ status: 403, message: 'Forbidden' });
       } else {
@@ -95,7 +95,7 @@ const authenController = () => ({
             if (err) res.status(403).json({ status: 403, message: err.message });
             const newAccessToken = generateAccessToken({ userName: user?.userName });
             const newRefreshToken = generateRefreshToken({ userName: user?.userName });
-            const insertRefreshTokenResult = await authService.insertRefreshTokens(refreshToken, user?.userName);
+            const insertRefreshTokenResult = await userService.insertRefreshTokens(refreshToken, user?.userName);
             insertRefreshTokenResult &&
                res.json(createResponse('success', 'Refresh token successfully !', { newAccessToken, newRefreshToken }));
             insertRefreshTokenResult || res.json(createResponse('error', 'Insert refresh token failed !'));

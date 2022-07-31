@@ -8,7 +8,7 @@ import Redis from 'ioredis';
 let RedisStore = require('connect-redis')(session);
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
-import authService from '../service/auth.service';
+import userService from '../service/user.service';
 const redisClient = new Redis();
 
 export default function configs(app) {
@@ -55,7 +55,7 @@ export default function configs(app) {
             const localStraregy = new LocalStrategy(async (username, password, done) => {
                if (username && password) {
                   try {
-                     const userInfo = await authService.login(username, password);
+                     const userInfo = await userService.login(username, password);
                      if (userInfo) {
                         return done(null, userInfo, { message: 'Logged in Successfully' });
                      } else {

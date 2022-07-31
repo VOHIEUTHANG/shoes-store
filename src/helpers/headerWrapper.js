@@ -10,7 +10,7 @@ export default function headerWrapper(controllerFunction) {
          const categoryNameList = categorys.map((category) => category.name);
          req.payload = { brandNameList, categoryNameList };
       } catch (error) {
-         console.log('error', err);
+         console.log('error', error);
          res.status(400).json({ status: 'Select brand or category occured error!' });
       }
       return controllerFunction(req, res, next);

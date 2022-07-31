@@ -5,12 +5,8 @@ const sequelize = new Sequelize(mysqlInfo.database, mysqlInfo.user, mysqlInfo.pa
    host: 'localhost',
    dialect: 'mysql',
 });
-
-try {
-   await sequelize.authenticate();
-   console.log('Connection has been established successfully.');
-} catch (error) {
-   console.error('Unable to connect to the database:', error);
-}
-
-export default sequelize;
+    sequelize.authenticate().then(()=> {console.log('Connection has been established successfully.');})
+.catch((err)=>{
+   console.log(err)
+})
+module.exports= sequelize;

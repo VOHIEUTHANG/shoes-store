@@ -2,7 +2,6 @@ import authService from '../service/auth.service';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../helpers/tokenHandler';
 import { createResponse } from '../helpers/responseCreator';
 import passport from 'passport';
-import { ExtractJwt } from 'passport-jwt';
 
 const authenController = () => ({
    async login(req, res, next) {
@@ -50,16 +49,39 @@ const authenController = () => ({
       if (result) res.status(200).json(createResponse('success', 'Đăng ký tài khoản thành công !'));
       else res.status(200).json(createResponse('error', 'Đăng ký tài khoản không thành công !'));
    },
+   getLoginPage: (req, res) => {
+      const user = req.user;
+      const payloadInfo = req.payload;
+      if (user) {
+         res.redirect('/');
+      } else {
+         res.render('pages/login', { user: {}, isLoggedIn: false, ...payloadInfo });
+      }
+   },
+   getRegisterPage: (req, res) => {
+      const user = req.user;
+      const payloadInfo = req.payload;
+      if (user) {
+         res.redirect('/');
+      } else {
+         res.render('pages/register', { user: {}, isLoggedIn: false, ...payloadInfo });
+      }
+   },
    async logout(req, res, next) {
       const { refreshToken } = req.body;
-      if (!refreshToken) res.json({ info: 'missing refreshToken !' });
-      verifyRefreshToken(refreshToken, async (err, user) => {
-         if (err) res.status(403).json({ status: 403, message: err.message });
-         const userName = user?.userName;
-         if (!userName) res.json({ info: 'missing userName !' });
-         const deleteRefreshTokensResult = await authService.deleteRefreshTokensByUserName(userName);
-         if (deleteRefreshTokensResult) res.json({ info: 'logout successfully!' });
-         else res.json({ info: 'logout failed!' });
+      req.logout(function (err) {
+         if (err) {
+            return res.json(createResponse('error', 'Logout thất bại !'));
+         }
+         if (!refreshToken) return res.json(createResponse('error', 'Missing refreshToken !'));
+         verifyRefreshToken(refreshToken, async (err, user) => {
+            if (err) return res.status(403).json(createResponse('error', 'Invalid refreshToken !'));
+            const userName = user?.userName;
+            if (!userName) return res.json({ info: 'missing userName !' });
+            const deleteRefreshTokensResult = await authService.deleteRefreshTokensByUserName(userName);
+            if (deleteRefreshTokensResult) res.json(createResponse('success', 'Login successfully !'));
+            else res.json({ info: 'logout failed!' });
+         });
       });
    },
    async getNewAccessToken(req, res, next) {

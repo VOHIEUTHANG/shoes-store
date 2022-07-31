@@ -28,7 +28,7 @@
 
                         <% if(isLoggedIn){ %>
                         <li class="nav-item user-cart">
-                           <a class="nav-link" href="/login"><i class="ti-shopping-cart"></i></a>
+                           <a class="nav-link" href="/api/userlogin"><i class="ti-shopping-cart"></i></a>
                         </li>
                         <li class="nav-item user-info">
                            <div class="nav-item__avatar">
@@ -47,15 +47,15 @@
                                  <i class="fa-brands fa-gg"></i>
                                  <span>Đơn mua</span>
                               </div>
-                              <a href="/logout" class="user-options__item logout">
+                              <div class="user-options__item logout">
                                  <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                  <span>Đăng xuất</span>
-                              </a>
+                              </div>
                            </div>
                         </li>
                         <% } else { %>
                         <li class="nav-item user-section">
-                           <a class="nav-link" href="/login"><i class="fa-regular fa-user"></i></a>
+                           <a class="nav-link" href="/api/user/login"><i class="fa-regular fa-user"></i></a>
                         </li>
                         <li class="nav-item wishlist">
                            <a class="nav-link" href="#"> <i class="fa-regular fa-heart"></i></a>

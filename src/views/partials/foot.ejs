@@ -1,31 +1,26 @@
+<!-- LIBRARY -->
 <script src="/js/library/justValidate.min.js"></script>
 <script src="/js/library/axios.min.js"></script>
 <script src="/js/library/popper.min.js"></script>
 <script src="/js/library/tippy.min.js"></script>
 <script src="/js/library/toastr.min.js"></script>
-<script>
-   // TOAST MESSAGE CONFIGURATION
-   toastr.options.closeMethod = 'fadeOut';
-   toastr.options.closeDuration = 300;
-   toastr.options.closeEasing = 'swing';
-   toastr.options.progressBar = true;
-   toastr.options.closeButton = true;
-   toastr.options.timeOut = 5000;
-   toastr.options.extendedTimeOut = 5000;
-   // TIPPY
-   tippy('.menu-link--sale', {
-      content: 'Giảm giá',
-   });
-   tippy('.user-section', {
-      content: 'Tài khoản',
-   });
-   tippy('.wishlist', {
-      content: 'Wish list',
-   });
-   tippy('.main-logo', {
-      content: 'Cửa hàng',
-   });
-   tippy('.user-cart', {
-      content: 'Giỏ hàng',
-   });
+<!-- GLOBAL LOGIC -->
+<script src="/js/global.js"></script>
+<script type="module">
+   import localstorage from '/js/localStorage.js';
+   if (localstorage.getStore()) {
+      const { refreshToken } = localstorage.getStore();
+      const logoutBtn = $('.user-options__item.logout');
+      logoutBtn.click(async () => {
+         const payload = { refreshToken };
+         const { data, status } = await axios.delete('/api/user/logout', { data: payload });
+         if (data.status === 'success' && status === 200) {
+            localstorage.clearStore();
+            window.location.href = '/';
+         } else {
+            const { status, message } = data;
+            toastr[status](message);
+         }
+      });
+   }
 </script>

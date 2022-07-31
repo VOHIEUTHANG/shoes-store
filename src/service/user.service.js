@@ -1,4 +1,5 @@
-import pool from './connectDB';
+import pool from '../database/pool';
+
 import PasswordHandler from '../helpers/passwordHandler';
 
 class AuthenService {

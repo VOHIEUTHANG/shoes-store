@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 import userController from '../controllers/user.controller';
-const router = express.Router();
 import headerWrapper from '../helpers/headerWrapper';
+const router = express.Router();
 
 router.get('/login', headerWrapper(userController.getLoginPage));
 router.get('/register', headerWrapper(userController.getRegisterPage));

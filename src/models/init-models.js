@@ -1,25 +1,25 @@
-var DataTypes = require('sequelize').DataTypes;
-var _account = require('./account');
-var _brand = require('./brand');
-var _cart = require('./cart');
-var _category = require('./category');
-var _delivery_address = require('./delivery_address');
-var _discount = require('./discount');
-var _employee = require('./employee');
-var _order = require('./order');
-var _order_detail = require('./order_detail');
-var _price_adjustment = require('./price_adjustment');
-var _product = require('./product');
-var _product_category = require('./product_category');
-var _product_images = require('./product_images');
-var _product_items = require('./product_items');
-var _product_rating = require('./product_rating');
-var _product_review = require('./product_review');
-var _refresh_tokens = require('./refresh_tokens');
-var _role = require('./role');
-var _user = require('./user');
+import { DataTypes } from 'sequelize';
+import _account from './account';
+import _brand from './brand';
+import _cart from './cart';
+import _category from './category';
+import _delivery_address from './delivery_address';
+import _discount from './discount';
+import _employee from './employee';
+import _order from './order';
+import _order_detail from './order_detail';
+import _price_adjustment from './price_adjustment';
+import _product from './product';
+import _product_category from './product_category';
+import _product_images from './product_images';
+import _product_items from './product_items';
+import _product_rating from './product_rating';
+import _product_review from './product_review';
+import _refresh_tokens from './refresh_tokens';
+import _role from './role';
+import _user from './user';
 
-function initModels(sequelize) {
+export default function initModels(sequelize) {
    var account = _account(sequelize, DataTypes);
    var brand = _brand(sequelize, DataTypes);
    var cart = _cart(sequelize, DataTypes);
@@ -165,6 +165,3 @@ function initModels(sequelize) {
       user,
    };
 }
-module.exports = initModels;
-module.exports.initModels = initModels;
-module.exports.default = initModels;

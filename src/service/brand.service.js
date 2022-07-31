@@ -1,4 +1,4 @@
-import pool from './connectDB';
+import pool from '../database/pool';
 
 class BrandService {
    async getAllBrands() {

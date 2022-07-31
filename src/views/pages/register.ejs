@@ -65,7 +65,7 @@
                      </div>
                   </form>
                   <div class="more-options">
-                     <a href="/login" class="text--underline">Đăng nhập với tài khoản có sẵn</a>
+                     <a href="/api/user/login" class="text--underline">Đăng nhập với tài khoản có sẵn</a>
                      <a href="/" class="text--underline">Trở về cửa hàng</a>
                   </div>
                </div>
@@ -145,7 +145,7 @@
             .onSuccess(async (event) => {
                const formData = getFormData(event.target);
                try {
-                  const { data, status } = await axios.post('/api/v1/auth/register', formData);
+                  const { data, status } = await axios.post('/api/user/register', formData);
                   if (status === 200) {
                      const { status, message } = data;
                      toastr[status](message);

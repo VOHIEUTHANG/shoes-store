@@ -4,6 +4,7 @@ import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import Redis from 'ioredis';
+
 let RedisStore = require('connect-redis')(session);
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { Strategy as LocalStrategy } from 'passport-local';
@@ -77,7 +78,6 @@ export default function configs(app) {
             app.use(passport.authenticate('session'));
 
             passport.serializeUser(function (user, done) {
-               console.log('🚀 ~ file: index.js ~ line 68 ~ user', user);
                process.nextTick(function () {
                   done(null, user);
                });

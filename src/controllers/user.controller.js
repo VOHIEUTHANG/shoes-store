@@ -52,24 +52,6 @@ const userController = () => ({
          res.json(result);
       } else res.json(createResponse('error', 'Đăng ký tài thất bại !'));
    },
-   getLoginPage: (req, res) => {
-      const user = req.user;
-      const payloadInfo = req.payload;
-      if (user) {
-         res.redirect('/');
-      } else {
-         res.render('pages/login', { user: {}, isLoggedIn: false, ...payloadInfo });
-      }
-   },
-   getRegisterPage: (req, res) => {
-      const user = req.user;
-      const payloadInfo = req.payload;
-      if (user) {
-         res.redirect('/');
-      } else {
-         res.render('pages/register', { user: {}, isLoggedIn: false, ...payloadInfo });
-      }
-   },
    async logout(req, res, next) {
       const { refreshToken } = req.body;
       req.logout(function (err) {
@@ -80,10 +62,10 @@ const userController = () => ({
          verifyRefreshToken(refreshToken, async (err, user) => {
             if (err) return res.status(403).json(createResponse('error', 'Invalid refreshToken !'));
             const userName = user?.userName;
-            if (!userName) return res.json({ info: 'missing userName !' });
+            if (!userName) return res.json(createResponse('error', 'Missing userName data payload in refreshToken'));
             const deleteRefreshTokensResult = await userService.deleteRefreshTokensByUserName(userName);
             if (deleteRefreshTokensResult) res.json(createResponse('success', 'Login successfully !'));
-            else res.json({ info: 'logout failed!' });
+            else res.json(createResponse('error', 'Login failed !'));
          });
       });
    },

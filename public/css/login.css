@@ -279,6 +279,8 @@
 
 #footer {
   color: #222; }
+  #footer:last-child {
+    margin-top: auto; }
   #footer .footer-top {
     background-color: #121314;
     padding: 5rem 0; }

@@ -5,8 +5,8 @@
       <link rel="stylesheet" href="/css/signup.css" />
    </head>
    <body>
-      <%- include('../partials/header',{user,isLoggedIn}) %>
       <div id="root">
+         <%- include('../partials/header',{user,isLoggedIn}) %>
          <div class="login signup">
             <div class="container">
                <div class="login-wrapper">
@@ -65,14 +65,15 @@
                      </div>
                   </form>
                   <div class="more-options">
-                     <a href="/api/user/login" class="text--underline">Đăng nhập với tài khoản có sẵn</a>
+                     <a href="/login" class="text--underline">Đăng nhập với tài khoản có sẵn</a>
                      <a href="/" class="text--underline">Trở về cửa hàng</a>
                   </div>
                </div>
             </div>
          </div>
+         <%- include('../partials/footer') %>
       </div>
-      <%- include('../partials/footer') %> <%- include('../partials/foot'); %>
+      <%- include('../partials/foot'); %>
       <script type="module">
          import { getFormData } from '/js/utils/formDataHandler.js';
          const validate = new window.JustValidate('#form-register');

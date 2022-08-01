@@ -338,6 +338,11 @@ body::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-image: linear-gradient(to bottom, #a6d1e6, #eea4f5); }
 
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; }
+
 .text-title {
   font-size: 1.8rem; }
 

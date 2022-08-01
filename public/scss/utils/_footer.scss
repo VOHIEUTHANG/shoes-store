@@ -3,6 +3,9 @@
 
 #footer {
    color: $color-text-primary;
+   &:last-child {
+      margin-top: auto;
+   }
    .footer-top {
       background-color: $color-bg-dark;
       padding: 5rem 0;

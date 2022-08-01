@@ -110,10 +110,10 @@
                                  <i class="fa-regular fa-user"></i>
                                  <span>Thông tin</span>
                               </div>
-                              <div class="user-options__item">
+                              <a href="/wishlist" class="user-options__item">
                                  <i class="fa-regular fa-heart"></i>
                                  <span>Wishlist</span>
-                              </div>
+                              </a>
                               <div class="user-options__item">
                                  <i class="fa-brands fa-gg"></i>
                                  <span>Đơn mua</span>
@@ -126,10 +126,7 @@
                         </li>
                         <% } else { %>
                         <li class="nav-item user-section">
-                           <a class="nav-link" href="/api/user/login"><i class="fa-regular fa-user"></i></a>
-                        </li>
-                        <li class="nav-item wishlist">
-                           <a class="nav-link" href="#"> <i class="fa-regular fa-heart"></i></a>
+                           <a class="nav-link" href="/login"><i class="fa-regular fa-user"></i></a>
                         </li>
                         <% } %>
                      </ul>

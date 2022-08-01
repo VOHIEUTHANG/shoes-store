@@ -1,0 +1,141 @@
+<html lang="en">
+   <head>
+      <%- include('../partials/head'); %>
+      <link rel="stylesheet" href="/css/cart.css" />
+   </head>
+   <body>
+      <div id="root">
+         <%- include('../partials/header',{user,isLoggedIn}) %>
+         <div id="main">
+            <div class="cart-main-area cart">
+               <div class="container">
+                  <div class="row">
+                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h1 class="cart-heading">Cart</h1>
+                        <form action="#">
+                           <div class="table-content table-responsive">
+                              <table>
+                                 <thead>
+                                    <tr>
+                                       <th>Xóa</th>
+                                       <th>Hình Ảnh</th>
+                                       <th>Tên sản phẩm</th>
+                                       <th>Giá</th>
+                                       <th>Số lượng</th>
+                                       <th>Tổng tiền</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr>
+                                       <td class="product-remove">
+                                          <a href="#"><i class="ti-close"></i></a>
+                                       </td>
+                                       <td class="product-thumbnail">
+                                          <a href="#"
+                                             ><img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_3ce527bb-53c7-44ab-9089-730127cd49fc_1296x.jpg?v=1658381543"
+                                                alt=""
+                                          /></a>
+                                       </td>
+                                       <td class="product-name">
+                                          <a href="#"> JORDAN AIR 1 </a>
+                                       </td>
+                                       <td class="product-price-cart">
+                                          <span class="amount">$165.00</span>
+                                       </td>
+                                       <td class="product-quantity">
+                                          <input value="1" type="number" />
+                                       </td>
+                                       <td class="product-subtotal">$165.00</td>
+                                    </tr>
+                                    <tr>
+                                       <td class="product-remove">
+                                          <a href="#"><i class="ti-close"></i></a>
+                                       </td>
+                                       <td class="product-thumbnail">
+                                          <a href="#"
+                                             ><img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_1eab42d4-bd19-4969-867c-5a22c52a473c_1296x.jpg?v=1657727029"
+                                                alt=""
+                                          /></a>
+                                       </td>
+                                       <td class="product-name">
+                                          <a href="#">Vestibulum dictum</a>
+                                       </td>
+                                       <td class="product-price-cart">
+                                          <span class="amount">$150.00</span>
+                                       </td>
+                                       <td class="product-quantity">
+                                          <input value="1" type="number" />
+                                       </td>
+                                       <td class="product-subtotal">$150.00</td>
+                                    </tr>
+                                    <tr>
+                                       <td class="product-remove">
+                                          <a href="#"><i class="ti-close"></i></a>
+                                       </td>
+                                       <td class="product-thumbnail">
+                                          <a href="#"
+                                             ><img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_0c1094b4-3c00-41e3-a52c-accc05e34edf_1296x.jpg?v=1656276816"
+                                                alt=""
+                                          /></a>
+                                       </td>
+                                       <td class="product-name">
+                                          <a href="#"> BITS HEADPHONE</a>
+                                       </td>
+                                       <td class="product-price-cart">
+                                          <span class="amount">$150.00</span>
+                                       </td>
+                                       <td class="product-quantity">
+                                          <input value="1" type="number" />
+                                       </td>
+                                       <td class="product-subtotal">$150.00</td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                           <div class="row">
+                              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                 <div class="coupon-all">
+                                    <div class="coupon">
+                                       <input
+                                          id="coupon_code"
+                                          class="input-text"
+                                          name="coupon_code"
+                                          value=""
+                                          placeholder="Coupon code"
+                                          type="text"
+                                       />
+                                       <input class="button" name="apply_coupon" value="Apply coupon" type="submit" />
+                                    </div>
+                                    <div class="coupon2">
+                                       <input class="button" name="update_cart" value="Update cart" type="submit" />
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-md-5" style="margin-left: auto">
+                                 <div class="cart-page-total">
+                                    <h2>Cart totals</h2>
+                                    <ul>
+                                       <li>Subtotal<span>100.00</span></li>
+                                       <li>Total<span>100.00</span></li>
+                                    </ul>
+                                    <a href="#">Proceed to checkout</a>
+                                 </div>
+                              </div>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <%- include('../partials/footer') %>
+      </div>
+      <%- include('../partials/foot') %>
+      <script type="module"></script>
+   </body>
+</html>

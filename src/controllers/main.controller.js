@@ -37,6 +37,16 @@ const mainController = () => ({
       }
       res.render('pages/wishlist', payload);
    },
+   getCartPage: (req, res) => {
+      const user = req.user;
+      const payloadInfo = req.payload;
+      const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
+      if (user) {
+         payload.user = user;
+         payload.isLoggedIn = true;
+      }
+      res.render('pages/cart', payload);
+   },
    get404Page: (req, res) => {
       res.render('pages/404');
    },

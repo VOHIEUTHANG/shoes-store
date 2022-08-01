@@ -1,13 +1,13 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('employee', {
-    userName: {
+    username: {
       type: DataTypes.STRING(30),
       allowNull: false,
       primaryKey: true,
       references: {
         model: 'account',
-        key: 'userName'
+        key: 'username'
       }
     },
     fullName: {
@@ -56,14 +56,14 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "userName" },
+          { name: "username" },
         ]
       },
       {
         name: "fk_EMPLOYEE_INFO_ACCOUNT1_idx",
         using: "BTREE",
         fields: [
-          { name: "userName" },
+          { name: "username" },
         ]
       },
     ]

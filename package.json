@@ -10,7 +10,8 @@
       "build": "npm run clean && npm run build-babel",
       "production": "npm run build && node ./build/src/server.js",
       "start": "nodemon --exec ./node_modules/.bin/babel-node ./src/server.js",
-      "sass": "node-sass --watch public/scss -o public/css"
+      "sass": "node-sass --watch public/scss -o public/css",
+      "sequelize": "node_modules/.bin/sequelize-auto -h localhost -d shoe_store -u root -x 0335647164Abc -p 3306 -e mysql -o ./src/models"
    },
    "keywords": [],
    "author": "",

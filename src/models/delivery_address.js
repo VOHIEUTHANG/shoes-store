@@ -23,12 +23,12 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(45),
       allowNull: true
     },
-    userName: {
+    username: {
       type: DataTypes.STRING(30),
       allowNull: false,
       references: {
         model: 'user',
-        key: 'userName'
+        key: 'username'
       }
     }
   }, {
@@ -48,7 +48,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "fk_DELIVERY_ADDRESS_USER_INFO1_idx",
         using: "BTREE",
         fields: [
-          { name: "userName" },
+          { name: "username" },
         ]
       },
     ]

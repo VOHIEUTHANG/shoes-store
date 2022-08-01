@@ -1,12 +1,84 @@
 <html lang="en">
    <head>
       <%- include('../partials/head'); %>
-      <link rel="stylesheet" href="/css/login.css" />
+      <link rel="stylesheet" href="/css/wishlist.css" />
    </head>
    <body>
       <div id="root">
          <%- include('../partials/header',{user,isLoggedIn}) %>
-         <div id="main">Wish LIST PAGE</div>
+         <div id="main">
+            <div class="cart-main-area pt-95 pb-100 wishlist">
+               <div class="container">
+                  <div class="row">
+                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <h1 class="cart-heading">wishlist</h1>
+                        <form action="#">
+                           <div class="table-content table-responsive">
+                              <table>
+                                 <thead>
+                                    <tr>
+                                       <th>remove</th>
+                                       <th>images</th>
+                                       <th>Product</th>
+                                       <th>Price</th>
+                                       <th>Detail</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr>
+                                       <td class="product-remove">
+                                          <a href="#"><i class="ti-close"></i></a>
+                                       </td>
+                                       <td class="product-thumbnail">
+                                          <a href="#"
+                                             ><img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_09f30200-e2d7-44d4-aed5-72473dd2cc73_large.jpg?v=1657254494"
+                                                alt=""
+                                          /></a>
+                                       </td>
+                                       <td class="product-name"><a href="#">Wooden Furniture </a></td>
+                                       <td class="product-price-cart"><span class="amount">$165.00</span></td>
+                                       <td class="product-subtotal"><div class="button">View Detail</div></td>
+                                    </tr>
+                                    <tr>
+                                       <td class="product-remove">
+                                          <a href="#"><i class="ti-close"></i></a>
+                                       </td>
+                                       <td class="product-thumbnail">
+                                          <a href="#"
+                                             ><img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_c78e0f98-7af4-471e-ab55-82a7d560bc44_large.jpg?v=1656997813"
+                                                alt=""
+                                          /></a>
+                                       </td>
+                                       <td class="product-name"><a href="#">Vestibulum dictum</a></td>
+                                       <td class="product-price-cart"><span class="amount">$150.00</span></td>
+                                       <td class="product-subtotal"><div class="button">View Detail</div></td>
+                                    </tr>
+                                    <tr>
+                                       <td class="product-remove">
+                                          <a href="#"><i class="ti-close"></i></a>
+                                       </td>
+                                       <td class="product-thumbnail">
+                                          <a href="#"
+                                             ><img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_f4f1b022-a8d2-495d-9880-1b17ab6b876e_large.jpg?v=1657099189"
+                                                alt=""
+                                          /></a>
+                                       </td>
+                                       <td class="product-name"><a href="#">Vestibulum dictum</a></td>
+                                       <td class="product-price-cart"><span class="amount">$150.00</span></td>
+                                       <td class="product-subtotal"><div class="button">View Detail</div></td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
          <%- include('../partials/footer') %>
       </div>
       <%- include('../partials/foot') %>

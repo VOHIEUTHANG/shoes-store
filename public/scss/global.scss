@@ -22,6 +22,12 @@ body::-webkit-scrollbar-thumb {
 }
 // Customize scrollbar ================>
 
+#root {
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+}
+
 // Text styles ==================>
 .text-title {
    font-size: 1.8rem;

@@ -4,8 +4,8 @@
       <link rel="stylesheet" href="/css/login.css" />
    </head>
    <body>
-      <%- include('../partials/header',{user,isLoggedIn}) %>
       <div id="root">
+         <%- include('../partials/header',{user,isLoggedIn}) %>
          <div class="login">
             <div class="container">
                <div class="login-wrapper">
@@ -52,14 +52,15 @@
                      <button type="submit" class="button button-full">LOGIN</button>
                   </form>
                   <div class="more-options">
-                     <a href="/api/user/register" class="text--underline">Tạo tại khoản</a>
+                     <a href="/register" class="text--underline">Tạo tại khoản</a>
                      <a href="/" class="text--underline">Trở về cửa hàng</a>
                   </div>
                </div>
             </div>
          </div>
+         <%- include('../partials/footer') %>
       </div>
-      <%- include('../partials/footer') %> <%- include('../partials/foot') %>
+      <%- include('../partials/foot') %>
       <script type="module">
          import { getFormData } from '/js/utils/formDataHandler.js';
          import localStorage from '/js/localStorage.js';

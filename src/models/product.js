@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     sellStartDate: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: true
     },
     price: {
       type: DataTypes.INTEGER,
@@ -25,7 +25,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     slug: {
       type: DataTypes.STRING(100),
-      allowNull: true
+      allowNull: false,
+      unique: "slug_UNIQUE"
     },
     suitableFor: {
       type: DataTypes.ENUM('male','female','both'),
@@ -39,12 +40,12 @@ module.exports = function(sequelize, DataTypes) {
         key: 'ID'
       }
     },
-    desc: {
-      type: DataTypes.STRING(1000),
+    specifications: {
+      type: DataTypes.STRING(300),
       allowNull: true
     },
-    detail: {
-      type: DataTypes.STRING(200),
+    descriptions: {
+      type: DataTypes.STRING(2000),
       allowNull: true
     }
   }, {
@@ -59,6 +60,14 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "ID" },
+        ]
+      },
+      {
+        name: "slug_UNIQUE",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "slug" },
         ]
       },
       {

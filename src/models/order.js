@@ -7,12 +7,12 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    userName: {
+    username: {
       type: DataTypes.STRING(30),
       allowNull: false,
       references: {
         model: 'user',
-        key: 'userName'
+        key: 'username'
       }
     },
     totalMoney: {
@@ -66,7 +66,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "fk_ORDER_USER1_idx",
         using: "BTREE",
         fields: [
-          { name: "userName" },
+          { name: "username" },
         ]
       },
       {

@@ -7,13 +7,13 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    userName: {
+    username: {
       type: DataTypes.STRING(30),
       allowNull: false,
       primaryKey: true,
       references: {
         model: 'user',
-        key: 'userName'
+        key: 'username'
       }
     },
     PRODUCT_ID: {
@@ -44,7 +44,7 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "id" },
-          { name: "userName" },
+          { name: "username" },
           { name: "PRODUCT_ID" },
         ]
       },
@@ -59,7 +59,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "fk_USER_has_PRODUCT_USER1_idx",
         using: "BTREE",
         fields: [
-          { name: "userName" },
+          { name: "username" },
         ]
       },
     ]

@@ -1,27 +1,27 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('refresh_tokens', {
-    ID: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
+  return sequelize.define('wish_list', {
+    PRODUCT_ID: {
+      type: DataTypes.SMALLINT,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      references: {
+        model: 'product',
+        key: 'ID'
+      }
     },
     username: {
       type: DataTypes.STRING(30),
       allowNull: false,
+      primaryKey: true,
       references: {
         model: 'user',
         key: 'username'
       }
-    },
-    refreshToken: {
-      type: DataTypes.STRING(500),
-      allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'refresh_tokens',
+    tableName: 'wish_list',
     timestamps: false,
     indexes: [
       {
@@ -29,14 +29,22 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "ID" },
+          { name: "PRODUCT_ID" },
+          { name: "username" },
         ]
       },
       {
-        name: "fk_REFRESH_TOKENS_USER1_idx",
+        name: "fk_PRODUCT_has_USER_USER2_idx",
         using: "BTREE",
         fields: [
           { name: "username" },
+        ]
+      },
+      {
+        name: "fk_PRODUCT_has_USER_PRODUCT2_idx",
+        using: "BTREE",
+        fields: [
+          { name: "PRODUCT_ID" },
         ]
       },
     ]

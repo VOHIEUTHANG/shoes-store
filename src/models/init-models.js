@@ -18,27 +18,29 @@ import _product_review from './product_review';
 import _refresh_tokens from './refresh_tokens';
 import _role from './role';
 import _user from './user';
+import _wish_list from './wish_list';
 
 export default function initModels(sequelize) {
-   var account = _account(sequelize, DataTypes);
-   var brand = _brand(sequelize, DataTypes);
-   var cart = _cart(sequelize, DataTypes);
-   var category = _category(sequelize, DataTypes);
-   var delivery_address = _delivery_address(sequelize, DataTypes);
-   var discount = _discount(sequelize, DataTypes);
-   var employee = _employee(sequelize, DataTypes);
-   var order = _order(sequelize, DataTypes);
-   var order_detail = _order_detail(sequelize, DataTypes);
-   var price_adjustment = _price_adjustment(sequelize, DataTypes);
-   var product = _product(sequelize, DataTypes);
-   var product_category = _product_category(sequelize, DataTypes);
-   var product_images = _product_images(sequelize, DataTypes);
-   var product_items = _product_items(sequelize, DataTypes);
-   var product_rating = _product_rating(sequelize, DataTypes);
-   var product_review = _product_review(sequelize, DataTypes);
-   var refresh_tokens = _refresh_tokens(sequelize, DataTypes);
-   var role = _role(sequelize, DataTypes);
-   var user = _user(sequelize, DataTypes);
+   const account = _account(sequelize, DataTypes);
+   const brand = _brand(sequelize, DataTypes);
+   const cart = _cart(sequelize, DataTypes);
+   const category = _category(sequelize, DataTypes);
+   const delivery_address = _delivery_address(sequelize, DataTypes);
+   const discount = _discount(sequelize, DataTypes);
+   const employee = _employee(sequelize, DataTypes);
+   const order = _order(sequelize, DataTypes);
+   const order_detail = _order_detail(sequelize, DataTypes);
+   const price_adjustment = _price_adjustment(sequelize, DataTypes);
+   const product = _product(sequelize, DataTypes);
+   const product_category = _product_category(sequelize, DataTypes);
+   const product_images = _product_images(sequelize, DataTypes);
+   const product_items = _product_items(sequelize, DataTypes);
+   const product_rating = _product_rating(sequelize, DataTypes);
+   const product_review = _product_review(sequelize, DataTypes);
+   const refresh_tokens = _refresh_tokens(sequelize, DataTypes);
+   const role = _role(sequelize, DataTypes);
+   const user = _user(sequelize, DataTypes);
+   const wish_list = _wish_list(sequelize, DataTypes);
 
    category.belongsToMany(product, {
       as: 'PRODUCT_ID_products',
@@ -59,16 +61,22 @@ export default function initModels(sequelize) {
       otherKey: 'CATEGORY_ID',
    });
    product.belongsToMany(user, {
-      as: 'userName_users',
+      as: 'username_user_product_ratings',
       through: product_rating,
       foreignKey: 'PRODUCT_ID',
-      otherKey: 'userName',
+      otherKey: 'username',
    });
    product.belongsToMany(user, {
-      as: 'userName_user_product_reviews',
+      as: 'username_user_product_reviews',
       through: product_review,
       foreignKey: 'PRODUCT_ID',
-      otherKey: 'userName',
+      otherKey: 'username',
+   });
+   product.belongsToMany(user, {
+      as: 'username_user_wish_lists',
+      through: wish_list,
+      foreignKey: 'PRODUCT_ID',
+      otherKey: 'username',
    });
    product_items.belongsToMany(order, {
       as: 'ORDER_ID_orders',
@@ -77,33 +85,39 @@ export default function initModels(sequelize) {
       otherKey: 'ORDER_ID',
    });
    product_items.belongsToMany(user, {
-      as: 'user_name_users',
+      as: 'username_users',
       through: cart,
       foreignKey: 'PRODUCT_ITEMS_ID',
-      otherKey: 'user_name',
+      otherKey: 'username',
    });
    user.belongsToMany(product, {
       as: 'PRODUCT_ID_product_product_ratings',
       through: product_rating,
-      foreignKey: 'userName',
+      foreignKey: 'username',
       otherKey: 'PRODUCT_ID',
    });
    user.belongsToMany(product, {
       as: 'PRODUCT_ID_product_product_reviews',
       through: product_review,
-      foreignKey: 'userName',
+      foreignKey: 'username',
+      otherKey: 'PRODUCT_ID',
+   });
+   user.belongsToMany(product, {
+      as: 'PRODUCT_ID_product_wish_lists',
+      through: wish_list,
+      foreignKey: 'username',
       otherKey: 'PRODUCT_ID',
    });
    user.belongsToMany(product_items, {
       as: 'PRODUCT_ITEMS_ID_product_items',
       through: cart,
-      foreignKey: 'user_name',
+      foreignKey: 'username',
       otherKey: 'PRODUCT_ITEMS_ID',
    });
-   employee.belongsTo(account, { as: 'userName_account', foreignKey: 'userName' });
-   account.hasOne(employee, { as: 'employee', foreignKey: 'userName' });
-   user.belongsTo(account, { as: 'userName_account', foreignKey: 'userName' });
-   account.hasOne(user, { as: 'user', foreignKey: 'userName' });
+   employee.belongsTo(account, { as: 'username_account', foreignKey: 'username' });
+   account.hasOne(employee, { as: 'employee', foreignKey: 'username' });
+   user.belongsTo(account, { as: 'username_account', foreignKey: 'username' });
+   account.hasOne(user, { as: 'user', foreignKey: 'username' });
    product.belongsTo(brand, { as: 'BRAND', foreignKey: 'BRAND_ID' });
    brand.hasMany(product, { as: 'products', foreignKey: 'BRAND_ID' });
    product_category.belongsTo(category, { as: 'CATEGORY', foreignKey: 'CATEGORY_ID' });
@@ -126,22 +140,26 @@ export default function initModels(sequelize) {
    product.hasMany(product_rating, { as: 'product_ratings', foreignKey: 'PRODUCT_ID' });
    product_review.belongsTo(product, { as: 'PRODUCT', foreignKey: 'PRODUCT_ID' });
    product.hasMany(product_review, { as: 'product_reviews', foreignKey: 'PRODUCT_ID' });
+   wish_list.belongsTo(product, { as: 'PRODUCT', foreignKey: 'PRODUCT_ID' });
+   product.hasMany(wish_list, { as: 'wish_lists', foreignKey: 'PRODUCT_ID' });
    cart.belongsTo(product_items, { as: 'PRODUCT_ITEM', foreignKey: 'PRODUCT_ITEMS_ID' });
    product_items.hasMany(cart, { as: 'carts', foreignKey: 'PRODUCT_ITEMS_ID' });
    order_detail.belongsTo(product_items, { as: 'PRODUCT_ITEM', foreignKey: 'PRODUCT_ITEMS_ID' });
    product_items.hasMany(order_detail, { as: 'order_details', foreignKey: 'PRODUCT_ITEMS_ID' });
-   cart.belongsTo(user, { as: 'user_name_user', foreignKey: 'user_name' });
-   user.hasMany(cart, { as: 'carts', foreignKey: 'user_name' });
-   delivery_address.belongsTo(user, { as: 'userName_user', foreignKey: 'userName' });
-   user.hasMany(delivery_address, { as: 'delivery_addresses', foreignKey: 'userName' });
-   order.belongsTo(user, { as: 'userName_user', foreignKey: 'userName' });
-   user.hasMany(order, { as: 'orders', foreignKey: 'userName' });
-   product_rating.belongsTo(user, { as: 'userName_user', foreignKey: 'userName' });
-   user.hasMany(product_rating, { as: 'product_ratings', foreignKey: 'userName' });
-   product_review.belongsTo(user, { as: 'userName_user', foreignKey: 'userName' });
-   user.hasMany(product_review, { as: 'product_reviews', foreignKey: 'userName' });
-   refresh_tokens.belongsTo(user, { as: 'userName_user', foreignKey: 'userName' });
-   user.hasMany(refresh_tokens, { as: 'refresh_tokens', foreignKey: 'userName' });
+   cart.belongsTo(user, { as: 'username_user', foreignKey: 'username' });
+   user.hasMany(cart, { as: 'carts', foreignKey: 'username' });
+   delivery_address.belongsTo(user, { as: 'username_user', foreignKey: 'username' });
+   user.hasMany(delivery_address, { as: 'delivery_addresses', foreignKey: 'username' });
+   order.belongsTo(user, { as: 'username_user', foreignKey: 'username' });
+   user.hasMany(order, { as: 'orders', foreignKey: 'username' });
+   product_rating.belongsTo(user, { as: 'username_user', foreignKey: 'username' });
+   user.hasMany(product_rating, { as: 'product_ratings', foreignKey: 'username' });
+   product_review.belongsTo(user, { as: 'username_user', foreignKey: 'username' });
+   user.hasMany(product_review, { as: 'product_reviews', foreignKey: 'username' });
+   refresh_tokens.belongsTo(user, { as: 'username_user', foreignKey: 'username' });
+   user.hasMany(refresh_tokens, { as: 'refresh_tokens', foreignKey: 'username' });
+   wish_list.belongsTo(user, { as: 'username_user', foreignKey: 'username' });
+   user.hasMany(wish_list, { as: 'wish_lists', foreignKey: 'username' });
 
    return {
       account,
@@ -163,5 +181,6 @@ export default function initModels(sequelize) {
       refresh_tokens,
       role,
       user,
+      wish_list,
    };
 }

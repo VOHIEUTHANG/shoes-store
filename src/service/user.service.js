@@ -1,8 +1,9 @@
 import pool from '../database/pool';
 
 import PasswordHandler from '../helpers/passwordHandler';
+import { createResponse } from '../helpers/responseCreator';
 
-class AuthenService {
+class userService {
    async login(username, password) {
       const [rows] = await pool.execute(
          'SELECT userName,password,avatar,permissionCode FROM account,role WHERE userName = ? AND ROLE_ID = role.id;',
@@ -16,12 +17,16 @@ class AuthenService {
       }
       return null;
    }
-   async register({ fullName, email, phoneNumber, userName, password }) {
+   async register({ fullName, email, phoneNumber, userName, password, avatar }) {
       const hashPassword = PasswordHandler.getHashPassword(password);
       try {
+         const [rows] = await pool.query('SELECT * FROM account WHERE userName = ?', [userName]);
+         if (rows.length > 0) {
+            return createResponse('warning', 'Tài khoản đã tồn tại');
+         }
          const [insertAccountHeaderResult] = await pool.query(
-            'INSERT INTO account (userName,password,ROLE_ID,isVerify,isLocked) VALUES (?,?,3,0,0)',
-            [userName, hashPassword],
+            'INSERT INTO account (userName,password,avatar,ROLE_ID,isVerify,isLocked) VALUES (?,?,?,3,0,0)',
+            [userName, hashPassword, avatar],
          );
          const [insertUserHeaderResult] = await pool.query(
             'INSERT INTO user (userName,fullName,email,phoneNumber) VALUES (?,?,?,?)',
@@ -64,4 +69,4 @@ class AuthenService {
       }
    }
 }
-export default new AuthenService();
+export default new userService();

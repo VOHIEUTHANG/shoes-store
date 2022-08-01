@@ -12,6 +12,7 @@
       const { refreshToken } = localstorage.getStore();
       const logoutBtn = $('.user-options__item.logout');
       logoutBtn.click(async () => {
+         console.log('logout clicked !');
          const payload = { refreshToken };
          const { data, status } = await axios.delete('/api/user/logout', { data: payload });
          if (data.status === 'success' && status === 200) {

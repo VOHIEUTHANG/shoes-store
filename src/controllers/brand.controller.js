@@ -1,4 +1,3 @@
-import pool from '../';
 const brandController = () => ({
    getAllBrands: () => {},
 });

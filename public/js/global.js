@@ -22,9 +22,6 @@
          tippy('.main-logo', {
             content: 'Cửa hàng',
          });
-         tippy('.user-cart', {
-            content: 'Giỏ hàng',
-         });
       },
       run() {
          this.toastrConfig();

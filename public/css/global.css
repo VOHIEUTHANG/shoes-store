@@ -368,6 +368,9 @@ input.input-feild {
 .glide__slide {
   margin-bottom: 1px; }
 
+.flex-start {
+  justify-content: flex-start !important; }
+
 .text--underline {
   text-decoration: underline; }
 
@@ -375,15 +378,20 @@ input.input-feild {
   text-transform: initial; }
 
 .button {
+  display: inline-block;
+  text-align: center;
   position: relative;
   padding: 0.8rem 2rem;
   letter-spacing: 0.13rem;
   font-size: 1.6rem;
   outline: none;
-  background-color: #202228;
+  background-color: #121314;
   color: #fff;
-  border: 1px solid #202228;
+  border: 1px solid #121314;
   z-index: 1; }
+  .button.full {
+    width: 100%;
+    padding: 1.2rem 2rem; }
   .button::after {
     position: absolute;
     display: block;

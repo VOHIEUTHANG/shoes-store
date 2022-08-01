@@ -3,7 +3,20 @@
       <div class="header__logobar">
          <div class="container">
             <div class="row">
-               <div class="col"></div>
+               <div class="col">
+                  <div class="nav-wrapper flex-start">
+                     <ul class="nav-list">
+                        <li class="nav-item nav-item__search">
+                           <div class="search-wrapper">
+                              <div class="search-btn">
+                                 <i class="fa-solid fa-magnifying-glass"></i>
+                              </div>
+                              <input type="text" class="search-input" />
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
                <div class="col">
                   <div class="logo-wrapper wow flipInY">
                      <a href="/" class="main-logo">
@@ -17,18 +30,76 @@
                <div class="col">
                   <div class="nav-wrapper">
                      <ul class="nav-list">
-                        <li class="nav-item nav-item__search">
-                           <div class="search-wrapper">
-                              <div class="search-btn">
-                                 <i class="fa-solid fa-magnifying-glass"></i>
-                              </div>
-                              <input type="text" class="search-input" />
-                           </div>
-                        </li>
-
                         <% if(isLoggedIn){ %>
-                        <li class="nav-item user-cart">
-                           <a class="nav-link" href="/api/userlogin"><i class="ti-shopping-cart"></i></a>
+                        <li class="nav-item user-cart header-cart cart-res">
+                           <a class="nav-link icon-cart" href="/api/userlogin">
+                              <i class="ti-shopping-cart"></i>
+                              <span class="shop-count pink">03</span>
+                           </a>
+                           <ul class="cart-dropdown">
+                              <li class="single-product-cart">
+                                 <div class="cart-img">
+                                    <a href="#"
+                                       ><img
+                                          src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_3ce527bb-53c7-44ab-9089-730127cd49fc_1296x.jpg?v=1658381543"
+                                          alt=""
+                                    /></a>
+                                 </div>
+                                 <div class="cart-title">
+                                    <h5><a href="#"> Jordan air 1 </a></h5>
+                                    <h6><a href="#">SIZE 40</a></h6>
+                                    <span>3.000.000 VND x 1</span>
+                                 </div>
+                                 <div class="cart-delete">
+                                    <a href="#"><i class="ti-trash"></i></a>
+                                 </div>
+                              </li>
+                              <li class="single-product-cart">
+                                 <div class="cart-img">
+                                    <a href="#"
+                                       ><img
+                                          src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_1eab42d4-bd19-4969-867c-5a22c52a473c_1296x.jpg?v=1657727029"
+                                          alt=""
+                                    /></a>
+                                 </div>
+                                 <div class="cart-title">
+                                    <h5><a href="#"> Bits Headphone</a></h5>
+                                    <h6><a href="#">Black</a></h6>
+                                    <span>4.000.000 VND x 1</span>
+                                 </div>
+                                 <div class="cart-delete">
+                                    <a href="#"><i class="ti-trash"></i></a>
+                                 </div>
+                              </li>
+                              <li class="single-product-cart">
+                                 <div class="cart-img">
+                                    <a href="#"
+                                       ><img
+                                          src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_0c1094b4-3c00-41e3-a52c-accc05e34edf_1296x.jpg?v=1656276816"
+                                          alt=""
+                                    /></a>
+                                 </div>
+                                 <div class="cart-title">
+                                    <h5><a href="#"> Bits Headphone</a></h5>
+                                    <h6><a href="#">Black</a></h6>
+                                    <span>3.000.000 x 2</span>
+                                 </div>
+                                 <div class="cart-delete">
+                                    <a href="#"><i class="ti-trash"></i></a>
+                                 </div>
+                              </li>
+                              <li class="cart-space">
+                                 <div class="cart-sub">
+                                    <h4>Tổng cộng</h4>
+                                 </div>
+                                 <div class="cart-price">
+                                    <h4>10.500.000 VND</h4>
+                                 </div>
+                              </li>
+                              <li class="cart-btn-wrapper">
+                                 <a class="button full" href="#">Xem giỏ hàng</a>
+                              </li>
+                           </ul>
                         </li>
                         <li class="nav-item user-info">
                            <div class="nav-item__avatar">

@@ -1,12 +1,13 @@
-import pool from '../database/pool';
+import Models from '../database/sequelize';
+const Category = Models.category;
 
 class CategoryService {
    async getAllCategory() {
       try {
-         const [categorys] = await pool.execute('SELECT * FROM category');
+         const categorys = await Category.findAll();
          return categorys;
       } catch (error) {
-         console.log(error);
+         console.log('🚀 ~ file: category.service.js ~ line 10 ~ CategoryService ~ error', error);
          return null;
       }
    }

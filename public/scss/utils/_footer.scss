@@ -23,11 +23,27 @@
          color: $color-text-primary;
       }
    }
-   .footer-widget-title {
-      color: $color-white;
-      margin-bottom: 1.3rem;
-      font-size: 2rem;
+   .footer-widget {
+      font-weight: 300;
+      .footer-widget-title {
+         color: $color-white;
+         margin-bottom: 3rem;
+         font-size: 2rem;
+      }
+      .footer-widget-content {
+         ul > li {
+            margin-bottom: 1rem;
+            color: $color-text-dark-gray;
+            & > a {
+               color: inherit;
+            }
+         }
+      }
    }
+   #mc_embed_signup {
+      margin: 2rem 0;
+   }
+
    .footer-newsletter {
       color: $color-text-light;
    }

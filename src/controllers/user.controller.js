@@ -3,7 +3,7 @@ import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '.
 import { createResponse } from '../helpers/responseCreator';
 import passport from 'passport';
 
-const authenController = () => ({
+const userController = () => ({
    async login(req, res, next) {
       passport.authenticate('local', async (err, user, info) => {
          try {
@@ -44,10 +44,13 @@ const authenController = () => ({
    },
    async register(req, res, next) {
       const userInfo = req.body;
+      userInfo.avatar = 'https://www.pngitem.com/pimgs/m/421-4212341_default-avatar-svg-hd-png-download.png';
       const result = await userService.register(userInfo);
       console.log('🚀 ~ file: authController.js ~ line 29 ~ result', result);
-      if (result) res.status(200).json(createResponse('success', 'Đăng ký tài khoản thành công !'));
-      else res.status(200).json(createResponse('error', 'Đăng ký tài khoản không thành công !'));
+      if (result === true) res.json(createResponse('success', 'Đăng ký tài khoản thành công !'));
+      else if (typeof result === 'object') {
+         res.json(result);
+      } else res.json(createResponse('error', 'Đăng ký tài thất bại !'));
    },
    getLoginPage: (req, res) => {
       const user = req.user;
@@ -104,4 +107,4 @@ const authenController = () => ({
    },
 });
 
-export default authenController();
+export default userController();

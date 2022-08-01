@@ -59,6 +59,9 @@ input.input-feild {
 .glide__slide {
    margin-bottom: 1px;
 }
+.flex-start {
+   justify-content: flex-start !important;
+}
 
 .text--underline {
    text-decoration: underline;
@@ -68,6 +71,8 @@ input.input-feild {
 }
 
 .button {
+   display: inline-block;
+   text-align: center;
    position: relative;
    padding: 0.8rem 2rem;
    letter-spacing: 0.13rem;
@@ -77,6 +82,10 @@ input.input-feild {
    color: $color-white;
    border: 1px solid $color-bg-dark;
    z-index: 1;
+   &.full {
+      width: 100%;
+      padding: 1.2rem 2rem;
+   }
    &::after {
       position: absolute;
       display: block;

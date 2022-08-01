@@ -85,13 +85,11 @@
                   if (status === 200) {
                      const { title, message } = data;
                      if (title === 'success') {
+                        const tokens = data.payload;
+                        localStorage.setStore(tokens);
                         window.location.href = '/';
                      } else {
                         toastr[title](message);
-                        if (title === 'success') {
-                           const tokens = data.payload;
-                           localStorage.setStore(tokens);
-                        }
                      }
                   }
                } catch (error) {

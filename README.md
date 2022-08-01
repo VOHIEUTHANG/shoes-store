@@ -1,4 +1,22 @@
-# Ecommerce webapp (authors = ['DucManh','Devo'])
+# Shoes Store Webapp
+
+## Tech used:
+
+### - Frontend:
+
+-  Core: HTML, CSS, JS
+-  Jquery, Boostrap, Animate.css, wowJS, Glide, just-validate, axios...
+
+### - Backend:
+
+-  Core: Nodejs + Express
+-  View engine: EJS
+-  Database: SQL(mysql)
+-  ORM: sequelize
+
+## Databse Schema:
+
+![Database](./public/assets/images/database.png)
 
 ### GIT COMMIT RULES
 
@@ -6,7 +24,7 @@
 type(scope?): subject
 ```
 
-### type ở trên có thể là:
+### Type List:
 
 -  build: Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
 -  ci: Changes to our CI configuration files and scripts (example scopes: Gitlab CI, Circle, BrowserStack, SauceLabs)

@@ -159,7 +159,7 @@
           justify-content: center;
           align-items: center;
           border-radius: 2px;
-          border: 1px solid #aaaaaa; }
+          border-bottom: 1px solid #aaaaaa; }
           .header__logobar .nav-wrapper .nav-list .nav-item.nav-item__search .search-wrapper .search-input {
             outline: none;
             background-color: transparent;
@@ -170,8 +170,7 @@
             width: 20rem; }
           .header__logobar .nav-wrapper .nav-list .nav-item.nav-item__search .search-wrapper .search-btn {
             cursor: pointer;
-            padding: 0.8rem;
-            border-right: 1px solid #aaaaaa; }
+            padding: 0.8rem; }
             .header__logobar .nav-wrapper .nav-list .nav-item.nav-item__search .search-wrapper .search-btn:hover > i {
               color: #aaaaaa; }
             .header__logobar .nav-wrapper .nav-list .nav-item.nav-item__search .search-wrapper .search-btn > i {
@@ -702,6 +701,9 @@ input.input-feild {
 .flex-start {
   justify-content: flex-start !important; }
 
+.nowrap {
+  white-space: nowrap; }
+
 .text--underline {
   text-decoration: underline; }
 
@@ -724,6 +726,8 @@ input.input-feild {
   .button.full {
     width: 100%;
     padding: 1.2rem 2rem; }
+  .button.large {
+    padding: 1.2rem 3rem; }
   .button::after {
     position: absolute;
     display: block;

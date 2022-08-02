@@ -1,0 +1,19 @@
+<html lang="en">
+   <head>
+      <%- include('../partials/head'); %>
+      <link rel="stylesheet" href="/css/product-detail.css" />
+   </head>
+   <body>
+      <div id="root">
+         <%- include('../partials/header',{user,isLoggedIn}) %>
+         <div id="main">
+            <div class="product-detail"></div>
+         </div>
+         <%- include('../partials/footer') %>
+      </div>
+      <%- include('../partials/foot') %>
+      <script type="module">
+         import formatToCurrency from '/js/utils/formatCurrency.js';
+      </script>
+   </body>
+</html>

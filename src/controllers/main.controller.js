@@ -59,10 +59,19 @@ const mainController = () => ({
       if (user) {
          payload.user = user;
          payload.isLoggedIn = true;
-         res.render('pages/all_product', payload);
-      } else {
-         res.redirect('/');
       }
+      res.render('pages/all-product', payload);
+   },
+   getProductDetailsPage: (req, res) => {
+      const { slug } = req.params;
+      const user = req.user;
+      const payloadInfo = req.payload;
+      const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
+      if (user) {
+         payload.user = user;
+         payload.isLoggedIn = true;
+      }
+      res.render('pages/product-detail', payload);
    },
 });
 

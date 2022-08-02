@@ -71,6 +71,9 @@ input.input-feild {
 .flex-start {
    justify-content: flex-start !important;
 }
+.nowrap {
+   white-space: nowrap;
+}
 
 .text--underline {
    text-decoration: underline;
@@ -95,6 +98,10 @@ input.input-feild {
    &.full {
       width: 100%;
       padding: 1.2rem 2rem;
+   }
+
+   &.large {
+      padding: 1.2rem 3rem;
    }
    &::after {
       position: absolute;

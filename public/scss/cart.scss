@@ -1,0 +1,176 @@
+.cart {
+   padding: 8rem 0;
+   .cart-heading {
+      text-align: center;
+   }
+   .cart-title-area {
+      padding-top: 30px;
+   }
+   .car-header-title h2 {
+      font-size: 20px;
+      margin: 0;
+      text-transform: uppercase;
+   }
+   .table-content table {
+      background: #fff none repeat scroll 0 0;
+      border-color: #e5e5e5;
+      border-radius: 0;
+      border-style: solid;
+      border-width: 1px 0 0 1px;
+      margin: 0 0 50px;
+      text-align: center;
+      width: 100%;
+      border: none;
+   }
+   .wishlist .table-content table {
+      margin: 0 0 0px;
+   }
+   .table-content.wish table {
+      margin: 0 0 0px;
+   }
+   .table-content table th {
+      border-top: medium none;
+      color: #555;
+      font-size: 16px;
+      font-weight: normal;
+      padding: 15px 10px 12px;
+      text-align: center;
+      text-transform: uppercase;
+      vertical-align: middle;
+      white-space: nowrap;
+   }
+   .table-content table td {
+      border-top: medium none;
+      padding: 2rem 1rem;
+      vertical-align: middle;
+      //   font-size: 1;
+   }
+   .table-content table td input {
+      background: #e5e5e5 none repeat scroll 0 0;
+      border: medium none;
+      border-radius: 3px;
+      color: #6f6f6f;
+      font-size: 15px;
+      font-weight: normal;
+      height: 40px;
+      padding: 0 5px 0 10px;
+      width: 60px;
+   }
+   .table-content table td.product-subtotal {
+      color: #555;
+      font-size: 15px;
+      width: 160px;
+   }
+   .table-content table td.product-name a {
+      color: #6f6f6f;
+      font-size: 1.7rem;
+      margin-left: 10px;
+   }
+   .table-content table td.product-name a:hover {
+      color: #050035;
+   }
+   .table-content table td.product-name {
+      width: 270px;
+   }
+   .table-content table td.product-thumbnail {
+      width: 130px;
+      a {
+         display: inline-block;
+         width: 10rem;
+         height: 10rem;
+      }
+      img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+      }
+   }
+   .table-content table td.product-remove i {
+      color: #919191;
+      display: inline-block;
+      font-size: 2rem;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      width: 40px;
+   }
+   .table-content table .product-price-cart .amount {
+      color: #555;
+      font-size: 1.8rem;
+   }
+   .table-content table td.product-remove i:hover {
+      color: #050035;
+   }
+   .table-content table td.product-quantity {
+      width: 180px;
+   }
+   .table-content table td.product-remove {
+      width: 150px;
+   }
+   .table-content table td.product-price-cart {
+      width: 130px;
+   }
+   thead {
+      background-color: #f6f6f6;
+   }
+   .cart-page-total li:last-child {
+      border-bottom: none;
+   }
+   .cart-page-total {
+      padding-top: 50px;
+      display: flex;
+      flex-direction: column;
+      & > ul {
+         border: 1px solid #ddd;
+      }
+      & > h2 {
+         font-size: 2.3rem;
+         text-align: center;
+         font-weight: 500;
+         margin-bottom: 20px;
+      }
+      & > a {
+         background-color: #333;
+         border: 1px solid #333;
+         color: #fff;
+         display: inline-block;
+         margin-top: 30px;
+         padding: 9px 20px;
+         text-transform: capitalize;
+         transition: all 0.3s ease 0s;
+         &:hover {
+            background-color: #050035;
+            color: #fff;
+            border: 1px solid #050035;
+         }
+      }
+      span {
+         white-space: nowrap;
+         letter-spacing: 1px;
+         &.discount {
+            font-size: 1.4rem;
+            font-weight: light;
+         }
+         &.payment-total {
+            font-size: 1.7rem;
+            color: rgb(252, 109, 109);
+            font-weight: bold;
+         }
+      }
+      li {
+         display: flex;
+         white-space: nowrap;
+         justify-content: space-between;
+         border-bottom: 1px solid #ddd;
+         color: #555;
+         font-size: 1.6rem;
+         font-weight: 500;
+         padding: 1.6rem 3rem;
+      }
+      .button.btn-checkout {
+         margin: 3rem auto;
+         max-width: 50%;
+         min-width: 30rem;
+      }
+   }
+}

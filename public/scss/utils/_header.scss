@@ -20,11 +20,22 @@
    }
    &__logobar {
       .logo-wrapper {
+         height: 100%;
          @include centerFlexItems;
-         & a {
+         a {
             display: inline-block;
+            span {
+               background-color: $color-bg-dark;
+               clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
+               font-style: italic;
+               font-size: 1.8rem;
+               color: $color-white;
+               font-weight: 600;
+               padding: 1rem 1.8rem;
+               white-space: wrap;
+            }
          }
-         & img {
+         img {
             max-height: 50px;
          }
       }
@@ -242,7 +253,7 @@
          .cart-space {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 12px;
+            margin-bottom: 2rem;
          }
          .cart-sub > h4 {
             color: #070b21;

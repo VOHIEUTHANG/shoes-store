@@ -126,6 +126,7 @@
          font-size: 2rem;
          font-weight: 600;
          height: 20px;
+         user-select: none;
          width: 20px;
          @include centerFlexItems;
          @include transition;
@@ -456,12 +457,17 @@
    }
    .product-details-large {
       width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @include centerFlexItems;
+      overflow: hidden;
+      &:hover {
+         img {
+            transform: scale(1.2);
+         }
+      }
    }
    .product-details-large .easyzoom > a img,
    .details-9 .easyzoom > a img {
+      @include transition;
       width: 100%;
       max-height: 100%;
       height: auto;
@@ -505,6 +511,7 @@
    }
    .product-details-tab.product-details-tab2 {
       height: 50vh;
+      margin-bottom: 20px;
       display: flex;
       gap: 2rem;
    }
@@ -701,6 +708,5 @@
    }
    .details-9-content .product-color-style2 > ul li {
       display: inline-block;
-      float: inherit;
    }
 }

@@ -74,12 +74,25 @@ input.input-feild {
 .nowrap {
    white-space: nowrap;
 }
-
+.ptb-5 {
+   padding-top: 5rem;
+   padding-bottom: 5rem;
+}
+.plr-10 {
+   padding-left: 10rem;
+   padding-right: 10rem;
+}
+.mb-6 {
+   margin-bottom: 6rem;
+}
 .text--underline {
    text-decoration: underline;
 }
 .denind-uppercase {
    text-transform: initial;
+}
+.text-center {
+   text-align: center;
 }
 
 .button {
@@ -97,6 +110,7 @@ input.input-feild {
    z-index: 1;
    &.full {
       width: 100%;
+      height: 100%;
       padding: 1.2rem 2rem;
    }
 

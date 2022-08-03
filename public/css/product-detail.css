@@ -39,10 +39,10 @@
       border: 1px solid #ccc; }
       #product-detail-page .product-details .size-list .size-item.active {
         color: #fff;
-        background-color: #050035; }
+        background-color: #030021; }
       #product-detail-page .product-details .size-list .size-item:hover {
         color: #fff;
-        background-color: #050035; }
+        background-color: #030021; }
   #product-detail-page .product-details .qwick-view-content > h3 {
     color: #707070;
     font-size: 20px;
@@ -101,6 +101,7 @@
     font-size: 2rem;
     font-weight: 600;
     height: 20px;
+    user-select: none;
     width: 20px;
     display: flex;
     flex-direction: row;
@@ -398,11 +399,16 @@
 #product-detail-page .product-details-large {
   width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  overflow: hidden; }
+  #product-detail-page .product-details-large:hover img {
+    transform: scale(1.2); }
 
 #product-detail-page .product-details-large .easyzoom > a img,
 #product-detail-page .details-9 .easyzoom > a img {
+  transition: all 0.3s ease-in-out;
   width: 100%;
   max-height: 100%;
   height: auto;
@@ -439,6 +445,7 @@
 
 #product-detail-page .product-details-tab.product-details-tab2 {
   height: 50vh;
+  margin-bottom: 20px;
   display: flex;
   gap: 2rem; }
 
@@ -636,5 +643,4 @@
   width: 54%; }
 
 #product-detail-page .details-9-content .product-color-style2 > ul li {
-  display: inline-block;
-  float: inherit; }
+  display: inline-block; }

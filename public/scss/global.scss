@@ -4,6 +4,9 @@
 @import 'node_modules/@glidejs/glide/src/assets/sass/glide.core';
 @import 'node_modules/@glidejs/glide/src/assets/sass/glide.theme';
 
+@import './utils/header';
+@import './utils/footer';
+
 @import './library/validate';
 @import './library/toastr';
 
@@ -68,6 +71,9 @@ input.input-feild {
 .flex-start {
    justify-content: flex-start !important;
 }
+.nowrap {
+   white-space: nowrap;
+}
 
 .text--underline {
    text-decoration: underline;
@@ -83,6 +89,7 @@ input.input-feild {
    padding: 0.8rem 2rem;
    letter-spacing: 0.13rem;
    font-size: 1.6rem;
+   cursor: pointer;
    outline: none;
    background-color: $color-bg-dark;
    color: $color-white;
@@ -91,6 +98,10 @@ input.input-feild {
    &.full {
       width: 100%;
       padding: 1.2rem 2rem;
+   }
+
+   &.large {
+      padding: 1.2rem 3rem;
    }
    &::after {
       position: absolute;
@@ -109,6 +120,14 @@ input.input-feild {
       &::after {
          width: 100%;
       }
-      color: $color-black;
+      color: $color-bg-dark !important;
    }
+}
+
+// TEMPLATE
+h1.cart-heading {
+   color: #252525;
+   font-size: 25px;
+   margin-bottom: 25px;
+   text-transform: uppercase;
 }

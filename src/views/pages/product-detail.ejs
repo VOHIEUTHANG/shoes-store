@@ -1,0 +1,550 @@
+<html lang="en">
+   <head>
+      <%- include('../partials/head'); %>
+      <link rel="stylesheet" href="/css/product-detail.css" />
+   </head>
+   <body>
+      <div id="root">
+         <%- include('../partials/header',{user,isLoggedIn}) %>
+         <div id="main">
+            <div id="product-detail-page">
+               <div class="product-details">
+                  <div class="container">
+                     <div class="row gx-5">
+                        <div class="col-md-12 col-lg-6 col-12">
+                           <div class="product-details-img-content">
+                              <div class="product-details-tab mr-35 product-details-tab2">
+                                 <div class="product-details-large tab-content">
+                                    <div class="tab-pane active show fade" id="pro-details1" role="tabpanel">
+                                       <div class="easyzoom easyzoom--overlay">
+                                          <a
+                                             target="_blank"
+                                             href="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_0c1094b4-3c00-41e3-a52c-accc05e34edf_1296x.jpg?v=1656276816"
+                                          >
+                                             <img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_0c1094b4-3c00-41e3-a52c-accc05e34edf_1296x.jpg?v=1656276816"
+                                                alt=""
+                                             />
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pro-details2" role="tabpanel">
+                                       <div class="easyzoom easyzoom--overlay">
+                                          <a
+                                             target="_blank"
+                                             href="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/1_5ee34c84-267e-4fb7-9316-1c296323adfe_1296x.jpg?v=1656276816"
+                                          >
+                                             <img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/1_5ee34c84-267e-4fb7-9316-1c296323adfe_1296x.jpg?v=1656276816"
+                                                alt=""
+                                             />
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pro-details3" role="tabpanel">
+                                       <div class="easyzoom easyzoom--overlay">
+                                          <a
+                                             target="_blank"
+                                             href="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/2_0e9eb0a0-ce97-4506-bbe6-8d33c3c450ba_1296x.jpg?v=1656276816"
+                                          >
+                                             <img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/2_0e9eb0a0-ce97-4506-bbe6-8d33c3c450ba_1296x.jpg?v=1656276816"
+                                                alt=""
+                                             />
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pro-details4" role="tabpanel">
+                                       <div class="easyzoom easyzoom--overlay">
+                                          <a
+                                             target="_blank"
+                                             href="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/3_3a07696f-4f21-46e8-9bf4-7a29f41fb41b_1296x.jpg?v=1656276816"
+                                          >
+                                             <img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/3_3a07696f-4f21-46e8-9bf4-7a29f41fb41b_1296x.jpg?v=1656276816"
+                                                alt=""
+                                             />
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pro-details5" role="tabpanel">
+                                       <div class="easyzoom easyzoom--overlay">
+                                          <a
+                                             target="_blank"
+                                             href="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/5_3f188960-a28b-4a09-bbb4-8731568c5c37_1296x.jpg?v=1656276816"
+                                          >
+                                             <img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/5_3f188960-a28b-4a09-bbb4-8731568c5c37_1296x.jpg?v=1656276816"
+                                                alt=""
+                                             />
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="pro-details6" role="tabpanel">
+                                       <div class="easyzoom easyzoom--overlay">
+                                          <a
+                                             target="_blank"
+                                             href="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/4_1ce779ea-b1de-4526-af2f-d59191c7044d_1296x.jpg?v=1656276816"
+                                          >
+                                             <img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/4_1ce779ea-b1de-4526-af2f-d59191c7044d_1296x.jpg?v=1656276816"
+                                                alt=""
+                                             />
+                                          </a>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="product-details-small nav ml-10 product-details-2" role="tablist">
+                                    <div class="swiper product-images-slide">
+                                       <div class="swiper-wrapper">
+                                          <a
+                                             class="active mb-10 swiper-slide"
+                                             href="#pro-details1"
+                                             data-bs-toggle="list"
+                                             role="tab"
+                                             aria-selected="true"
+                                          >
+                                             <img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_0c1094b4-3c00-41e3-a52c-accc05e34edf_1296x.jpg?v=1656276816"
+                                                alt=""
+                                             />
+                                          </a>
+                                          <a
+                                             class="mb-10 swiper-slide"
+                                             href="#pro-details2"
+                                             data-bs-toggle="list"
+                                             role="tab"
+                                             aria-selected="true"
+                                          >
+                                             <img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/1_5ee34c84-267e-4fb7-9316-1c296323adfe_1296x.jpg?v=1656276816"
+                                                alt=""
+                                             />
+                                          </a>
+                                          <a
+                                             class="mb-10 swiper-slide"
+                                             href="#pro-details3"
+                                             data-bs-toggle="list"
+                                             role="tab"
+                                             aria-selected="true"
+                                          >
+                                             <img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/2_0e9eb0a0-ce97-4506-bbe6-8d33c3c450ba_1296x.jpg?v=1656276816"
+                                                alt=""
+                                             />
+                                          </a>
+                                          <a
+                                             class="mb-10 swiper-slide"
+                                             href="#pro-details4"
+                                             data-bs-toggle="list"
+                                             role="tab"
+                                             aria-selected="true"
+                                          >
+                                             <img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/3_3a07696f-4f21-46e8-9bf4-7a29f41fb41b_1296x.jpg?v=1656276816"
+                                                alt=""
+                                             />
+                                          </a>
+                                          <a
+                                             class="mb-10 swiper-slide"
+                                             href="#pro-details5"
+                                             data-bs-toggle="list"
+                                             role="tab"
+                                             aria-selected="true"
+                                          >
+                                             <img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/5_3f188960-a28b-4a09-bbb4-8731568c5c37_1296x.jpg?v=1656276816"
+                                                alt=""
+                                             />
+                                          </a>
+                                          <a
+                                             class="mb-10 swiper-slide"
+                                             href="#pro-details6"
+                                             data-bs-toggle="list"
+                                             role="tab"
+                                             aria-selected="true"
+                                          >
+                                             <img
+                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/4_1ce779ea-b1de-4526-af2f-d59191c7044d_1296x.jpg?v=1656276816"
+                                                alt=""
+                                             />
+                                          </a>
+                                       </div>
+                                       <!-- <div class="swiper-pagination"></div> -->
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6 col-12">
+                           <div class="product-details-content">
+                              <h3>Air Jordan 1 pink blue</h3>
+                              <div class="rating-number">
+                                 <div class="quick-view-rating">
+                                    <i class="fa-solid fa-star yellow-star"></i>
+                                    <i class="fa-solid fa-star yellow-star"></i>
+                                    <i class="fa-solid fa-star yellow-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                 </div>
+                                 <div class="quick-view-number">
+                                    <span>3 sao Ratting (S)</span>
+                                 </div>
+                              </div>
+                              <div class="details-price">
+                                 <span>5.200.000 VND</span>
+                              </div>
+                              <p>
+                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmol tempor incidid
+                                 ut labore et dolore magna aliqua. Ut enim ad minim veni quis nostrud exercitation
+                                 ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                              </p>
+                              <div class="quick-view-select">
+                                 <div class="select-option-part">
+                                    <label>Size*</label>
+                                    <ul class="size-list row">
+                                       <li class="size-item">38</li>
+                                       <li class="size-item">39</li>
+                                       <li class="size-item">40</li>
+                                       <li class="size-item">41</li>
+                                       <li class="size-item">42</li>
+                                       <li class="size-item">43</li>
+                                       <li class="size-item">44</li>
+                                    </ul>
+                                 </div>
+                              </div>
+                              <div class="quickview-plus-minus">
+                                 <div class="cart-plus-minus">
+                                    <div class="dec qtybutton">-</div>
+                                    <input
+                                       type="text"
+                                       value="1"
+                                       name="qtybutton"
+                                       class="cart-plus-minus-box"
+                                       id="product-count"
+                                    />
+                                    <div class="inc qtybutton">+</div>
+                                 </div>
+                                 <div class="quickview-btn-cart">
+                                    <a class="button" href="#">add to cart</a>
+                                 </div>
+                                 <div class="quickview-btn-wishlist">
+                                    <a class="btn-hover" href="#"><i class="fa-regular fa-heart"></i></a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="product-description-review-area">
+                  <div class="container">
+                     <div class="product-description-review text-center">
+                        <div class="description-review-title nav" role="tablist">
+                           <a class="active" href="#pro-dec" data-bs-toggle="list" role="tab" aria-selected="true">
+                              Mô tả sản phẩm
+                           </a>
+                           <a href="#pro-review" data-bs-toggle="list" role="tab" aria-selected="false">
+                              Đánh giá (0)
+                           </a>
+                        </div>
+                        <div class="description-review-text tab-content">
+                           <div class="tab-pane active show fade" id="pro-dec" role="tabpanel">
+                              <p>
+                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                                 dolor in
+                              </p>
+                           </div>
+                           <div class="tab-pane fade" id="pro-review" role="tabpanel">
+                              <a class="button" href="#">Trở thành người đầu tiên viết đánh giá cho sản phẩm !</a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="product-area">
+                  <div class="container">
+                     <div class="section-title-3">
+                        <h2>Sản phẩm liên quan</h2>
+                     </div>
+                     <div class="product-style">
+                        <div class="glide related-products">
+                           <div class="related-product-active glide__track" data-glide-el="track">
+                              <div class="glide__slides">
+                                 <div class="product-wrapper glide__slide">
+                                    <div class="product-img">
+                                       <a href="#">
+                                          <img
+                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_b99ea025-62e2-4457-8c7d-31afc7c47590_1296x.jpg?v=1657526503"
+                                             alt=""
+                                          />
+                                       </a>
+                                       <span>hot</span>
+                                       <div class="product-action">
+                                          <a class="animate-left" title="Wishlist" href="#">
+                                             <i class="fa-regular fa-heart"></i>
+                                          </a>
+                                          <a class="animate-top" title="Add To Cart" href="#">
+                                             <i class="ti-shopping-cart"></i>
+                                          </a>
+                                          <a
+                                             class="animate-right"
+                                             title="Quick View"
+                                             data-toggle="modal"
+                                             data-target="#exampleModal"
+                                             href="#"
+                                          >
+                                             <i class="fa-regular fa-eye"></i>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <div class="product-content">
+                                       <h4><a href="#">Arifo Stylas Dress</a></h4>
+                                       <span>$115.00</span>
+                                    </div>
+                                 </div>
+                                 <div class="product-wrapper glide__slide">
+                                    <div class="product-img">
+                                       <a href="#">
+                                          <img
+                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_e6cc4d63-d366-45dc-ab50-514a07a11358_large.jpg?v=1656739225"
+                                             alt=""
+                                          />
+                                       </a>
+                                       <div class="product-action">
+                                          <a class="animate-left" title="Wishlist" href="#">
+                                             <i class="fa-regular fa-heart"></i>
+                                          </a>
+                                          <a class="animate-top" title="Add To Cart" href="#">
+                                             <i class="ti-shopping-cart"></i>
+                                          </a>
+                                          <a
+                                             class="animate-right"
+                                             title="Quick View"
+                                             data-toggle="modal"
+                                             data-target="#exampleModal"
+                                             href="#"
+                                          >
+                                             <i class="fa-regular fa-eye"></i>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <div class="product-content">
+                                       <h4><a href="#">Arifo Stylas Dress</a></h4>
+                                       <span>$115.00</span>
+                                    </div>
+                                 </div>
+                                 <div class="product-wrapper glide__slide">
+                                    <div class="product-img">
+                                       <a href="#">
+                                          <img
+                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_14961e9a-1e1b-4d1e-a8d2-2e4fedf3bc91_large.jpg?v=1656283010"
+                                             alt=""
+                                          />
+                                       </a>
+                                       <span>hot</span>
+                                       <div class="product-action">
+                                          <a class="animate-left" title="Wishlist" href="#">
+                                             <i class="fa-regular fa-heart"></i>
+                                          </a>
+                                          <a class="animate-top" title="Add To Cart" href="#">
+                                             <i class="ti-shopping-cart"></i>
+                                          </a>
+                                          <a
+                                             class="animate-right"
+                                             title="Quick View"
+                                             data-toggle="modal"
+                                             data-target="#exampleModal"
+                                             href="#"
+                                          >
+                                             <i class="fa-regular fa-eye"></i>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <div class="product-content">
+                                       <h4><a href="#">Arifo Stylas Dress</a></h4>
+                                       <span>$115.00</span>
+                                    </div>
+                                 </div>
+                                 <div class="product-wrapper glide__slide">
+                                    <div class="product-img">
+                                       <a href="#">
+                                          <img
+                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_2d012beb-bf98-4485-8fed-14a6c37be834_large.jpg?v=1656588942"
+                                             alt=""
+                                          />
+                                       </a>
+                                       <div class="product-action">
+                                          <a class="animate-left" title="Wishlist" href="#">
+                                             <i class="fa-regular fa-heart"></i>
+                                          </a>
+                                          <a class="animate-top" title="Add To Cart" href="#">
+                                             <i class="ti-shopping-cart"></i>
+                                          </a>
+                                          <a
+                                             class="animate-right"
+                                             title="Quick View"
+                                             data-toggle="modal"
+                                             data-target="#exampleModal"
+                                             href="#"
+                                          >
+                                             <i class="fa-regular fa-eye"></i>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <div class="product-content">
+                                       <h4><a href="#">Arifo Stylas Dress</a></h4>
+                                       <span>$115.00</span>
+                                    </div>
+                                 </div>
+                                 <div class="product-wrapper glide__slide">
+                                    <div class="product-img">
+                                       <a href="#">
+                                          <img
+                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_b0789392-9e1f-44f8-ad9b-b346a0453fca_large.jpg?v=1656305785"
+                                             alt=""
+                                          />
+                                       </a>
+                                       <span>hot</span>
+                                       <div class="product-action">
+                                          <a class="animate-left" title="Wishlist" href="#">
+                                             <i class="fa-regular fa-heart"></i>
+                                          </a>
+                                          <a class="animate-top" title="Add To Cart" href="#">
+                                             <i class="ti-shopping-cart"></i>
+                                          </a>
+                                          <a
+                                             class="animate-right"
+                                             title="Quick View"
+                                             data-toggle="modal"
+                                             data-target="#exampleModal"
+                                             href="#"
+                                          >
+                                             <i class="fa-regular fa-eye"></i>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <div class="product-content">
+                                       <h4><a href="#">Arifo Stylas Dress</a></h4>
+                                       <span>$115.00</span>
+                                    </div>
+                                 </div>
+                                 <div class="product-wrapper glide__slide">
+                                    <div class="product-img">
+                                       <a href="#">
+                                          <img
+                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_2d012beb-bf98-4485-8fed-14a6c37be834_large.jpg?v=1656588942"
+                                             alt=""
+                                          />
+                                       </a>
+                                       <div class="product-action">
+                                          <a class="animate-left" title="Wishlist" href="#">
+                                             <i class="fa-regular fa-heart"></i>
+                                          </a>
+                                          <a class="animate-top" title="Add To Cart" href="#">
+                                             <i class="ti-shopping-cart"></i>
+                                          </a>
+                                          <a
+                                             class="animate-right"
+                                             title="Quick View"
+                                             data-toggle="modal"
+                                             data-target="#exampleModal"
+                                             href="#"
+                                          >
+                                             <i class="fa-regular fa-eye"></i>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <div class="product-content">
+                                       <h4><a href="#">Arifo Stylas Dress</a></h4>
+                                       <span>$115.00</span>
+                                    </div>
+                                 </div>
+                                 <div class="product-wrapper glide__slide">
+                                    <div class="product-img">
+                                       <a href="#">
+                                          <img
+                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_b99ea025-62e2-4457-8c7d-31afc7c47590_1296x.jpg?v=1657526503"
+                                             alt=""
+                                          />
+                                       </a>
+                                       <span>hot</span>
+                                       <div class="product-action">
+                                          <a class="animate-left" title="Wishlist" href="#">
+                                             <i class="fa-regular fa-heart"></i>
+                                          </a>
+                                          <a class="animate-top" title="Add To Cart" href="#">
+                                             <i class="ti-shopping-cart"></i>
+                                          </a>
+                                          <a
+                                             class="animate-right"
+                                             title="Quick View"
+                                             data-toggle="modal"
+                                             data-target="#exampleModal"
+                                             href="#"
+                                          >
+                                             <i class="fa-regular fa-eye"></i>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <div class="product-content">
+                                       <h4><a href="#">Arifo Stylas Dress</a></h4>
+                                       <span>$115.00</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <%- include('../partials/footer') %>
+      </div>
+      <%- include('../partials/foot') %>
+      <script src="/js/library/glide.min.js"></script>
+      <script type="module">
+         import formatToCurrency from '/js/utils/formatCurrency.js';
+         new Glide('.glide.related-products', {
+            type: 'carousel',
+            perView: 4,
+            gap: 20,
+         }).mount();
+
+         const swiper = new Swiper('.swiper.product-images-slide', {
+            direction: 'vertical',
+            slidesPerView: 4,
+            pagination: {
+               el: '.swiper-pagination',
+               clickable: true,
+            },
+         });
+
+         $(() => {
+            const sizeItems = $('.size-list > .size-item');
+            sizeItems.click(function () {
+               sizeItems.removeClass('active');
+               $(this).addClass('active');
+               const size = $(this).text();
+            });
+            const productCountEle = $('#product-count');
+            const plusBtn = $('.inc.qtybutton');
+            const minusBtn = $('.dec.qtybutton');
+            let currentVal = Number(productCountEle.val());
+
+            minusBtn.click(() => {
+               currentVal > 1 && currentVal--;
+               productCountEle.val(currentVal);
+            });
+
+            plusBtn.click(() => {
+               currentVal < 10 && currentVal++;
+               productCountEle.val(currentVal);
+            });
+         });
+      </script>
+   </body>
+</html>

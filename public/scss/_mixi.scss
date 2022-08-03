@@ -13,3 +13,7 @@
 @mixin transition($target: all, $duration: 0.3s, $motionType: ease-in-out) {
    transition: all $duration $motionType;
 }
+@mixin blackWhiteEffect() {
+   color: $color-white;
+   background-color: $color-bg-dark;
+}

@@ -51,7 +51,7 @@
                   .search-wrapper {
                      @include centerFlexItems;
                      border-radius: 2px;
-                     border: 1px solid $color-gray;
+                     border-bottom: 1px solid $color-gray;
                      .search-input {
                         outline: none;
                         background-color: transparent;
@@ -64,7 +64,6 @@
                      .search-btn {
                         cursor: pointer;
                         padding: 0.8rem;
-                        border-right: 1px solid $color-gray;
                         &:hover {
                            & > i {
                               color: $color-gray;

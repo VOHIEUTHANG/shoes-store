@@ -11,7 +11,7 @@
                               <div class="search-btn">
                                  <i class="fa-solid fa-magnifying-glass"></i>
                               </div>
-                              <input type="text" class="search-input" />
+                              <input type="text" placeholder="search..." class="search-input" />
                            </div>
                         </li>
                      </ul>
@@ -32,7 +32,7 @@
                      <ul class="nav-list">
                         <% if(isLoggedIn){ %>
                         <li class="nav-item user-cart header-cart cart-res">
-                           <a class="nav-link icon-cart" href="/api/userlogin">
+                           <a class="nav-link icon-cart" href="/cart">
                               <i class="ti-shopping-cart"></i>
                               <span class="shop-count pink">03</span>
                            </a>
@@ -97,7 +97,7 @@
                                  </div>
                               </li>
                               <li class="cart-btn-wrapper">
-                                 <a class="button full" href="#">Xem giỏ hàng</a>
+                                 <a class="button full" href="/cart">Xem giỏ hàng</a>
                               </li>
                            </ul>
                         </li>
@@ -200,6 +200,9 @@
                      <% }) %>
                   </ul>
                   <% } %>
+               </li>
+               <li class="menu-item">
+                  <a href="/all-product" class="menu-link">All product</a>
                </li>
                <li class="menu-item">
                   <a href="#" class="wow tada menu-link menu-link--sale">sale</a>

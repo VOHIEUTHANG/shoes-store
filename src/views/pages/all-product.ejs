@@ -588,8 +588,7 @@
       </div>
       <%- include('../partials/foot') %>
       <script type="module">
-         const formatToCurrency = (amout) => amout.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
-
+         import formatToCurrency from '/js/utils/formatCurrency.js';
          rangeSlider(document.querySelector('.amount-range-slider'), {
             min: 0,
             max: 200,
@@ -599,7 +598,6 @@
                const endPrice = $('#end-price');
                startPrice.text(formatToCurrency(valueSet[0] * 100000));
                endPrice.text(formatToCurrency(valueSet[1] * 100000));
-               // ...
             },
          });
       </script>

@@ -236,7 +236,7 @@
       top: 10%;
       left: 80%;
       height: 25px;
-      background-color: #121314;
+      background-color: #050035;
       border-radius: 50px;
       color: #fff;
       display: inline-block;
@@ -395,7 +395,7 @@
   #footer:last-child {
     margin-top: auto; }
   #footer .footer-top {
-    background-color: #121314;
+    background-color: #050035;
     padding: 5rem 0; }
   #footer .footer-bottom {
     background-color: #fff;
@@ -719,9 +719,9 @@ input.input-feild {
   font-size: 1.6rem;
   cursor: pointer;
   outline: none;
-  background-color: #121314;
+  background-color: #050035;
   color: #fff;
-  border: 1px solid #121314;
+  border: 1px solid #050035;
   z-index: 1; }
   .button.full {
     width: 100%;
@@ -741,7 +741,7 @@ input.input-feild {
     transition: all 0.3s ease-in-out;
     transform: translateX(-50%); }
   .button:hover {
-    color: #000; }
+    color: #050035 !important; }
     .button:hover::after {
       width: 100%; }
 

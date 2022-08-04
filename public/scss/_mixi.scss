@@ -17,3 +17,12 @@
    color: $color-white;
    background-color: $color-bg-dark;
 }
+
+@mixin limitTextRows($limitNumber: 2) {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: $limitNumber;
+   line-clamp: $limitNumber;
+   -webkit-box-orient: vertical;
+}

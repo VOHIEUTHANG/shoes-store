@@ -16,12 +16,6 @@
          tippy('.user-section', {
             content: 'Tài khoản',
          });
-         tippy('.wishlist', {
-            content: 'Wish list',
-         });
-         tippy('.main-logo', {
-            content: 'Cửa hàng',
-         });
       },
       run() {
          this.toastrConfig();

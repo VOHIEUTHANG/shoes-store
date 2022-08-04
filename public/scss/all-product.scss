@@ -278,13 +278,35 @@
    }
    .product-size li {
       display: inline-block;
-      margin-right: 16px;
+   }
+   .product-size ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+   }
+   .sidebar-title {
+      margin-bottom: 2rem;
+   }
+   .size-item.active {
+      a {
+         border-color: $color-black;
+         color: $color-black;
+      }
    }
    .product-size li a {
       color: #888888;
       font-size: 15px;
+      @include centerFlexItems;
+      width: 5rem;
+      height: 4rem;
+      border: 1px solid #ccc;
       font-weight: 600;
       text-transform: uppercase;
+      @include transition;
+      &:hover {
+         border-color: $color-black;
+         color: $color-black;
+      }
    }
    .single-top-rated {
       display: flex;

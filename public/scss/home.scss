@@ -2,6 +2,9 @@
 @import 'mixi';
 
 #main {
+   .glide__slide {
+      height: unset;
+   }
    .section-title > h2 {
       display: inline-block;
       font-size: 3.2rem;
@@ -139,6 +142,7 @@
             border-radius: 4px;
             overflow: hidden;
             width: 100%;
+            height: 100%;
          }
          &__image {
             width: 100%;
@@ -157,6 +161,9 @@
             flex-direction: column;
             padding: 2rem;
             gap: 1.5rem;
+            a {
+               color: inherit;
+            }
          }
          &__brand {
             padding: 0.3rem 1.6rem;
@@ -171,6 +178,7 @@
             font-size: larger;
             text-align: center;
             color: $color-text-primary;
+            @include limitTextRows(3);
             font-weight: 600;
          }
          &__price {
@@ -204,6 +212,10 @@
       }
    }
    .all-products-area {
+      .load-more {
+         margin: 2rem 0;
+         @include centerFlexItems;
+      }
       .custom-row {
          display: flex;
          flex-wrap: wrap;
@@ -239,12 +251,27 @@
          line-height: 1;
          margin: 0 28px;
       }
-      .product-wrapper,
       .product-img {
          position: relative;
+         overflow: hidden;
+         img {
+            @include transition;
+         }
+         &:hover img {
+            filter: blur(2px);
+         }
       }
+      .product-wrapper {
+         border: 1px solid #ccc;
+         border-radius: 6px;
+         height: 100%;
+         overflow: hidden;
+         position: relative;
+      }
+
       .product-action {
-         bottom: 30px;
+         top: 50%;
+         transform: translateY(-50%);
          display: inline-block;
          left: 0;
          opacity: 0;
@@ -269,39 +296,55 @@
          background-color: #050035;
          color: #fff;
       }
-      .product-img > span {
-         background-color: #666;
-         border-radius: 100%;
-         color: #fff;
-         display: inline-block;
-         font-size: 12px;
-         font-weight: bold;
-         height: 40px;
-         left: 20px;
-         letter-spacing: 1px;
-         line-height: 40px;
-         position: absolute;
-         text-align: center;
-         text-transform: uppercase;
-         top: 20px;
-         width: 40px;
-      }
-      .product-content h4 a {
-         color: #383838;
-         font-size: 18px;
-         margin-bottom: 6px;
+      .product-content h4 {
+         margin-bottom: 0;
+         a {
+            color: #383838;
+            font-size: 18px;
+            user-select: none;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* number of lines to show */
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+         }
       }
       .product-content > span {
          color: #383838;
          font-size: 18px;
-         font-weight: bold;
+         white-space: nowrap;
+         user-select: none;
+         font-weight: 500;
       }
       .product-content {
+         display: flex;
+         padding: 2rem;
+         border-top: 1px solid #ccc;
+         flex-direction: column;
+         align-items: center;
+         gap: 1.3rem;
          padding-top: 23px;
+         margin-top: auto;
+         .category__brand {
+            display: inline-block;
+            user-select: none;
+            padding: 0.3rem 1.6rem;
+            border-radius: 25px;
+            border: 1px solid #aaaaaa;
+            a {
+               color: inherit;
+            }
+         }
       }
       .product-action > a {
          @include centerFlexItems;
          display: inline-flex;
+         &:hover {
+            color: $color-text-primary;
+            background-color: white;
+         }
       }
       .product-action > a.animate-left {
          transform: translateX(-20px);

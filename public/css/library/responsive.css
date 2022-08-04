@@ -1,6 +1,13 @@
 /* large desktop :1366px. */
 
-@media (min-width: 1200px) and (max-width: 2000px) {
+@media (min-width: 1650px) {
+   .custom-col-5 {
+      flex: 0 0 20%;
+      max-width: 20%;
+   }
+}
+
+@media (min-width: 1200px) and (max-width: 1650px) {
    .wacth-img img {
       max-width: 340px;
    }
@@ -45,6 +52,8 @@
    .custom-col-5 {
       flex: 0 0 25%;
       max-width: 25%;
+      padding-left: 1.6rem !important;
+      padding-right: 1.6rem !important;
    }
    .pl-185 {
       padding-left: 155px;
@@ -435,6 +444,8 @@
    .custom-col-5 {
       flex: 0 0 33.33%;
       max-width: 33.33%;
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
    }
    .pr-185 {
       padding-right: 50px;
@@ -1216,6 +1227,8 @@
    .custom-col-5 {
       flex: 0 0 50%;
       max-width: 50%;
+      padding-left: 1rem !important;
+      padding-right: 1rem !important;
    }
    .row.no-gutters.banner-mrg {
       margin-left: 0;

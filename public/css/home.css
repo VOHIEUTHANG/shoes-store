@@ -1,3 +1,6 @@
+#main .glide__slide {
+  height: unset; }
+
 #main .section-title > h2 {
   display: inline-block;
   font-size: 3.2rem;
@@ -103,7 +106,8 @@
     border: 1px solid #aaaaaa;
     border-radius: 4px;
     overflow: hidden;
-    width: 100%; }
+    width: 100%;
+    height: 100%; }
   #main .main-container .category__image {
     width: 100%;
     aspect-ratio: 1 / 1;
@@ -122,6 +126,8 @@
     flex-direction: column;
     padding: 2rem;
     gap: 1.5rem; }
+    #main .main-container .category__desc a {
+      color: inherit; }
   #main .main-container .category__brand {
     padding: 0.3rem 1.6rem;
     border-radius: 25px;
@@ -133,6 +139,12 @@
     font-size: larger;
     text-align: center;
     color: #222;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
     font-weight: 600; }
   #main .main-container .category__price {
     color: #00000073;
@@ -154,6 +166,13 @@
     transition: all 0.3s ease-in-out; }
   #main .brand-logo-area .single-brand:hover img {
     transform: scale(1.2); }
+
+#main .all-products-area .load-more {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; }
 
 #main .all-products-area .custom-row {
   display: flex;
@@ -190,12 +209,24 @@
   line-height: 1;
   margin: 0 28px; }
 
-#main .all-products-area .product-wrapper,
 #main .all-products-area .product-img {
+  position: relative;
+  overflow: hidden; }
+  #main .all-products-area .product-img img {
+    transition: all 0.3s ease-in-out; }
+  #main .all-products-area .product-img:hover img {
+    filter: blur(2px); }
+
+#main .all-products-area .product-wrapper {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  height: 100%;
+  overflow: hidden;
   position: relative; }
 
 #main .all-products-area .product-action {
-  bottom: 30px;
+  top: 50%;
+  transform: translateY(-50%);
   display: inline-block;
   left: 0;
   opacity: 0;
@@ -220,35 +251,45 @@
   background-color: #050035;
   color: #fff; }
 
-#main .all-products-area .product-img > span {
-  background-color: #666;
-  border-radius: 100%;
-  color: #fff;
-  display: inline-block;
-  font-size: 12px;
-  font-weight: bold;
-  height: 40px;
-  left: 20px;
-  letter-spacing: 1px;
-  line-height: 40px;
-  position: absolute;
-  text-align: center;
-  text-transform: uppercase;
-  top: 20px;
-  width: 40px; }
-
-#main .all-products-area .product-content h4 a {
-  color: #383838;
-  font-size: 18px;
-  margin-bottom: 6px; }
+#main .all-products-area .product-content h4 {
+  margin-bottom: 0; }
+  #main .all-products-area .product-content h4 a {
+    color: #383838;
+    font-size: 18px;
+    user-select: none;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    /* number of lines to show */
+    line-clamp: 3;
+    -webkit-box-orient: vertical; }
 
 #main .all-products-area .product-content > span {
   color: #383838;
   font-size: 18px;
-  font-weight: bold; }
+  white-space: nowrap;
+  user-select: none;
+  font-weight: 500; }
 
 #main .all-products-area .product-content {
-  padding-top: 23px; }
+  display: flex;
+  padding: 2rem;
+  border-top: 1px solid #ccc;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.3rem;
+  padding-top: 23px;
+  margin-top: auto; }
+  #main .all-products-area .product-content .category__brand {
+    display: inline-block;
+    user-select: none;
+    padding: 0.3rem 1.6rem;
+    border-radius: 25px;
+    border: 1px solid #aaaaaa; }
+    #main .all-products-area .product-content .category__brand a {
+      color: inherit; }
 
 #main .all-products-area .product-action > a {
   display: flex;
@@ -256,6 +297,9 @@
   justify-content: center;
   align-items: center;
   display: inline-flex; }
+  #main .all-products-area .product-action > a:hover {
+    color: #222;
+    background-color: white; }
 
 #main .all-products-area .product-action > a.animate-left {
   transform: translateX(-20px);

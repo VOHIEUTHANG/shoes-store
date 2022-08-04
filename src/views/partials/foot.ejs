@@ -26,5 +26,18 @@
             toastr[status](message);
          }
       });
+   } else {
+      alert('Missing refresh token to logout!');
+   }
+</script>
+<script type="module">
+   import localstorage from '/js/localStorage.js';
+   const tokens = localstorage.getStore();
+   if (tokens) {
+      const { refreshToken, accessToken } = tokens;
+      const profileBtn = $('#user-profile');
+      profileBtn.click(() => {});
+   } else {
+      alert('Missing access tokens !');
    }
 </script>

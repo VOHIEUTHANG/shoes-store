@@ -1,0 +1,167 @@
+<html lang="en">
+   <head>
+      <%- include('../partials/head'); %>
+      <link rel="stylesheet" href="/css/login.css" />
+      <link rel="stylesheet" href="/css/signup.css" />
+      <link rel="stylesheet" href="/css/profile.css" />
+   </head>
+   <body>
+      <div id="root">
+         <%- include('../partials/header',{user,isLoggedIn}) %>
+         <div id="main">
+            <div id="profile">
+               <div class="login signup">
+                  <div class="container">
+                     <div class="login-wrapper">
+                        <div class="login-title">Thông tin người dùng</div>
+                        <form id="form-register" action="/api/v1/auth/signup" method="post">
+                           <div class="avatar">
+                              <label for="avatar-upload" class="avatar__upload">
+                                 <div class="avatar-wrapper">
+                                    <img
+                                       id="avatar-img"
+                                       src="https://images.wallpaperscraft.com/image/single/dog_husky_look_spotted_muzzle_40227_1920x1080.jpg"
+                                       alt="avatar"
+                                    />
+                                 </div>
+                                 <input id="avatar-upload" hidden type="file" accept="image/*" />
+                              </label>
+                           </div>
+                           <div class="row form-container">
+                              <div class="col-12">
+                                 <input
+                                    type="text"
+                                    class="input-feild"
+                                    placeholder="Họ và tên"
+                                    autocomplete="off"
+                                    name="fullName"
+                                    id="fullName"
+                                 />
+                              </div>
+                              <div class="col-12">
+                                 <input class="input-feild" placeholder="Email" id="email" type="email" name="email" />
+                              </div>
+                              <div class="col-12">
+                                 <input
+                                    class="input-feild"
+                                    placeholder="Số điện thoại"
+                                    id="phoneNumber"
+                                    type="text"
+                                    name="phoneNumber"
+                                 />
+                              </div>
+                              <div class="col-12">
+                                 <input
+                                    class="input-feild"
+                                    placeholder="Địa chỉ"
+                                    type="text"
+                                    id="address"
+                                    name="address"
+                                 />
+                              </div>
+                              <div class="col-12">
+                                 <div class="gender-wrapper">
+                                    <div class="form-check">
+                                       <input
+                                          checked
+                                          class="form-check-input"
+                                          type="radio"
+                                          name="gender"
+                                          id="gender_1"
+                                       />
+                                       <label class="form-check-label" for="gender_1"> Nam </label>
+                                    </div>
+                                    <div class="form-check">
+                                       <input class="form-check-input" type="radio" name="gender" id="gender_2" />
+                                       <label class="form-check-label" for="gender_2"> Nữ </label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <button type="submit" class="button button-full">CẬP NHẬT</button>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <%- include('../partials/footer') %>
+      </div>
+      <%- include('../partials/foot'); %>
+      <script type="module">
+         import { getFormData } from '/js/utils/formDataHandler.js';
+         const validate = new window.JustValidate('#form-register');
+         validate
+            .addField('#fullName', [
+               {
+                  rule: 'required',
+                  errorMessage: 'Không được để trống họ tên',
+               },
+               {
+                  rule: 'minLength',
+                  value: 3,
+                  errorMessage: 'Họ và tên phải có ít nhất 3 ký tự',
+               },
+               {
+                  rule: 'maxLength',
+                  value: 30,
+                  errorMessage: 'Họ và tên chỉ được có tối đa 30 ký tự',
+               },
+            ])
+            .addField('#email', [
+               {
+                  rule: 'required',
+                  errorMessage: 'Không được để trống email !',
+               },
+               {
+                  rule: 'email',
+                  errorMessage: 'Không đúng định dạng email !',
+               },
+            ])
+            .addField('#phoneNumber', [
+               {
+                  rule: 'minLength',
+                  value: 10,
+                  errorMessage: 'Số điện thoại phải có ít nhất 10 chữ số!',
+               },
+               {
+                  rule: 'maxLength',
+                  value: 12,
+                  errorMessage: 'Số điện thoại chỉ được có tối đa 12 chữ số!',
+               },
+            ])
+            .addField('#address', [
+               {
+                  rule: 'required',
+                  errorMessage: 'Vui lòng điền mật khẩu !',
+               },
+               {
+                  rule: 'password',
+                  errorMessage: 'Mật khẩu phải có ít nhất 8 ký tự, trong đó có ít nhất một ký tự chữ và một ký tự số !',
+               },
+            ])
+            .onSuccess(async (event) => {
+               const formData = getFormData(event.target);
+               try {
+                  const { data, status } = await axios.post('/api/user/register', formData);
+                  if (status === 200) {
+                     const { status, message } = data;
+                     toastr[status](message);
+                  }
+               } catch (error) {
+                  toastr.error('Xảy ra lỗi khi gửi request về server !');
+               }
+            });
+      </script>
+      <script>
+         const uploadAvatart = $('#avatar-upload');
+         const imgPreview = $('#avatar-img');
+         uploadAvatart.change(function () {
+            if (this.files && this.files[0]) {
+               const tempURL = URL.createObjectURL(this.files[0]);
+               imgPreview.attr('src', tempURL);
+            }
+         });
+      </script>
+   </body>
+</html>

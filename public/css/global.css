@@ -174,8 +174,9 @@
             outline: none;
             background-color: transparent;
             padding: 0.3rem 0.8rem;
-            font-family: "Montserrat", sans-serif;
             border: none;
+            text-transform: capitalize;
+            font-size: 1.6rem;
             text-transform: initial;
             width: 20rem; }
           .header__logobar .nav-wrapper .nav-list .nav-item.nav-item__search .search-wrapper .search-btn {

@@ -10,9 +10,6 @@
          toastr.options.extendedTimeOut = 5000;
       },
       tippy() {
-         tippy('.menu-link--sale', {
-            content: 'Giảm giá',
-         });
          tippy('.user-section', {
             content: 'Tài khoản',
          });

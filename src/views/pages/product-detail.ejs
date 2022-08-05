@@ -507,7 +507,8 @@
       <%- include('../partials/foot') %>
       <script src="/js/library/glide.min.js"></script>
       <script type="module">
-         import formatToCurrency from '/js/utils/formatCurrency.js';
+         import { formatToCurrency } from '/js/utils/index.js';
+
          new Glide('.glide.related-products', {
             type: 'carousel',
             perView: 4,

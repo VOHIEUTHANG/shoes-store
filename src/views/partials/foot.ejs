@@ -10,16 +10,17 @@
 <!-- GLOBAL LOGIC -->
 <script src="/js/global.js"></script>
 <script type="module">
-   import localstorage from '/js/localStorage.js';
-   if (localstorage.getStore()) {
-      const { refreshToken } = localstorage.getStore();
+   import { localStorage } from '/js/utils/index.js';
+
+   if (localStorage.getStore()) {
+      const { refreshToken } = localStorage.getStore();
       const logoutBtn = $('.user-options__item.logout');
       logoutBtn.click(async () => {
          console.log('logout clicked !');
          const payload = { refreshToken };
          const { data, status } = await axios.delete('/api/user/logout', { data: payload });
          if (data.status === 'success' && status === 200) {
-            localstorage.clearStore();
+            localStorage.clearStore();
             window.location.href = '/';
          } else {
             const { status, message } = data;
@@ -27,17 +28,20 @@
          }
       });
    } else {
-      alert('Missing refresh token to logout!');
+      console.log('Missing refresh token to logout!');
    }
 </script>
 <script type="module">
-   import localstorage from '/js/localStorage.js';
-   const tokens = localstorage.getStore();
+   import { localStorage, responseHandler, configHeaders } from '/js/utils/index.js';
+   const tokens = localStorage.getStore();
    if (tokens) {
-      const { refreshToken, accessToken } = tokens;
+      const { accessToken } = tokens;
       const profileBtn = $('#user-profile');
-      profileBtn.click(() => {});
+      profileBtn.click(async () => {
+         const getProfilePageResult = await axios.get('api/user/profile', {}, configHeaders(accessToken));
+         console.log(getProfilePageResult);
+      });
    } else {
-      alert('Missing access tokens !');
+      console.log('Missing access tokens !');
    }
 </script>

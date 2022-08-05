@@ -52,6 +52,12 @@ const mainController = () => ({
    get404Page: (req, res) => {
       res.render('pages/404');
    },
+   get403Page: (req, res) => {
+      res.render('pages/403');
+   },
+   get401Page: (req, res) => {
+      res.render('pages/401');
+   },
    getAllProductPage: (req, res) => {
       const user = req.user;
       const payloadInfo = req.payload;
@@ -74,6 +80,7 @@ const mainController = () => ({
       res.render('pages/product-detail', payload);
    },
    getProfilePage: (req, res) => {
+      console.log('access success !');
       const user = req.user;
       const payloadInfo = req.payload;
       const payload = { user: {}, isLoggedIn: false, ...payloadInfo };

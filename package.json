@@ -36,6 +36,7 @@
       "jsonwebtoken": "^8.5.1",
       "just-validate": "^3.8.1",
       "method-override": "^3.0.0",
+      "multer": "^1.4.5-lts.1",
       "mysql2": "^2.3.3",
       "npm": "^8.15.0",
       "passport": "^0.6.0",

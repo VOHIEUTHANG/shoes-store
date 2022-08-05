@@ -37,4 +37,8 @@
          border-color: black;
       }
    }
+   input[readonly='true'] {
+      opacity: 0.5;
+      cursor: not-allowed;
+   }
 }

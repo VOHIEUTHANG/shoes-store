@@ -30,3 +30,7 @@
 #profile .form-check-input:checked {
   background-color: #000;
   border-color: black; }
+
+#profile input[readonly='true'] {
+  opacity: 0.5;
+  cursor: not-allowed; }

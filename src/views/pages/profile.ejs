@@ -14,7 +14,7 @@
                   <div class="container">
                      <div class="login-wrapper">
                         <div class="login-title">Thông tin người dùng</div>
-                        <form id="form-register" action="/api/v1/auth/signup" method="post">
+                        <form id="form-update-user-profile" action="/api/v1/auth/signup" method="post">
                            <div class="avatar">
                               <label for="avatar-upload" class="avatar__upload">
                                  <div class="avatar-wrapper">
@@ -24,10 +24,42 @@
                                        alt="avatar"
                                     />
                                  </div>
-                                 <input id="avatar-upload" hidden type="file" accept="image/*" />
+                                 <input id="avatar-upload" hidden name="avatar" type="file" accept="image/*" />
                               </label>
                            </div>
                            <div class="row form-container">
+                              <div class="col-12">
+                                 <input
+                                    type="text"
+                                    class="input-feild"
+                                    readonly="true"
+                                    placeholder="Tên đăng nhập"
+                                    autocomplete="off"
+                                    name="username"
+                                    id="username"
+                                 />
+                              </div>
+
+                              <div class="col-12">
+                                 <input
+                                    class="input-feild"
+                                    readonly="true"
+                                    placeholder="Email"
+                                    id="email"
+                                    type="email"
+                                    name="email"
+                                 />
+                              </div>
+                              <div class="col-12">
+                                 <input
+                                    class="input-feild"
+                                    readonly="true"
+                                    placeholder="Số điện thoại"
+                                    id="phoneNumber"
+                                    type="text"
+                                    name="phoneNumber"
+                                 />
+                              </div>
                               <div class="col-12">
                                  <input
                                     type="text"
@@ -36,18 +68,6 @@
                                     autocomplete="off"
                                     name="fullName"
                                     id="fullName"
-                                 />
-                              </div>
-                              <div class="col-12">
-                                 <input class="input-feild" placeholder="Email" id="email" type="email" name="email" />
-                              </div>
-                              <div class="col-12">
-                                 <input
-                                    class="input-feild"
-                                    placeholder="Số điện thoại"
-                                    id="phoneNumber"
-                                    type="text"
-                                    name="phoneNumber"
                                  />
                               </div>
                               <div class="col-12">
@@ -63,8 +83,8 @@
                                  <div class="gender-wrapper">
                                     <div class="form-check">
                                        <input
-                                          checked
-                                          class="form-check-input"
+                                          value="male"
+                                          class="form-check-input gender-radio"
                                           type="radio"
                                           name="gender"
                                           id="gender_1"
@@ -72,8 +92,24 @@
                                        <label class="form-check-label" for="gender_1"> Nam </label>
                                     </div>
                                     <div class="form-check">
-                                       <input class="form-check-input" type="radio" name="gender" id="gender_2" />
+                                       <input
+                                          value="female"
+                                          class="form-check-input gender-radio"
+                                          type="radio"
+                                          name="gender"
+                                          id="gender_2"
+                                       />
                                        <label class="form-check-label" for="gender_2"> Nữ </label>
+                                    </div>
+                                    <div class="form-check">
+                                       <input
+                                          value="flex"
+                                          class="form-check-input gender-radio"
+                                          type="radio"
+                                          name="gender"
+                                          id="gender_3"
+                                       />
+                                       <label class="form-check-label" for="gender_3"> Khác </label>
                                     </div>
                                  </div>
                               </div>
@@ -89,14 +125,11 @@
       </div>
       <%- include('../partials/foot'); %>
       <script type="module">
-         import { getFormData } from '/js/utils/formDataHandler.js';
-         const validate = new window.JustValidate('#form-register');
+         import { configHeaders, localStorage, responseHandler, getFormData } from '/js/utils/index.js';
+
+         const validate = new window.JustValidate('#form-update-user-profile');
          validate
             .addField('#fullName', [
-               {
-                  rule: 'required',
-                  errorMessage: 'Không được để trống họ tên',
-               },
                {
                   rule: 'minLength',
                   value: 3,
@@ -108,48 +141,47 @@
                   errorMessage: 'Họ và tên chỉ được có tối đa 30 ký tự',
                },
             ])
-            .addField('#email', [
-               {
-                  rule: 'required',
-                  errorMessage: 'Không được để trống email !',
-               },
-               {
-                  rule: 'email',
-                  errorMessage: 'Không đúng định dạng email !',
-               },
-            ])
-            .addField('#phoneNumber', [
-               {
-                  rule: 'minLength',
-                  value: 10,
-                  errorMessage: 'Số điện thoại phải có ít nhất 10 chữ số!',
-               },
-               {
-                  rule: 'maxLength',
-                  value: 12,
-                  errorMessage: 'Số điện thoại chỉ được có tối đa 12 chữ số!',
-               },
-            ])
-            .addField('#address', [
-               {
-                  rule: 'required',
-                  errorMessage: 'Vui lòng điền mật khẩu !',
-               },
-               {
-                  rule: 'password',
-                  errorMessage: 'Mật khẩu phải có ít nhất 8 ký tự, trong đó có ít nhất một ký tự chữ và một ký tự số !',
-               },
-            ])
             .onSuccess(async (event) => {
-               const formData = getFormData(event.target);
-               try {
-                  const { data, status } = await axios.post('/api/user/register', formData);
-                  if (status === 200) {
-                     const { status, message } = data;
-                     toastr[status](message);
-                  }
-               } catch (error) {
-                  toastr.error('Xảy ra lỗi khi gửi request về server !');
+               const totalData = getFormData(event.target);
+               const genderOptionSelected = $('.gender-radio:checked');
+               const avatarNode = $('#avatar-upload');
+
+               const formData = new FormData();
+
+               formData.append(
+                  'userInfo',
+                  JSON.stringify({
+                     fullName: totalData.fullName,
+                     address: totalData.address,
+                     gender: genderOptionSelected.val(),
+                  }),
+               );
+               if (avatarNode[0]?.files?.length > 0) {
+                  const avatarFile = avatarNode[0].files[0];
+                  formData.append('avatar', avatarFile);
+               }
+
+               const handleUpdateInfoSuccess = () => {
+                  toastr.success('Cập nhật thông tin người dùng thành công !');
+               };
+               const { accessToken, refreshToken } = localStorage.getStore();
+               const config = configHeaders(accessToken, 'multipart/form-data');
+               const { data, status } = await axios.put('/api/user/update-info', formData, config);
+               data.status === 'success' && handleUpdateInfoSuccess();
+               if (data?.message === 'jwt expired') {
+                  const refreshTokenResponse = await axios.post('/api/user/refresh-token', { refreshToken });
+                  responseHandler(refreshTokenResponse, async (data) => {
+                     const { accessToken } = data.payload;
+                     localStorage.setStore(data.payload);
+                     const config = configHeaders(accessToken, 'multipart/form-data');
+                     const updateInfoResult = await axios.put('/api/user/update-info', formData, config);
+
+                     responseHandler(updateInfoResult, (data) => {
+                        data.status === 'success' && handleUpdateInfoSuccess();
+                     });
+                  });
+               } else if (data?.message === 'No auth token') {
+                  window.location.href('/login');
                }
             });
       </script>

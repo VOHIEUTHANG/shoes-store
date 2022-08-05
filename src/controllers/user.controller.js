@@ -82,10 +82,28 @@ const userController = () => ({
             const newRefreshToken = generateRefreshToken({ userName: user?.userName });
             const insertRefreshTokenResult = await userService.insertRefreshTokens(refreshToken, user?.userName);
             insertRefreshTokenResult &&
-               res.json(createResponse('success', 'Refresh token successfully !', { newAccessToken, newRefreshToken }));
+               res.json(
+                  createResponse('success', 'Refresh token successfully !', {
+                     accessToken: newAccessToken,
+                     refreshToken: newRefreshToken,
+                  }),
+               );
             insertRefreshTokenResult || res.json(createResponse('error', 'Insert refresh token failed !'));
          });
       }
+   },
+   async updateInfo(req, res) {
+      const avatar = req.file;
+      let { userInfo } = req.body;
+      userInfo = JSON.parse(userInfo);
+      const username = req.user.userName;
+      if (!!avatar) {
+         const avatarPathFormated = '/' + avatar.path.replaceAll('\\', '/');
+         userInfo.avatar = avatarPathFormated;
+      }
+      userInfo.username = username;
+      res.json({ userInfo });
+      // const updateUserResult = await userService.updateUserInfo(userInfo);
    },
 });
 

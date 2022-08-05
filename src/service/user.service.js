@@ -1,4 +1,6 @@
 import pool from '../database/pool';
+import Models from '../database/sequelize';
+const UserModel = Models.user;
 
 import PasswordHandler from '../helpers/passwordHandler';
 import { createResponse } from '../helpers/responseCreator';
@@ -36,6 +38,19 @@ class userService {
       } catch (error) {
          return false;
       }
+   }
+   async updateUserInfo(userInfo) {
+      const username = userInfo?.username;
+      if (!username) {
+         console.log('missing username...');
+         return null;
+      }
+      const targetUser = await UserModel.findAll({
+         where: {
+            username: username,
+         },
+      });
+      return targetUser;
    }
    async getAllRefreshTokens() {
       const [rows] = await pool.execute('select refreshToken from refresh_tokens');

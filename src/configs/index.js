@@ -45,11 +45,13 @@ export default function configs(app) {
             jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken('Authorization');
             jwtOptions.secretOrKey = process.env.ACCESS_TOKEN_SECRET;
 
-            const JWTstrategy = new JwtStrategy(jwtOptions, (payload, done) => {
+            const JWTstrategy = new JwtStrategy(jwtOptions, (user, done) => {
                try {
-                  console.log('payload >>', payload);
-                  done(null, { userName: payload.userName });
-               } catch (error) {}
+                  done(null, user);
+               } catch (error) {
+                  console.log('message: ', error.message);
+                  done(null, false);
+               }
             });
 
             const localStraregy = new LocalStrategy(async (username, password, done) => {

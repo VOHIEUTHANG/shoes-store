@@ -15,7 +15,7 @@ class productService {
             str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
                      .replace(/\s+/g, '-') // collapse whitespace and replace by -
                      .replace(/-+/g, '-'); // collapse dashes
-          
+            
             return str;
           
     }
@@ -29,18 +29,23 @@ class productService {
         }
     }
     async save(data){
-      const product = await productModel.create({
-      name:data.name,
-      isSelling:data.isSelling,
-      sellStartDate: data.date,
-      price: data.price,
-      suitableFor: data.sex,
-      specifications: data.detail,
-      description: data.description,
-      BRAND_ID: 10,
-      slug: this.createslug(data.name),
-      })
-      return product;
+      try {
+        const product = await productModel.create({
+          name:data.name,
+          isSelling:data.isSelling,
+          sellStartDate: data.date,
+          price: data.price,
+          suitableFor: data.sex,
+          specifications: data.detail,
+          description: data.description,
+          BRAND_ID: 10,
+          slug: this.createslug(data.name),
+          })
+          return product;
+    } catch (err) {
+        console.log('🚀 ~ file: product.service.js ~ line 8 ~ productService ~ error', err);
+        return null;
+    }   
     }
 }
 module.exports = new productService;

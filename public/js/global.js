@@ -10,17 +10,8 @@
          toastr.options.extendedTimeOut = 5000;
       },
       tippy() {
-         tippy('.menu-link--sale', {
-            content: 'Giảm giá',
-         });
          tippy('.user-section', {
             content: 'Tài khoản',
-         });
-         tippy('.wishlist', {
-            content: 'Wish list',
-         });
-         tippy('.main-logo', {
-            content: 'Cửa hàng',
          });
       },
       run() {

@@ -73,6 +73,16 @@ const mainController = () => ({
       }
       res.render('pages/product-detail', payload);
    },
+   getProfilePage: (req, res) => {
+      const user = req.user;
+      const payloadInfo = req.payload;
+      const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
+      if (user) {
+         payload.user = user;
+         payload.isLoggedIn = true;
+      }
+      res.render('pages/profile', payload);
+   },
 });
 
 export default mainController();

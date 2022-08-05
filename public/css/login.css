@@ -37,7 +37,7 @@
       background-color: #fefbf6; }
     .login-method-item i {
       font-size: 2rem;
-      color: #050035; }
+      color: #030021; }
   .login .divider {
     margin: 3rem 0;
     position: relative; }
@@ -57,7 +57,7 @@
     gap: 2rem;
     display: flex;
     flex-direction: column; }
-    .login form input {
+    .login form input:not([type='radio']) {
       width: 100%; }
     .login form .button[type='submit'] {
       margin-top: 2rem;

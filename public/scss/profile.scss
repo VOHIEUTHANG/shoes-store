@@ -1,0 +1,40 @@
+@import './variable';
+@import './mixi';
+#profile {
+   .avatar {
+      @include centerFlexItems;
+      flex-direction: column;
+      margin-bottom: 2rem;
+      &-wrapper {
+         cursor: pointer;
+         width: 200px;
+         height: 200px;
+         border-radius: 50%;
+         // border: 5px solid rgb(243, 243, 243);
+         box-shadow: rgba(0, 0, 0, 0.03) 0 0 40px 2px;
+         overflow: hidden;
+         img {
+            user-select: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+         }
+      }
+      .button.avatar__upload {
+         margin-top: 2rem;
+      }
+   }
+   .gender-wrapper {
+      display: flex;
+      justify-content: space-evenly;
+   }
+   .form-check {
+      text-align: start;
+   }
+   .form-check-input {
+      &:checked {
+         background-color: $color-black;
+         border-color: black;
+      }
+   }
+}

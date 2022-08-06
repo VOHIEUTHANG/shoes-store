@@ -703,7 +703,7 @@ input.input-feild {
   padding: 1rem 1.7rem;
   outline: none;
   border: 1px solid #d7d6d6;
-  color: #5e5c5c;
+  color: #222;
   text-transform: initial; }
 
 .glide__slide {
@@ -773,6 +773,13 @@ input.input-feild {
     color: #030021 !important; }
     .button:hover::after {
       width: 100%; }
+  .button.disable {
+    cursor: default;
+    opacity: 0.5; }
+    .button.disable:hover {
+      color: #fff !important; }
+      .button.disable:hover::after {
+        width: 0; }
 
 h1.cart-heading {
   color: #252525;

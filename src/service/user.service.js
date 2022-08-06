@@ -41,17 +41,40 @@ class userService {
       }
    }
    async updateUserInfo(userInfo) {
-      const username = userInfo?.username;
-      if (!username) {
+      if (!userInfo?.username) {
          console.log('missing username...');
-         return null;
+         return false;
       }
-      const targetUser = await UserModel.findAll({
-         where: {
-            username: username,
-         },
-      });
-      return targetUser;
+      try {
+         const updateUserResult = await UserModel.update(
+            {
+               fullName: userInfo.fullName,
+               gender: userInfo.gender,
+               address: userInfo.address,
+            },
+            {
+               where: {
+                  username: userInfo.username,
+               },
+            },
+         );
+         if (userInfo.avatar) {
+            const updateAccountResult = await AccountModel.update(
+               {
+                  avatar: userInfo.avatar,
+               },
+               {
+                  where: {
+                     username: userInfo.username,
+                  },
+               },
+            );
+         }
+         return true;
+      } catch (error) {
+         console.log(error);
+         return false;
+      }
    }
    async getUserInfo(username) {
       const userInfo = UserModel.findAll({

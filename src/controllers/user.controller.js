@@ -99,11 +99,15 @@ const userController = () => ({
       const username = req.user.userName;
       if (!!avatar) {
          const avatarPathFormated = '/' + avatar.path.replaceAll('\\', '/');
-         userInfo.avatar = avatarPathFormated;
+         userInfo.avatar = avatarPathFormated.slice(avatarPathFormated.indexOf('assets') - 1);
       }
       userInfo.username = username;
-      res.json({ userInfo });
-      // const updateUserResult = await userService.updateUserInfo(userInfo);
+      const updateUserResult = await userService.updateUserInfo(userInfo);
+      if (updateUserResult) {
+         res.status(200).json(createResponse('success', 'Cập nhật thông tin người dùng thành công !'));
+      } else {
+         res.status(400).json(createResponse('error', 'Cập nhật thông tin người đùng thất bại!'));
+      }
    },
 });
 

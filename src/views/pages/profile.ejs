@@ -100,7 +100,7 @@
                                     </div>
                                  </div>
                               </div>
-                              <button type="submit" class="button button-full">CẬP NHẬT</button>
+                              <button type="submit" class="button disable button-full">CẬP NHẬT</button>
                            </div>
                         </form>
                      </div>
@@ -112,7 +112,13 @@
       </div>
       <%- include('../partials/foot'); %>
       <script type="module">
-         import { configHeaders, localStorage, responseHandler, getFormData } from '/js/utils/index.js';
+         import {
+            configHeaders,
+            localStorage,
+            responseHandler,
+            getFormData,
+            refreshTokenHandler,
+         } from '/js/utils/index.js';
          const validate = new window.JustValidate('#form-update-user-profile');
          validate
             .addField('#fullName', [
@@ -151,14 +157,20 @@
                };
                const { accessToken, refreshToken } = localStorage.getStore();
                const config = configHeaders(accessToken, 'multipart/form-data');
-               const { data, status } = await axios.put('/api/user/update-info', formData, config);
-
-               // const config = configHeaders(accessToken, 'multipart/form-data');
-               // const updateInfoResult = await axios.put('/api/user/update-info', formData, config);
-
-               // responseHandler(updateInfoResult, (data) => {
-               //    data.status === 'success' && handleSuccess();
-               // });
+               axios
+                  .put('/api/user/update-info', formData, config)
+                  .then(({ data }) => {
+                     toastr[data.status](data.message);
+                  })
+                  .catch(async (error) => {
+                     const newToken = await refreshTokenHandler(error.response.status);
+                     const { data } = axios.put(
+                        '/api/user/update-info',
+                        formData,
+                        configHeaders(newToken, 'multipart/form-data'),
+                     );
+                     toastr[data.status](data.message);
+                  });
             });
       </script>
       <script>

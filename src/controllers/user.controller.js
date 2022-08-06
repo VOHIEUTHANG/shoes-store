@@ -71,13 +71,13 @@ const userController = () => ({
    },
    async getNewAccessToken(req, res, next) {
       const { refreshToken } = req.body;
-      if (!refreshToken) res.status(401).json({ status: 401, message: 'Missing refresh token !' });
+      if (!refreshToken) res.status(401).json(createResponse('error', 'Missing refresh token !'));
       const refreshTokens = await userService.getAllRefreshTokens();
       if (!refreshTokens?.includes(refreshToken)) {
-         res.status(403).json({ status: 403, message: 'Forbidden' });
+         res.status(403).json(createResponse('error', 'forbiden'));
       } else {
          verifyRefreshToken(refreshToken, async (err, user) => {
-            if (err) res.status(403).json({ status: 403, message: err.message });
+            if (err) res.status(403).json(createResponse('error', 'forbiden'));
             const newAccessToken = generateAccessToken({ userName: user?.userName });
             const newRefreshToken = generateRefreshToken({ userName: user?.userName });
             const insertRefreshTokenResult = await userService.insertRefreshTokens(refreshToken, user?.userName);

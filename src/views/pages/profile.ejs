@@ -18,11 +18,7 @@
                            <div class="avatar">
                               <label for="avatar-upload" class="avatar__upload">
                                  <div class="avatar-wrapper">
-                                    <img
-                                       id="avatar-img"
-                                       src="https://images.wallpaperscraft.com/image/single/dog_husky_look_spotted_muzzle_40227_1920x1080.jpg"
-                                       alt="avatar"
-                                    />
+                                    <img id="avatar-img" src="<%= userInfo.avatar %>" alt="avatar" />
                                  </div>
                                  <input id="avatar-upload" hidden name="avatar" type="file" accept="image/*" />
                               </label>
@@ -35,6 +31,7 @@
                                     readonly="true"
                                     placeholder="Tên đăng nhập"
                                     autocomplete="off"
+                                    value="<%= userInfo.username %>"
                                     name="username"
                                     id="username"
                                  />
@@ -45,6 +42,7 @@
                                     class="input-feild"
                                     readonly="true"
                                     placeholder="Email"
+                                    value="<%= userInfo.email %>"
                                     id="email"
                                     type="email"
                                     name="email"
@@ -54,6 +52,7 @@
                                  <input
                                     class="input-feild"
                                     readonly="true"
+                                    value="<%= userInfo.phoneNumber %>"
                                     placeholder="Số điện thoại"
                                     id="phoneNumber"
                                     type="text"
@@ -64,6 +63,7 @@
                                  <input
                                     type="text"
                                     class="input-feild"
+                                    value="<%= userInfo.fullName %>"
                                     placeholder="Họ và tên"
                                     autocomplete="off"
                                     name="fullName"
@@ -74,6 +74,7 @@
                                  <input
                                     class="input-feild"
                                     placeholder="Địa chỉ"
+                                    value="<%= userInfo.address %>"
                                     type="text"
                                     id="address"
                                     name="address"
@@ -82,33 +83,19 @@
                               <div class="col-12">
                                  <div class="gender-wrapper">
                                     <div class="form-check">
-                                       <input
-                                          value="male"
-                                          class="form-check-input gender-radio"
-                                          type="radio"
-                                          name="gender"
-                                          id="gender_1"
-                                       />
+                                       <input value="male" class="form-check-input gender-radio" type="radio"
+                                       name="gender" id="gender_1" <%= userInfo.gender === 'Male' ? 'checked' : '' %> />
                                        <label class="form-check-label" for="gender_1"> Nam </label>
                                     </div>
                                     <div class="form-check">
-                                       <input
-                                          value="female"
-                                          class="form-check-input gender-radio"
-                                          type="radio"
-                                          name="gender"
-                                          id="gender_2"
+                                       <input value="female" class="form-check-input gender-radio" type="radio"
+                                       name="gender" id="gender_2" <%= userInfo.gender === 'Female' ? 'checked' : '' %>
                                        />
                                        <label class="form-check-label" for="gender_2"> Nữ </label>
                                     </div>
                                     <div class="form-check">
-                                       <input
-                                          value="flex"
-                                          class="form-check-input gender-radio"
-                                          type="radio"
-                                          name="gender"
-                                          id="gender_3"
-                                       />
+                                       <input value="flex" class="form-check-input gender-radio" type="radio"
+                                       name="gender" id="gender_3" <%= userInfo.gender === 'Flex' ? 'checked' : '' %> />
                                        <label class="form-check-label" for="gender_3"> Khác </label>
                                     </div>
                                  </div>
@@ -126,7 +113,6 @@
       <%- include('../partials/foot'); %>
       <script type="module">
          import { configHeaders, localStorage, responseHandler, getFormData } from '/js/utils/index.js';
-
          const validate = new window.JustValidate('#form-update-user-profile');
          validate
             .addField('#fullName', [
@@ -160,29 +146,19 @@
                   const avatarFile = avatarNode[0].files[0];
                   formData.append('avatar', avatarFile);
                }
-
                const handleUpdateInfoSuccess = () => {
                   toastr.success('Cập nhật thông tin người dùng thành công !');
                };
                const { accessToken, refreshToken } = localStorage.getStore();
                const config = configHeaders(accessToken, 'multipart/form-data');
                const { data, status } = await axios.put('/api/user/update-info', formData, config);
-               data.status === 'success' && handleUpdateInfoSuccess();
-               if (data?.message === 'jwt expired') {
-                  const refreshTokenResponse = await axios.post('/api/user/refresh-token', { refreshToken });
-                  responseHandler(refreshTokenResponse, async (data) => {
-                     const { accessToken } = data.payload;
-                     localStorage.setStore(data.payload);
-                     const config = configHeaders(accessToken, 'multipart/form-data');
-                     const updateInfoResult = await axios.put('/api/user/update-info', formData, config);
 
-                     responseHandler(updateInfoResult, (data) => {
-                        data.status === 'success' && handleUpdateInfoSuccess();
-                     });
-                  });
-               } else if (data?.message === 'No auth token') {
-                  window.location.href('/login');
-               }
+               // const config = configHeaders(accessToken, 'multipart/form-data');
+               // const updateInfoResult = await axios.put('/api/user/update-info', formData, config);
+
+               // responseHandler(updateInfoResult, (data) => {
+               //    data.status === 'success' && handleSuccess();
+               // });
             });
       </script>
       <script>

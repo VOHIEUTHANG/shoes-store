@@ -18,8 +18,7 @@ function responseHandler(responseResult, successHandler) {
    const { data, status } = responseResult;
    switch (status) {
       case 200:
-         successHandler(data);
-         break;
+         return successHandler(data);
       case 401:
          window.location.href = '/401';
          break;
@@ -53,4 +52,27 @@ const configHeaders = (token, contentType) => {
 
 const formatToCurrency = (amout) => amout.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
 
-export { responseHandler, localStorage, getFormData, formatToCurrency, configHeaders };
+const refreshTokenHandler = async (status) => {
+   const { refreshToken } = localStorage.getStore();
+   switch (status) {
+      case 200:
+         return true;
+      case 403:
+         // token expired
+         const refreshTokenResponse = await axios.post('/api/user/refresh-token', { refreshToken });
+         return responseHandler(refreshTokenResponse, (data) => {
+            localStorage.setStore(data.payload);
+            const { accessToken } = data.payload;
+            return accessToken;
+         });
+         break;
+      case 401:
+         // No auth token
+         window.location.href('/login');
+         break;
+      default:
+         window.location.href('/403');
+   }
+};
+
+export { responseHandler, localStorage, getFormData, formatToCurrency, configHeaders, refreshTokenHandler };

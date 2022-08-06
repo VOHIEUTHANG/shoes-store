@@ -1,3 +1,5 @@
+import UserService from '../service/user.service';
+
 const mainController = () => ({
    getHomePage: async (req, res) => {
       const user = req.user;
@@ -79,15 +81,13 @@ const mainController = () => ({
       }
       res.render('pages/product-detail', payload);
    },
-   getProfilePage: (req, res) => {
-      console.log('access success !');
+   getProfilePage: async (req, res) => {
       const user = req.user;
+      if (!user) return res.redirect('/login');
+      const userInfo = await UserService.getUserInfo(user.userName);
       const payloadInfo = req.payload;
-      const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
-      if (user) {
-         payload.user = user;
-         payload.isLoggedIn = true;
-      }
+      console.log('🚀 ~ file: main.controller.js ~ line 89 ~ payloadInfo', payloadInfo);
+      const payload = { user, isLoggedIn: true, userInfo, ...payloadInfo };
       res.render('pages/profile', payload);
    },
 });

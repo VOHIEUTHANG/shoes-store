@@ -4,7 +4,7 @@ import mainController from '../controllers/main.controller';
 import headerWrapper from '../helpers/headerWrapper';
 import validateToken from '../middlewares/validateToken';
 
-router.get('/profile', validateToken, headerWrapper(mainController.getProfilePage));
+router.get('/profile', headerWrapper(mainController.getProfilePage));
 
 router.get('/product-details/:slug', headerWrapper(mainController.getProductDetailsPage));
 router.get('/all-product', headerWrapper(mainController.getAllProductPage));

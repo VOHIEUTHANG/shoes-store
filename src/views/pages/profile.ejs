@@ -100,7 +100,9 @@
                                     </div>
                                  </div>
                               </div>
-                              <button type="submit" class="button disable button-full">CẬP NHẬT</button>
+                              <button type="submit" id="update-user-submit-btn" class="button disable button-full">
+                                 CẬP NHẬT
+                              </button>
                            </div>
                         </form>
                      </div>
@@ -120,6 +122,8 @@
             refreshTokenHandler,
          } from '/js/utils/index.js';
          const validate = new window.JustValidate('#form-update-user-profile');
+         const submitBtn = $('#update-user-submit-btn');
+         const avatarNode = $('#avatar-upload');
          validate
             .addField('#fullName', [
                {
@@ -134,44 +138,56 @@
                },
             ])
             .onSuccess(async (event) => {
-               const totalData = getFormData(event.target);
-               const genderOptionSelected = $('.gender-radio:checked');
-               const avatarNode = $('#avatar-upload');
+               if (!submitBtn.hasClass('disable')) {
+                  const totalData = getFormData(event.target);
+                  const genderOptionSelected = $('.gender-radio:checked');
+                  const formData = new FormData();
 
-               const formData = new FormData();
-
-               formData.append(
-                  'userInfo',
-                  JSON.stringify({
-                     fullName: totalData.fullName,
-                     address: totalData.address,
-                     gender: genderOptionSelected.val(),
-                  }),
-               );
-               if (avatarNode[0]?.files?.length > 0) {
-                  const avatarFile = avatarNode[0].files[0];
-                  formData.append('avatar', avatarFile);
+                  formData.append(
+                     'userInfo',
+                     JSON.stringify({
+                        fullName: totalData.fullName,
+                        address: totalData.address,
+                        gender: genderOptionSelected.val(),
+                     }),
+                  );
+                  if (avatarNode[0]?.files?.length > 0) {
+                     const avatarFile = avatarNode[0].files[0];
+                     formData.append('avatar', avatarFile);
+                  }
+                  const handleUpdateInfoSuccess = () => {
+                     toastr.success('Cập nhật thông tin người dùng thành công !');
+                  };
+                  const { accessToken, refreshToken } = localStorage.getStore();
+                  const config = configHeaders(accessToken, 'multipart/form-data');
+                  axios
+                     .put('/api/user/update-info', formData, config)
+                     .then(({ data }) => {
+                        toastr[data.status](data.message);
+                     })
+                     .catch(async (error) => {
+                        const newToken = await refreshTokenHandler(error.response.status);
+                        const { data } = axios.put(
+                           '/api/user/update-info',
+                           formData,
+                           configHeaders(newToken, 'multipart/form-data'),
+                        );
+                        toastr[data.status](data.message);
+                     });
+               } else {
+                  toastr.info('Thông tin người dùng không có sự sửa đổi nào !');
                }
-               const handleUpdateInfoSuccess = () => {
-                  toastr.success('Cập nhật thông tin người dùng thành công !');
-               };
-               const { accessToken, refreshToken } = localStorage.getStore();
-               const config = configHeaders(accessToken, 'multipart/form-data');
-               axios
-                  .put('/api/user/update-info', formData, config)
-                  .then(({ data }) => {
-                     toastr[data.status](data.message);
-                  })
-                  .catch(async (error) => {
-                     const newToken = await refreshTokenHandler(error.response.status);
-                     const { data } = axios.put(
-                        '/api/user/update-info',
-                        formData,
-                        configHeaders(newToken, 'multipart/form-data'),
-                     );
-                     toastr[data.status](data.message);
-                  });
             });
+         const removeClass = () => {
+            submitBtn.hasClass('disable') && submitBtn.removeClass('disable');
+         };
+         !(function checkModifyUser() {
+            const genderCheckInput = $('.form-check > input[type = radio]');
+            $('#fullName').on('input', removeClass);
+            $('#address').on('input', removeClass);
+            genderCheckInput.change(removeClass);
+            avatarNode.change(removeClass);
+         })();
       </script>
       <script>
          const uploadAvatart = $('#avatar-upload');

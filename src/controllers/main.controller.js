@@ -85,8 +85,8 @@ const mainController = () => ({
       const user = req.user;
       if (!user) return res.redirect('/login');
       const userInfo = await UserService.getUserInfo(user.userName);
+      user.avatar = userInfo.avatar;
       const payloadInfo = req.payload;
-      console.log('🚀 ~ file: main.controller.js ~ line 89 ~ payloadInfo', payloadInfo);
       const payload = { user, isLoggedIn: true, userInfo, ...payloadInfo };
       res.render('pages/profile', payload);
    },

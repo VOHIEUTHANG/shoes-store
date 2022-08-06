@@ -1,12 +1,21 @@
 import jwt from 'jsonwebtoken';
+import passport from 'passport';
+import { createResponse } from '../helpers/responseCreator';
 
 export default function validateTokenMiddleware(req, res, next) {
-   const authHeader = req.headers['authorization'];
-   const token = authHeader && authHeader.split(' ')[1];
-   if (!token) res.status(401);
-   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-      if (err) res.status(403).json({ status: 403, message: err.message });
-      req.user = user;
-      next();
-   });
+   passport.authenticate('jwt', { session: false }, (error, user, info, status) => {
+      console.log(user);
+      if (!user) {
+         if (info?.message === 'No auth token') {
+            return res.status(401).json(createResponse('warning', info.message));
+         }
+         if (info?.message === 'jwt expired') {
+            return res.status(403).json(createResponse('warning', info.message));
+         }
+         return res.status(400).json(createResponse('error', 'Invalide token'));
+      } else {
+         req.user = user;
+         next();
+      }
+   })(req, res, next);
 }

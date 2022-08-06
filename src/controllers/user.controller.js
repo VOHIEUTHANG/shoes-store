@@ -71,20 +71,42 @@ const userController = () => ({
    },
    async getNewAccessToken(req, res, next) {
       const { refreshToken } = req.body;
-      if (!refreshToken) res.status(401).json({ status: 401, message: 'Missing refresh token !' });
+      if (!refreshToken) res.status(401).json(createResponse('error', 'Missing refresh token !'));
       const refreshTokens = await userService.getAllRefreshTokens();
       if (!refreshTokens?.includes(refreshToken)) {
-         res.status(403).json({ status: 403, message: 'Forbidden' });
+         res.status(403).json(createResponse('error', 'forbiden'));
       } else {
          verifyRefreshToken(refreshToken, async (err, user) => {
-            if (err) res.status(403).json({ status: 403, message: err.message });
+            if (err) res.status(403).json(createResponse('error', 'forbiden'));
             const newAccessToken = generateAccessToken({ userName: user?.userName });
             const newRefreshToken = generateRefreshToken({ userName: user?.userName });
             const insertRefreshTokenResult = await userService.insertRefreshTokens(refreshToken, user?.userName);
             insertRefreshTokenResult &&
-               res.json(createResponse('success', 'Refresh token successfully !', { newAccessToken, newRefreshToken }));
+               res.json(
+                  createResponse('success', 'Refresh token successfully !', {
+                     accessToken: newAccessToken,
+                     refreshToken: newRefreshToken,
+                  }),
+               );
             insertRefreshTokenResult || res.json(createResponse('error', 'Insert refresh token failed !'));
          });
+      }
+   },
+   async updateInfo(req, res) {
+      const avatar = req.file;
+      let { userInfo } = req.body;
+      userInfo = JSON.parse(userInfo);
+      const username = req.user.userName;
+      if (!!avatar) {
+         const avatarPathFormated = '/' + avatar.path.replaceAll('\\', '/');
+         userInfo.avatar = avatarPathFormated.slice(avatarPathFormated.indexOf('assets') - 1);
+      }
+      userInfo.username = username;
+      const updateUserResult = await userService.updateUserInfo(userInfo);
+      if (updateUserResult) {
+         res.status(200).json(createResponse('success', 'Cập nhật thông tin người dùng thành công !'));
+      } else {
+         res.status(400).json(createResponse('error', 'Cập nhật thông tin người đùng thất bại!'));
       }
    },
 });

@@ -10,16 +10,17 @@
 <!-- GLOBAL LOGIC -->
 <script src="/js/global.js"></script>
 <script type="module">
-   import localstorage from '/js/localStorage.js';
-   if (localstorage.getStore()) {
-      const { refreshToken } = localstorage.getStore();
+   import { localStorage } from '/js/utils/index.js';
+
+   if (localStorage.getStore()) {
+      const { refreshToken } = localStorage.getStore();
       const logoutBtn = $('.user-options__item.logout');
       logoutBtn.click(async () => {
          console.log('logout clicked !');
          const payload = { refreshToken };
          const { data, status } = await axios.delete('/api/user/logout', { data: payload });
          if (data.status === 'success' && status === 200) {
-            localstorage.clearStore();
+            localStorage.clearStore();
             window.location.href = '/';
          } else {
             const { status, message } = data;
@@ -27,17 +28,38 @@
          }
       });
    } else {
-      alert('Missing refresh token to logout!');
+      console.log('Missing refresh token to logout!');
    }
 </script>
-<script type="module">
-   import localstorage from '/js/localStorage.js';
-   const tokens = localstorage.getStore();
+<!-- <script type="module">
+   import { localStorage, responseHandler, configHeaders, refreshTokenHandler } from '/js/utils/index.js';
+   const tokens = localStorage.getStore();
    if (tokens) {
-      const { refreshToken, accessToken } = tokens;
+      const { accessToken } = tokens;
       const profileBtn = $('#user-profile');
-      profileBtn.click(() => {});
+      profileBtn.click(async () => {
+         axios
+            .get('/profile', configHeaders(accessToken, 'application/json;charset=UTF-8'))
+            .then((res) => {
+               console.log('res', res);
+            })
+            .catch(async (error) => {
+               console.log('error', error);
+               // const newToken = await refreshTokenHandler(error.response.status);
+               // axios.get('/profile', configHeaders(newToken));
+            });
+         // console.log('getProfilePageResult', getProfilePageResult);
+         // const handleSuccess = (data) => {
+         //    console.log('success');
+         //    console.log(data);
+         // };
+         // const result = await refreshTokenHandler(getProfilePageResult, handleSuccess);
+         // if (typeof result === 'string') {
+         //    const getProfilePageResult = await axios.get('/profile', {}, configHeaders(result));
+         //    responseHandler(getProfilePageResult, handleSuccess);
+         // }
+      });
    } else {
-      alert('Missing access tokens !');
+      console.log('Missing access tokens !');
    }
-</script>
+</script> -->

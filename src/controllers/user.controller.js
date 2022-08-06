@@ -80,7 +80,7 @@ const userController = () => ({
             if (err) res.status(403).json(createResponse('error', 'forbiden'));
             const newAccessToken = generateAccessToken({ userName: user?.userName });
             const newRefreshToken = generateRefreshToken({ userName: user?.userName });
-            const insertRefreshTokenResult = await userService.insertRefreshTokens(refreshToken, user?.userName);
+            const insertRefreshTokenResult = await userService.insertRefreshTokens(newRefreshToken, user.userName);
             insertRefreshTokenResult &&
                res.json(
                   createResponse('success', 'Refresh token successfully !', {

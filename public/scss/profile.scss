@@ -37,4 +37,9 @@
          border-color: black;
       }
    }
+   input[readonly='true'] {
+      opacity: 0.7;
+      color: rgb(141, 141, 141);
+      cursor: default;
+   }
 }

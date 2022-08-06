@@ -559,7 +559,7 @@
       </div>
       <%- include('../partials/foot') %>
       <script type="module">
-         import formatToCurrency from '/js/utils/formatCurrency.js';
+         import { formatToCurrency } from '/js/utils/index.js';
          rangeSlider(document.querySelector('.amount-range-slider'), {
             min: 0,
             max: 200,

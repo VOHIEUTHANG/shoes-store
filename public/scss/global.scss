@@ -61,7 +61,7 @@ input.input-feild {
    padding: 1rem 1.7rem;
    outline: none;
    border: 1px solid $color-border-gray;
-   color: $color-text-gray;
+   color: $color-text-primary;
    text-transform: initial;
 }
 
@@ -138,6 +138,16 @@ input.input-feild {
          width: 100%;
       }
       color: $color-bg-dark !important;
+   }
+   &.disable {
+      cursor: default;
+      opacity: 0.5;
+      &:hover {
+         color: $color-white !important;
+         &::after {
+            width: 0;
+         }
+      }
    }
 }
 

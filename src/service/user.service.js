@@ -1,4 +1,7 @@
 import pool from '../database/pool';
+import Models from '../database/sequelize';
+const UserModel = Models.user;
+const AccountModel = Models.account;
 
 import PasswordHandler from '../helpers/passwordHandler';
 import { createResponse } from '../helpers/responseCreator';
@@ -36,6 +39,64 @@ class userService {
       } catch (error) {
          return false;
       }
+   }
+   async updateUserInfo(userInfo) {
+      if (!userInfo?.username) {
+         console.log('missing username...');
+         return false;
+      }
+      try {
+         const updateUserResult = await UserModel.update(
+            {
+               fullName: userInfo.fullName,
+               gender: userInfo.gender,
+               address: userInfo.address,
+            },
+            {
+               where: {
+                  username: userInfo.username,
+               },
+            },
+         );
+         if (userInfo.avatar) {
+            const updateAccountResult = await AccountModel.update(
+               {
+                  avatar: userInfo.avatar,
+               },
+               {
+                  where: {
+                     username: userInfo.username,
+                  },
+               },
+            );
+         }
+         return true;
+      } catch (error) {
+         console.log(error);
+         return false;
+      }
+   }
+   async getUserInfo(username) {
+      const userInfo = UserModel.findAll({
+         where: {
+            username: username,
+         },
+      });
+      const userAvatar = AccountModel.findAll({
+         attributes: ['avatar'],
+         where: {
+            username: username,
+         },
+      });
+      return Promise.all([userInfo, userAvatar])
+         .then((res) => {
+            let expectData = {};
+            res.forEach((data) => {
+               expectData = Object.assign(expectData, data[0].dataValues);
+            });
+            return expectData;
+         })
+         .catch(console.log);
    }
    async getAllRefreshTokens() {
       const [rows] = await pool.execute('select refreshToken from refresh_tokens');

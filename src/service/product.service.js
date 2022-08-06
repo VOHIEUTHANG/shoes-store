@@ -37,8 +37,8 @@ class productService {
           price: data.price,
           suitableFor: data.sex,
           specifications: data.detail,
-          description: data.description,
-          BRAND_ID: 10,
+          description: data.des,
+          BRAND_ID: data.brand,
           slug: this.createslug(data.name),
           })
           return product;

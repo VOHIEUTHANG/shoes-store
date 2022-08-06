@@ -1,7 +1,7 @@
 import Models from '../database/sequelize';
 const product_itemModel = Models.product_items;
 class product_itemService{
-    async save(productId,inventory,size,t){
+    async save(productId,inventory,size){
         try {
             const product_item = await product_itemModel.create({
               PRODUCT_ID: productId,

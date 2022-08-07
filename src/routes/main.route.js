@@ -12,6 +12,7 @@ router.get('/login', headerWrapper(mainController.getLoginPage));
 router.get('/register', headerWrapper(mainController.getRegisterPage));
 router.get('/wishlist', headerWrapper(mainController.getWishListPage));
 router.get('/cart', headerWrapper(mainController.getCartPage));
+router.get('/change-password', headerWrapper(mainController.getChangePasswordPage));
 
 router.get('/403', mainController.get403Page);
 router.get('/401', mainController.get401Page);

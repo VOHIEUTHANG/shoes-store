@@ -154,7 +154,31 @@ input.input-feild {
 // TEMPLATE
 h1.cart-heading {
    color: #252525;
-   font-size: 25px;
-   margin-bottom: 25px;
+   font-size: 3rem;
+   margin-bottom: 5rem;
    text-transform: uppercase;
+}
+h1.page-heading {
+   color: #252525;
+   font-size: 3rem;
+   text-align: center;
+   margin-bottom: 5rem;
+   text-transform: uppercase;
+   span {
+      position: relative;
+      padding: 1rem 2rem;
+      background-color: white;
+      &::after {
+         content: '';
+         z-index: -1;
+         position: absolute;
+         @include centerPosition;
+         background-color: $color-bg-medium-gray;
+         width: 150%;
+         height: 1px;
+      }
+   }
+}
+.page-container {
+   padding: 8rem 0;
 }

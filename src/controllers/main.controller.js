@@ -33,13 +33,10 @@ const mainController = () => ({
       const user = req.user;
       const payloadInfo = req.payload;
       const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
-      if (user) {
-         payload.user = user;
-         payload.isLoggedIn = true;
-         res.render('pages/wishlist', payload);
-      } else {
-         res.redirect('/');
-      }
+      if (!user) return res.redirect('/');
+      payload.user = user;
+      payload.isLoggedIn = true;
+      res.render('pages/wishlist', payload);
    },
    getCartPage: (req, res) => {
       const user = req.user;
@@ -89,6 +86,15 @@ const mainController = () => ({
       const payloadInfo = req.payload;
       const payload = { user, isLoggedIn: true, userInfo, ...payloadInfo };
       res.render('pages/profile', payload);
+   },
+   getChangePasswordPage: async (req, res) => {
+      const user = req.user;
+      if (!user) return res.redirect('/');
+      const payloadInfo = req.payload;
+      const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
+      payload.user = user;
+      payload.isLoggedIn = true;
+      res.render('pages/change-password', payload);
    },
 });
 

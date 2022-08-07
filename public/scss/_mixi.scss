@@ -10,6 +10,15 @@
    justify-content: $JCtype;
    align-items: $AIType;
 }
+@mixin centerPosition() {
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+}
+@mixin hidden() {
+   visibility: hidden;
+   opacity: 0;
+}
 @mixin transition($target: all, $duration: 0.3s, $motionType: ease-in-out) {
    transition: all $duration $motionType;
 }

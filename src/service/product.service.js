@@ -1,32 +1,34 @@
 import Models from '../database/sequelize';
 const productModel = Models.product;
+import createSlug from '../helpers/createSlug';
+const brandModel= Models.brand;
+const product_categoryModel = Models.product_category;
 class productService {
-    createslug(str){   
-            str = str.replace(/^\s+|\s+$/g, ''); // trim
-            str = str.toLowerCase();
-          
-            // remove accents, swap ñ for n, etc
-            var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;";
-            var to   = "aaaaaeeeeeiiiiooooouuuunc------";
-            for (var i = 0, l = from.length; i < l; i++) {
-              str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-            }
-          
-            str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-                     .replace(/\s+/g, '-') // collapse whitespace and replace by -
-                     .replace(/-+/g, '-'); // collapse dashes
-            
-            return str;
-          
-    }
+   
     async getAll(){
         try {
             const products = productModel.findAll();
              return products
         } catch (err) {
-            console.log('🚀 ~ file: product.service.js ~ line 8 ~ productService ~ error', error);
+            console.log('🚀 ~ file: product.service.js ~ method getAll ~ productService ~ error', error);
             return null;
         }
+    }
+    async getAllJoin(){
+      const products = productModel.findAll({ include:{model: brandModel, as :'BRAND' },include:{model: product_categoryModel,as:'product_categories'}});
+      const brands= brandModel.findAll();
+      const product_category = product_categoryModel.findAll();
+      return products;
+      // return Promise.all([products,brands,product_category])
+      // .then((data)=>{
+      //  let productList = {};
+      //  console.log(data);
+      //  return productList;
+       
+      // })
+      // .catch((err)=>{
+      //   console.log(err);
+      // });
     }
     async save(data){
       try {
@@ -39,11 +41,11 @@ class productService {
           specifications: data.detail,
           description: data.des,
           BRAND_ID: data.brand,
-          slug: this.createslug(data.name),
+          slug: this.createSlug(data.name),
           })
           return product;
     } catch (err) {
-        console.log('🚀 ~ file: product.service.js ~ line 8 ~ productService ~ error', err);
+        console.log('🚀 ~ file: product.service.js ~ method save ~ productService ~ error', err);
         return null;
     }   
     }

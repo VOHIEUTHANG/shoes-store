@@ -8,7 +8,7 @@ class productController{
       
          try {  
             const product=  await productService.save(req.body);
-            const product_category = await productService.save(product.dataValues.ID,req.body.category);
+            const product_category = await product_categoryService.save(product.dataValues.ID,req.body.category);
             for (const element of product_itemList) {
                console.log(element);
               await product_itemService.save(product.dataValues.ID,element.inputInventory,element.inputSize);

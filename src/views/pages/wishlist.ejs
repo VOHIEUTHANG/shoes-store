@@ -1,6 +1,7 @@
 <html lang="en">
    <head>
       <%- include('../partials/head'); %>
+      <link rel="stylesheet" href="/css/library/responsize.css" />
       <link rel="stylesheet" href="/css/wishlist.css" />
    </head>
    <body>
@@ -9,73 +10,115 @@
          <div id="main">
             <div class="cart-main-area pt-95 pb-100 wishlist">
                <div class="container">
-                  <div class="row">
-                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <h1 class="cart-heading">wishlist</h1>
-                        <form action="#">
-                           <div class="table-content table-responsive">
-                              <table>
-                                 <thead>
-                                    <tr>
-                                       <th>Xóa</th>
-                                       <th>Hình ảnh</th>
-                                       <th>Tên sản phẩm</th>
-                                       <th>Giá</th>
-                                       <th>Chi tiết</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    <tr>
-                                       <td class="product-remove">
-                                          <a href="#"><i class="ti-close"></i></a>
-                                       </td>
-                                       <td class="product-thumbnail">
-                                          <a href="#"
-                                             ><img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_09f30200-e2d7-44d4-aed5-72473dd2cc73_large.jpg?v=1657254494"
-                                                alt=""
-                                          /></a>
-                                       </td>
-                                       <td class="product-name"><a href="#">Wooden Furniture </a></td>
-                                       <td class="product-price-cart"><span class="amount">3.400.000 VND</span></td>
-                                       <td class="product-subtotal"><div class="button">Xem chi tiết</div></td>
-                                    </tr>
-                                    <tr>
-                                       <td class="product-remove">
-                                          <a href="#"><i class="ti-close"></i></a>
-                                       </td>
-                                       <td class="product-thumbnail">
-                                          <a href="#"
-                                             ><img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_c78e0f98-7af4-471e-ab55-82a7d560bc44_large.jpg?v=1656997813"
-                                                alt=""
-                                          /></a>
-                                       </td>
-                                       <td class="product-name"><a href="#">Vestibulum dictum</a></td>
-                                       <td class="product-price-cart"><span class="amount">12.000.000 VND</span></td>
-                                       <td class="product-subtotal"><div class="button">Xem chi tiết</div></td>
-                                    </tr>
-                                    <tr>
-                                       <td class="product-remove">
-                                          <a href="#"><i class="ti-close"></i></a>
-                                       </td>
-                                       <td class="product-thumbnail">
-                                          <a href="#"
-                                             ><img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_f4f1b022-a8d2-495d-9880-1b17ab6b876e_large.jpg?v=1657099189"
-                                                alt=""
-                                          /></a>
-                                       </td>
-                                       <td class="product-name"><a href="#">Vestibulum dictum</a></td>
-                                       <td class="product-price-cart"><span class="amount">9.300.000 VND</span></td>
-                                       <td class="product-subtotal"><div class="button">Xem chi tiết</div></td>
-                                    </tr>
-                                 </tbody>
-                              </table>
+                  <h1 class="cart-heading">wishlist</h1>
+                  <form action="#">
+                     <div class="product-style">
+                        <div class="custom-row row gx-5 gy-5">
+                           <div class="col col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                              <div class="product-wrapper">
+                                 <div class="product-img">
+                                    <a href="#">
+                                       <img
+                                          src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_14961e9a-1e1b-4d1e-a8d2-2e4fedf3bc91_1296x.jpg?v=1656283010"
+                                          alt=""
+                                       />
+                                    </a>
+                                    <div class="add-to-cart">
+                                       <i class="ti-shopping-cart"></i>
+                                    </div>
+                                 </div>
+                                 <div class="product-content">
+                                    <div class="category__brand">Jordan</div>
+                                    <h4>
+                                       <a href="#">Air Jordan 1 Mid Diamond Shorts </a>
+                                    </h4>
+                                    <span>3.726.000 VND</span>
+                                 </div>
+                                 <div class="product-remove">
+                                    <i class="ti-close"></i>
+                                 </div>
+                              </div>
                            </div>
-                        </form>
+                           <div class="col col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                              <div class="product-wrapper">
+                                 <div class="product-img">
+                                    <a href="#">
+                                       <img
+                                          src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_0fcb40f6-8ce3-4ca8-a19b-3a81666a5d75_1296x.jpg?v=1656307568"
+                                          alt=""
+                                       />
+                                    </a>
+                                    <div class="add-to-cart">
+                                       <i class="ti-shopping-cart"></i>
+                                    </div>
+                                 </div>
+                                 <div class="product-content">
+                                    <div class="category__brand">Jordan</div>
+                                    <h4>
+                                       <a href="product-details.html"
+                                          >Air Jordan 1 Retro High OG Bred Patent 555088-063</a
+                                       >
+                                    </h4>
+                                    <div class="product-remove">
+                                       <i class="ti-close"></i>
+                                    </div>
+                                    <span>5.058.000 VND</span>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                              <div class="product-wrapper">
+                                 <div class="product-img">
+                                    <a href="#">
+                                       <img
+                                          src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_a2841cef-c85d-4d9d-bd39-856a36b993c3_1296x.jpg?v=1656235266"
+                                          alt=""
+                                       />
+                                    </a>
+                                    <div class="add-to-cart">
+                                       <i class="ti-shopping-cart"></i>
+                                    </div>
+                                 </div>
+                                 <div class="product-content">
+                                    <div class="category__brand">Jordan</div>
+                                    <h4>
+                                       <a href="product-details.html">Converse Chuck 70 High ' Dark Root 170551C</a>
+                                    </h4>
+                                    <span>2.221.000 VND</span>
+                                 </div>
+                                 <div class="product-remove">
+                                    <i class="ti-close"></i>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                              <div class="product-wrapper">
+                                 <div class="product-img">
+                                    <a href="#">
+                                       <img
+                                          src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_8b4dfd98-9cea-4bb4-b426-1633a0cd691f_1296x.jpg?v=1656404656"
+                                          alt=""
+                                       />
+                                    </a>
+                                    <div class="add-to-cart">
+                                       <i class="ti-shopping-cart"></i>
+                                    </div>
+                                 </div>
+                                 <div class="product-content">
+                                    <div class="category__brand">Jordan</div>
+                                    <h4>
+                                       <a href="product-details.html">Air Jordan 1 Retro High OG Pollen 555088-701</a>
+                                    </h4>
+                                    <span>4.490.000 VND</span>
+                                 </div>
+                                 <div class="product-remove">
+                                    <i class="ti-close"></i>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
                      </div>
-                  </div>
+                  </form>
                </div>
             </div>
          </div>

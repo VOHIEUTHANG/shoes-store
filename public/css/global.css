@@ -451,9 +451,6 @@
 input.just-validate-error-field {
   border: 1px solid var(--bs-danger) !important; }
 
-input.just-validate-success-field {
-  border: 1px solid var(--bs-success) !important; }
-
 .just-validate-error-label {
   font-size: 1.4rem; }
 
@@ -783,6 +780,30 @@ input.input-feild {
 
 h1.cart-heading {
   color: #252525;
-  font-size: 25px;
-  margin-bottom: 25px;
+  font-size: 3rem;
+  margin-bottom: 5rem;
   text-transform: uppercase; }
+
+h1.page-heading {
+  color: #252525;
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 5rem;
+  text-transform: uppercase; }
+  h1.page-heading span {
+    position: relative;
+    padding: 1rem 2rem;
+    background-color: white; }
+    h1.page-heading span::after {
+      content: '';
+      z-index: -1;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #9b9b9b;
+      width: 150%;
+      height: 1px; }
+
+.page-container {
+  padding: 8rem 0; }

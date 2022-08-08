@@ -1,13 +1,14 @@
 import Models from '../database/sequelize';
 const productModel = Models.product;
 import createSlug from '../helpers/createSlug';
+const categoryModel = Models.category;
 const brandModel= Models.brand;
 const product_categoryModel = Models.product_category;
 class productService {
    
     async getAll(){
         try {
-            const products = productModel.findAll();
+            let products = productModel.findAll();
              return products
         } catch (err) {
             console.log('🚀 ~ file: product.service.js ~ method getAll ~ productService ~ error', error);
@@ -15,24 +16,18 @@ class productService {
         }
     }
     async getAllJoin(){
-      const products = productModel.findAll({ include:{model: brandModel, as :'BRAND' },include:{model: product_categoryModel,as:'product_categories'}});
-      const brands= brandModel.findAll();
-      const product_category = product_categoryModel.findAll();
+     let products = productModel.findAll(
+     { include:[{model: brandModel, as :'BRAND' },
+      {model: product_categoryModel,as:'product_categories',include:[{model: categoryModel, as:'CATEGORY'}]
+       }]
+     });
+     let brands= brandModel.findAll();
+     let product_category = product_categoryModel.findAll();
       return products;
-      // return Promise.all([products,brands,product_category])
-      // .then((data)=>{
-      //  let productList = {};
-      //  console.log(data);
-      //  return productList;
-       
-      // })
-      // .catch((err)=>{
-      //   console.log(err);
-      // });
     }
     async save(data){
       try {
-        const product = await productModel.create({
+       let product = await productModel.create({
           name:data.name,
           isSelling:data.isSelling,
           sellStartDate: data.date,
@@ -41,7 +36,7 @@ class productService {
           specifications: data.detail,
           description: data.des,
           BRAND_ID: data.brand,
-          slug: this.createSlug(data.name),
+          slug: createSlug(data.name),
           })
           return product;
     } catch (err) {

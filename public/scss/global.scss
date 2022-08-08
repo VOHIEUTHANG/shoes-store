@@ -112,11 +112,26 @@ input.input-feild {
    letter-spacing: 0.13rem;
    font-size: 1.6rem;
    cursor: pointer;
+   overflow: hidden;
    outline: none;
    background-color: $color-bg-dark;
    color: $color-white;
    border: 1px solid $color-bg-dark;
    z-index: 1;
+   &.light {
+      color: $color-bg-dark;
+      background-color: $color-white;
+      &::after {
+         background-color: $color-bg-dark;
+      }
+      &:hover {
+         &::after {
+            // width: 100%;
+         }
+         color: $color-white !important;
+         // background-color: $color-bg-dark;
+      }
+   }
    &.full {
       width: 100%;
       height: 100%;
@@ -141,7 +156,7 @@ input.input-feild {
    }
    &:hover {
       &::after {
-         width: 100%;
+         width: 110%;
       }
       color: $color-bg-dark !important;
    }

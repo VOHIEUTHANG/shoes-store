@@ -37,6 +37,8 @@
    }
    .purchase-container {
       padding: 2rem 0;
+      // max-height: 80vh;
+      // overflow-y: scroll;
       .purchase-wrapper {
          margin-bottom: 2rem;
          &.success {
@@ -68,6 +70,12 @@
                padding: 2rem;
                .purchase-product-list {
                   .purchase-product-item {
+                     &:not(:last-child) {
+                        padding-bottom: 1.4rem;
+                        margin-bottom: 1.4rem;
+                        border-bottom: 1px solid #ccc;
+                     }
+
                      .left-section {
                         .product {
                            &-img {
@@ -120,19 +128,34 @@
                         }
                         .discount {
                            font-style: italic;
+                           color: red;
                         }
                         .last-price {
-                           font-size: 1.9rem;
+                           font-size: 1.7rem;
                            letter-spacing: 1px;
-                           font-weight: 500;
+                           font-weight: 400;
                         }
                      }
                   }
                }
             }
-         }
-
-         &-foot {
+            &-foot {
+               padding: 2rem;
+               border-top: 1px solid #ccc;
+               .button {
+               }
+               .button:not(:last-child) {
+                  margin-right: 1rem;
+               }
+               .total-price {
+                  span {
+                     margin-left: 1rem;
+                     font-size: 2rem;
+                     letter-spacing: 1px;
+                     font-weight: 500;
+                  }
+               }
+            }
          }
       }
    }

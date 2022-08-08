@@ -44,6 +44,10 @@
       border-bottom: 1px solid #eee; }
     #purchase-order .purchase-container .purchase-wrapper .purchase-body {
       padding: 2rem; }
+      #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item:not(:last-child) {
+        padding-bottom: 1.4rem;
+        margin-bottom: 1.4rem;
+        border-bottom: 1px solid #ccc; }
       #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .left-section .product-img {
         width: 100px;
         height: 100px;
@@ -83,8 +87,19 @@
           color: #5e5c5c;
           opacity: 0.5; }
         #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .right-section .discount {
-          font-style: italic; }
+          font-style: italic;
+          color: red; }
         #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .right-section .last-price {
-          font-size: 1.9rem;
+          font-size: 1.7rem;
           letter-spacing: 1px;
-          font-weight: 500; }
+          font-weight: 400; }
+    #purchase-order .purchase-container .purchase-wrapper .purchase-foot {
+      padding: 2rem;
+      border-top: 1px solid #ccc; }
+      #purchase-order .purchase-container .purchase-wrapper .purchase-foot .button:not(:last-child) {
+        margin-right: 1rem; }
+      #purchase-order .purchase-container .purchase-wrapper .purchase-foot .total-price span {
+        margin-left: 1rem;
+        font-size: 2rem;
+        letter-spacing: 1px;
+        font-weight: 500; }

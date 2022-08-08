@@ -2,6 +2,7 @@ const express = require('express');
 const productService = require('../service/product.service');
 const product_itemService = require('../service/product_item.service');
 const product_categoryService = require('../service/product_category.service');
+
 class productController{
    async create(req,res){
       let product_itemList= req.body.data;
@@ -24,6 +25,6 @@ class productController{
                message: 'Tạo thất bại!'
             });
          }
+      }
    }
-}
-module.exports = new productController;
+module.exports = new productController();

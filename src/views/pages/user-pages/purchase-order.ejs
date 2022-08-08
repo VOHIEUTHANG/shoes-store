@@ -1,0 +1,22 @@
+<html lang="en">
+   <head>
+      <%- include('../../partials/head'); %>
+      <link rel="stylesheet" href="/css/purchase-order.css" />
+   </head>
+   <body>
+      <div id="root">
+         <%- include('../../partials/header',{user,isLoggedIn}) %>
+         <div id="main">
+            <div id="purchase-order">
+               <div class="container page-container">
+                  <h1 class="page-heading">
+                     <span>Đơn mua</span>
+                  </h1>
+               </div>
+            </div>
+         </div>
+         <%- include('../../partials/footer') %>
+      </div>
+      <%- include('../../partials/foot') %>
+   </body>
+</html>

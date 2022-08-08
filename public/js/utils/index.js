@@ -75,4 +75,39 @@ const refreshTokenHandler = async (status) => {
    }
 };
 
-export { responseHandler, localStorage, getFormData, formatToCurrency, configHeaders, refreshTokenHandler };
+const privateRequestHandler = async (
+   path,
+   method = 'post',
+   payload,
+   successHandler,
+   contentType = 'application/json',
+) => {
+   const { accessToken } = localStorage.getStore();
+   const config = configHeaders(accessToken, contentType);
+   axios[method](path, payload, config)
+      .then(({ data, status }) => {
+         successHandler(data, status);
+      })
+      .catch(async (error) => {
+         console.log(error);
+         const newToken = await refreshTokenHandler(error.response?.status);
+         const newconfig = configHeaders(newToken, contentType);
+         axios[method](path, payload, newconfig)
+            .then(({ data, status }) => {
+               successHandler(data, status);
+            })
+            .catch((data) => {
+               toastr.error('Refresh token occured error , please try again !');
+            });
+      });
+};
+
+export {
+   responseHandler,
+   localStorage,
+   getFormData,
+   privateRequestHandler,
+   formatToCurrency,
+   configHeaders,
+   refreshTokenHandler,
+};

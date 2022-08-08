@@ -1,0 +1,139 @@
+@import './mixi';
+@import './variable';
+
+#purchase-order {
+   .purchase-tabs {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      .purchase-item {
+         position: relative;
+         text-align: center;
+         color: $color-text-gray;
+         font-weight: 400;
+         padding: 1.4rem 0;
+         cursor: pointer;
+         @include transition;
+         &::after {
+            position: absolute;
+            content: '';
+            top: 98%;
+            left: 50%;
+            transform: translateX(-50%);
+            @include hidden;
+            @include transition;
+            width: 70%;
+            height: 2px;
+            background-color: $color-primary;
+         }
+         &:hover,
+         &.active {
+            color: $color-primary;
+            &::after {
+               visibility: visible;
+               opacity: 1;
+            }
+         }
+      }
+   }
+   .purchase-container {
+      padding: 2rem 0;
+      .purchase-wrapper {
+         margin-bottom: 2rem;
+         &.success {
+            .purchase-head {
+               background-color: $color-bg-success;
+            }
+         }
+         &.cancel {
+            .purchase-head {
+               background-color: $color-bg-cancel;
+            }
+         }
+         border-radius: 4px;
+         border: 1px solid #ccc;
+         box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
+         .purchase {
+            &-head {
+               background-color: $color-bg-process;
+               padding: 1rem;
+               border-bottom: 1px solid #eee;
+               .purchase-info {
+                  .purchase-status {
+                  }
+                  .purchase-time {
+                  }
+               }
+            }
+            &-body {
+               padding: 2rem;
+               .purchase-product-list {
+                  .purchase-product-item {
+                     .left-section {
+                        .product {
+                           &-img {
+                              width: 100px;
+                              height: 100px;
+                              border: 1px solid #ccc;
+                              padding: 0.6rem;
+                              overflow: hidden;
+                              img {
+                                 width: 100%;
+                                 height: 100%;
+                                 object-fit: cover;
+                                 @include transition;
+                                 &:hover {
+                                    transform: scale(1.1);
+                                 }
+                              }
+                           }
+                           &-info {
+                              user-select: none;
+                              margin-left: 1rem;
+                              p {
+                                 margin: 0;
+                              }
+                              .name {
+                                 color: $color-text-primary;
+                                 @include limitTextRows(1);
+                                 font-size: 1.8rem;
+                                 @include transition;
+                                 &:hover {
+                                    color: $color-primary;
+                                 }
+                              }
+                              .size {
+                              }
+                              .quantity {
+                                 span:last-child {
+                                    font-size: 1.8rem;
+                                 }
+                              }
+                           }
+                        }
+                     }
+                     .right-section {
+                        text-align: right;
+                        .origin-price {
+                           text-decoration: line-through;
+                           color: $color-text-gray;
+                           opacity: 0.5;
+                        }
+                        .discount {
+                           font-style: italic;
+                        }
+                        .last-price {
+                           font-size: 1.9rem;
+                           letter-spacing: 1px;
+                           font-weight: 500;
+                        }
+                     }
+                  }
+               }
+            }
+         }
+
+         &-foot {
+         }
+      }
+   }
+}

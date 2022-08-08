@@ -1,0 +1,90 @@
+#purchase-order .purchase-tabs {
+  border: 1px solid #ccc;
+  border-radius: 4px; }
+  #purchase-order .purchase-tabs .purchase-item {
+    position: relative;
+    text-align: center;
+    color: #5e5c5c;
+    font-weight: 400;
+    padding: 1.4rem 0;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out; }
+    #purchase-order .purchase-tabs .purchase-item::after {
+      position: absolute;
+      content: '';
+      top: 98%;
+      left: 50%;
+      transform: translateX(-50%);
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.3s ease-in-out;
+      width: 70%;
+      height: 2px;
+      background-color: #030021; }
+    #purchase-order .purchase-tabs .purchase-item:hover, #purchase-order .purchase-tabs .purchase-item.active {
+      color: #030021; }
+      #purchase-order .purchase-tabs .purchase-item:hover::after, #purchase-order .purchase-tabs .purchase-item.active::after {
+        visibility: visible;
+        opacity: 1; }
+
+#purchase-order .purchase-container {
+  padding: 2rem 0; }
+  #purchase-order .purchase-container .purchase-wrapper {
+    margin-bottom: 2rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px; }
+    #purchase-order .purchase-container .purchase-wrapper.success .purchase-head {
+      background-color: #a8ffb5; }
+    #purchase-order .purchase-container .purchase-wrapper.cancel .purchase-head {
+      background-color: #ffdcdb; }
+    #purchase-order .purchase-container .purchase-wrapper .purchase-head {
+      background-color: #e3e3e3;
+      padding: 1rem;
+      border-bottom: 1px solid #eee; }
+    #purchase-order .purchase-container .purchase-wrapper .purchase-body {
+      padding: 2rem; }
+      #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .left-section .product-img {
+        width: 100px;
+        height: 100px;
+        border: 1px solid #ccc;
+        padding: 0.6rem;
+        overflow: hidden; }
+        #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .left-section .product-img img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: all 0.3s ease-in-out; }
+          #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .left-section .product-img img:hover {
+            transform: scale(1.1); }
+      #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .left-section .product-info {
+        user-select: none;
+        margin-left: 1rem; }
+        #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .left-section .product-info p {
+          margin: 0; }
+        #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .left-section .product-info .name {
+          color: #222;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          line-clamp: 1;
+          -webkit-box-orient: vertical;
+          font-size: 1.8rem;
+          transition: all 0.3s ease-in-out; }
+          #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .left-section .product-info .name:hover {
+            color: #030021; }
+        #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .left-section .product-info .quantity span:last-child {
+          font-size: 1.8rem; }
+      #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .right-section {
+        text-align: right; }
+        #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .right-section .origin-price {
+          text-decoration: line-through;
+          color: #5e5c5c;
+          opacity: 0.5; }
+        #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .right-section .discount {
+          font-style: italic; }
+        #purchase-order .purchase-container .purchase-wrapper .purchase-body .purchase-product-list .purchase-product-item .right-section .last-price {
+          font-size: 1.9rem;
+          letter-spacing: 1px;
+          font-weight: 500; }

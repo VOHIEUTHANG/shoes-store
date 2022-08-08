@@ -735,6 +735,12 @@ input.input-feild {
 .text-center {
   text-align: center; }
 
+.divider-vertical {
+  background-color: #3d3c42;
+  width: 1px;
+  height: 100%;
+  margin: 0 1rem; }
+
 .button {
   display: inline-block;
   text-align: center;

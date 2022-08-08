@@ -58,14 +58,14 @@ const userController = () => ({
          if (err) {
             return res.json(createResponse('error', 'Logout thất bại !'));
          }
-         if (!refreshToken) return res.json(createResponse('error', 'Missing refreshToken !'));
+         if (!refreshToken) return res.status(401).json(createResponse('error', 'Missing refreshToken !'));
          verifyRefreshToken(refreshToken, async (err, user) => {
             if (err) return res.status(403).json(createResponse('error', 'Invalid refreshToken !'));
             const userName = user?.userName;
             if (!userName) return res.json(createResponse('error', 'Missing userName data payload in refreshToken'));
             const deleteRefreshTokensResult = await userService.deleteRefreshTokensByUserName(userName);
             if (deleteRefreshTokensResult) res.json(createResponse('success', 'Login successfully !'));
-            else res.json(createResponse('error', 'Login failed !'));
+            else res.status(400).json(createResponse('error', 'Login failed !'));
          });
       });
    },
@@ -107,6 +107,20 @@ const userController = () => ({
          res.status(200).json(createResponse('success', 'Cập nhật thông tin người dùng thành công !'));
       } else {
          res.status(400).json(createResponse('error', 'Cập nhật thông tin người đùng thất bại!'));
+      }
+   },
+   async changePassword(req, res) {
+      const { currentPassword, newPassword } = req.body;
+      const username = req.user.userName;
+      try {
+         const updateResult = await userService.changePassword(username, currentPassword, newPassword);
+         if (typeof updateResult === 'string') {
+            res.json(createResponse('warning', updateResult));
+         } else {
+            res.json(createResponse('success', 'Cập nhật mật khẩu mới thành công !'));
+         }
+      } catch (error) {
+         res.status(400).json(createResponse('error', 'Occured erorr !'));
       }
    },
 });

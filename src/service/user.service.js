@@ -1,5 +1,6 @@
 import pool from '../database/pool';
 import Models from '../database/sequelize';
+import passwordHandler from '../helpers/passwordHandler.js';
 const UserModel = Models.user;
 const AccountModel = Models.account;
 
@@ -127,6 +128,36 @@ class userService {
       } catch (error) {
          console.log('Delete refresh token occured error :', error);
          return false;
+      }
+   }
+   async changePassword(username, currentPassword, newPassword) {
+      const targetAccount = await AccountModel.findAll({
+         attributes: ['username', 'password'],
+         where: {
+            username,
+         },
+      });
+      if (targetAccount.length === 0) return 'Người dùng này hiện không tồn tại !';
+      const hashPassword = targetAccount[0].dataValues.password;
+      const isMatchPassword = passwordHandler.checkMatch(currentPassword, hashPassword);
+      if (!isMatchPassword) return 'Mật khẩu hiện tại không đúng !';
+      if (newPassword?.length < 8) return 'Mật khẩu mới không hợp lệ !';
+      try {
+         const newHashPassword = passwordHandler.getHashPassword(newPassword);
+         await AccountModel.update(
+            {
+               password: newHashPassword,
+            },
+            {
+               where: {
+                  username,
+               },
+            },
+         );
+         return true;
+      } catch (error) {
+         console.log('🚀 ~ file: user.service.js ~ line 147 ~ userService ~ error', error);
+         return 'Update mật khẩu mới xảy ra lỗi !';
       }
    }
 }

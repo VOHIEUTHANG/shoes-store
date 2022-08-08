@@ -1,12 +1,12 @@
 <html lang="en">
    <head>
-      <%- include('../partials/head'); %>
+      <%- include('../../partials/head'); %>
       <link rel="stylesheet" href="/css/library/responsize.css" />
       <link rel="stylesheet" href="/css/wishlist.css" />
    </head>
    <body>
       <div id="root">
-         <%- include('../partials/header',{user,isLoggedIn}) %>
+         <%- include('../../partials/header',{user,isLoggedIn}) %>
          <div id="main">
             <div class="cart-main-area pt-95 pb-100 wishlist">
                <div class="container">
@@ -122,8 +122,8 @@
                </div>
             </div>
          </div>
-         <%- include('../partials/footer') %>
+         <%- include('../../partials/footer') %>
       </div>
-      <%- include('../partials/foot') %>
+      <%- include('../../partials/foot') %>
    </body>
 </html>

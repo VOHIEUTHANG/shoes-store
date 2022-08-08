@@ -31,35 +31,3 @@
       console.log('Missing refresh token to logout!');
    }
 </script>
-<!-- <script type="module">
-   import { localStorage, responseHandler, configHeaders, refreshTokenHandler } from '/js/utils/index.js';
-   const tokens = localStorage.getStore();
-   if (tokens) {
-      const { accessToken } = tokens;
-      const profileBtn = $('#user-profile');
-      profileBtn.click(async () => {
-         axios
-            .get('/profile', configHeaders(accessToken, 'application/json;charset=UTF-8'))
-            .then((res) => {
-               console.log('res', res);
-            })
-            .catch(async (error) => {
-               console.log('error', error);
-               // const newToken = await refreshTokenHandler(error.response.status);
-               // axios.get('/profile', configHeaders(newToken));
-            });
-         // console.log('getProfilePageResult', getProfilePageResult);
-         // const handleSuccess = (data) => {
-         //    console.log('success');
-         //    console.log(data);
-         // };
-         // const result = await refreshTokenHandler(getProfilePageResult, handleSuccess);
-         // if (typeof result === 'string') {
-         //    const getProfilePageResult = await axios.get('/profile', {}, configHeaders(result));
-         //    responseHandler(getProfilePageResult, handleSuccess);
-         // }
-      });
-   } else {
-      console.log('Missing access tokens !');
-   }
-</script> -->

@@ -5,7 +5,7 @@ import headerWrapper from '../helpers/headerWrapper';
 import validateToken from '../middlewares/validateToken';
 
 router.get('/profile', headerWrapper(mainController.getProfilePage));
-
+router.get('/purchase-order', headerWrapper(mainController.gePurchaseOrderPage));
 router.get('/product-details/:slug', headerWrapper(mainController.getProductDetailsPage));
 router.get('/all-product', headerWrapper(mainController.getAllProductPage));
 router.get('/login', headerWrapper(mainController.getLoginPage));

@@ -1,13 +1,13 @@
 <html lang="en">
    <head>
-      <%- include('../partials/head'); %>
+      <%- include('../../partials/head'); %>
       <link rel="stylesheet" href="/css/login.css" />
       <link rel="stylesheet" href="/css/signup.css" />
       <link rel="stylesheet" href="/css/profile.css" />
    </head>
    <body>
       <div id="root">
-         <%- include('../partials/header',{user,isLoggedIn}) %>
+         <%- include('../../partials/header',{user,isLoggedIn}) %>
          <div id="main">
             <div id="profile">
                <div class="login signup">
@@ -109,9 +109,9 @@
                </div>
             </div>
          </div>
-         <%- include('../partials/footer') %>
+         <%- include('../../partials/footer') %>
       </div>
-      <%- include('../partials/foot'); %>
+      <%- include('../../partials/foot'); %>
       <script type="module">
          import {
             configHeaders,
@@ -159,27 +159,6 @@
                   await privateRequestHandler('/api/user/update-info', 'put', formData, (data, status) => {
                      toastr[data.status](data.message), 'multipart/form-data';
                   });
-                  // const { refreshToken } = localStorage.getStore();
-                  // const config = configHeaders(true, 'multipart/form-data');
-                  // axios
-                  //    .put('/api/user/update-info', formData, config)
-                  //    .then(({ data }) => {
-                  //       toastr[data.status](data.message);
-                  //    })
-                  //    .catch(async (error) => {
-                  //       const newToken = await refreshTokenHandler(error.response.status);
-                  //       axios.put(
-                  //          '/api/user/update-info',
-                  //          formData,
-                  //          configHeaders(newToken, 'multipart/form-data')
-                  //             .then(({ data }) => {
-                  //                toastr[data.status](data.message);
-                  //             })
-                  //             .catch((error) => {
-                  //                toastr.error('Refresh token occured error , please try again !');
-                  //             }),
-                  //       );
-                  //    });
                } else {
                   toastr.info('Thông tin người dùng không có sự sửa đổi nào !');
                }

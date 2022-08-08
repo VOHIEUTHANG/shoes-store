@@ -274,7 +274,6 @@
       visibility: hidden;
       width: 40rem;
       max-height: 70vh;
-      overflow-y: scroll;
       z-index: 9999; }
     .header__logobar .header-cart .single-product-cart {
       border-bottom: 1px solid #aaaaaa;
@@ -749,11 +748,19 @@ input.input-feild {
   letter-spacing: 0.13rem;
   font-size: 1.6rem;
   cursor: pointer;
+  overflow: hidden;
   outline: none;
   background-color: #030021;
   color: #fff;
   border: 1px solid #030021;
   z-index: 1; }
+  .button.light {
+    color: #030021;
+    background-color: #fff; }
+    .button.light::after {
+      background-color: #030021; }
+    .button.light:hover {
+      color: #fff !important; }
   .button.full {
     width: 100%;
     height: 100%;
@@ -775,7 +782,7 @@ input.input-feild {
   .button:hover {
     color: #030021 !important; }
     .button:hover::after {
-      width: 100%; }
+      width: 110%; }
   .button.disable {
     cursor: default;
     opacity: 0.5; }

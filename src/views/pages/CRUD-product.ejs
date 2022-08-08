@@ -1,80 +1,82 @@
 <html lang="en">
 
 <head>
-    <!-- CSS only -->
+    <link rel="stylesheet" href="/css/admin-product.css">
     <%- include('../partials/head-admin') %>
         <title>CRUD Products</title>
 </head>
-
 <body>
-    <%- include('../partials/header-admin') %>
-        <div class="container-fluid" style="display: none;">
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">Tên sản phẩm</span>
-                <input type="text" class="form-control" placeholder="Tên sản phẩm" aria-describedby="basic-addon1"
-                    id="name">
+   
+        <div class="modal-custom">
+            <div class="modal-content-custom">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Tên sản phẩm</span>
+                    <input type="text" class="form-control" placeholder="Tên sản phẩm" aria-describedby="basic-addon1"
+                        id="name">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Giá bán </span>
+                    <input type="text" class="form-control" placeholder="Giá bán" aria-label="Giá *1000 đ"
+                        aria-describedby="basic-addon1" id="price">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Ngày bắt đầu bán</span>
+                    <input type="datetime-local" class="form-control" placeholder="" aria-describedby="basic-addon1"
+                        id="date">
+                </div>
+    
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Thương hiệu</span>
+                    <select class="form-select" aria-label="Default select example" id="brand">
+                        <%brandList.forEach((element)=>{ %>
+                            <option value="<%=element.dataValues.ID%>">
+                                <%=element.dataValues.brandName%>
+                            </option>
+                            <%})%>
+                    </select>
+                    <span class="input-group-text" id="basic-addon1">Giới tính</span>
+                    <select class="form-select" aria-label="Default select example" id="sex">
+                        <option value="male">Nam</option>
+                        <option value="female">Nữ</option>
+                        <option value="both">Unisex</option>
+                    </select>
+                    <span class="input-group-text" id="basic-addon1">Phân loại</span>
+                    <select class="form-select" aria-label="Default select example" id="category">
+                        <%categoryList.forEach((element)=>{ %>
+                            <option value="<%=element.dataValues.ID%>">
+                                <%=element.dataValues.name%>
+                            </option>
+                            <%})%>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Trạng thái</span>
+                    <input type="range" min="0" max="1" id="isSelling">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Mô tả</span>
+                    <textarea class="form-control" rows="3" id="description"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Chi tiết</span>
+                    <textarea class="form-control" rows="3" id="detail"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Size</span>
+                    <input type="text" class="form-control" placeholder="Size" id="inputSize">
+                    <span class="input-group-text">Số lượng</span>
+                    <input type="text" class="form-control" placeholder="Số lượng" id="inputInventory">
+                </div>
+    
+                <div class="addsize">
+                    <ul class="size-list" id="size-list">
+                    </ul>
+                </div>
+                <button onclick="addItem()">Thêm chi tiết</button>
+                <button onclick="sendData()">Lưu</button>
             </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">Giá bán </span>
-                <input type="text" class="form-control" placeholder="Giá bán" aria-label="Giá *1000 đ"
-                    aria-describedby="basic-addon1" id="price">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">Ngày bắt đầu bán</span>
-                <input type="datetime-local" class="form-control" placeholder="" aria-describedby="basic-addon1"
-                    id="date">
-            </div>
-
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">Thương hiệu</span>
-                <select class="form-select" aria-label="Default select example" id="brand">
-                    <%brandList.forEach((element)=>{ %>
-                        <option value="<%=element.dataValues.ID%>">
-                            <%=element.dataValues.brandName%>
-                        </option>
-                        <%})%>
-                </select>
-                <span class="input-group-text" id="basic-addon1">Giới tính</span>
-                <select class="form-select" aria-label="Default select example" id="sex">
-                    <option value="male">Nam</option>
-                    <option value="female">Nữ</option>
-                    <option value="both">Unisex</option>
-                </select>
-                <span class="input-group-text" id="basic-addon1">Phân loại</span>
-                <select class="form-select" aria-label="Default select example" id="category">
-                    <%categoryList.forEach((element)=>{ %>
-                        <option value="<%=element.dataValues.ID%>">
-                            <%=element.dataValues.name%>
-                        </option>
-                        <%})%>
-                </select>
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">Trạng thái</span>
-                <input type="range" min="0" max="1" id="isSelling">
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">Mô tả</span>
-                <textarea class="form-control" rows="3" id="description"></textarea>
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">Chi tiết</span>
-                <textarea class="form-control" rows="3" id="detail"></textarea>
-            </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text">Size</span>
-                <input type="text" class="form-control" placeholder="Size" id="inputSize">
-                <span class="input-group-text">Số lượng</span>
-                <input type="text" class="form-control" placeholder="Số lượng" id="inputInventory">
-            </div>
-
-            <div class="addsize">
-                <ul class="size-list" id="size-list">
-                </ul>
-            </div>
-            <button onclick="addItem()">Thêm chi tiết</button>
-            <button onclick="sendData()">Lưu</button>
         </div>
+        <%- include('../partials/header-admin') %>
         <div class="container">
             <table class="table">
                 <thead>
@@ -105,11 +107,13 @@
                                 <%=element.dataValues.isSelling%>
                             </td>
                             <td>
-                                <%=element.dataValues.price%> 000đ
-                            </td>
-                            <td>      
+                                <%=element.dataValues.price%> 000đ 
+                            </td>      
+                            <td>  
+                                <%=element.BRAND.dataValues.brandName%>  
                             </td>
                             <td>
+                                <%=element.product_categories[0].CATEGORY.dataValues.name%> 
                             </td>
                             <td><button>Chi tiết</button></td>
                         </tr>

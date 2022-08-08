@@ -4,13 +4,12 @@ const product_itemService = require('../service/product_item.service');
 const product_categoryService = require('../service/product_category.service');
 class productController{
    async create(req,res){
-      const product_itemList= req.body.data;
+      let product_itemList= req.body.data;
       
          try {  
-            const product=  await productService.save(req.body);
-            const product_category = await product_categoryService.save(product.dataValues.ID,req.body.category);
-            for (const element of product_itemList) {
-               console.log(element);
+            let product=  await productService.save(req.body);
+            let product_category = await product_categoryService.save(product.dataValues.ID,req.body.category);
+            for (let element of product_itemList) {
               await product_itemService.save(product.dataValues.ID,element.inputInventory,element.inputSize);
             } 
              res.status(200).json({

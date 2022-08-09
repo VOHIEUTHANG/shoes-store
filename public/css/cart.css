@@ -118,12 +118,16 @@
     .cart .cart-page-total span {
       white-space: nowrap;
       letter-spacing: 1px; }
-      .cart .cart-page-total span.discount {
+      .cart .cart-page-total span.origin-price {
+        text-decoration: line-through;
+        opacity: 0.8; }
+      .cart .cart-page-total span.discount, .cart .cart-page-total span.shipment {
         font-size: 1.4rem;
-        font-weight: light; }
+        font-weight: light;
+        color: #fc6d6d;
+        font-style: italic; }
       .cart .cart-page-total span.payment-total {
         font-size: 1.7rem;
-        color: #fc6d6d;
         font-weight: bold; }
     .cart .cart-page-total li {
       display: flex;

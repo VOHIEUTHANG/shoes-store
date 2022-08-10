@@ -149,3 +149,28 @@ values
 ('/assets/images/products/adidas-harden-vol--5-futurenatural-avatar-pack---traffic-violation-fz4405_3.png',18),
 ('/assets/images/products/adidas-harden-vol--5-futurenatural-avatar-pack---traffic-violation-fz4405_4.png',18),
 ('/assets/images/products/adidas-harden-vol--5-futurenatural-avatar-pack---traffic-violation-fz4405_5.png',18);
+
+INSERT INTO `shoe_store`.`product` 
+(name, slug,isSelling, sellStartDate,price, BRAND_ID,suitablefor) VALUES 
+('Converse Chuck Taylor All Star Hi  Black/Black M9160C','converse-chuck-taylor-all-star-hi-black-black-black-m9160c', 1, '2022-08-10', '3216', 4,'both');
+INSERT INTO `shoe_store`.`product_images`
+(imageURL,PRODUCT_ID) 
+values 
+('/assets/images/products/converse-chuck-taylor-all-star-hi-black-black-black-m9160c_1.png',19),
+('/assets/images/products/converse-chuck-taylor-all-star-hi-black-black-black-m9160c_2.png',19),
+('/assets/images/products/converse-chuck-taylor-all-star-hi-black-black-black-m9160c_3.png',19),
+('/assets/images/products/converse-chuck-taylor-all-star-hi-black-black-black-m9160c_4.png',19),
+('/assets/images/products/converse-chuck-taylor-all-star-hi-black-black-black-m9160c_5.png',19);
+
+INSERT INTO `shoe_store`.`product` 
+(name, slug,isSelling, sellStartDate,price, BRAND_ID,suitablefor) VALUES 
+('Converse Chuck Taylor All Star HI Navy M9622C','converse-chuck-taylor-all-star-hi-navy-m9622c', 1, '2022-08-10', '960', 4,'both');
+INSERT INTO `shoe_store`.`product_images`
+(imageURL,PRODUCT_ID) 
+values 
+('/assets/images/products/converse-chuck-taylor-all-star-hi-navy-m9622c_1.png',20),
+('/assets/images/products/converse-chuck-taylor-all-star-hi-navy-m9622c_2.png',20),
+('/assets/images/products/converse-chuck-taylor-all-star-hi-navy-m9622c_3.png',20),
+('/assets/images/products/converse-chuck-taylor-all-star-hi-navy-m9622c_4.png',20),
+('/assets/images/products/converse-chuck-taylor-all-star-hi-navy-m9622c_5.png',20);
+

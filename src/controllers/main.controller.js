@@ -1,4 +1,5 @@
 import UserService from '../service/user.service';
+import ProductService from '../service/product.service';
 
 const mainController = () => ({
    getHomePage: async (req, res) => {
@@ -9,7 +10,11 @@ const mainController = () => ({
          payload.user = user;
          payload.isLoggedIn = true;
       }
-      res.render('pages/home', payload);
+      const products = await ProductService.getActiveProduct({ offset: 4 });
+      if (products) {
+         payload.products = products;
+      }
+      res.render('pages/home', { ...payload });
    },
    getLoginPage: (req, res) => {
       const user = req.user;
@@ -49,13 +54,13 @@ const mainController = () => ({
       res.render('pages/user-pages/cart', payload);
    },
    get404Page: (req, res) => {
-      res.render('pages/error-pages/404');
+      res.render('pages/404');
    },
    get403Page: (req, res) => {
-      res.render('pages/error-pages/403');
+      res.render('pages/403');
    },
    get401Page: (req, res) => {
-      res.render('pages/error-pages/401');
+      res.render('pages/401');
    },
    getAllProductPage: (req, res) => {
       const user = req.user;

@@ -233,10 +233,11 @@
   padding: 0 20px;
   position: absolute;
   right: 0;
+  cursor: pointer;
   text-align: center;
   transition: all 0.3s ease 0s; }
 
-#main .all-products-area .product-action a {
+#main .all-products-area .product-action div {
   background-color: #383838;
   border-radius: 100%;
   color: #f7f7f7;
@@ -247,7 +248,7 @@
   margin: 0 15px;
   width: 45px; }
 
-#main .all-products-area .product-action a:hover {
+#main .all-products-area .product-action div:hover {
   background-color: #050035;
   color: #fff; }
 
@@ -291,35 +292,35 @@
     #main .all-products-area .product-content .category__brand a {
       color: inherit; }
 
-#main .all-products-area .product-action > a {
+#main .all-products-area .product-action > div {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   display: inline-flex; }
-  #main .all-products-area .product-action > a:hover {
+  #main .all-products-area .product-action > div:hover {
     color: #222;
     background-color: white; }
 
-#main .all-products-area .product-action > a.animate-left {
+#main .all-products-area .product-action > div.animate-left {
   transform: translateX(-20px);
   transition: all 0.4s ease 0s; }
 
-#main .all-products-area .product-wrapper:hover .product-action > a.animate-left {
+#main .all-products-area .product-wrapper:hover .product-action > div.animate-left {
   transform: translateX(0px); }
 
 #main .all-products-area .product-action > a.animate-right {
   transform: translateX(20px);
   transition: all 0.4s ease 0s; }
 
-#main .all-products-area .product-wrapper:hover .product-action > a.animate-right {
+#main .all-products-area .product-wrapper:hover .product-action > div.animate-right {
   transform: translateX(0px); }
 
-#main .all-products-area .product-action > a.animate-top {
+#main .all-products-area .product-action > div.animate-top {
   transform: translateY(20px);
   transition: all 0.4s ease 0s; }
 
-#main .all-products-area .product-wrapper:hover .product-action > a.animate-top {
+#main .all-products-area .product-wrapper:hover .product-action > div.animate-top {
   transform: translateY(0px); }
 
 #main .all-products-area .product-wrapper:hover .product-action {

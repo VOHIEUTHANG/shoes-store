@@ -213,3 +213,4 @@ values
 ('/assets/images/products/thuong-ding-kk14-1-white_2.png',4),
 ('/assets/images/products/thuong-ding-kk14-1-white_3.png',4),
 ('/assets/images/products/thuong-ding-kk14-1-white_4.png',4);
+

@@ -2,7 +2,6 @@ import express, { response } from 'express';
 const router = express.Router();
 import mainController from '../controllers/main.controller';
 import headerWrapper from '../helpers/headerWrapper';
-import validateToken from '../middlewares/validateToken';
 
 router.get('/profile', headerWrapper(mainController.getProfilePage));
 router.get('/purchase-order', headerWrapper(mainController.gePurchaseOrderPage));

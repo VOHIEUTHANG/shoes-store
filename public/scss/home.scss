@@ -278,10 +278,11 @@
          padding: 0 20px;
          position: absolute;
          right: 0;
+         cursor: pointer;
          text-align: center;
          transition: all 0.3s ease 0s;
       }
-      .product-action a {
+      .product-action div {
          background-color: #383838;
          border-radius: 100%;
          color: #f7f7f7;
@@ -292,7 +293,7 @@
          margin: 0 15px;
          width: 45px;
       }
-      .product-action a:hover {
+      .product-action div:hover {
          background-color: #050035;
          color: #fff;
       }
@@ -338,7 +339,7 @@
             }
          }
       }
-      .product-action > a {
+      .product-action > div {
          @include centerFlexItems;
          display: inline-flex;
          &:hover {
@@ -346,25 +347,25 @@
             background-color: white;
          }
       }
-      .product-action > a.animate-left {
+      .product-action > div.animate-left {
          transform: translateX(-20px);
          transition: all 0.4s ease 0s;
       }
-      .product-wrapper:hover .product-action > a.animate-left {
+      .product-wrapper:hover .product-action > div.animate-left {
          transform: translateX(0px);
       }
       .product-action > a.animate-right {
          transform: translateX(20px);
          transition: all 0.4s ease 0s;
       }
-      .product-wrapper:hover .product-action > a.animate-right {
+      .product-wrapper:hover .product-action > div.animate-right {
          transform: translateX(0px);
       }
-      .product-action > a.animate-top {
+      .product-action > div.animate-top {
          transform: translateY(20px);
          transition: all 0.4s ease 0s;
       }
-      .product-wrapper:hover .product-action > a.animate-top {
+      .product-wrapper:hover .product-action > div.animate-top {
          transform: translateY(0px);
       }
       .product-wrapper:hover .product-action {

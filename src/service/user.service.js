@@ -3,6 +3,7 @@ import Models from '../database/sequelize';
 import passwordHandler from '../helpers/passwordHandler.js';
 const UserModel = Models.user;
 const AccountModel = Models.account;
+const wishListModel = Models.wish_list;
 
 import PasswordHandler from '../helpers/passwordHandler';
 import { createResponse } from '../helpers/responseCreator';
@@ -159,6 +160,20 @@ class userService {
          console.log('🚀 ~ file: user.service.js ~ line 147 ~ userService ~ error', error);
          return 'Update mật khẩu mới xảy ra lỗi !';
       }
+   }
+   async addToWishList(username, PRODUCT_ID) {
+      if (username && PRODUCT_ID) {
+         try {
+            const insertWishListResult = await wishListModel.create({
+               username,
+               PRODUCT_ID,
+            });
+            return true;
+         } catch (error) {
+            return false;
+         }
+      }
+      return false;
    }
 }
 export default new userService();

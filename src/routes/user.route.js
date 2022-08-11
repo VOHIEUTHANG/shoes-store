@@ -12,5 +12,6 @@ router.delete('/logout', userController.logout);
 // PRIVATE ROUTES ------------------------------
 router.put('/update-info', validateToken, signleFileUpload('avatar'), userController.updateInfo);
 router.put('/change-password', validateToken, userController.changePassword);
+router.post('/add-to-wishlist/:productID', validateToken, userController.addToWishList);
 
 export default router;

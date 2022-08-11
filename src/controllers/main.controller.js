@@ -11,7 +11,7 @@ const mainController = () => ({
          payload.user = user;
          payload.isLoggedIn = true;
       }
-      const products = await ProductService.getActiveProduct({ offset: 4 });
+      const products = await ProductService.getActiveProduct({ offset: 0, limit: 10 });
       if (products) {
          payload.productsData = products;
       }

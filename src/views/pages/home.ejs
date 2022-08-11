@@ -250,12 +250,12 @@
                                           />
                                        </a>
                                        <div class="product-action">
-                                          <a class="animate-left " title="Wishlist" href="#">
+                                          <div class="animate-left add-to-wishlist"  title="Wishlist" data-product-id="<%= product.ID %>">
                                              <i class="fa-regular fa-heart"></i>
-                                          </a>
-                                          <a class="animate-right" title="Add To Cart" href="#">
+                                          </div>
+                                          <div class="animate-right" title="Add To Cart" data-product-id="<%= product.ID %>" >
                                              <i class="ti-shopping-cart"></i>
-                                          </a>
+                                          </div>
                                        </div>
                                     </div>
                                     <div class="product-content">
@@ -282,7 +282,8 @@
       </div>
       <%- include('../partials/foot'); %>
       <script src="js/library/glide.min.js"></script>
-      <script>
+      <script type="module">
+         import {privateRequestHandler} from '/js/utils/index.js';
          new Glide('.glide', {
             type: 'carousel',
             autoplay: 5000,
@@ -306,15 +307,22 @@
          }).mount();
 
          const loadMoreBtn = $('.load-more > .button');
+         const addToWishListbtn = $(".add-to-wishlist");
          const productNodeList = $('.custom-row');
-         let pageNumber = 1;
+         let pageNumber = 2;
          const limit = 5;
-         loadMoreBtn.click(async ()=>{
-            pageNumber++;
-            try {
+         loadMoreBtn.click(async function(){
+            if(!$(this).hasClass('disable')){
+               pageNumber++;
+               try {
                const productResult = await axios.get(`/api/product?page=${pageNumber || 1}&&limit=5`);
+               const totalProducts = productResult.data.total; 
+               const endProductIndex = (pageNumber - 1) * limit + limit;
+               if(endProductIndex >= totalProducts){
+                  $(this).addClass('disable');
+               }
+
                const products = productResult.data.products;
-               console.log(productResult.data);
 
                const productsHtml = products.forEach((product)=>{
                   const productItem = document.createElement("div");
@@ -328,12 +336,12 @@
                               />
                            </a>
                            <div class="product-action">
-                              <a class="animate-left" title="Wishlist" href="#">
+                              <div class="animate-left add-to-wishlist" title="Wishlist" data-product-id="${product.ID}">
                                  <i class="fa-regular fa-heart"></i>
-                              </a>
-                              <a class="animate-right" title="Add To Cart" href="#">
+                              </div>
+                              <div class="animate-right" title="Add To Cart" data-product-id="${product.ID}">
                                  <i class="ti-shopping-cart"></i>
-                              </a>
+                              </div>
                            </div>
                         </div>
                         <div class="product-content">
@@ -348,10 +356,25 @@
                      </div>`;
                      productNodeList[0].appendChild(productItem);
                });
-            } catch (error) {
-               
+               } catch (error) {
+                  toastr.error('Xảy ra lỗi khi load sản phẩm !');
+               }
+            }else{
+               toastr.warning('Đã hết sản phẩm để hiện thị !');
             }
-            
+         });
+         addToWishListbtn.click(async function (){
+            const PRODUCT_ID = this.dataset.productId;
+            console.log('PRODUCT_ID');
+            try {
+               await privateRequestHandler(`/api/user/add-to-wishlist/${PRODUCT_ID}`,'post',{},(data,status)=>{
+               toastr[data.status](data.message);
+            })
+            } catch (error) {
+               toastr.error("Có lỗi xảy ra, vui lòng liên hệ quản trị viên !");
+            }
+        
+
          })
       </script>
    </body>

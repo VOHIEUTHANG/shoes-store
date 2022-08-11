@@ -51,6 +51,15 @@ class productService {
          return null;
       }
    }
+   async getOneJoin(id){
+    let product = productModel.findOne(
+    { include:[{model: brandModel, as :'BRAND' },
+     {model: product_categoryModel,as:'product_categories',include:[{model: categoryModel, as:'CATEGORY'}]
+      }],
+      where: {ID:id}
+    });
+     return product;
+   }
    async getActiveProduct({ offset = 0, limit = 5 }) {
       const filterPropertis = { isSelling: true };
       try {
@@ -122,6 +131,7 @@ class productService {
          return false;
       }
    }
+
 }
 
 module.exports = new productService();

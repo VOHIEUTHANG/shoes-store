@@ -1,10 +1,12 @@
 import Models from '../database/sequelize';
-const productModel = Models.product;
+import formatCurrency from '../helpers/formatCurrency';
 import createSlug from '../helpers/createSlug';
+const productModel = Models.product;
 const categoryModel = Models.category;
 const brandModel = Models.brand;
 const product_categoryModel = Models.product_category;
 const product_imagesModel = Models.product_images;
+
 class productService {
    async getAll() {
       try {
@@ -49,14 +51,14 @@ class productService {
          return null;
       }
    }
-   async getActiveProduct({ offset = 0 }) {
+   async getActiveProduct({ offset = 0, limit = 5 }) {
       const filterPropertis = { isSelling: true };
-
       try {
          const { count, rows } = await productModel.findAndCountAll({
             attributes: {
                exclude: ['BRAND_ID', 'sellStartDate', 'specifications', 'descriptions'],
             },
+            distinct: true,
             include: [
                {
                   model: brandModel,
@@ -68,14 +70,15 @@ class productService {
                },
             ],
             where: filterPropertis,
-            order: [],
-            limit: 5,
-            offset,
+            order: ['ID'],
+            limit: limit,
+            offset: offset,
          });
          const products = rows.map((product) => ({
             ...product.dataValues,
             BRAND: product.dataValues.BRAND.brandName,
             product_images: product.dataValues.product_images[0]?.imageURL,
+            price: formatCurrency(product.dataValues.price * 1000),
          }));
          return { total: count, products };
       } catch (error) {

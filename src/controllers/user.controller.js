@@ -123,6 +123,16 @@ const userController = () => ({
          res.status(400).json(createResponse('error', 'Occured erorr !'));
       }
    },
+   async addToWishList(req, res) {
+      const productID = req.params.productID;
+      const username = req.user.userName;
+      const insertWishListResult = await userService.addToWishList(username, productID);
+      if (insertWishListResult) {
+         res.json(createResponse('success', 'Thêm sản phẩm vào wishlist thành công !'));
+      } else {
+         res.json(createResponse('errro', 'Có lỗi xảy ra khi thêm sản phẩm vào wishlist !'));
+      }
+   },
 });
 
 export default userController();

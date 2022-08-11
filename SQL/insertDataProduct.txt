@@ -174,3 +174,42 @@ values
 ('/assets/images/products/converse-chuck-taylor-all-star-hi-navy-m9622c_4.png',20),
 ('/assets/images/products/converse-chuck-taylor-all-star-hi-navy-m9622c_5.png',20);
 
+
+
+INSERT INTO `shoe_store`.`product_images`
+(imageURL,PRODUCT_ID) 
+values 
+('/assets/images/products/grand-court-cloudfoam-lifestyle-court-comfort_1.png',1),
+('/assets/images/products/grand-court-cloudfoam-lifestyle-court-comfort_2.png',1),
+('/assets/images/products/grand-court-cloudfoam-lifestyle-court-comfort_3.png',1),
+('/assets/images/products/grand-court-cloudfoam-lifestyle-court-comfort_4.png',1),
+('/assets/images/products/grand-court-cloudfoam-lifestyle-court-comfort_5.png',1),
+('/assets/images/products/grand-court-cloudfoam-lifestyle-court-comfort_6.png',1);
+
+INSERT INTO `shoe_store`.`product_images`
+(imageURL,PRODUCT_ID) 
+values 
+('/assets/images/products/nike-air-jordan-1-low-unc_1.png',2),
+('/assets/images/products/nike-air-jordan-1-low-unc_2.png',2),
+('/assets/images/products/nike-air-jordan-1-low-unc_3.png',2),
+('/assets/images/products/nike-air-jordan-1-low-unc_4.png',2),
+('/assets/images/products/nike-air-jordan-1-low-unc_5.png',2);
+
+INSERT INTO `shoe_store`.`product_images`
+(imageURL,PRODUCT_ID) 
+values 
+('/assets/images/products/hunter-core_1.png',3),
+('/assets/images/products/hunter-core_2.png',3),
+('/assets/images/products/hunter-core_3.png',3),
+('/assets/images/products/hunter-core_4.png',3),
+('/assets/images/products/hunter-core_5.png',3),
+('/assets/images/products/hunter-core_6.png',3);
+
+
+INSERT INTO `shoe_store`.`product_images`
+(imageURL,PRODUCT_ID) 
+values 
+('/assets/images/products/thuong-ding-kk14-1-white_1.png',4),
+('/assets/images/products/thuong-ding-kk14-1-white_2.png',4),
+('/assets/images/products/thuong-ding-kk14-1-white_3.png',4),
+('/assets/images/products/thuong-ding-kk14-1-white_4.png',4);

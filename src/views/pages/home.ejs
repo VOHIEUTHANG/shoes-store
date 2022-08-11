@@ -321,9 +321,7 @@
                if(endProductIndex >= totalProducts){
                   $(this).addClass('disable');
                }
-
                const products = productResult.data.products;
-
                const productsHtml = products.forEach((product)=>{
                   const productItem = document.createElement("div");
                   productItem.classList.add("custom-col-5",'custom-col-style','mb-4');
@@ -373,8 +371,6 @@
             } catch (error) {
                toastr.error("Có lỗi xảy ra, vui lòng liên hệ quản trị viên !");
             }
-        
-
          })
       </script>
    </body>

@@ -1,9 +1,13 @@
 import pool from '../database/pool';
 import Models from '../database/sequelize';
 import passwordHandler from '../helpers/passwordHandler.js';
+import formatToCurrency from '../helpers/formatCurrency';
 const UserModel = Models.user;
+const ProductModel = Models.product;
 const AccountModel = Models.account;
 const wishListModel = Models.wish_list;
+const BrandModel = Models.brand;
+const ProductImagesModel = Models.product_images;
 
 import PasswordHandler from '../helpers/passwordHandler';
 import { createResponse } from '../helpers/responseCreator';
@@ -174,6 +178,59 @@ class userService {
          }
       }
       return false;
+   }
+   async getAllProductsWishList(username) {
+      if (username) {
+         try {
+            const wishListResult = await wishListModel.findAll({
+               include: {
+                  model: ProductModel,
+                  as: 'PRODUCT',
+                  attributes: {
+                     exclude: ['ID', 'sellStartDate', 'suitableFor', 'specifications', 'descriptions', 'BRAND_ID'],
+                  },
+                  include: [
+                     {
+                        model: BrandModel,
+                        as: 'BRAND',
+                        required: true,
+                     },
+                     {
+                        model: ProductImagesModel,
+                        as: 'product_images',
+                        required: true,
+                     },
+                  ],
+               },
+               where: {
+                  username,
+               },
+            });
+            const formatedData = wishListResult.map((wishlist) => {
+               return {
+                  ...wishlist.dataValues,
+                  PRODUCT: {
+                     ...wishlist.dataValues.PRODUCT.dataValues,
+                     BRAND: wishlist.dataValues.PRODUCT.dataValues.BRAND.dataValues.brandName,
+                     price: formatToCurrency(Number(wishlist.dataValues.PRODUCT.dataValues.price) * 1000),
+                     product_images:
+                        wishlist.dataValues.PRODUCT.dataValues.product_images.length > 0
+                           ? wishlist.dataValues.PRODUCT.dataValues.product_images.map((imgRecore) => {
+                                return imgRecore.dataValues.imageURL;
+                             })
+                           : [],
+                  },
+               };
+            });
+            console.log('formatedData', formatedData);
+         } catch (error) {
+            console.log('🚀 ~ file: user.service.js ~ line 189 ~ userService ~ error', error);
+            return false;
+         }
+      } else {
+         console.log('Missing username !');
+         return false;
+      }
    }
 }
 export default new userService();

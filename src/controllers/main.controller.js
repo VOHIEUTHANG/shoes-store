@@ -1,6 +1,7 @@
 import UserService from '../service/user.service';
 import ProductService from '../service/product.service';
 import { createResponse } from '../helpers/responseCreator';
+import userService from '../service/user.service';
 
 const mainController = () => ({
    getHomePage: async (req, res) => {
@@ -36,13 +37,15 @@ const mainController = () => ({
          res.render('pages/register', { user: {}, isLoggedIn: false, ...payloadInfo });
       }
    },
-   getWishListPage: (req, res) => {
+   getWishListPage: async (req, res) => {
       const user = req.user;
       const payloadInfo = req.payload;
       const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
       if (!user) return res.redirect('/');
       payload.user = user;
       payload.isLoggedIn = true;
+      const username = user?.userName;
+      const wishList = await userService.getAllProductsWishList(username);
       res.render('pages/user-pages/wishlist', payload);
    },
    getCartPage: (req, res) => {

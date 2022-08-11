@@ -1,28 +1,23 @@
-INSERT INTO `shoe_store`.`product` 
-(name, slug,isSelling, sellStartDate,price, BRAND_ID,suitablefor) VALUES 
-('Air Jordan 1 Retro High OG Heritage 555088-161','air-jordan-1-retro-high-og-heritage-555088-161', 1, '2022-09-08', '3580', 6,'both');
-INSERT INTO `shoe_store`.`product_images`
-(imageURL,PRODUCT_ID) 
-values 
-('/assets/images/products/air-jordan-1-retro-high-og-heritage-555088-161_1.png',5),
-('/assets/images/products/air-jordan-1-retro-high-og-heritage-555088-161_2.png',5),
-('/assets/images/products/air-jordan-1-retro-high-og-heritage-555088-161_3.png',5),
-('/assets/images/products/air-jordan-1-retro-high-og-heritage-555088-161_4.png',5),
-('/assets/images/products/air-jordan-1-retro-high-og-heritage-555088-161_5.png',5),
-('/assets/images/products/air-jordan-1-retro-high-og-heritage-555088-161_6.png',5);
 
-INSERT INTO `shoe_store`.`product` 
-(name, slug,isSelling, sellStartDate,price, BRAND_ID,suitablefor) VALUES 
-('Air Jordan 1 Retro High OG University Blue 555088-134','air-jordan-1-retro-high-og-university-blue-555088-134', 1, '2022-09-08', '8987', 6,'both');
 INSERT INTO `shoe_store`.`product_images`
 (imageURL,PRODUCT_ID) 
 values 
-('/assets/images/products/air-jordan-1-retro-high-og-university-blue-555088-134_1.png',6),
-('/assets/images/products/air-jordan-1-retro-high-og-university-blue-555088-134_2.png',6),
-('/assets/images/products/air-jordan-1-retro-high-og-university-blue-555088-134_3.png',6),
-('/assets/images/products/air-jordan-1-retro-high-og-university-blue-555088-134_4.png',6),
-('/assets/images/products/air-jordan-1-retro-high-og-university-blue-555088-134_5.png',6),
-('/assets/images/products/air-jordan-1-retro-high-og-university-blue-555088-134_6.png',6);
+('/assets/images/products/air-jordan-1-retro-high-og-heritage-555088-161_1.png',29),
+('/assets/images/products/air-jordan-1-retro-high-og-heritage-555088-161_2.png',29),
+('/assets/images/products/air-jordan-1-retro-high-og-heritage-555088-161_3.png',29),
+('/assets/images/products/air-jordan-1-retro-high-og-heritage-555088-161_4.png',29),
+('/assets/images/products/air-jordan-1-retro-high-og-heritage-555088-161_5.png',29),
+('/assets/images/products/air-jordan-1-retro-high-og-heritage-555088-161_6.png',29);
+
+INSERT INTO `shoe_store`.`product_images`
+(imageURL,PRODUCT_ID) 
+values 
+('/assets/images/products/air-jordan-1-retro-high-og-university-blue-555088-134_1.png',30),
+('/assets/images/products/air-jordan-1-retro-high-og-university-blue-555088-134_2.png',30),
+('/assets/images/products/air-jordan-1-retro-high-og-university-blue-555088-134_3.png',30),
+('/assets/images/products/air-jordan-1-retro-high-og-university-blue-555088-134_4.png',30),
+('/assets/images/products/air-jordan-1-retro-high-og-university-blue-555088-134_5.png',30),
+('/assets/images/products/air-jordan-1-retro-high-og-university-blue-555088-134_6.png',30);
 
 INSERT INTO `shoe_store`.`product` 
 (name, slug,isSelling, sellStartDate,price, BRAND_ID,suitablefor) VALUES 
@@ -30,11 +25,11 @@ INSERT INTO `shoe_store`.`product`
 INSERT INTO `shoe_store`.`product_images`
 (imageURL,PRODUCT_ID) 
 values 
-('/assets/images/products/air-jordan-1-retro-high-og-light-smoke-grey-555088-126_1.png',7),
-('/assets/images/products/air-jordan-1-retro-high-og-light-smoke-grey-555088-126_2.png',7),
-('/assets/images/products/air-jordan-1-retro-high-og-light-smoke-grey-555088-126_3.png',7),
-('/assets/images/products/air-jordan-1-retro-high-og-light-smoke-grey-555088-126_4.png',7),
-('/assets/images/products/air-jordan-1-retro-high-og-light-smoke-grey-555088-126_5.png',7);
+('/assets/images/products/air-jordan-1-retro-high-og-light-smoke-grey-555088-126_1.png',31),
+('/assets/images/products/air-jordan-1-retro-high-og-light-smoke-grey-555088-126_2.png',31),
+('/assets/images/products/air-jordan-1-retro-high-og-light-smoke-grey-555088-126_3.png',31),
+('/assets/images/products/air-jordan-1-retro-high-og-light-smoke-grey-555088-126_4.png',31),
+('/assets/images/products/air-jordan-1-retro-high-og-light-smoke-grey-555088-126_5.png',31);
 
 INSERT INTO `shoe_store`.`product` 
 (name, slug,isSelling, sellStartDate,price, BRAND_ID,suitablefor) VALUES 
@@ -42,12 +37,12 @@ INSERT INTO `shoe_store`.`product`
 INSERT INTO `shoe_store`.`product_images`
 (imageURL,PRODUCT_ID) 
 values 
-('/assets/images/products/air-jordan-1-retro-high-decon-ice-blue-867338-425_1.png',8),
-('/assets/images/products/air-jordan-1-retro-high-decon-ice-blue-867338-425_2.png',8),
-('/assets/images/products/air-jordan-1-retro-high-decon-ice-blue-867338-425_3.png',8),
-('/assets/images/products/air-jordan-1-retro-high-decon-ice-blue-867338-425_4.png',8),
-('/assets/images/products/air-jordan-1-retro-high-decon-ice-blue-867338-425_5.png',8),
-('/assets/images/products/air-jordan-1-retro-high-decon-ice-blue-867338-425_6.png',8);
+('/assets/images/products/air-jordan-1-retro-high-decon-ice-blue-867338-425_1.png',32),
+('/assets/images/products/air-jordan-1-retro-high-decon-ice-blue-867338-425_2.png',32),
+('/assets/images/products/air-jordan-1-retro-high-decon-ice-blue-867338-425_3.png',32),
+('/assets/images/products/air-jordan-1-retro-high-decon-ice-blue-867338-425_4.png',32),
+('/assets/images/products/air-jordan-1-retro-high-decon-ice-blue-867338-425_5.png',32),
+('/assets/images/products/air-jordan-1-retro-high-decon-ice-blue-867338-425_6.png',32);
 
 INSERT INTO `shoe_store`.`product` 
 (name, slug,isSelling, sellStartDate,price, BRAND_ID,suitablefor) VALUES 
@@ -55,12 +50,12 @@ INSERT INTO `shoe_store`.`product`
 INSERT INTO `shoe_store`.`product_images`
 (imageURL,PRODUCT_ID) 
 values 
-('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-light-violet-ct0979-101_1.png',9),
-('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-light-violet-ct0979-101_2.png',9),
-('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-light-violet-ct0979-101_3.png',9),
-('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-light-violet-ct0979-101_4.png',9),
-('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-light-violet-ct0979-101_5.png',9),
-('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-light-violet-ct0979-101_6.png',9);
+('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-light-violet-ct0979-101_1.png',33),
+('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-light-violet-ct0979-101_2.png',33),
+('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-light-violet-ct0979-101_3.png',33),
+('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-light-violet-ct0979-101_4.png',33),
+('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-light-violet-ct0979-101_5.png',33),
+('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-light-violet-ct0979-101_6.png',33);
 
 INSERT INTO `shoe_store`.`product` 
 (name, slug,isSelling, sellStartDate,price, BRAND_ID,suitablefor) VALUES 
@@ -68,12 +63,12 @@ INSERT INTO `shoe_store`.`product`
 INSERT INTO `shoe_store`.`product_images`
 (imageURL,PRODUCT_ID) 
 values 
-('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-halloween-ct0979-001_1.png',10),
-('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-halloween-ct0979-001_2.png',10),
-('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-halloween-ct0979-001_3.png',10),
-('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-halloween-ct0979-001_4.png',10),
-('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-halloween-ct0979-001_5.png',10),
-('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-halloween-ct0979-001_6.png',10);
+('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-halloween-ct0979-001_1.png',34),
+('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-halloween-ct0979-001_2.png',34),
+('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-halloween-ct0979-001_3.png',34),
+('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-halloween-ct0979-001_4.png',34),
+('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-halloween-ct0979-001_5.png',34),
+('/assets/images/products/wmns-air-jordan-1-zoom-air-cmft-womens-halloween-ct0979-001_6.png',34);
 
 INSERT INTO `shoe_store`.`product` 
 (name, slug,isSelling, sellStartDate,price, BRAND_ID,suitablefor) VALUES 
@@ -81,12 +76,12 @@ INSERT INTO `shoe_store`.`product`
 INSERT INTO `shoe_store`.`product_images`
 (imageURL,PRODUCT_ID) 
 values 
-('/assets/images/products/wmns-air-jordan-1-mid-womens-magenta-bq6472-005_1.png',11),
-('/assets/images/products/wmns-air-jordan-1-mid-womens-magenta-bq6472-005_2.png',11),
-('/assets/images/products/wmns-air-jordan-1-mid-womens-magenta-bq6472-005_3.png',11),
-('/assets/images/products/wmns-air-jordan-1-mid-womens-magenta-bq6472-005_4.png',11),
-('/assets/images/products/wmns-air-jordan-1-mid-womens-magenta-bq6472-005_5.png',11),
-('/assets/images/products/wmns-air-jordan-1-mid-womens-magenta-bq6472-005_6.png',11);
+('/assets/images/products/wmns-air-jordan-1-mid-womens-magenta-bq6472-005_1.png',35),
+('/assets/images/products/wmns-air-jordan-1-mid-womens-magenta-bq6472-005_2.png',35),
+('/assets/images/products/wmns-air-jordan-1-mid-womens-magenta-bq6472-005_3.png',35),
+('/assets/images/products/wmns-air-jordan-1-mid-womens-magenta-bq6472-005_4.png',35),
+('/assets/images/products/wmns-air-jordan-1-mid-womens-magenta-bq6472-005_5.png',35),
+('/assets/images/products/wmns-air-jordan-1-mid-womens-magenta-bq6472-005_6.png',35);
 
 INSERT INTO `shoe_store`.`product` 
 (name, slug,isSelling, sellStartDate,price, BRAND_ID,suitablefor) VALUES 
@@ -94,12 +89,12 @@ INSERT INTO `shoe_store`.`product`
 INSERT INTO `shoe_store`.`product_images`
 (imageURL,PRODUCT_ID) 
 values 
-('/assets/images/products/wmns-air-jordan-1-mid-se-womens-multi-patent-cv5276-001_1.png',12),
-('/assets/images/products/wmns-air-jordan-1-mid-se-womens-multi-patent-cv5276-001_2.png',12),
-('/assets/images/products/wmns-air-jordan-1-mid-se-womens-multi-patent-cv5276-001_3.png',12),
-('/assets/images/products/wmns-air-jordan-1-mid-se-womens-multi-patent-cv5276-001_4.png',12),
-('/assets/images/products/wmns-air-jordan-1-mid-se-womens-multi-patent-cv5276-001_5.png',12),
-('/assets/images/products/wmns-air-jordan-1-mid-se-womens-multi-patent-cv5276-001_6.png',12);
+('/assets/images/products/wmns-air-jordan-1-mid-se-womens-multi-patent-cv5276-001_1.png',36),
+('/assets/images/products/wmns-air-jordan-1-mid-se-womens-multi-patent-cv5276-001_2.png',36),
+('/assets/images/products/wmns-air-jordan-1-mid-se-womens-multi-patent-cv5276-001_3.png',36),
+('/assets/images/products/wmns-air-jordan-1-mid-se-womens-multi-patent-cv5276-001_4.png',36),
+('/assets/images/products/wmns-air-jordan-1-mid-se-womens-multi-patent-cv5276-001_5.png',36),
+('/assets/images/products/wmns-air-jordan-1-mid-se-womens-multi-patent-cv5276-001_6.png',36);
 
 INSERT INTO `shoe_store`.`product` 
 (name, slug,isSelling, sellStartDate,price, BRAND_ID,suitablefor) VALUES 
@@ -107,12 +102,12 @@ INSERT INTO `shoe_store`.`product`
 INSERT INTO `shoe_store`.`product_images`
 (imageURL,PRODUCT_ID) 
 values 
-('/assets/images/products/air-jordan-2-retro-decon-sail-897521-100_1.png',13),
-('/assets/images/products/air-jordan-2-retro-decon-sail-897521-100_2.png',13),
-('/assets/images/products/air-jordan-2-retro-decon-sail-897521-100_3.png',13),
-('/assets/images/products/air-jordan-2-retro-decon-sail-897521-100_4.png',13),
-('/assets/images/products/air-jordan-2-retro-decon-sail-897521-100_5.png',13),
-('/assets/images/products/air-jordan-2-retro-decon-sail-897521-100_6.png',13);
+('/assets/images/products/air-jordan-2-retro-decon-sail-897521-100_1.png',37),
+('/assets/images/products/air-jordan-2-retro-decon-sail-897521-100_2.png',37),
+('/assets/images/products/air-jordan-2-retro-decon-sail-897521-100_3.png',37),
+('/assets/images/products/air-jordan-2-retro-decon-sail-897521-100_4.png',37),
+('/assets/images/products/air-jordan-2-retro-decon-sail-897521-100_5.png',37),
+('/assets/images/products/air-jordan-2-retro-decon-sail-897521-100_6.png',37);
 
 INSERT INTO `shoe_store`.`product` 
 (name, slug,isSelling, sellStartDate,price, BRAND_ID,suitablefor) VALUES 
@@ -120,11 +115,11 @@ INSERT INTO `shoe_store`.`product`
 INSERT INTO `shoe_store`.`product_images`
 (imageURL,PRODUCT_ID) 
 values 
-('/assets/images/products/nike-lebron-soldier-xiii-sfg-ep-basketball-ar4228-100_1.png',14),
-('/assets/images/products/nike-lebron-soldier-xiii-sfg-ep-basketball-ar4228-100_2.png',14),
-('/assets/images/products/nike-lebron-soldier-xiii-sfg-ep-basketball-ar4228-100_3.png',14),
-('/assets/images/products/nike-lebron-soldier-xiii-sfg-ep-basketball-ar4228-100_4.png',14),
-('/assets/images/products/nike-lebron-soldier-xiii-sfg-ep-basketball-ar4228-100_5.png',14);
+('/assets/images/products/nike-lebron-soldier-xiii-sfg-ep-basketball-ar4228-100_1.png',38),
+('/assets/images/products/nike-lebron-soldier-xiii-sfg-ep-basketball-ar4228-100_2.png',38),
+('/assets/images/products/nike-lebron-soldier-xiii-sfg-ep-basketball-ar4228-100_3.png',38),
+('/assets/images/products/nike-lebron-soldier-xiii-sfg-ep-basketball-ar4228-100_4.png',38),
+('/assets/images/products/nike-lebron-soldier-xiii-sfg-ep-basketball-ar4228-100_5.png',38);
 
 INSERT INTO `shoe_store`.`product` 
 (name, slug,isSelling, sellStartDate,price, BRAND_ID,suitablefor) VALUES 
@@ -132,11 +127,11 @@ INSERT INTO `shoe_store`.`product`
 INSERT INTO `shoe_store`.`product_images`
 (imageURL,PRODUCT_ID) 
 values 
-('/assets/images/products/vans-style-29-vn0a3mvh6bt_1.png',17),
-('/assets/images/products/vans-style-29-vn0a3mvh6bt_2.png',17),
-('/assets/images/products/vans-style-29-vn0a3mvh6bt_3.png',17),
-('/assets/images/products/vans-style-29-vn0a3mvh6bt_4.png',17),
-('/assets/images/products/vans-style-29-vn0a3mvh6bt_5.png',17);
+('/assets/images/products/vans-style-29-vn0a3mvh6bt_1.png',39),
+('/assets/images/products/vans-style-29-vn0a3mvh6bt_2.png',39),
+('/assets/images/products/vans-style-29-vn0a3mvh6bt_3.png',39),
+('/assets/images/products/vans-style-29-vn0a3mvh6bt_4.png',39),
+('/assets/images/products/vans-style-29-vn0a3mvh6bt_5.png',39);
 
 INSERT INTO `shoe_store`.`product` 
 (name, slug,isSelling, sellStartDate,price, BRAND_ID,suitablefor) VALUES 
@@ -144,8 +139,8 @@ INSERT INTO `shoe_store`.`product`
 INSERT INTO `shoe_store`.`product_images`
 (imageURL,PRODUCT_ID) 
 values 
-('/assets/images/products/adidas-harden-vol--5-futurenatural-avatar-pack---traffic-violation-fz4405_1.png',18),
-('/assets/images/products/adidas-harden-vol--5-futurenatural-avatar-pack---traffic-violation-fz4405_2.png',18),
-('/assets/images/products/adidas-harden-vol--5-futurenatural-avatar-pack---traffic-violation-fz4405_3.png',18),
-('/assets/images/products/adidas-harden-vol--5-futurenatural-avatar-pack---traffic-violation-fz4405_4.png',18),
-('/assets/images/products/adidas-harden-vol--5-futurenatural-avatar-pack---traffic-violation-fz4405_5.png',18);
+('/assets/images/products/adidas-harden-vol--5-futurenatural-avatar-pack---traffic-violation-fz4405_1.png',40),
+('/assets/images/products/adidas-harden-vol--5-futurenatural-avatar-pack---traffic-violation-fz4405_2.png',40),
+('/assets/images/products/adidas-harden-vol--5-futurenatural-avatar-pack---traffic-violation-fz4405_3.png',40),
+('/assets/images/products/adidas-harden-vol--5-futurenatural-avatar-pack---traffic-violation-fz4405_4.png',40),
+('/assets/images/products/adidas-harden-vol--5-futurenatural-avatar-pack---traffic-violation-fz4405_5.png',40);

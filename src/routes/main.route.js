@@ -6,7 +6,7 @@ import validateToken from '../middlewares/validateToken';
 
 router.get('/profile', headerWrapper(mainController.getProfilePage));
 router.get('/purchase-order', headerWrapper(mainController.gePurchaseOrderPage));
-router.get('/product-details/:slug', headerWrapper(mainController.getProductDetailsPage));
+router.get('/product/:slug', headerWrapper(mainController.getProductDetailsPage));
 router.get('/all-product', headerWrapper(mainController.getAllProductPage));
 router.get('/login', headerWrapper(mainController.getLoginPage));
 router.get('/register', headerWrapper(mainController.getRegisterPage));

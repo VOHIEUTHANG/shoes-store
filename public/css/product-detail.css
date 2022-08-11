@@ -43,6 +43,10 @@
       #product-detail-page .product-details .size-list .size-item:hover {
         color: #fff;
         background-color: #030021; }
+  #product-detail-page .product-details .swiper-pagination {
+    right: 0; }
+  #product-detail-page .product-details .swiper-pagination-bullet-active {
+    background-color: #a8ffb5; }
   #product-detail-page .product-details .qwick-view-content > h3 {
     color: #707070;
     font-size: 20px;

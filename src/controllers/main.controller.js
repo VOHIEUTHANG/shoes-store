@@ -1,4 +1,6 @@
 import UserService from '../service/user.service';
+import ProductService from '../service/product.service';
+import { createResponse } from '../helpers/responseCreator';
 
 const mainController = () => ({
    getHomePage: async (req, res) => {
@@ -9,7 +11,12 @@ const mainController = () => ({
          payload.user = user;
          payload.isLoggedIn = true;
       }
-      res.render('pages/home', payload);
+      const products = await ProductService.getActiveProduct({ offset: 4 });
+      if (products) {
+         payload.productsData = products;
+      }
+      console.log(payload.products);
+      res.render('pages/home', { ...payload });
    },
    getLoginPage: (req, res) => {
       const user = req.user;
@@ -49,13 +56,13 @@ const mainController = () => ({
       res.render('pages/user-pages/cart', payload);
    },
    get404Page: (req, res) => {
-      res.render('pages/error-pages/404');
+      res.render('pages/404');
    },
    get403Page: (req, res) => {
-      res.render('pages/error-pages/403');
+      res.render('pages/403');
    },
    get401Page: (req, res) => {
-      res.render('pages/error-pages/401');
+      res.render('pages/401');
    },
    getAllProductPage: (req, res) => {
       const user = req.user;
@@ -67,8 +74,12 @@ const mainController = () => ({
       }
       res.render('pages/all-product', payload);
    },
-   getProductDetailsPage: (req, res) => {
+   getProductDetailsPage: async (req, res, next) => {
       const { slug } = req.params;
+      const targetProduct = await ProductService.getDetailProductBySlug(slug);
+      if (!targetProduct) {
+         return next();
+      }
       const user = req.user;
       const payloadInfo = req.payload;
       const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
@@ -76,6 +87,8 @@ const mainController = () => ({
          payload.user = user;
          payload.isLoggedIn = true;
       }
+      payload.productDetail = targetProduct;
+      console.log(payload.productDetail);
       res.render('pages/product-detail', payload);
    },
    getProfilePage: async (req, res) => {

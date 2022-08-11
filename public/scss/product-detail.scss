@@ -56,6 +56,12 @@
             }
          }
       }
+      .swiper-pagination {
+         right: 0;
+      }
+      .swiper-pagination-bullet-active {
+         background-color: $color-bg-success;
+      }
       .qwick-view-content > h3 {
          color: #707070;
          font-size: 20px;

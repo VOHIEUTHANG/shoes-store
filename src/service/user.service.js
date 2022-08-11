@@ -213,16 +213,11 @@ class userService {
                      ...wishlist.dataValues.PRODUCT.dataValues,
                      BRAND: wishlist.dataValues.PRODUCT.dataValues.BRAND.dataValues.brandName,
                      price: formatToCurrency(Number(wishlist.dataValues.PRODUCT.dataValues.price) * 1000),
-                     product_images:
-                        wishlist.dataValues.PRODUCT.dataValues.product_images.length > 0
-                           ? wishlist.dataValues.PRODUCT.dataValues.product_images.map((imgRecore) => {
-                                return imgRecore.dataValues.imageURL;
-                             })
-                           : [],
+                     product_images: wishlist.dataValues.PRODUCT.dataValues.product_images[0].dataValues.imageURL,
                   },
                };
             });
-            console.log('formatedData', formatedData);
+            return formatedData;
          } catch (error) {
             console.log('🚀 ~ file: user.service.js ~ line 189 ~ userService ~ error', error);
             return false;

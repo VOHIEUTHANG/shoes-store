@@ -1,6 +1,5 @@
 import UserService from '../service/user.service';
 import ProductService from '../service/product.service';
-
 const mainController = () => ({
    getHomePage: async (req, res) => {
       const user = req.user;
@@ -12,8 +11,10 @@ const mainController = () => ({
       }
       const products = await ProductService.getActiveProduct({ offset: 4 });
       if (products) {
-         payload.products = products;
+         payload.productsData = products;
       }
+
+      console.log(payload.products);
       res.render('pages/home', { ...payload });
    },
    getLoginPage: (req, res) => {

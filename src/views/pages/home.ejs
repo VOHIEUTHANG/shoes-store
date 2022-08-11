@@ -239,34 +239,36 @@
                      </div>
                      <div class="product-style">
                         <div class="custom-row">
-                           <div class="custom-col-5 custom-col-style mb-4 wow fadeInUp">
-                              <div class="product-wrapper">
-                                 <div class="product-img">
-                                    <a href="#">
-                                       <img
-                                          src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_14961e9a-1e1b-4d1e-a8d2-2e4fedf3bc91_1296x.jpg?v=1656283010"
-                                          alt=""
-                                       />
-                                    </a>
-                                    <div class="product-action">
-                                       <a class="animate-left " title="Wishlist" href="#">
-                                          <i class="fa-regular fa-heart"></i>
+                           <% productsData.products.forEach(function(product){%>
+                              <div class="custom-col-5 custom-col-style mb-4 wow fadeInUp">
+                                 <div class="product-wrapper">
+                                    <div class="product-img">
+                                       <a href="#">
+                                          <img
+                                             src="<%= product.product_images %>"
+                                             alt=""
+                                          />
                                        </a>
-                                       <a class="animate-right" title="Add To Cart" href="#">
-                                          <i class="ti-shopping-cart"></i>
-                                       </a>
+                                       <div class="product-action">
+                                          <a class="animate-left " title="Wishlist" href="#">
+                                             <i class="fa-regular fa-heart"></i>
+                                          </a>
+                                          <a class="animate-right" title="Add To Cart" href="#">
+                                             <i class="ti-shopping-cart"></i>
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <div class="product-content">
+                                       <div class="category__brand"><%=product.BRAND %></div>
+                                       <h4>
+                                          <a href="#"><%= product.name %></a>
+                                       </h4>
+                                       <span><%= product.price %></span>
                                     </div>
                                  </div>
-                                 <div class="product-content">
-                                    <div class="category__brand">Jordan</div>
-                                    <h4>
-                                       <a href="#">Air Jordan 1 Mid Diamond Shorts </a>
-                                    </h4>
-                                    <span>3.726.000 VND</span>
-                                 </div>
                               </div>
-                           </div>
-                           <div class="custom-col-5 custom-col-style mb-4 wow fadeInUp">
+                           <% }); %>
+                           <!-- <div class="custom-col-5 custom-col-style mb-4 wow fadeInUp">
                               <div class="product-wrapper">
                                  <div class="product-img">
                                     <a href="#">
@@ -666,7 +668,7 @@
                                     <span>9.691.000 VND</span>
                                  </div>
                               </div>
-                           </div>
+                           </div> -->
                         </div>
                      </div>
                      <div class="load-more">
@@ -703,6 +705,60 @@
             animationDuration: 2000,
             gap: 20,
          }).mount();
+
+         const loadMoreBtn = $('.load-more > .button');
+         const productNodeList = $('.custom-row');
+         let pageNumber = 1;
+         const limit = 5;
+         loadMoreBtn.click(async ()=>{
+            pageNumber++;
+            try {
+               const productResult = await axios.get(`/api/product?page=${pageNumber || 1}&&limit=5`);
+               const products = productResult.data.products;
+               console.log(productResult.data);
+
+               const productsHtml = products.forEach((product)=>{
+                  const productItem = document.createElement("div");
+                  productItem.classList.add("custom-col-5",'custom-col-style','mb-4','wow','fadeInUp');
+                  productItem.innerHTML = `<div class="product-wrapper">
+                        <div class="product-img">
+                           <a href="#">
+                              <img
+                                 src="${product.product_images}"
+                                 alt=""
+                              />
+                           </a>
+                           <div class="product-action">
+                              <a class="animate-left" title="Wishlist" href="#">
+                                 <i class="fa-regular fa-heart"></i>
+                              </a>
+                              <a class="animate-right" title="Add To Cart" href="#">
+                                 <i class="ti-shopping-cart"></i>
+                              </a>
+                           </div>
+                        </div>
+                        <div class="product-content">
+                           <div class="category__brand">${product.BRAND}</div>
+                           <h4>
+                              <a href="product-details.html"
+                                 >${product.name}</a
+                              >
+                           </h4>
+                           <span>${product.price}</span>
+                        </div>
+                     </div>`;
+                     productNodeList[0].appendChild(productItem);
+               });
+               // const productsNode = document.createElement('div');
+               // productsNode.innerHTML = productsHtml;
+             
+               // productNodeList.appendChild(productsNode);
+               
+            } catch (error) {
+               
+            }
+            
+         })
       </script>
    </body>
 </html>

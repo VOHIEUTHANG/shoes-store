@@ -70,8 +70,18 @@ window.onload = function(){
     }
     
     // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
+    span.onclick = function() {   
       modal.style.display = "none";
+      document.getElementById('name').value='';
+      document.getElementById('price').value= '';
+      document.getElementById('date').value='';
+      document.getElementById('brand').value= '';
+      document.getElementById('sex').value= ''
+      document.getElementById('category').value= '';
+      document.getElementById('description').value= '';
+      document.getElementById('detail').value='';
+      document.getElementById('btn-save').onclick= createProduct;
+      document.getElementById('btn-save').innerText= 'Lưu';
     }
     
     // When the user clicks anywhere outside of the modal, close it
@@ -121,6 +131,8 @@ function modifyProduct(){
         brand,
         category,
     }).then ((res)=>{
-        console.log(res);
+       alert(res.data);
+    }).catch((err)=>{
+       alert(err)
     })
 }

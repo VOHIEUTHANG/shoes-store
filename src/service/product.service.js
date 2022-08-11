@@ -86,6 +86,42 @@ class productService {
          return null;
       }
    }
+   async getDetailProductBySlug(slug) {
+      try {
+         const productResult = await productModel.findOne({
+            attributes: {
+               exclude: ['BRAND_ID', 'sellStartDate'],
+            },
+            include: [
+               {
+                  model: brandModel,
+                  as: 'BRAND',
+               },
+               {
+                  model: product_imagesModel,
+                  as: 'product_images',
+               },
+            ],
+            where: { slug: slug },
+         });
+         if (productResult) {
+            const formatedProduct = {
+               ...productResult.dataValues,
+               BRAND: productResult.dataValues.BRAND.dataValues.brandName,
+               product_images: productResult.dataValues.product_images.map((img) => {
+                  return img.imageURL;
+               }),
+               price: formatCurrency(productResult.dataValues.price * 1000),
+            };
+            return formatedProduct;
+         } else {
+            return null;
+         }
+      } catch (error) {
+         console.log('🚀 ~ file: product.service.js ~ line 109 ~ productService ~ error', error);
+         return false;
+      }
+   }
 }
 
 module.exports = new productService();

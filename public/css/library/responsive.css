@@ -1949,7 +1949,7 @@
       margin-right: 0;
    }
    .product-details-tab2 .product-details-small a > img {
-      height: 156px;
+      /* height: 156px; */
    }
    .pro-stick .easyzoom.easyzoom--overlay > a img,
    .single-details-gallery .easyzoom.easyzoom--overlay > a img,

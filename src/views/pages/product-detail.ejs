@@ -15,162 +15,36 @@
                            <div class="product-details-img-content">
                               <div class="product-details-tab mr-35 product-details-tab2">
                                  <div class="product-details-large tab-content">
-                                    <div class="tab-pane active show fade" id="pro-details1" role="tabpanel">
+                                    <% for(let i = 0;i< productDetail.product_images.length;i++) { %>
+                                    <div
+                                       class="tab-pane fade <%= i===0 ? 'active show' : '' %>"
+                                       id="pro-details<%= i+1 %>"
+                                       role="tabpanel"
+                                    >
                                        <div class="easyzoom easyzoom--overlay">
-                                          <a
-                                             target="_blank"
-                                             href="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_0c1094b4-3c00-41e3-a52c-accc05e34edf_1296x.jpg?v=1656276816"
-                                          >
-                                             <img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_0c1094b4-3c00-41e3-a52c-accc05e34edf_1296x.jpg?v=1656276816"
-                                                alt=""
-                                             />
+                                          <a target="_blank" href="<%= productDetail.product_images[i] %>">
+                                             <img src="<%= productDetail.product_images[i] %>" alt="" />
                                           </a>
                                        </div>
                                     </div>
-                                    <div class="tab-pane fade" id="pro-details2" role="tabpanel">
-                                       <div class="easyzoom easyzoom--overlay">
-                                          <a
-                                             target="_blank"
-                                             href="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/1_5ee34c84-267e-4fb7-9316-1c296323adfe_1296x.jpg?v=1656276816"
-                                          >
-                                             <img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/1_5ee34c84-267e-4fb7-9316-1c296323adfe_1296x.jpg?v=1656276816"
-                                                alt=""
-                                             />
-                                          </a>
-                                       </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="pro-details3" role="tabpanel">
-                                       <div class="easyzoom easyzoom--overlay">
-                                          <a
-                                             target="_blank"
-                                             href="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/2_0e9eb0a0-ce97-4506-bbe6-8d33c3c450ba_1296x.jpg?v=1656276816"
-                                          >
-                                             <img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/2_0e9eb0a0-ce97-4506-bbe6-8d33c3c450ba_1296x.jpg?v=1656276816"
-                                                alt=""
-                                             />
-                                          </a>
-                                       </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="pro-details4" role="tabpanel">
-                                       <div class="easyzoom easyzoom--overlay">
-                                          <a
-                                             target="_blank"
-                                             href="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/3_3a07696f-4f21-46e8-9bf4-7a29f41fb41b_1296x.jpg?v=1656276816"
-                                          >
-                                             <img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/3_3a07696f-4f21-46e8-9bf4-7a29f41fb41b_1296x.jpg?v=1656276816"
-                                                alt=""
-                                             />
-                                          </a>
-                                       </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="pro-details5" role="tabpanel">
-                                       <div class="easyzoom easyzoom--overlay">
-                                          <a
-                                             target="_blank"
-                                             href="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/5_3f188960-a28b-4a09-bbb4-8731568c5c37_1296x.jpg?v=1656276816"
-                                          >
-                                             <img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/5_3f188960-a28b-4a09-bbb4-8731568c5c37_1296x.jpg?v=1656276816"
-                                                alt=""
-                                             />
-                                          </a>
-                                       </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="pro-details6" role="tabpanel">
-                                       <div class="easyzoom easyzoom--overlay">
-                                          <a
-                                             target="_blank"
-                                             href="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/4_1ce779ea-b1de-4526-af2f-d59191c7044d_1296x.jpg?v=1656276816"
-                                          >
-                                             <img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/4_1ce779ea-b1de-4526-af2f-d59191c7044d_1296x.jpg?v=1656276816"
-                                                alt=""
-                                             />
-                                          </a>
-                                       </div>
-                                    </div>
+                                    <% }%>
                                  </div>
                                  <div class="product-details-small nav ml-10 product-details-2" role="tablist">
                                     <div class="swiper product-images-slide">
                                        <div class="swiper-wrapper">
+                                          <% productDetail.product_images?.forEach((imgURL,i)=>{ %>
                                           <a
-                                             class="active mb-10 swiper-slide"
-                                             href="#pro-details1"
+                                             class="mb-10 swiper-slide <%= i===0 ? 'active' : '' %>"
+                                             href="#pro-details<%= i+1 %>"
                                              data-bs-toggle="list"
                                              role="tab"
                                              aria-selected="true"
                                           >
-                                             <img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_0c1094b4-3c00-41e3-a52c-accc05e34edf_1296x.jpg?v=1656276816"
-                                                alt=""
-                                             />
+                                             <img src="<%= imgURL %>" alt="" />
                                           </a>
-                                          <a
-                                             class="mb-10 swiper-slide"
-                                             href="#pro-details2"
-                                             data-bs-toggle="list"
-                                             role="tab"
-                                             aria-selected="true"
-                                          >
-                                             <img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/1_5ee34c84-267e-4fb7-9316-1c296323adfe_1296x.jpg?v=1656276816"
-                                                alt=""
-                                             />
-                                          </a>
-                                          <a
-                                             class="mb-10 swiper-slide"
-                                             href="#pro-details3"
-                                             data-bs-toggle="list"
-                                             role="tab"
-                                             aria-selected="true"
-                                          >
-                                             <img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/2_0e9eb0a0-ce97-4506-bbe6-8d33c3c450ba_1296x.jpg?v=1656276816"
-                                                alt=""
-                                             />
-                                          </a>
-                                          <a
-                                             class="mb-10 swiper-slide"
-                                             href="#pro-details4"
-                                             data-bs-toggle="list"
-                                             role="tab"
-                                             aria-selected="true"
-                                          >
-                                             <img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/3_3a07696f-4f21-46e8-9bf4-7a29f41fb41b_1296x.jpg?v=1656276816"
-                                                alt=""
-                                             />
-                                          </a>
-                                          <a
-                                             class="mb-10 swiper-slide"
-                                             href="#pro-details5"
-                                             data-bs-toggle="list"
-                                             role="tab"
-                                             aria-selected="true"
-                                          >
-                                             <img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/5_3f188960-a28b-4a09-bbb4-8731568c5c37_1296x.jpg?v=1656276816"
-                                                alt=""
-                                             />
-                                          </a>
-                                          <a
-                                             class="mb-10 swiper-slide"
-                                             href="#pro-details6"
-                                             data-bs-toggle="list"
-                                             role="tab"
-                                             aria-selected="true"
-                                          >
-                                             <img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/4_1ce779ea-b1de-4526-af2f-d59191c7044d_1296x.jpg?v=1656276816"
-                                                alt=""
-                                             />
-                                          </a>
+                                          <%}) %>
                                        </div>
-                                       <!-- <div class="swiper-pagination"></div> -->
+                                       <div class="swiper-pagination"></div>
                                     </div>
                                  </div>
                               </div>
@@ -178,7 +52,7 @@
                         </div>
                         <div class="col-md-12 col-lg-6 col-12">
                            <div class="product-details-content">
-                              <h3>Air Jordan 1 pink blue</h3>
+                              <h3><%= productDetail.name %>e</h3>
                               <div class="rating-number">
                                  <div class="quick-view-rating">
                                     <i class="fa-solid fa-star yellow-star"></i>
@@ -192,7 +66,7 @@
                                  </div>
                               </div>
                               <div class="details-price">
-                                 <span>5.200.000 VND</span>
+                                 <span><%= productDetail.price %></span>
                               </div>
                               <p>
                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmol tempor incidid

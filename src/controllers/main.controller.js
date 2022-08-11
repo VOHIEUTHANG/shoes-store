@@ -45,7 +45,14 @@ const mainController = () => ({
       payload.user = user;
       payload.isLoggedIn = true;
       const username = user?.userName;
-      const wishList = await userService.getAllProductsWishList(username);
+      try {
+         const wishList = await userService.getAllProductsWishList(username);
+         console.log('wishList', wishList);
+         payload.wishlist = wishList;
+      } catch (error) {
+         res.json(createResponse('error', 'Query wishlist xảy ra lỗi !'));
+      }
+
       res.render('pages/user-pages/wishlist', payload);
    },
    getCartPage: (req, res) => {

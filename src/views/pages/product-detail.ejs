@@ -1,6 +1,7 @@
 <html lang="en">
    <head>
       <%- include('../partials/head'); %>
+      <title>PRODUCT DETAILS</title>
       <link rel="stylesheet" href="/css/product-detail.css" />
    </head>
    <body>
@@ -77,14 +78,21 @@
                                  <div class="select-option-part">
                                     <label>Size*</label>
                                     <ul class="size-list row">
-                                       <li class="size-item">38</li>
-                                       <li class="size-item">39</li>
-                                       <li class="size-item">40</li>
-                                       <li class="size-item">41</li>
-                                       <li class="size-item">42</li>
-                                       <li class="size-item">43</li>
-                                       <li class="size-item">44</li>
+                                       <% productDetail.product_items.forEach(product=>{ %>
+                                       <li
+                                          class="size-item <%= product.inventory <= 0 ? 'disable' : '' %>"
+                                          data-inventory="<%= product.inventory %>"
+                                       >
+                                          <%= product.size %>
+                                       </li>
+                                       <% }) %>
                                     </ul>
+                                    <div style="margin-top: 2rem">
+                                       Số lượng trong kho:
+                                       <span style="font-size: 1.8rem; font-weight: 400" class="product-quantity"
+                                          >...</span
+                                       >
+                                    </div>
                                  </div>
                               </div>
                               <div class="quickview-plus-minus">
@@ -100,11 +108,20 @@
                                     <div class="inc qtybutton">+</div>
                                  </div>
                                  <div class="quickview-btn-cart">
-                                    <a class="button" href="#">add to cart</a>
+                                    <div class="button disable" id="add-to-cart">add to cart</div>
                                  </div>
                                  <div class="quickview-btn-wishlist">
-                                    <a class="btn-hover" href="#"><i class="fa-regular fa-heart"></i></a>
+                                    <div
+                                       class="btn-hover"
+                                       id="add-to-wishlist"
+                                       data-product-id="<%= productDetail.ID %>"
+                                    >
+                                       <i class="fa-regular fa-heart"></i>
+                                    </div>
                                  </div>
+                              </div>
+                              <div style="margin-top: 14px" class="warning-message wow shakeX">
+                                 Vui lòng chọn size !
                               </div>
                            </div>
                         </div>
@@ -381,7 +398,7 @@
       <%- include('../partials/foot') %>
       <script src="/js/library/glide.min.js"></script>
       <script type="module">
-         import { formatToCurrency } from '/js/utils/index.js';
+         import { formatToCurrency, privateRequestHandler } from '/js/utils/index.js';
 
          new Glide('.glide.related-products', {
             type: 'carousel',
@@ -400,10 +417,18 @@
 
          $(() => {
             const sizeItems = $('.size-list > .size-item');
+            const addToCartBtn = $('#add-to-cart');
+            const warningMessageBtn = $('.warning-message');
             sizeItems.click(function () {
-               sizeItems.removeClass('active');
-               $(this).addClass('active');
-               const size = $(this).text();
+               if (!$(this).hasClass('disable')) {
+                  addToCartBtn.removeClass('disable');
+                  warningMessageBtn.removeClass('active');
+                  sizeItems.removeClass('active');
+                  $(this).addClass('active');
+                  const inventory = this.dataset.inventory;
+                  $('.product-quantity').text(inventory);
+                  const size = $(this).text();
+               }
             });
             const productCountEle = $('#product-count');
             const plusBtn = $('.inc.qtybutton');
@@ -418,6 +443,29 @@
             plusBtn.click(() => {
                currentVal < 10 && currentVal++;
                productCountEle.val(currentVal);
+            });
+
+            addToCartBtn.click(async function () {
+               if (!$(this).hasClass('disable')) {
+                  $('.warning-message').removeClass('active');
+                  const size = $('.size-item.active').text().trim();
+                  const quantity = $('#product-count').val();
+                  console.log({ size, quantity });
+               } else {
+                  $('.warning-message').addClass('active');
+               }
+            });
+
+            const addToWishlistBtn = $('#add-to-wishlist');
+            addToWishlistBtn.click(async function () {
+               const productID = this.dataset.productId;
+               try {
+                  await privateRequestHandler(`/api/user/add-to-wishlist/${productID}`, 'post', {}, (data, status) => {
+                     toastr[data.status](data.message);
+                  });
+               } catch (error) {
+                  toastr.error('Có lỗi xảy ra, vui lòng liên hệ quản trị viên !');
+               }
             });
          });
       </script>

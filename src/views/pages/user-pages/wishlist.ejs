@@ -14,7 +14,15 @@
                   <form action="#">
                      <div class="product-style">
                         <div class="custom-row row gx-5 gy-5">
-                           <% wishlist.forEach((product)=> { %>
+                           <% if(wishlist.length === 0) {%>
+                           <div class="d-flex justify-content-center align-items-center" style="flex-direction: column">
+                              <i style="font-size: 6rem" class="ti-dropbox"></i>
+                              <h2 class="cart-heading" style="font-size: 2.8rem; margin-top: 3rem; color: #444">
+                                 Wishlist chưa có sản phẩm nào :((
+                              </h2>
+                           </div>
+
+                           <% } %> <% wishlist.forEach((product)=> { %>
                            <div class="col col-sm-12 col-md-6 col-lg-4 col-xl-3 product-item">
                               <div class="product-wrapper">
                                  <div class="product-img">

@@ -121,11 +121,12 @@
       .cart .cart-page-total span.origin-price {
         text-decoration: line-through;
         opacity: 0.8; }
-      .cart .cart-page-total span.discount, .cart .cart-page-total span.shipment {
+      .cart .cart-page-total span.shipment {
         font-size: 1.4rem;
         font-weight: light;
-        color: #fc6d6d;
         font-style: italic; }
+      .cart .cart-page-total span.discount {
+        color: #5aa65a; }
       .cart .cart-page-total span.payment-total {
         font-size: 1.7rem;
         font-weight: bold; }

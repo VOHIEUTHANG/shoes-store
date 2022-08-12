@@ -4,8 +4,9 @@ import createSlug from '../helpers/createSlug';
 const productModel = Models.product;
 const categoryModel = Models.category;
 const brandModel = Models.brand;
-const product_categoryModel = Models.product_category;
-const product_imagesModel = Models.product_images;
+const productCategoryModel = Models.product_category;
+const productImagesModel = Models.product_images;
+const productItemModel = Models.product_items;
 
 class productService {
    async getAll() {
@@ -22,14 +23,14 @@ class productService {
          include: [
             { model: brandModel, as: 'BRAND' },
             {
-               model: product_categoryModel,
+               model: productCategoryModel,
                as: 'product_categories',
                include: [{ model: categoryModel, as: 'CATEGORY' }],
             },
          ],
       });
       let brands = brandModel.findAll();
-      let product_category = product_categoryModel.findAll();
+      let product_category = productCategoryModel.findAll();
       return products;
    }
    async save(data) {
@@ -74,7 +75,7 @@ class productService {
                   as: 'BRAND',
                },
                {
-                  model: product_imagesModel,
+                  model: productImagesModel,
                   as: 'product_images',
                },
             ],
@@ -107,8 +108,13 @@ class productService {
                   as: 'BRAND',
                },
                {
-                  model: product_imagesModel,
+                  model: productImagesModel,
                   as: 'product_images',
+               },
+               {
+                  model: productItemModel,
+                  as: 'product_items',
+                  attributes: ['inventory', 'size'],
                },
             ],
             where: { slug: slug },
@@ -121,6 +127,9 @@ class productService {
                   return img.imageURL;
                }),
                price: formatCurrency(productResult.dataValues.price * 1000),
+               product_items: productResult.dataValues.product_items.map((product) => {
+                  return product.dataValues;
+               }),
             };
             return formatedProduct;
          } else {

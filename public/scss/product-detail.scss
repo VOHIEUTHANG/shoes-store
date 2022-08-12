@@ -47,9 +47,18 @@
             cursor: pointer;
             flex-grow: 0;
             @include transition;
+            user-select: none;
             border: 1px solid #ccc;
             &.active {
                @include blackWhiteEffect;
+            }
+            &.disable {
+               opacity: 0.3;
+               cursor: not-allowed;
+               &:hover {
+                  background-color: transparent;
+                  color: inherit !important;
+               }
             }
             &:hover {
                @include blackWhiteEffect;
@@ -179,7 +188,7 @@
          text-transform: uppercase;
          z-index: 5;
       }
-      .quickview-btn-wishlist > a {
+      .quickview-btn-wishlist > div {
          border: 1px solid #dcdcdc;
          color: #727272;
          display: inline-block;
@@ -189,12 +198,21 @@
          height: 100%;
          @include transition;
          aspect-ratio: 1;
+         cursor: pointer;
          font-size: 22px;
          z-index: 9;
       }
-      .quickview-btn-wishlist > a:hover {
+      .quickview-btn-wishlist > div:hover {
          background-color: $color-black;
          color: $color-white;
+      }
+      .warning-message {
+         color: rgb(255, 101, 101);
+         @include hidden();
+         &.active {
+            visibility: visible;
+            opacity: 1;
+         }
       }
       .quickview-btn-cart {
          margin: 0 30px;

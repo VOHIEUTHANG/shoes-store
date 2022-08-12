@@ -237,7 +237,8 @@
   text-align: center;
   transition: all 0.3s ease 0s; }
 
-#main .all-products-area .product-action div {
+#main .all-products-area .product-action div,
+#main .all-products-area .product-action a {
   background-color: #383838;
   border-radius: 100%;
   color: #f7f7f7;
@@ -248,7 +249,8 @@
   margin: 0 15px;
   width: 45px; }
 
-#main .all-products-area .product-action div:hover {
+#main .all-products-area .product-action div:hover,
+#main .all-products-area .product-action a:hover {
   background-color: #050035;
   color: #fff; }
 
@@ -285,6 +287,7 @@
   margin-top: auto; }
   #main .all-products-area .product-content .category__brand {
     display: inline-block;
+    color: #222;
     user-select: none;
     padding: 0.3rem 1.6rem;
     border-radius: 25px;
@@ -292,35 +295,43 @@
     #main .all-products-area .product-content .category__brand a {
       color: inherit; }
 
-#main .all-products-area .product-action > div {
+#main .all-products-area .product-action > div,
+#main .all-products-area .product-action > a {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   display: inline-flex; }
-  #main .all-products-area .product-action > div:hover {
+  #main .all-products-area .product-action > div:hover,
+  #main .all-products-area .product-action > a:hover {
     color: #222;
     background-color: white; }
 
-#main .all-products-area .product-action > div.animate-left {
+#main .all-products-area .product-action > div.animate-left,
+#main .all-products-area .product-action > a.animate-left {
   transform: translateX(-20px);
   transition: all 0.4s ease 0s; }
 
-#main .all-products-area .product-wrapper:hover .product-action > div.animate-left {
+#main .all-products-area .product-wrapper:hover .product-action > div.animate-left,
+#main .all-products-area .product-wrapper:hover .product-action > a.animate-left {
   transform: translateX(0px); }
 
-#main .all-products-area .product-action > a.animate-right {
+#main .all-products-area .product-action > a.animate-right,
+#main .all-products-area .product-action > div.animate-right {
   transform: translateX(20px);
   transition: all 0.4s ease 0s; }
 
-#main .all-products-area .product-wrapper:hover .product-action > div.animate-right {
+#main .all-products-area .product-wrapper:hover .product-action > div.animate-left,
+#main .all-products-area .product-wrapper:hover .product-action > a.animate-left {
   transform: translateX(0px); }
 
-#main .all-products-area .product-action > div.animate-top {
+#main .all-products-area .product-action > div.animate-top,
+#main .all-products-area .product-action > a.animate-top {
   transform: translateY(20px);
   transition: all 0.4s ease 0s; }
 
-#main .all-products-area .product-wrapper:hover .product-action > div.animate-top {
+#main .all-products-area .product-wrapper:hover .product-action > div.animate-top,
+#main .all-products-area .product-wrapper:hover .product-action > a.animate-top {
   transform: translateY(0px); }
 
 #main .all-products-area .product-wrapper:hover .product-action {

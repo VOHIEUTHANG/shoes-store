@@ -1,3 +1,4 @@
+@import './variable';
 .cart {
    padding: 8rem 0;
    .cart-heading {
@@ -151,12 +152,14 @@
             text-decoration: line-through;
             opacity: 0.8;
          }
-         &.discount,
+
          &.shipment {
             font-size: 1.4rem;
             font-weight: light;
-            color: rgb(252, 109, 109);
             font-style: italic;
+         }
+         &.discount {
+            color: rgb(90, 166, 90);
          }
          &.payment-total {
             font-size: 1.7rem;

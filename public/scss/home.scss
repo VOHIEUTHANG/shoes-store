@@ -282,7 +282,8 @@
          text-align: center;
          transition: all 0.3s ease 0s;
       }
-      .product-action div {
+      .product-action div,
+      .product-action a {
          background-color: #383838;
          border-radius: 100%;
          color: #f7f7f7;
@@ -293,7 +294,8 @@
          margin: 0 15px;
          width: 45px;
       }
-      .product-action div:hover {
+      .product-action div:hover,
+      .product-action a:hover {
          background-color: #050035;
          color: #fff;
       }
@@ -330,6 +332,7 @@
          margin-top: auto;
          .category__brand {
             display: inline-block;
+            color: $color-text-primary;
             user-select: none;
             padding: 0.3rem 1.6rem;
             border-radius: 25px;
@@ -339,7 +342,8 @@
             }
          }
       }
-      .product-action > div {
+      .product-action > div,
+      .product-action > a {
          @include centerFlexItems;
          display: inline-flex;
          &:hover {
@@ -347,25 +351,31 @@
             background-color: white;
          }
       }
-      .product-action > div.animate-left {
+      .product-action > div.animate-left,
+      .product-action > a.animate-left {
          transform: translateX(-20px);
          transition: all 0.4s ease 0s;
       }
-      .product-wrapper:hover .product-action > div.animate-left {
+      .product-wrapper:hover .product-action > div.animate-left,
+      .product-wrapper:hover .product-action > a.animate-left {
          transform: translateX(0px);
       }
-      .product-action > a.animate-right {
+      .product-action > a.animate-right,
+      .product-action > div.animate-right {
          transform: translateX(20px);
          transition: all 0.4s ease 0s;
       }
-      .product-wrapper:hover .product-action > div.animate-right {
+      .product-wrapper:hover .product-action > div.animate-left,
+      .product-wrapper:hover .product-action > a.animate-left {
          transform: translateX(0px);
       }
-      .product-action > div.animate-top {
+      .product-action > div.animate-top,
+      .product-action > a.animate-top {
          transform: translateY(20px);
          transition: all 0.4s ease 0s;
       }
-      .product-wrapper:hover .product-action > div.animate-top {
+      .product-wrapper:hover .product-action > div.animate-top,
+      .product-wrapper:hover .product-action > a.animate-top {
          transform: translateY(0px);
       }
       .product-wrapper:hover .product-action {

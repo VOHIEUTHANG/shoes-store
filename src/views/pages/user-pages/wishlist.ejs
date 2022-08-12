@@ -14,8 +14,16 @@
                   <form action="#">
                      <div class="product-style">
                         <div class="custom-row row gx-5 gy-5">
-                           <% wishlist.forEach((product)=> { %>
-                           <div class="col col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                           <% if(wishlist.length === 0) {%>
+                           <div class="d-flex justify-content-center align-items-center" style="flex-direction: column">
+                              <i style="font-size: 6rem" class="ti-dropbox"></i>
+                              <h2 class="cart-heading" style="font-size: 2.8rem; margin-top: 3rem; color: #444">
+                                 Wishlist chưa có sản phẩm nào :((
+                              </h2>
+                           </div>
+
+                           <% } %> <% wishlist.forEach((product)=> { %>
+                           <div class="col col-sm-12 col-md-6 col-lg-4 col-xl-3 product-item">
                               <div class="product-wrapper">
                                  <div class="product-img">
                                     <a href="#">
@@ -32,7 +40,7 @@
                                     </h4>
                                     <span><%= product.PRODUCT.price %></span>
                                  </div>
-                                 <div class="product-remove">
+                                 <div class="product-remove" data-product-id="<%= product.PRODUCT.ID%>">
                                     <i class="ti-close"></i>
                                  </div>
                               </div>
@@ -47,5 +55,28 @@
          <%- include('../../partials/footer') %>
       </div>
       <%- include('../../partials/foot') %>
+      <script type="module">
+         import { privateRequestHandler } from '/js/utils/index.js';
+         const removeProductBtn = $('.product-remove');
+         removeProductBtn.click(async function () {
+            const productID = this.dataset.productId;
+            try {
+               await privateRequestHandler(
+                  `/api/user/delete-from-wishlist/${productID}`,
+                  'delete',
+                  {},
+                  (data, status) => {
+                     toastr[data.status](data.message);
+                     if (data.status === 'success') {
+                        $(this).closest('.product-item').remove();
+                     }
+                  },
+               );
+            } catch (error) {
+               console.log('🚀 ~ file: wishlist.ejs ~ line 60 ~ error', error);
+               toastr.error('Xóa wishlist xảy ra lỗi ');
+            }
+         });
+      </script>
    </body>
 </html>

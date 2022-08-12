@@ -1,10 +1,9 @@
-import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import { createResponse } from '../helpers/responseCreator';
 
 export default function validateTokenMiddleware(req, res, next) {
    passport.authenticate('jwt', { session: false }, (error, user, info, status) => {
-      console.log(user);
+      console.log('Current user ===> ', user);
       if (!user) {
          if (info?.message === 'No auth token') {
             return res.status(401).json(createResponse('warning', info.message));

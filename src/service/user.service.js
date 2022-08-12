@@ -184,6 +184,21 @@ class userService {
          return false;
       }
    }
+   async deleteWishListByUsernameAndPrdocutID(username, PRODUCT_ID) {
+      try {
+         const count = await wishListModel.destroy({
+            where: {
+               username,
+               PRODUCT_ID,
+            },
+         });
+         return count > 0 ? true : false;
+      } catch (error) {
+         console.log('🚀 ~ file: user.service.js ~ line 197 ~ userService ~ error', error);
+         return false;
+      }
+   }
+
    async getAllProductsWishList(username) {
       if (username) {
          try {
@@ -192,7 +207,7 @@ class userService {
                   model: ProductModel,
                   as: 'PRODUCT',
                   attributes: {
-                     exclude: ['ID', 'sellStartDate', 'suitableFor', 'specifications', 'descriptions', 'BRAND_ID'],
+                     exclude: ['sellStartDate', 'suitableFor', 'specifications', 'descriptions', 'BRAND_ID'],
                   },
                   include: [
                      {

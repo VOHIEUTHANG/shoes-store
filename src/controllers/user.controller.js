@@ -128,13 +128,28 @@ const userController = () => ({
       const username = req.user.userName;
       if (productID && productID) {
          const insertWishListResult = await userService.addToWishList(username, productID);
-         console.log('insertWishListResult', insertWishListResult);
          if (insertWishListResult === true) {
             return res.json(createResponse('success', 'Thêm sản phẩm vào wishlist thành công !'));
          } else if (typeof insertWishListResult === 'object') {
             return res.json(insertWishListResult);
          } else {
             return res.json(createResponse('error', 'Có lỗi xảy ra khi thêm sản phẩm vào wishlist !'));
+         }
+      } else {
+         return res.json(createResponse('error', 'Missing username or productID'));
+      }
+   },
+   async deleteFromWishList(req, res) {
+      console.log('validated successfully !');
+      const productID = req.params.productID;
+      const username = req.user.userName;
+      if (productID && username) {
+         const deleteResult = await userService.deleteWishListByUsernameAndPrdocutID(username, productID);
+         console.log('🚀 ~ file: user.controller.js ~ line 148 ~ deleteResult', deleteResult);
+         if (deleteResult) {
+            return res.json(createResponse('success', 'Xóa sản phẩm khỏi wishlist thành công !'));
+         } else {
+            return res.json(createResponse('error', 'Xóa sản phẩm khỏi wishlist thất bại !'));
          }
       } else {
          return res.json(createResponse('error', 'Missing username or productID'));

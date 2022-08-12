@@ -65,13 +65,13 @@ const refreshTokenHandler = async (status) => {
             const { accessToken } = data.payload;
             return accessToken;
          });
-         break;
       case 401:
          // No auth token
-         window.location.href('/login');
+         toastr && toastr.error('Missing auth token, Please check again !');
+         // window.location.href = '/401';
          break;
       default:
-         window.location.href('/403');
+         window.location.href = '/403';
    }
 };
 
@@ -84,21 +84,29 @@ const privateRequestHandler = async (
 ) => {
    const { accessToken } = localStorage.getStore();
    const config = configHeaders(accessToken, contentType);
-   axios[method](path, payload, config)
+   let axiosParameters = [path, payload, config];
+   if (method === 'delete') {
+      axiosParameters = [path, config];
+   }
+   axios[method](...axiosParameters)
       .then(({ data, status }) => {
          successHandler(data, status);
       })
       .catch(async (error) => {
          console.log(error);
          const newToken = await refreshTokenHandler(error.response?.status);
-         const newconfig = configHeaders(newToken, contentType);
-         axios[method](path, payload, newconfig)
-            .then(({ data, status }) => {
-               successHandler(data, status);
-            })
-            .catch((data) => {
-               toastr.error('Refresh token occured error , please try again !');
-            });
+         if (typeof newToken === 'string') {
+            const newconfig = configHeaders(newToken, contentType);
+            axiosParameters.pop();
+            axiosParameters.push(newconfig);
+            axios[method](...axiosParameters)
+               .then(({ data, status }) => {
+                  successHandler(data, status);
+               })
+               .catch((data) => {
+                  toastr.error('Refresh token occured error , please try again !');
+               });
+         }
       });
 };
 

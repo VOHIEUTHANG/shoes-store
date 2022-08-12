@@ -307,53 +307,54 @@
          }).mount();
 
          const loadMoreBtn = $('.load-more > .button');
-         const addToWishListbtn = $(".add-to-wishlist");
          const productNodeList = $('.custom-row');
          let pageNumber = 2;
          const limit = 5;
          loadMoreBtn.click(async function(){
+        
             if(!$(this).hasClass('disable')){
                pageNumber++;
                try {
-               const productResult = await axios.get(`/api/product?page=${pageNumber || 1}&&limit=5`);
-               const totalProducts = productResult.data.total; 
-               const endProductIndex = (pageNumber - 1) * limit + limit;
-               if(endProductIndex >= totalProducts){
-                  $(this).addClass('disable');
-               }
-               const products = productResult.data.products;
-               const productsHtml = products.forEach((product)=>{
-                  const productItem = document.createElement("div");
-                  productItem.classList.add("custom-col-5",'custom-col-style','mb-4');
-                  productItem.innerHTML = `<div class="product-wrapper">
-                        <div class="product-img">
-                           <a href="/product/${product.slug}">
-                              <img
-                                 src="${product.product_images}"
-                                 alt=""
-                              />
-                           </a>
-                           <div class="product-action">
-                              <div class="animate-left add-to-wishlist" title="Wishlist" data-product-id="${product.ID}">
-                                 <i class="fa-regular fa-heart"></i>
-                              </div>
-                              <div class="animate-right" title="Add To Cart" data-product-id="${product.ID}">
-                                 <i class="ti-shopping-cart"></i>
+                  const productResult = await axios.get(`/api/product?page=${pageNumber || 1}&&limit=5`);
+                  const totalProducts = productResult.data.total; 
+                  const endProductIndex = (pageNumber - 1) * limit + limit;
+                  if(endProductIndex >= totalProducts){
+                     $(this).addClass('disable');
+                  }
+                  const products = productResult.data.products;
+                  const productsHtml = products.forEach((product)=>{
+                     const productItem = document.createElement("div");
+                     productItem.classList.add("custom-col-5",'custom-col-style','mb-4');
+                     productItem.innerHTML = `<div class="product-wrapper">
+                           <div class="product-img">
+                              <a href="/product/${product.slug}">
+                                 <img
+                                    src="${product.product_images}"
+                                    alt=""
+                                 />
+                              </a>
+                              <div class="product-action">
+                                 <div class="animate-left add-to-wishlist" title="Wishlist" data-product-id="${product.ID}">
+                                    <i class="fa-regular fa-heart"></i>
+                                 </div>
+                                 <div class="animate-right" title="Add To Cart" data-product-id="${product.ID}">
+                                    <i class="ti-shopping-cart"></i>
+                                 </div>
                               </div>
                            </div>
-                        </div>
-                        <div class="product-content">
-                           <div class="category__brand">${product.BRAND}</div>
-                           <h4>
-                              <a href="/product/${product.slug}"
-                                 >${product.name}</a
-                              >
-                           </h4>
-                           <span>${product.price}</span>
-                        </div>
-                     </div>`;
-                     productNodeList[0].appendChild(productItem);
-               });
+                           <div class="product-content">
+                              <div class="category__brand">${product.BRAND}</div>
+                              <h4>
+                                 <a href="/product/${product.slug}"
+                                    >${product.name}</a
+                                 >
+                              </h4>
+                              <span>${product.price}</span>
+                           </div>
+                        </div>`;
+                        productNodeList[0].appendChild(productItem);
+                  });
+                  reloadProductLogic();
                } catch (error) {
                   toastr.error('Xảy ra lỗi khi load sản phẩm !');
                }
@@ -361,18 +362,20 @@
                toastr.warning('Đã hết sản phẩm để hiện thị !');
             }
          });
-         addToWishListbtn.click(async function (){
-            console.log('123');
-            const PRODUCT_ID = this.dataset.productId;
-            console.log('PRODUCT_ID');
-            try {
-               await privateRequestHandler(`/api/user/add-to-wishlist/${PRODUCT_ID}`,'post',{},(data,status)=>{
-               toastr[data.status](data.message);
+
+         function reloadProductLogic(){
+            $(".add-to-wishlist").click(async function (){
+               const PRODUCT_ID = this.dataset.productId;
+               try {
+                  await privateRequestHandler(`/api/user/add-to-wishlist/${PRODUCT_ID}`,'post',{},(data,status)=>{
+                  toastr[data.status](data.message);
+               })
+               } catch (error) {
+                  toastr.error("Có lỗi xảy ra, vui lòng liên hệ quản trị viên !");
+               }
             })
-            } catch (error) {
-               toastr.error("Có lỗi xảy ra, vui lòng liên hệ quản trị viên !");
-            }
-         })
+         }
+         reloadProductLogic();
       </script>
    </body>
 </html>

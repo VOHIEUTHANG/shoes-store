@@ -126,11 +126,18 @@ const userController = () => ({
    async addToWishList(req, res) {
       const productID = req.params.productID;
       const username = req.user.userName;
-      const insertWishListResult = await userService.addToWishList(username, productID);
-      if (insertWishListResult) {
-         res.json(createResponse('success', 'Thêm sản phẩm vào wishlist thành công !'));
+      if (productID && productID) {
+         const insertWishListResult = await userService.addToWishList(username, productID);
+         console.log('insertWishListResult', insertWishListResult);
+         if (insertWishListResult === true) {
+            return res.json(createResponse('success', 'Thêm sản phẩm vào wishlist thành công !'));
+         } else if (typeof insertWishListResult === 'object') {
+            return res.json(insertWishListResult);
+         } else {
+            return res.json(createResponse('error', 'Có lỗi xảy ra khi thêm sản phẩm vào wishlist !'));
+         }
       } else {
-         res.json(createResponse('errro', 'Có lỗi xảy ra khi thêm sản phẩm vào wishlist !'));
+         return res.json(createResponse('error', 'Missing username or productID'));
       }
    },
 });

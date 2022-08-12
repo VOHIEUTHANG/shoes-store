@@ -166,18 +166,23 @@ class userService {
       }
    }
    async addToWishList(username, PRODUCT_ID) {
-      if (username && PRODUCT_ID) {
-         try {
-            const insertWishListResult = await wishListModel.create({
-               username,
-               PRODUCT_ID,
-            });
-            return true;
-         } catch (error) {
-            return false;
-         }
+      const wishListOfTargetUser = await wishListModel.findOne({
+         where: {
+            username,
+            PRODUCT_ID,
+         },
+      });
+      console.log('wishListOfTargetUser', wishListOfTargetUser);
+      if (wishListOfTargetUser !== null) return createResponse('warning', 'Sản phẩm này đã được thêm vào wishlist !');
+      try {
+         await wishListModel.create({
+            username,
+            PRODUCT_ID,
+         });
+         return true;
+      } catch (error) {
+         return false;
       }
-      return false;
    }
    async getAllProductsWishList(username) {
       if (username) {

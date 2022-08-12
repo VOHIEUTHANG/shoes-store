@@ -47,7 +47,6 @@ const mainController = () => ({
       const username = user?.userName;
       try {
          const wishList = await userService.getAllProductsWishList(username);
-         console.log('wishList', wishList);
          payload.wishlist = wishList;
       } catch (error) {
          res.json(createResponse('error', 'Query wishlist xảy ra lỗi !'));

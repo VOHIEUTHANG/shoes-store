@@ -13,5 +13,6 @@ router.delete('/logout', userController.logout);
 router.put('/update-info', validateToken, signleFileUpload('avatar'), userController.updateInfo);
 router.put('/change-password', validateToken, userController.changePassword);
 router.post('/add-to-wishlist/:productID', validateToken, userController.addToWishList);
+router.delete('/delete-from-wishlist/:productID', validateToken, userController.deleteFromWishList);
 
 export default router;

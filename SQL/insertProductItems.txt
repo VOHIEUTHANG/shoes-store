@@ -1,4 +1,42 @@
 insert into product_items (PRODUCT_ID,inventory,size) values 
+(1,25,38),
+(1,2,39),
+(1,13,40),
+(1,0,41),
+(1,9,42),
+(1,23,43),
+(1,2,44);
+
+insert into product_items (PRODUCT_ID,inventory,size) values 
+(2,22,38),
+(2,21,39),
+(2,1,40),
+(2,13,41),
+(2,9,42),
+(2,93,43),
+(2,2,44);
+
+insert into product_items (PRODUCT_ID,inventory,size) values 
+(3,2,38),
+(3,21,39),
+(3,16,40),
+(3,13,41),
+(3,9,42),
+(3,9,43),
+(3,2,44),
+(3,1,45);
+
+insert into product_items (PRODUCT_ID,inventory,size) values 
+(4,0,38),
+(4,21,39),
+(4,16,40),
+(4,21,41),
+(4,9,42),
+(4,19,43),
+(4,0,44),
+(4,0,45);
+
+insert into product_items (PRODUCT_ID,inventory,size) values 
 (5,10,38),
 (5,20,39),
 (5,16,40),

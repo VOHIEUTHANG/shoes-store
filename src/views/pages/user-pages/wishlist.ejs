@@ -26,17 +26,17 @@
                            <div class="col col-sm-12 col-md-6 col-lg-4 col-xl-3 product-item">
                               <div class="product-wrapper">
                                  <div class="product-img">
-                                    <a href="#">
+                                    <a href="/product/<%= product.PRODUCT.slug %>">
                                        <img src="<%= product.PRODUCT.product_images %>" alt="" />
                                     </a>
-                                    <div class="add-to-cart">
+                                    <a href="/product/<%= product.PRODUCT.slug %>" class="add-to-cart">
                                        <i class="ti-shopping-cart"></i>
-                                    </div>
+                                    </a>
                                  </div>
                                  <div class="product-content">
                                     <div class="category__brand"><%= product.PRODUCT.BRAND%></div>
                                     <h4>
-                                       <a href="#"><%= product.PRODUCT.name%></a>
+                                       <a href="/product/<%= product.PRODUCT.slug %>"><%= product.PRODUCT.name%></a>
                                     </h4>
                                     <span><%= product.PRODUCT.price %></span>
                                  </div>

@@ -426,6 +426,9 @@
                   sizeItems.removeClass('active');
                   $(this).addClass('active');
                   const inventory = this.dataset.inventory;
+                  if (Number(inventory) < Number($('#product-count').val())) {
+                     $('#product-count').val(inventory);
+                  }
                   $('.product-quantity').text(inventory);
                   const size = $(this).text();
                }
@@ -435,24 +438,42 @@
             const minusBtn = $('.dec.qtybutton');
             let currentVal = Number(productCountEle.val());
 
+            const checkActiveSelectedSize = () => {
+               if (!$('.size-item.active').length) {
+                  warningMessageBtn.addClass('active');
+               }
+               return $('.size-item.active').length;
+            };
+
             minusBtn.click(() => {
-               currentVal > 1 && currentVal--;
-               productCountEle.val(currentVal);
+               const isSelectSize = checkActiveSelectedSize();
+               if (isSelectSize) {
+                  currentVal > 1 && currentVal--;
+                  productCountEle.val(currentVal);
+               }
             });
 
             plusBtn.click(() => {
-               currentVal < 10 && currentVal++;
-               productCountEle.val(currentVal);
+               const isSelectSize = checkActiveSelectedSize();
+               const currentProductCount = $('.product-quantity').text();
+
+               if (isSelectSize) {
+                  const convertNumber = Number(currentProductCount);
+                  if (currentVal < convertNumber) {
+                     currentVal++;
+                     productCountEle.val(currentVal);
+                  }
+               }
             });
 
             addToCartBtn.click(async function () {
                if (!$(this).hasClass('disable')) {
-                  $('.warning-message').removeClass('active');
+                  warningMessageBtn.removeClass('active');
                   const size = $('.size-item.active').text().trim();
                   const quantity = $('#product-count').val();
                   console.log({ size, quantity });
                } else {
-                  $('.warning-message').addClass('active');
+                  warningMessageBtn.addClass('active');
                }
             });
 

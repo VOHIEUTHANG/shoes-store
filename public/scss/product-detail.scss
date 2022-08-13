@@ -48,7 +48,7 @@
             flex-grow: 0;
             @include transition;
             user-select: none;
-            border: 1px solid #ccc;
+            border: 1px solid rgb(118, 118, 118);
             &.active {
                @include blackWhiteEffect;
             }

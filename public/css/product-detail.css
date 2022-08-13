@@ -37,7 +37,7 @@
       flex-grow: 0;
       transition: all 0.3s ease-in-out;
       user-select: none;
-      border: 1px solid #ccc; }
+      border: 1px solid #767676; }
       #product-detail-page .product-details .size-list .size-item.active {
         color: #fff;
         background-color: #030021; }

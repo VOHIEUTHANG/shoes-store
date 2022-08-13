@@ -31,3 +31,26 @@
       console.log('Missing refresh token to logout!');
    }
 </script>
+<script type="module">
+   import { privateRequestHandler } from '/js/utils/index.js';
+   $(() => {
+      const deleteCartBtn = $('.cart-delete');
+      deleteCartBtn?.click(async function () {
+         const cartItem = $(this).closest('.single-product-cart');
+         const cartItemPrice = this.dataset.cartPrice;
+         const totalPrice = $('.cart-price h4').text();
+
+         const productItemID = this.dataset.productId;
+         try {
+            await privateRequestHandler(`/api/user/delete-cart-item/${productItemID}`, 'delete', {}, (data, status) => {
+               console.log('data', data);
+               toastr[data.status](data.message);
+               cartItem.remove();
+            });
+         } catch (error) {
+            console.log('🚀 ~ file: foot.ejs ~ line 45 ~ error', error);
+            toastr.error('Xóa sản phẩm xảy ra lỗi !');
+         }
+      });
+   });
+</script>

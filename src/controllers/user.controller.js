@@ -171,6 +171,16 @@ const userController = () => ({
          return res.json(createResponse('warning', 'Missing some params !'));
       }
    },
+   async deleteCartItem(req, res) {
+      const productItemID = req.params.productItemID;
+      const username = req.user.userName;
+      const delteCartResult = await cartService.deleteCartItem(username, productItemID);
+      if (delteCartResult === true) {
+         res.json(createResponse('success', 'Xóa sản phẩm thành công !'));
+      } else {
+         res.json(createResponse('erorr', 'Xóa sản phẩm ra khỏi giỏ hàng thất bại !'));
+      }
+   },
 });
 
 export default userController();

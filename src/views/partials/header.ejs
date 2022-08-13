@@ -49,8 +49,12 @@
                                        <h6>SIZE <%= cart.PRODUCT_ITEM.size %></h6>
                                        <span><%= cart.PRODUCT_ITEM.PRODUCT.price %> x <%= cart.quantity %> </span>
                                     </div>
-                                    <div class="cart-delete">
-                                       <a href="#"><i class="ti-trash"></i></a>
+                                    <div
+                                       class="cart-delete"
+                                       data-cart-price="<%= cart.PRODUCT_ITEM.PRODUCT.price %>"
+                                       data-product-id="<%= cart.PRODUCT_ITEMS_ID %>"
+                                    >
+                                       <i class="ti-trash"></i>
                                     </div>
                                  </li>
                                  <% }) %>
@@ -61,7 +65,7 @@
                                        <h4>Tổng cộng</h4>
                                     </div>
                                     <div class="cart-price">
-                                       <h4>10.500.000 VND</h4>
+                                       <h4><%= cartList.totalPrice %></h4>
                                     </div>
                                  </li>
                                  <li class="cart-btn-wrapper">

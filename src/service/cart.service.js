@@ -59,14 +59,13 @@ class Cart {
             });
 
             const cartFormated = cartListResult.map((cart) => {
-               console.log('cart', cart);
                return {
                   ...cart.dataValues,
                   PRODUCT_ITEM: {
                      ...cart.dataValues.PRODUCT_ITEM.dataValues,
                      PRODUCT: {
                         name: cart.dataValues.PRODUCT_ITEM.dataValues.PRODUCT.dataValues.name,
-                        price: formatCurrency(cart.dataValues.PRODUCT_ITEM.dataValues.PRODUCT.dataValues.price * 1000),
+                        price: cart.dataValues.PRODUCT_ITEM.dataValues.PRODUCT.dataValues.price,
                         imageURL:
                            cart.dataValues.PRODUCT_ITEM.dataValues.PRODUCT.dataValues.product_images[0].dataValues
                               .imageURL,
@@ -77,6 +76,25 @@ class Cart {
             return cartFormated;
          } catch (error) {
             console.log('🚀 ~ file: user.controller.js ~ line 183 ~ error', error);
+            return false;
+         }
+      } else {
+         return false;
+      }
+   }
+   async deleteCartItem(username, productItemID) {
+      if ((username, productItemID)) {
+         try {
+            const delteCartResult = await CartModel.destroy({
+               where: {
+                  username,
+                  PRODUCT_ITEMS_ID: productItemID,
+               },
+            });
+            console.log('delteCartResult', delteCartResult);
+            return true;
+         } catch (error) {
+            console.log('🚀 ~ file: cart.service.js ~ line 89 ~ Cart ~ error', error);
             return false;
          }
       } else {

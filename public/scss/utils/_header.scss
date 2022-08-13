@@ -224,6 +224,7 @@
          .single-product-cart {
             border-bottom: 1px solid $color-gray;
             display: flex;
+            align-items: flex-start;
             margin-bottom: 20px;
             padding-bottom: 20px;
             .cart-img img {
@@ -235,12 +236,20 @@
          .single-product-cart:last-child {
             border-bottom: 0px solid $color-gray;
             margin-bottom: 0px;
-            padding-bottom: 0px;
+            padding-bottom: 20px;
          }
          .cart-delete {
+            cursor: pointer;
             display: flex;
             flex-grow: 100;
+            margin-top: 15px;
             justify-content: flex-end;
+            i {
+               @include transition;
+               &:hover {
+                  color: rgb(251, 39, 39);
+               }
+            }
          }
          .cart-title {
             margin: 19px 0 0 15px;
@@ -294,7 +303,7 @@
             color: #070b21;
             font-size: 18px;
             font-weight: bold;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
          }
       }
    }

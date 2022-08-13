@@ -38,6 +38,17 @@
                               <span class="shop-count pink"><%= cartList.length %></span>
                            </a>
                            <ul class="cart-dropdown">
+                              <% if(cartList.length===0) {%>
+                              <div
+                                 style="flex-direction: column"
+                                 class="d-flex justify-content-center align-items-center"
+                              >
+                                 <i style="font-size: 4rem !important" class="ti-face-sad"> </i>
+                                 <p style="text-align: center; margin-top: 2rem" class="nothing-title">
+                                    Bạn không có sản phẩm nào trong giỏ hàng !
+                                 </p>
+                              </div>
+                              <% } else { %>
                               <div class="cart-scroll-list">
                                  <% cartList.forEach((cart,index)=>{ %>
                                  <li class="single-product-cart">
@@ -72,6 +83,7 @@
                                     <a class="button full" href="/cart">Xem giỏ hàng</a>
                                  </li>
                               </div>
+                              <% } %>
                            </ul>
                         </li>
                         <li class="nav-item user-info">

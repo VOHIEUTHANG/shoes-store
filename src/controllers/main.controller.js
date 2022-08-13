@@ -16,7 +16,6 @@ const mainController = () => ({
       if (products) {
          payload.productsData = products;
       }
-      console.log(payload.products);
       res.render('pages/home', { ...payload });
    },
    getLoginPage: (req, res) => {

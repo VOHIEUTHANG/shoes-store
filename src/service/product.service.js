@@ -114,7 +114,7 @@ class productService {
                {
                   model: productItemModel,
                   as: 'product_items',
-                  attributes: ['inventory', 'size'],
+                  attributes: ['inventory', 'size', 'ID'],
                },
             ],
             where: { slug: slug },

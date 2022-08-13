@@ -14,5 +14,6 @@ router.put('/update-info', validateToken, signleFileUpload('avatar'), userContro
 router.put('/change-password', validateToken, userController.changePassword);
 router.post('/add-to-wishlist/:productID', validateToken, userController.addToWishList);
 router.delete('/delete-from-wishlist/:productID', validateToken, userController.deleteFromWishList);
+router.post('/add-to-cart', validateToken, userController.addCart);
 
 export default router;

@@ -82,6 +82,7 @@
                                        <li
                                           class="size-item <%= product.inventory <= 0 ? 'disable' : '' %>"
                                           data-inventory="<%= product.inventory %>"
+                                          data-product-id="<%= product.ID %>"
                                        >
                                           <%= product.size %>
                                        </li>
@@ -469,9 +470,17 @@
             addToCartBtn.click(async function () {
                if (!$(this).hasClass('disable')) {
                   warningMessageBtn.removeClass('active');
-                  const size = $('.size-item.active').text().trim();
+                  const productItemID = $('.size-item.active')[0].dataset.productId;
                   const quantity = $('#product-count').val();
-                  console.log({ size, quantity });
+                  const payload = { productItemID, quantity };
+                  try {
+                     await privateRequestHandler('/api/user/add-to-cart', 'post', payload, (data, status) => {
+                        toastr[data.status](data.message);
+                     });
+                  } catch (error) {
+                     console.log('🚀 ~ file: product-detail.ejs ~ line 481 ~ error', error);
+                     toastr.error('Thêm sản phẩm xảy ra lỗi !');
+                  }
                } else {
                   warningMessageBtn.addClass('active');
                }

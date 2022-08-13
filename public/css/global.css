@@ -266,15 +266,30 @@
       border-radius: 10px;
       box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
       opacity: 0;
-      padding: 20px 20px 47px;
+      padding: 20px 20px 20px;
       position: absolute;
       right: 0;
       top: 120%;
       transition: all 0.3s ease-in-out;
       visibility: hidden;
       width: 40rem;
-      max-height: 70vh;
       z-index: 9999; }
+      .header__logobar .header-cart .cart-dropdown .cart-scroll-list {
+        max-height: 50vh;
+        overflow-y: scroll;
+        padding-right: 0.3rem;
+        border-radius: 6px; }
+        .header__logobar .header-cart .cart-dropdown .cart-scroll-list::-webkit-scrollbar-track {
+          background-color: #f5f5f5; }
+        .header__logobar .header-cart .cart-dropdown .cart-scroll-list::-webkit-scrollbar {
+          width: 10px;
+          background-color: #f5f5f5; }
+        .header__logobar .header-cart .cart-dropdown .cart-scroll-list::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          background-image: linear-gradient(to bottom, #ccc, #ddd); }
+      .header__logobar .header-cart .cart-dropdown .cart-foot {
+        border-top: 1px solid black;
+        padding-top: 2rem; }
     .header__logobar .header-cart .single-product-cart {
       border-bottom: 1px solid #aaaaaa;
       display: flex;
@@ -293,7 +308,13 @@
       flex-grow: 100;
       justify-content: flex-end; }
     .header__logobar .header-cart .cart-title {
-      margin: 19px 0 0 15px; }
+      margin: 19px 0 0 15px;
+      max-width: 55%; }
+      .header__logobar .header-cart .cart-title a {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; }
     .header__logobar .header-cart .cart-title h5,
     .header__logobar .header-cart .cart-title h6,
     .header__logobar .header-cart .cart-title span {

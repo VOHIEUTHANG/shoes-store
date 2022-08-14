@@ -400,6 +400,7 @@
       <script src="/js/library/glide.min.js"></script>
       <script type="module">
          import { formatToCurrency, privateRequestHandler } from '/js/utils/index.js';
+         import deleteCartItemOnLick from '/js/utils/deleteCartItemHandler.js';
 
          new Glide('.glide.related-products', {
             type: 'carousel',
@@ -483,9 +484,14 @@
 
                   const productImage = $('.main-image').attr('src');
                   const productName = $('#product-name').text();
-                  const productPrice = $('.details-price span').text();
-                  const productSize = $('.size-item.active').text().trim();
+                  let productPrice = $('.details-price span').text();
+                  productPrice = convertFromStringToNumber(productPrice);
+                  let productTotalPrice = productPrice * quantity;
 
+                  productPrice = formatToCurrency(productPrice);
+                  productTotalPrice = formatToCurrency(productTotalPrice);
+
+                  const productSize = $('.size-item.active').text().trim();
                   try {
                      await privateRequestHandler('/api/user/add-to-cart', 'post', payload, (data, status) => {
                         toastr[data.status](data.message);
@@ -520,7 +526,7 @@
                                        <h4>Tổng cộng</h4>
                                     </div>
                                     <div class="cart-price">
-                                       <h4>${productPrice}</h4>
+                                       <h4>${productTotalPrice}</h4>
                                     </div>
                                  </li>
                                  <li class="cart-btn-wrapper">
@@ -552,10 +558,17 @@
                               $('.cart-scroll-list')[0].appendChild(cartItem);
                               const cartPrice = $('.cart-price > h4').text().trim();
                               const totalPrice = convertFromStringToNumber(cartPrice);
-                              const additionPrice = convertFromStringToNumber(productPrice);
+                              const additionPrice = convertFromStringToNumber(productPrice) * quantity;
                               const newPrice = totalPrice + additionPrice;
                               $('.cart-price > h4').text(formatToCurrency(newPrice));
                            }
+                           //
+                           const lastCartItem = $('.single-product-cart:last-child');
+                           const deleteCartBtn = lastCartItem.find('.cart-delete');
+                           console.log(deleteCartBtn);
+                           deleteCartBtn?.click(function () {
+                              deleteCartItemOnLick(this, privateRequestHandler, formatToCurrency);
+                           });
                         }
                      });
                   } catch (error) {

@@ -41,7 +41,7 @@
                                              role="tab"
                                              aria-selected="true"
                                           >
-                                             <img src="<%= imgURL %>" alt="" />
+                                             <img class="<%= i===0 ? 'main-image' : '' %>" src="<%= imgURL %>" alt="" />
                                           </a>
                                           <%}) %>
                                        </div>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-md-12 col-lg-6 col-12">
                            <div class="product-details-content">
-                              <h3><%= productDetail.name %>e</h3>
+                              <h3 id="product-name"><%= productDetail.name %>e</h3>
                               <div class="rating-number">
                                  <div class="quick-view-rating">
                                     <i class="fa-solid fa-star yellow-star"></i>
@@ -82,6 +82,7 @@
                                        <li
                                           class="size-item <%= product.inventory <= 0 ? 'disable' : '' %>"
                                           data-inventory="<%= product.inventory %>"
+                                          data-product-id="<%= product.ID %>"
                                        >
                                           <%= product.size %>
                                        </li>
@@ -399,6 +400,7 @@
       <script src="/js/library/glide.min.js"></script>
       <script type="module">
          import { formatToCurrency, privateRequestHandler } from '/js/utils/index.js';
+         import deleteCartItemOnLick from '/js/utils/deleteCartItemHandler.js';
 
          new Glide('.glide.related-products', {
             type: 'carousel',
@@ -426,6 +428,9 @@
                   sizeItems.removeClass('active');
                   $(this).addClass('active');
                   const inventory = this.dataset.inventory;
+                  if (Number(inventory) < Number($('#product-count').val())) {
+                     $('#product-count').val(inventory);
+                  }
                   $('.product-quantity').text(inventory);
                   const size = $(this).text();
                }
@@ -435,27 +440,145 @@
             const minusBtn = $('.dec.qtybutton');
             let currentVal = Number(productCountEle.val());
 
+            const checkActiveSelectedSize = () => {
+               if (!$('.size-item.active').length) {
+                  warningMessageBtn.addClass('active');
+               }
+               return $('.size-item.active').length;
+            };
+
             minusBtn.click(() => {
-               currentVal > 1 && currentVal--;
-               productCountEle.val(currentVal);
-            });
-
-            plusBtn.click(() => {
-               currentVal < 10 && currentVal++;
-               productCountEle.val(currentVal);
-            });
-
-            addToCartBtn.click(async function () {
-               if (!$(this).hasClass('disable')) {
-                  $('.warning-message').removeClass('active');
-                  const size = $('.size-item.active').text().trim();
-                  const quantity = $('#product-count').val();
-                  console.log({ size, quantity });
-               } else {
-                  $('.warning-message').addClass('active');
+               const isSelectSize = checkActiveSelectedSize();
+               if (isSelectSize) {
+                  currentVal > 1 && currentVal--;
+                  productCountEle.val(currentVal);
                }
             });
 
+            plusBtn.click(() => {
+               const isSelectSize = checkActiveSelectedSize();
+               const currentProductCount = $('.product-quantity').text();
+
+               if (isSelectSize) {
+                  const convertNumber = Number(currentProductCount);
+                  if (currentVal < convertNumber) {
+                     currentVal++;
+                     productCountEle.val(currentVal);
+                  }
+               }
+            });
+
+            function convertFromStringToNumber(stringNumber) {
+               const removeUnit = stringNumber.slice(0, stringNumber.length - 4);
+               let numberArray = removeUnit.split('.');
+               numberArray = numberArray.join('');
+               return Number(numberArray);
+            }
+
+            addToCartBtn.click(async function () {
+               if (!$(this).hasClass('disable')) {
+                  warningMessageBtn.removeClass('active');
+                  const productItemID = $('.size-item.active')[0].dataset.productId;
+                  const quantity = $('#product-count').val();
+                  const payload = { productItemID, quantity };
+
+                  const productImage = $('.main-image').attr('src');
+                  const productName = $('#product-name').text();
+                  let productPrice = $('.details-price span').text();
+                  productPrice = convertFromStringToNumber(productPrice);
+                  let productTotalPrice = productPrice * quantity;
+
+                  productPrice = formatToCurrency(productPrice);
+                  productTotalPrice = formatToCurrency(productTotalPrice);
+
+                  const productSize = $('.size-item.active').text().trim();
+                  try {
+                     await privateRequestHandler('/api/user/add-to-cart', 'post', payload, (data, status) => {
+                        toastr[data.status](data.message);
+                        if (data.status === 'success') {
+                           const cartItemQuantity = Number($('.shop-count.pink').text());
+                           $('.shop-count.pink').text(cartItemQuantity + 1);
+                           let additionHTML = '';
+                           if ($('.cart-scroll-list')?.children()?.length === 0 || !$('.cart-scroll-list').length) {
+                              additionHTML = `
+                              <div class="cart-scroll-list">
+                                 <li class="single-product-cart">
+                                    <div class="cart-img">
+                                       <a href="#"><img src="${productImage}" alt="" /></a>
+                                    </div>
+                                    <div class="cart-title">
+                                       <h5><a href="#">${productName}</a></h5>
+                                       <h6>SIZE ${productSize}</h6>
+                                       <span> ${productPrice} x  ${quantity} </span>
+                                    </div>
+                                    <div
+                                       class="cart-delete"
+                                       data-cart-price="${productPrice}"
+                                       data-product-id="${productItemID}"
+                                    >
+                                       <i class="ti-trash"></i>
+                                    </div>
+                                 </li>
+                              </div>
+                              <div class="cart-foot">
+                                 <li class="cart-space">
+                                    <div class="cart-sub">
+                                       <h4>Tổng cộng</h4>
+                                    </div>
+                                    <div class="cart-price">
+                                       <h4>${productTotalPrice}</h4>
+                                    </div>
+                                 </li>
+                                 <li class="cart-btn-wrapper">
+                                    <a class="button full" href="/cart">Xem giỏ hàng</a>
+                                 </li>
+                              </div>
+                              `;
+                              $('.cart-dropdown')[0].innerHTML = additionHTML;
+                           } else {
+                              const cartItem = document.createElement('li');
+                              cartItem.classList.add('single-product-cart');
+                              cartItem.innerHTML = `
+                              <div class="cart-img">
+                                 <a href="#"><img src="${productImage}" alt="" /></a>
+                              </div>
+                              <div class="cart-title">
+                                 <h5><a href="#">${productName}</a></h5>
+                                 <h6>SIZE ${productSize}</h6>
+                                 <span> ${productPrice} x  ${quantity} </span>
+                              </div>
+                              <div
+                                 class="cart-delete"
+                                 data-cart-price="${productPrice}"
+                                 data-product-id="${productItemID}"
+                              >
+                                 <i class="ti-trash"></i>
+                              </div>
+                              `;
+                              $('.cart-scroll-list')[0].appendChild(cartItem);
+                              const cartPrice = $('.cart-price > h4').text().trim();
+                              const totalPrice = convertFromStringToNumber(cartPrice);
+                              const additionPrice = convertFromStringToNumber(productPrice) * quantity;
+                              const newPrice = totalPrice + additionPrice;
+                              $('.cart-price > h4').text(formatToCurrency(newPrice));
+                           }
+                           //
+                           const lastCartItem = $('.single-product-cart:last-child');
+                           const deleteCartBtn = lastCartItem.find('.cart-delete');
+                           console.log(deleteCartBtn);
+                           deleteCartBtn?.click(function () {
+                              deleteCartItemOnLick(this, privateRequestHandler, formatToCurrency);
+                           });
+                        }
+                     });
+                  } catch (error) {
+                     console.log('🚀 ~ file: product-detail.ejs ~ line 481 ~ error', error);
+                     toastr.error('Thêm sản phẩm xảy ra lỗi !');
+                  }
+               } else {
+                  warningMessageBtn.addClass('active');
+               }
+            });
             const addToWishlistBtn = $('#add-to-wishlist');
             addToWishlistBtn.click(async function () {
                const productID = this.dataset.productId;

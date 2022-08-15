@@ -71,7 +71,8 @@ const refreshTokenHandler = async (status) => {
          // window.location.href = '/401';
          break;
       default:
-         window.location.href = '/403';
+         console.log('status', status);
+      // window.location.href = '/403';
    }
 };
 

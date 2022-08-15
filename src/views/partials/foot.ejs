@@ -31,3 +31,13 @@
       console.log('Missing refresh token to logout!');
    }
 </script>
+<script type="module">
+   import { privateRequestHandler, formatToCurrency } from '/js/utils/index.js';
+   import deleteCartItemOnLick from '/js/utils/deleteCartItemHandler.js';
+   $(() => {
+      const deleteCartBtn = $('.cart-delete');
+      deleteCartBtn?.click(function () {
+         deleteCartItemOnLick(this, privateRequestHandler, formatToCurrency);
+      });
+   });
+</script>

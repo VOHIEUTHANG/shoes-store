@@ -1,4 +1,5 @@
 import userService from '../service/user.service';
+import cartService from '../service/cart.service';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../helpers/tokenHandler';
 import { createResponse } from '../helpers/responseCreator';
 import passport from 'passport';
@@ -140,7 +141,6 @@ const userController = () => ({
       }
    },
    async deleteFromWishList(req, res) {
-      console.log('validated successfully !');
       const productID = req.params.productID;
       const username = req.user.userName;
       if (productID && username) {
@@ -153,6 +153,32 @@ const userController = () => ({
          }
       } else {
          return res.json(createResponse('error', 'Missing username or productID'));
+      }
+   },
+   async addCart(req, res) {
+      const username = req.user.userName;
+      const { productItemID, quantity } = req.body;
+      if (username && productItemID && quantity) {
+         const insertCartResult = await cartService.addCart(username, productItemID, quantity);
+         if (!insertCartResult) {
+            return res.json(createResponse('error', 'Thêm sản phẩm vào giỏ hàng xảy ra lỗi !'));
+         } else if (insertCartResult === true) {
+            return res.json(createResponse('success', 'Thêm sản phẩm vào giỏ hàng thành công !'));
+         } else if (typeof insertCartResult === 'object') {
+            return res.json(insertCartResult);
+         }
+      } else {
+         return res.json(createResponse('warning', 'Missing some params !'));
+      }
+   },
+   async deleteCartItem(req, res) {
+      const productItemID = req.params.productItemID;
+      const username = req.user.userName;
+      const delteCartResult = await cartService.deleteCartItem(username, productItemID);
+      if (delteCartResult === true) {
+         res.json(createResponse('success', 'Xóa sản phẩm thành công !'));
+      } else {
+         res.json(createResponse('erorr', 'Xóa sản phẩm ra khỏi giỏ hàng thất bại !'));
       }
    },
 });

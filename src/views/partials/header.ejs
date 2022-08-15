@@ -35,71 +35,55 @@
                         <li class="nav-item user-cart header-cart cart-res">
                            <a class="nav-link icon-cart" href="/cart">
                               <i class="ti-shopping-cart"></i>
-                              <span class="shop-count pink">03</span>
+                              <span class="shop-count pink"><%= cartList.length %></span>
                            </a>
                            <ul class="cart-dropdown">
-                              <li class="single-product-cart">
-                                 <div class="cart-img">
-                                    <a href="#"
-                                       ><img
-                                          src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_3ce527bb-53c7-44ab-9089-730127cd49fc_1296x.jpg?v=1658381543"
-                                          alt=""
-                                    /></a>
-                                 </div>
-                                 <div class="cart-title">
-                                    <h5><a href="#"> Jordan air 1 </a></h5>
-                                    <h6><a href="#">SIZE 40</a></h6>
-                                    <span>3.000.000 VND x 1</span>
-                                 </div>
-                                 <div class="cart-delete">
-                                    <a href="#"><i class="ti-trash"></i></a>
-                                 </div>
-                              </li>
-                              <li class="single-product-cart">
-                                 <div class="cart-img">
-                                    <a href="#"
-                                       ><img
-                                          src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_1eab42d4-bd19-4969-867c-5a22c52a473c_1296x.jpg?v=1657727029"
-                                          alt=""
-                                    /></a>
-                                 </div>
-                                 <div class="cart-title">
-                                    <h5><a href="#"> Bits Headphone</a></h5>
-                                    <h6><a href="#">Black</a></h6>
-                                    <span>4.000.000 VND x 1</span>
-                                 </div>
-                                 <div class="cart-delete">
-                                    <a href="#"><i class="ti-trash"></i></a>
-                                 </div>
-                              </li>
-                              <li class="single-product-cart">
-                                 <div class="cart-img">
-                                    <a href="#"
-                                       ><img
-                                          src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_0c1094b4-3c00-41e3-a52c-accc05e34edf_1296x.jpg?v=1656276816"
-                                          alt=""
-                                    /></a>
-                                 </div>
-                                 <div class="cart-title">
-                                    <h5><a href="#"> Bits Headphone</a></h5>
-                                    <h6><a href="#">Black</a></h6>
-                                    <span>3.000.000 x 2</span>
-                                 </div>
-                                 <div class="cart-delete">
-                                    <a href="#"><i class="ti-trash"></i></a>
-                                 </div>
-                              </li>
-                              <li class="cart-space">
-                                 <div class="cart-sub">
-                                    <h4>Tổng cộng</h4>
-                                 </div>
-                                 <div class="cart-price">
-                                    <h4>10.500.000 VND</h4>
-                                 </div>
-                              </li>
-                              <li class="cart-btn-wrapper">
-                                 <a class="button full" href="/cart">Xem giỏ hàng</a>
-                              </li>
+                              <% if(cartList.length===0) {%>
+                              <div
+                                 style="flex-direction: column"
+                                 class="d-flex justify-content-center align-items-center"
+                              >
+                                 <i style="font-size: 4rem !important" class="ti-face-sad"> </i>
+                                 <p style="text-align: center; margin-top: 2rem" class="nothing-title">
+                                    Bạn không có sản phẩm nào trong giỏ hàng !
+                                 </p>
+                              </div>
+                              <% } else { %>
+                              <div class="cart-scroll-list">
+                                 <% cartList.forEach((cart,index)=>{ %>
+                                 <li class="single-product-cart">
+                                    <div class="cart-img">
+                                       <a href="#"><img src="<%= cart.PRODUCT_ITEM.PRODUCT.imageURL %>" alt="" /></a>
+                                    </div>
+                                    <div class="cart-title">
+                                       <h5><a href="#"><%= cart.PRODUCT_ITEM.PRODUCT.name %> </a></h5>
+                                       <h6>SIZE <%= cart.PRODUCT_ITEM.size %></h6>
+                                       <span><%= cart.PRODUCT_ITEM.PRODUCT.price %> x <%= cart.quantity %> </span>
+                                    </div>
+                                    <div
+                                       class="cart-delete"
+                                       data-cart-price="<%= cart.PRODUCT_ITEM.PRODUCT.price %>"
+                                       data-product-id="<%= cart.PRODUCT_ITEMS_ID %>"
+                                    >
+                                       <i class="ti-trash"></i>
+                                    </div>
+                                 </li>
+                                 <% }) %>
+                              </div>
+                              <div class="cart-foot">
+                                 <li class="cart-space">
+                                    <div class="cart-sub">
+                                       <h4>Tổng cộng</h4>
+                                    </div>
+                                    <div class="cart-price">
+                                       <h4><%= cartList.totalPrice %></h4>
+                                    </div>
+                                 </li>
+                                 <li class="cart-btn-wrapper">
+                                    <a class="button full" href="/cart">Xem giỏ hàng</a>
+                                 </li>
+                              </div>
+                              <% } %>
                            </ul>
                         </li>
                         <li class="nav-item user-info">

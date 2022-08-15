@@ -55,7 +55,7 @@ class productController {
    async update(req,res){
        try {
          let product= await productService.update(req.body);
-         console.log(product);
+         let product_category = await product_categoryService.update(req.body.id, req.body.category);
          res.status(200).json({
             title: 'success',
             message: 'Sửa thành công!'

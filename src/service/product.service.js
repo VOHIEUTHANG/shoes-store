@@ -52,10 +52,30 @@ class productService {
          return null;
       }
    }
+   async update(data){
+      try {
+         let product = await productModel.upsert({
+            ID: data.id,
+            name: data.name,
+            isSelling: data.isSelling,
+            sellStartDate: data.date,
+            price: data.price,
+            suitableFor: data.sex,
+            specifications: data.detail,
+            description: data.des,
+            BRAND_ID: data.brand,
+            slug: createSlug(data.name),
+         });
+         return product;
+      } catch (err) {
+         console.log('🚀 ~ file: product.service.js ~ method update ~ productService ~ error', err);
+         return null;
+      }
+   }
    async getOneJoin(id){
     let product = productModel.findOne(
     { include:[{model: brandModel, as :'BRAND' },
-     {model: product_categoryModel,as:'product_categories',include:[{model: categoryModel, as:'CATEGORY'}]
+     {model: productCategoryModel,as:'product_categories',include:[{model: categoryModel, as:'CATEGORY'}]
       }],
       where: {ID:id}
     });

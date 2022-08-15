@@ -29,8 +29,6 @@ class productService {
             },
          ],
       });
-      let brands = brandModel.findAll();
-      let product_category = productCategoryModel.findAll();
       return products;
    }
    async save(data) {

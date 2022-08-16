@@ -69,11 +69,22 @@
     .cart .table-content table td.product-thumbnail a {
       display: inline-block;
       width: 10rem;
-      height: 10rem; }
+      height: 10rem;
+      position: relative;
+      padding: 0.4rem; }
     .cart .table-content table td.product-thumbnail img {
       width: 100%;
       height: 100%;
       object-fit: cover; }
+    .cart .table-content table td.product-thumbnail .discount-label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: #f34848;
+      padding: 0.5rem;
+      user-select: null; }
+      .cart .table-content table td.product-thumbnail .discount-label:hover {
+        color: white; }
   .cart .table-content table td.product-remove i {
     color: #919191;
     display: inline-block;

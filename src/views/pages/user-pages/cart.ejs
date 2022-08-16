@@ -50,7 +50,13 @@
                                                    ><img
                                                       src="<%= cart.PRODUCT_ITEM.PRODUCT.imageURL  %>"
                                                       alt=""
-                                                /></a>
+                                                />
+                                             <% if(cart.PRODUCT_ITEM.PRODUCT.discounts) {%>
+                                               <div class="discount-label">
+                                                -<%= cart.PRODUCT_ITEM.PRODUCT.discounts.percentReduction  %>%
+                                                </div>
+                                             <% } %>
+                                             </a>
                                              </td>
                                              <td class="product-name">
                                                 <a href="/product/<%= cart.PRODUCT_ITEM.PRODUCT.slug %>"> <%= cart.PRODUCT_ITEM.PRODUCT.name %> </a>

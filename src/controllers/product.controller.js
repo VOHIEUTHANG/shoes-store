@@ -12,8 +12,7 @@ class productController {
          let product = await productService.save(req.body);
          let product_category = await product_categoryService.save(product.dataValues.ID, req.body.category);
          for (let element of product_itemList) {
-            await product_itemService.save(product.dataValues.ID, element.inputInventory, element.inputSize);
-
+            await product_itemService.save(product.dataValues.ID, element.inventory, element.size);
          }
          res.status(200).json({
             title: 'success',
@@ -44,18 +43,18 @@ class productController {
    }
    async get(req,res){
       let id = req.param('id');
-      try {
-         let product= await productService.getOneJoin(id);
-         res.status(200).json(product);
-      } catch (err) {
+       Promise.all([productService.getOneJoin(id),product_itemService.getAllById(id)]).then((data)=>{
+         res.status(200).json({product:data[0],product_item:data[1]});
+       }).catch((error)=>{
          res.status(500).json({err: 'err'});
-         console.log(err);
-      }
+         console.log(error); 
+       })
+        
    }
    async update(req,res){
        try {
          let product= await productService.update(req.body);
-         console.log(product);
+         let product_category = await product_categoryService.update(req.body.id, req.body.category);
          res.status(200).json({
             title: 'success',
             message: 'Sửa thành công!'

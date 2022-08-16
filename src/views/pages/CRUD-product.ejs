@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="/css/admin-product.css">
     <%- include('../partials/head-admin') %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <title>CRUD Products</title>
 </head>
 <body>
@@ -62,18 +63,29 @@
                     <span class="input-group-text" id="basic-addon1">Chi tiết</span>
                     <textarea class="form-control" rows="3" id="detail"></textarea>
                 </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Size</span>
-                    <input type="text" class="form-control" placeholder="Size" id="inputSize">
-                    <span class="input-group-text">Số lượng</span>
-                    <input type="text" class="form-control" placeholder="Số lượng" id="inputInventory">
+                <div class="card">
+                    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
+                       Chi tiết sản phẩm
+                    </h3>
+                    <button id="export-btn">show</button>
+                    <div class="card-body">
+                        <div id="table" class="table-editable">
+                            <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i
+                                        class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
+                            <table class="table table-bordered table-responsive-md table-striped text-center" id="product_items">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Size</th>
+                                        <th class="text-center">Số lượng</th>
+                                    </tr>
+                                </thead>
+                              
+                            </table>
+                        </div>
+                    </div>
                 </div>
     
-                <div class="addsize">
-                    <ul class="size-list" id="size-list">
-                    </ul>
-                </div>
-                <button onclick="addItem()">Thêm chi tiết</button>
+                
                 <button id='btn-save'onclick="createProduct()">Lưu</button>
             </div>
         </div>
@@ -129,7 +141,7 @@
                 </tbody>
             </table>
         </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <!-- JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"

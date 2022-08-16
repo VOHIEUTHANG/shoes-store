@@ -1,33 +1,55 @@
+const $tableID = $('#table');
+const newTr = `
+<tr>
+<th class="text-center">Size</th>
+<th class="text-center">Số lượng</th>
 
-var modal = document.getElementById("myModal");
-const data = [];
-function addItem(){
-    const list = document.getElementById('size-list');
-    const inputSize = document.getElementById('inputSize').value;
-    const inputInventory= document.getElementById('inputInventory').value;
-    const li = document.createElement('li');
-    let flag =true;
-    if(data.length==0){
-        data.push({inputSize,inputInventory});
-        li.innerHTML = `Size: ${inputSize} Số lượng: ${inputInventory}`;
-        li.id= `${inputSize}`;
-        list.appendChild(li);
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="pt-3-half" contenteditable="true">0</td>
+<td class="pt-3-half" contenteditable="true">0</td>
+</tr>
+  `;
+  $('.table-add').on('click', 'i', () => {
+    const clone = $tableID.find('tbody tr').last();
+    console.log(clone);
+     if ($tableID.find('tbody tr ').length === 0) {
+    $('tbody').append(newTr);
     }
-    else{
-        for( item of data )
-        if(String(item.inputSize) == String(inputSize))
-        {   flag=false;
-            item.inputInventory = inputInventory;
-            document.getElementById(`${inputSize}`).innerHTML = `Size: ${inputSize} Số lượng: ${inputInventory}`;
-        }
-        if(flag){
-            data.push({inputSize,inputInventory});
-            li.innerHTML = `Size: ${inputSize} Số lượng: ${inputInventory}`;
-            li.id= `${inputSize}`;
-            list.appendChild(li);
-        }
-     
-    } 
+    $tableID.find('table').append(newTr);
+});
+var modal = document.getElementById("myModal");
+jQuery.fn.shift = [].shift;
+function getProductItem(){
+    const $rows = $tableID.find('tr');
+    const headers = [];
+    const data = []; // Get the headers
+    $rows.each(function() {
+        const $td = $(this).find('td');
+        const h = {size:$td.eq(0).text(),inventory:$td.eq(1).text()}; 
+        add(data,h);
+    });
+    return data;
+}
+function deleteDataModal(){
+    modal.style.display = "none";
+    document.getElementById('name').value='';
+    document.getElementById('price').value= '';
+    document.getElementById('date').value='';
+    document.getElementById('brand').value= '';
+    document.getElementById('sex').value= ''
+    document.getElementById('category').value= '';
+    document.getElementById('description').value= '';
+    document.getElementById('detail').value='';
+    document.getElementById('product_items').innerHTML=`
+    <thead>
+        <tr>
+            <th class="text-center">Size</th>
+            <th class="text-center">Số lượng</th>
+        </tr>
+    </thead>`;
 }
 function createProduct (){
     let name= document.getElementById('name').value;
@@ -49,15 +71,13 @@ function createProduct (){
         isSelling,
         brand,
         category,
-        data,
+        data:getProductItem(),
     }).then ((res)=>{
         alert(res.data);
-        data =[];
     })
 }
 window.onload = function(){ 
  
-
     // Get the button that opens the modal
     var btn = document.getElementById("btn-addProduct");
     
@@ -66,47 +86,48 @@ window.onload = function(){
     
     // When the user clicks on the button, open the modal
     btn.onclick = function() {
-         modal.style.display = "block";
+        modal.style.display = "block";
+        document.getElementById('btn-save').onclick= createProduct;
+        document.getElementById('btn-save').innerText= 'Lưu';
     }
     
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {   
-      modal.style.display = "none";
-      document.getElementById('name').value='';
-      document.getElementById('price').value= '';
-      document.getElementById('date').value='';
-      document.getElementById('brand').value= '';
-      document.getElementById('sex').value= ''
-      document.getElementById('category').value= '';
-      document.getElementById('description').value= '';
-      document.getElementById('detail').value='';
-      document.getElementById('btn-save').onclick= createProduct;
-      document.getElementById('btn-save').innerText= 'Lưu';
+      deleteDataModal()
     }
     
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
       if (event.target == modal) {
-        modal.style.display = "none";
-      }
+        deleteDataModal()
     }  
+}
 };
 var id_product=0;
 function getOneProduct(id){
     id_product =id;
     modal.style.display= 'block';
     axios.get(`/api/product/get`,{params:{id:id}}).then((res)=>{
-        document.getElementById('name').value= res.data.name;
-        document.getElementById('price').value= res.data.price;
-        let datestart= new Date(res.data.sellStartDate)
+        document.getElementById('name').value= res.data.product.name;
+        document.getElementById('price').value= res.data.product.price;
+        let datestart= new Date(res.data.product.sellStartDate)
         document.getElementById('date').value= datestart.toLocaleDateString('en-CA');
-        document.getElementById('brand').value= res.data.BRAND.ID;
-        document.getElementById('sex').value= res.data.suitableFor;
-        document.getElementById('category').value= res.data.product_categories[0].CATEGORY.ID;
-        document.getElementById('description').value= res.data.descriptions;
-        document.getElementById('detail').value= res.data.specifications;
+        document.getElementById('brand').value= res.data.product.BRAND.ID;
+        document.getElementById('sex').value= res.data.product.suitableFor;
+        document.getElementById('category').value= res.data.product.product_categories[0].CATEGORY.ID;
+        document.getElementById('description').value= res.data.product.descriptions;
+        document.getElementById('detail').value= res.data.product.specifications;
         document.getElementById('btn-save').onclick= modifyProduct;
         document.getElementById('btn-save').innerText= 'Lưu thay đổi';
+        let product_item_table = document.getElementById('product_items');
+        res.data.product_item.forEach(element=>{
+            const tr = document.createElement('tr');
+            tr.innerHTML=`<td  contenteditable="true">${element.size}</td>
+            <td  contenteditable="true">${element.inventory}</td>
+            `;
+            product_item_table.appendChild(tr);
+        });
+        
     })
 }
 function modifyProduct(){
@@ -136,3 +157,12 @@ function modifyProduct(){
        alert(err)
     })
 }
+function add(arr,object){
+    for(element of arr){
+      if(object.size==element.size){
+        return 
+      }
+    }
+     arr.push(object);
+  }
+  

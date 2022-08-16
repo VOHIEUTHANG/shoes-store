@@ -13,5 +13,18 @@ class product_categoryService{
             return null;
         }   
     }
+    async update(productId,categoryId){
+        try {
+            const product_category = await product_categoryModel.upsert({
+              PRODUCT_ID: productId,
+              CATEGORY_ID:categoryId,
+              });
+              return product_category;
+        } catch (err) {
+            console.log('🚀 ~ file: product_category.service.js ~ line 23 ~ product_categoryService ~ error', err);
+            return null;
+        }   
+    }
+    
 }
 module.exports = new product_categoryService;

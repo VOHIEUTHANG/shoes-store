@@ -14,6 +14,17 @@
                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <h1 class="cart-heading">Giỏ hàng</h1>
                         <form action="#">
+                           <% if(cartList.length === 0) { %>
+                              <div
+                              style="flex-direction: column"
+                              class="d-flex justify-content-center align-items-center"
+                           >
+                              <i style="font-size: 6rem !important" class="ti-face-sad"> </i>
+                              <p style="text-align: center; margin-top: 4rem;font-size:2.4rem" class="nothing-title">
+                                 Bạn không có sản phẩm nào trong giỏ hàng !
+                              </p>
+                           </div>
+                           <% } else{ %>
                            <div class="table-content table-responsive">
                               <table>
                                  <thead>
@@ -24,21 +35,11 @@
                                        <th>Giá</th>
                                        <th>Số lượng</th>
                                        <th>Size</th>
+                                       <th>Giảm giá</th>
                                        <th>Tổng tiền</th>
                                     </tr>
                                  </thead>
                                  <tbody>
-                                    <% if(cartList.length === 0) { %>
-                                       <div
-                                       style="flex-direction: column"
-                                       class="d-flex justify-content-center align-items-center"
-                                    >
-                                       <i style="font-size: 4rem !important" class="ti-face-sad"> </i>
-                                       <p style="text-align: center; margin-top: 2rem" class="nothing-title">
-                                          Bạn không có sản phẩm nào trong giỏ hàng !
-                                       </p>
-                                    </div>
-                                    <% } else{ %>
                                        <% cartList.forEach(cart=>{ %>
                                           <tr>
                                              <td class="product-remove">
@@ -63,28 +64,35 @@
                                              <td class="amount">
                                                 <div><%= cart.PRODUCT_ITEM.size %></div>
                                              </td>
-                                             <td class="product-subtotal"><%= cart.PRODUCT_ITEM.thisPrice %></td>
+                                             <td >
+                                                <div class="discount">- <%= cart.PRODUCT_ITEM.PRODUCT.discounts ? cart.PRODUCT_ITEM.thisDiscountPrice : ''   %></div>
+                                             </td>
+                                             <td class="product-subtotal">
+                                                <%= cart.PRODUCT_ITEM.thisPrice %>
+                                             </td>
                                           </tr>
                                        <% }) %>
                                     <% } %>
                                  </tbody>
                               </table>
                            </div>
-                           <hr>
-                           <div class="row justify-content-center">
-                              <div class="col-md-8" >
-                                 <div class="cart-page-total">
-                                    <h2>Đơn hàng</h2>
-                                    <ul>
-                                       <li>Tổng tiền hàng<span class="origin-price"><%= cartList.totalPrice %></span></li>
-                                       <li>Giảm giá sản phẩm<span class="discount">0 VND</span></li>
-                                       <li>Phí vận chuyển<span class="shipment">+ 30.000 VND</span></li>
-                                       <li>Tổng tiền thực thanh toán<span class="payment-total"><%= cartList.totalPrice %></span></li>
-                                    </ul>
-                                    <div class="button btn-checkout large">Mua hàng</a>
+                           <% if(cartList.length !== 0) { %>
+                              <hr>
+                              <div class="row justify-content-center">
+                                 <div class="col-md-8" >
+                                    <div class="cart-page-total">
+                                       <h2>Đơn hàng</h2>
+                                       <ul>
+                                          <li>Tổng tiền hàng<span class="origin-price"><%= cartList.originPrice %></span></li>
+                                          <li>Giảm giá sản phẩm<span class="discount">-<%= cartList.discountPrice %></span></li>
+                                          <li>Phí vận chuyển<span class="shipment">+ 30.000 VND</span></li>
+                                          <li>Tổng tiền thực thanh toán<span class="payment-total"><%= cartList.totalPrice %></span></li>
+                                       </ul>
+                                       <div class="button btn-checkout large">Mua hàng</a>
+                                    </div>
                                  </div>
                               </div>
-                           </div>
+                           <% }%>
                         </form>
                      </div>
                   </div>

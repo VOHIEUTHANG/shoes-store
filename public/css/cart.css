@@ -36,6 +36,9 @@
     border-top: medium none;
     padding: 2rem 1rem;
     vertical-align: middle; }
+    .cart .table-content table td .discount {
+      color: green;
+      font-style: italic; }
   .cart .table-content table td input {
     background: #e5e5e5 none repeat scroll 0 0;
     border: medium none;

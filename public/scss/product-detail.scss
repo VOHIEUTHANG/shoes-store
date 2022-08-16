@@ -389,11 +389,22 @@
       font-size: 24px;
       font-weight: 600;
       margin-bottom: 13px;
+      .discount {
+         color: red;
+         font-weight: 400;
+         font-style: italic;
+      }
    }
-   .details-price > span {
+   .details-price span {
       color: #050035;
-      font-size: 24px;
+      font-size: 2.4rem;
       font-weight: 600;
+      &.remove {
+         opacity: 0.4;
+         font-size: 2rem;
+         font-weight: 300;
+         text-decoration: line-through;
+      }
    }
    .product-details-4 .easyzoom a img {
       width: 100%;

@@ -64,7 +64,11 @@
                                           </a>
                                        </h5>
                                        <h6>SIZE <%= cart.PRODUCT_ITEM.size %></h6>
-                                       <span><%= cart.PRODUCT_ITEM.PRODUCT.price %> x <%= cart.quantity %> </span>
+                                       <span
+                                          ><%= cart.PRODUCT_ITEM.PRODUCT.discounts !== null ?
+                                          cart.PRODUCT_ITEM.PRODUCT.discounts.priceAfterApplyDiscount :
+                                          cart.PRODUCT_ITEM.PRODUCT.price %> x <%= cart.quantity %>
+                                       </span>
                                     </div>
                                     <div
                                        class="cart-delete"

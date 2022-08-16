@@ -10,9 +10,17 @@ export default function headerWrapper(controllerFunction) {
          let cartList = undefined;
          if (username) {
             cartList = await cartService.getAllCartByUsername(username);
+
             const total = cartList.reduce((acc, cart) => {
-               return acc + cart.PRODUCT_ITEM.PRODUCT.price * cart.quantity;
+               return !!cart.PRODUCT_ITEM.PRODUCT.discounts
+                  ? acc +
+                       ((cart.PRODUCT_ITEM.PRODUCT.price *
+                          (100 - cart.PRODUCT_ITEM.PRODUCT.discounts.percentReduction)) /
+                          100) *
+                          cart.quantity
+                  : acc + cart.PRODUCT_ITEM.PRODUCT.price * cart.quantity;
             }, 0);
+
             cartList = cartList.map((cart) => {
                return {
                   ...cart,

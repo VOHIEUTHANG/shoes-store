@@ -2,6 +2,7 @@ import sequelize, { Op } from 'sequelize';
 import Models from '../database/sequelize';
 import createSlug from '../helpers/createSlug';
 import formatCurrency from '../helpers/formatCurrency';
+import { calculatePriceAfterApplyDiscount, calculateDiscountPrice } from '../helpers/discountHandler';
 const productModel = Models.product;
 const categoryModel = Models.category;
 const brandModel = Models.brand;
@@ -52,7 +53,7 @@ class productService {
          return null;
       }
    }
-   async update(data){
+   async update(data) {
       try {
          let product = await productModel.upsert({
             ID: data.id,
@@ -72,14 +73,19 @@ class productService {
          return null;
       }
    }
-   async getOneJoin(id){
-    let product = productModel.findOne(
-    { include:[{model: brandModel, as :'BRAND' },
-     {model: productCategoryModel,as:'product_categories',include:[{model: categoryModel, as:'CATEGORY'}]
-      }],
-      where: {ID:id}
-    });
-     return product;
+   async getOneJoin(id) {
+      let product = productModel.findOne({
+         include: [
+            { model: brandModel, as: 'BRAND' },
+            {
+               model: productCategoryModel,
+               as: 'product_categories',
+               include: [{ model: categoryModel, as: 'CATEGORY' }],
+            },
+         ],
+         where: { ID: id },
+      });
+      return product;
    }
    async getActiveProduct({ offset = 0, limit = 5 }) {
       const filterPropertis = { isSelling: true };
@@ -131,7 +137,10 @@ class productService {
                   ? {
                        ...product.discounts,
                        priceAfterApplyDiscount: formatCurrency(
-                          Number(Math.round((product.price * (100 - product.discounts.percentReduction)) / 100)) * 1000,
+                          calculatePriceAfterApplyDiscount(product.price, product.discounts.percentReduction),
+                       ),
+                       discountPrice: formatCurrency(
+                          calculateDiscountPrice(product.price, product.discounts.percentReduction),
                        ),
                     }
                   : null,
@@ -164,6 +173,11 @@ class productService {
                   as: 'product_items',
                   attributes: ['inventory', 'size', 'ID'],
                },
+               {
+                  model: discountModel,
+                  required: false,
+                  as: 'discounts',
+               },
             ],
             where: { slug: slug },
          });
@@ -178,6 +192,18 @@ class productService {
                product_items: productResult.dataValues.product_items.map((product) => {
                   return product.dataValues;
                }),
+               discounts:
+                  productResult.dataValues.discounts.length > 0
+                     ? {
+                          percentReduction: productResult.dataValues.discounts[0].dataValues?.percentReduction,
+                          priceAfterApplyDiscount: formatCurrency(
+                             calculatePriceAfterApplyDiscount(
+                                productResult.dataValues.price,
+                                productResult.dataValues.discounts[0].dataValues.percentReduction,
+                             ),
+                          ),
+                       }
+                     : null,
             };
             return formatedProduct;
          } else {
@@ -188,7 +214,6 @@ class productService {
          return false;
       }
    }
-
 }
 
 module.exports = new productService();

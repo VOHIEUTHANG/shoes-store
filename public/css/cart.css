@@ -57,7 +57,10 @@
   .cart .table-content table td.product-name a:hover {
     color: #050035; }
   .cart .table-content table td.product-name {
-    width: 270px; }
+    max-width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
   .cart .table-content table td.product-thumbnail {
     width: 130px; }
     .cart .table-content table td.product-thumbnail a {
@@ -91,6 +94,8 @@
     background-color: #f6f6f6; }
   .cart .cart-page-total li:last-child {
     border-bottom: none; }
+  .cart .table-content table tr:not(:last-child) {
+    border-bottom: 1px solid #ccc; }
   .cart .cart-page-total {
     padding-top: 50px;
     display: flex;

@@ -1,6 +1,5 @@
 import Models from '../database/sequelize';
 import { createResponse } from '../helpers/responseCreator';
-import formatCurrency from '../helpers/formatCurrency';
 const CartModel = Models.cart;
 const ProductItemModel = Models.product_items;
 const productModel = Models.product;
@@ -48,7 +47,7 @@ class Cart {
                   include: {
                      model: productModel,
                      as: 'PRODUCT',
-                     attributes: ['name', 'price'],
+                     attributes: ['name', 'price', 'slug'],
                      include: {
                         model: productImageModel,
                         as: 'product_images',
@@ -66,6 +65,7 @@ class Cart {
                      PRODUCT: {
                         name: cart.dataValues.PRODUCT_ITEM.dataValues.PRODUCT.dataValues.name,
                         price: cart.dataValues.PRODUCT_ITEM.dataValues.PRODUCT.dataValues.price,
+                        slug: cart.dataValues.PRODUCT_ITEM.dataValues.PRODUCT.dataValues.slug,
                         imageURL:
                            cart.dataValues.PRODUCT_ITEM.dataValues.PRODUCT.dataValues.product_images[0].dataValues
                               .imageURL,

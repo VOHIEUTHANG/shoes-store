@@ -6,7 +6,7 @@
    </head>
    <body>
       <div id="root">
-         <%- include('../../partials/header',{user,isLoggedIn}) %>
+         <%- include('../../partials/header') %>
          <div id="main">
             <div class="cart-main-area cart">
                <div class="container">
@@ -23,76 +23,50 @@
                                        <th>Tên sản phẩm</th>
                                        <th>Giá</th>
                                        <th>Số lượng</th>
+                                       <th>Size</th>
                                        <th>Tổng tiền</th>
                                     </tr>
                                  </thead>
                                  <tbody>
-                                    <tr>
-                                       <td class="product-remove">
-                                          <a href="#"><i class="ti-close"></i></a>
-                                       </td>
-                                       <td class="product-thumbnail">
-                                          <a href="#"
-                                             ><img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_3ce527bb-53c7-44ab-9089-730127cd49fc_1296x.jpg?v=1658381543"
-                                                alt=""
-                                          /></a>
-                                       </td>
-                                       <td class="product-name">
-                                          <a href="#"> JORDAN AIR 1 </a>
-                                       </td>
-                                       <td class="product-price-cart">
-                                          <span class="amount">$165.00</span>
-                                       </td>
-                                       <td class="product-quantity">
-                                          <input value="1" type="number" />
-                                       </td>
-                                       <td class="product-subtotal">$165.00</td>
-                                    </tr>
-                                    <tr>
-                                       <td class="product-remove">
-                                          <a href="#"><i class="ti-close"></i></a>
-                                       </td>
-                                       <td class="product-thumbnail">
-                                          <a href="#"
-                                             ><img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_1eab42d4-bd19-4969-867c-5a22c52a473c_1296x.jpg?v=1657727029"
-                                                alt=""
-                                          /></a>
-                                       </td>
-                                       <td class="product-name">
-                                          <a href="#">Vestibulum dictum</a>
-                                       </td>
-                                       <td class="product-price-cart">
-                                          <span class="amount">$150.00</span>
-                                       </td>
-                                       <td class="product-quantity">
-                                          <input value="1" type="number" />
-                                       </td>
-                                       <td class="product-subtotal">$150.00</td>
-                                    </tr>
-                                    <tr>
-                                       <td class="product-remove">
-                                          <a href="#"><i class="ti-close"></i></a>
-                                       </td>
-                                       <td class="product-thumbnail">
-                                          <a href="#"
-                                             ><img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_0c1094b4-3c00-41e3-a52c-accc05e34edf_1296x.jpg?v=1656276816"
-                                                alt=""
-                                          /></a>
-                                       </td>
-                                       <td class="product-name">
-                                          <a href="#"> BITS HEADPHONE</a>
-                                       </td>
-                                       <td class="product-price-cart">
-                                          <span class="amount">$150.00</span>
-                                       </td>
-                                       <td class="product-quantity">
-                                          <input value="1" type="number" />
-                                       </td>
-                                       <td class="product-subtotal">$150.00</td>
-                                    </tr>
+                                    <% if(cartList.length === 0) { %>
+                                       <div
+                                       style="flex-direction: column"
+                                       class="d-flex justify-content-center align-items-center"
+                                    >
+                                       <i style="font-size: 4rem !important" class="ti-face-sad"> </i>
+                                       <p style="text-align: center; margin-top: 2rem" class="nothing-title">
+                                          Bạn không có sản phẩm nào trong giỏ hàng !
+                                       </p>
+                                    </div>
+                                    <% } else{ %>
+                                       <% cartList.forEach(cart=>{ %>
+                                          <tr>
+                                             <td class="product-remove">
+                                                <a href="#"><i class="ti-close"></i></a>
+                                             </td>
+                                             <td class="product-thumbnail">
+                                                <a href="/product/<%= cart.PRODUCT_ITEM.PRODUCT.slug %>"
+                                                   ><img
+                                                      src="<%= cart.PRODUCT_ITEM.PRODUCT.imageURL  %>"
+                                                      alt=""
+                                                /></a>
+                                             </td>
+                                             <td class="product-name">
+                                                <a href="/product/<%= cart.PRODUCT_ITEM.PRODUCT.slug %>"> <%= cart.PRODUCT_ITEM.PRODUCT.name %> </a>
+                                             </td>
+                                             <td class="product-price-cart">
+                                                <span class="amount"><%= cart.PRODUCT_ITEM.PRODUCT.price %></span>
+                                             </td>
+                                             <td class="product-quantity">
+                                                <input value="<%= cart.quantity || 1 %>" type="number" />
+                                             </td>
+                                             <td class="amount">
+                                                <div><%= cart.PRODUCT_ITEM.size %></div>
+                                             </td>
+                                             <td class="product-subtotal"><%= cart.PRODUCT_ITEM.thisPrice %></td>
+                                          </tr>
+                                       <% }) %>
+                                    <% } %>
                                  </tbody>
                               </table>
                            </div>
@@ -102,10 +76,10 @@
                                  <div class="cart-page-total">
                                     <h2>Đơn hàng</h2>
                                     <ul>
-                                       <li>Tổng tiền hàng<span class="origin-price">12.300.000 VND</span></li>
-                                       <li>Giảm giá sản phẩm<span class="discount">- 1.200.000 VND</span></li>
+                                       <li>Tổng tiền hàng<span class="origin-price"><%= cartList.totalPrice %></span></li>
+                                       <li>Giảm giá sản phẩm<span class="discount">0 VND</span></li>
                                        <li>Phí vận chuyển<span class="shipment">+ 30.000 VND</span></li>
-                                       <li>Tổng tiền thực thanh toán<span class="payment-total">11.070.000 VND</span></li>
+                                       <li>Tổng tiền thực thanh toán<span class="payment-total"><%= cartList.totalPrice %></span></li>
                                     </ul>
                                     <div class="button btn-checkout large">Mua hàng</a>
                                  </div>

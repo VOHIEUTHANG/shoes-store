@@ -6,7 +6,7 @@
    </head>
    <body>
       <div class="root">
-         <%- include('../partials/header',{user,isLoggedIn,brandNameList,categoryNameList,cartList}); %>
+         <%- include('../partials/header'); %>
          <div id="main">
             <div class="banner-container">
                <div class="glide">
@@ -271,8 +271,16 @@
                                        <h4>
                                           <a href="/product/<%= product.slug%>"><%= product.name %></a>
                                        </h4>
-                                       <span><%= product.price %></span>
+                                       <span class="<%= product.discounts !== null ? 'remove' : '' %>"><%= product.price %></span>
+                                       <% if(product.discounts) { %>
+                                       <span><%= product.discounts.priceAfterApplyDiscount  %></span>
+                                       <% } %>
                                     </div>
+                                    <% if(product.discounts !== null) {%>
+                                       <div class="product-discount-label">
+                                          -<%= product.discounts.percentReduction %>%
+                                       </div>
+                                    <% } %> 
                                  </div>
                               </div>
                            <% }); %>
@@ -357,8 +365,21 @@
                                     >${product.name}</a
                                  >
                               </h4>
-                              <span>${product.price}</span>
+                              <span class="${product.discounts ? 'remove': ''}">${product.price}</span>
+                              ${
+                                 product.discounts ? 
+                                 `<span>${product.discounts.priceAfterApplyDiscount}</span>`
+                                 : 
+                                 '' 
+                              }
                            </div>
+                           ${
+                              product.discounts !== null  ? `
+                              <div class="product-discount-label">
+                                 -${product.discounts.percentReduction}%
+                              </div>` : ''
+                        
+                           }
                         </div>`;
                         productNodeList[0].appendChild(productItem);
                   });

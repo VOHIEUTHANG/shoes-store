@@ -2,6 +2,8 @@ import UserService from '../service/user.service';
 import ProductService from '../service/product.service';
 import { createResponse } from '../helpers/responseCreator';
 import userService from '../service/user.service';
+import convertFromStringToNumber from '../helpers/convertCurrencyFromStringToNmber';
+import formatToCurrency from '../helpers/formatCurrency';
 
 const mainController = () => ({
    getHomePage: async (req, res) => {
@@ -53,7 +55,7 @@ const mainController = () => ({
 
       res.render('pages/user-pages/wishlist', payload);
    },
-   getCartPage: (req, res) => {
+   getCartPage: async (req, res) => {
       const user = req.user;
       const payloadInfo = req.payload;
       const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
@@ -61,6 +63,26 @@ const mainController = () => ({
          payload.user = user;
          payload.isLoggedIn = true;
       }
+      let cartList = payloadInfo.cartList;
+      console.log('cartList', cartList);
+
+      const cartListFormated = cartList.map((cart) => {
+         let quantity = cart.quantity;
+         let price = cart.PRODUCT_ITEM.PRODUCT.price;
+         price = convertFromStringToNumber(price);
+         let thisPrice = Number(quantity) * price;
+         thisPrice = formatToCurrency(thisPrice);
+
+         return {
+            ...cart,
+            PRODUCT_ITEM: {
+               ...cart.PRODUCT_ITEM,
+               thisPrice,
+            },
+         };
+      });
+      cartListFormated.totalPrice = cartList.totalPrice;
+      payload.cartList = cartListFormated;
       res.render('pages/user-pages/cart', payload);
    },
    get404Page: (req, res) => {

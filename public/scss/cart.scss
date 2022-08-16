@@ -71,7 +71,10 @@
       color: #050035;
    }
    .table-content table td.product-name {
-      width: 270px;
+      max-width: 250px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
    }
    .table-content table td.product-thumbnail {
       width: 130px;
@@ -117,6 +120,10 @@
    .cart-page-total li:last-child {
       border-bottom: none;
    }
+   .table-content table tr:not(:last-child) {
+      border-bottom: 1px solid #ccc;
+   }
+
    .cart-page-total {
       padding-top: 50px;
       display: flex;

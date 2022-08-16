@@ -10,7 +10,6 @@ export default function headerWrapper(controllerFunction) {
          let cartList = undefined;
          if (username) {
             cartList = await cartService.getAllCartByUsername(username);
-
             const total = cartList.reduce((acc, cart) => {
                return acc + cart.PRODUCT_ITEM.PRODUCT.price * cart.quantity;
             }, 0);
@@ -27,7 +26,7 @@ export default function headerWrapper(controllerFunction) {
                };
             });
             cartList.totalPrice = formatCurrency(total * 1000);
-            console.log(cartList);
+            console.log('cartList', cartList);
          }
          const brands = await brandService.getAllBrands();
          const categorys = await categoryService.getAllCategory();
@@ -37,14 +36,6 @@ export default function headerWrapper(controllerFunction) {
       } catch (error) {
          console.log('error', error);
          res.status(400).json({ status: 'Select brand or category occured error!' });
-      }
-      return controllerFunction(req, res, next);
-   };
-}
-
-export function cartListWrapper(controllerFunction) {
-   return async (req, res, next) => {
-      if (username) {
       }
       return controllerFunction(req, res, next);
    };

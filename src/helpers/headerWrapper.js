@@ -14,11 +14,32 @@ export default function headerWrapper(controllerFunction) {
             const total = cartList.reduce((acc, cart) => {
                return !!cart.PRODUCT_ITEM.PRODUCT.discounts
                   ? acc +
-                       ((cart.PRODUCT_ITEM.PRODUCT.price *
-                          (100 - cart.PRODUCT_ITEM.PRODUCT.discounts.percentReduction)) /
-                          100) *
+                       Number(
+                          Math.round(
+                             (cart.PRODUCT_ITEM.PRODUCT.price *
+                                (100 - cart.PRODUCT_ITEM.PRODUCT.discounts.percentReduction)) /
+                                100,
+                          ),
+                       ) *
                           cart.quantity
                   : acc + cart.PRODUCT_ITEM.PRODUCT.price * cart.quantity;
+            }, 0);
+
+            const originPrice = cartList.reduce((acc, cart) => {
+               return acc + cart.PRODUCT_ITEM.PRODUCT.price * cart.quantity;
+            }, 0);
+
+            const discountPrice = cartList.reduce((acc, cart) => {
+               return !!cart.PRODUCT_ITEM.PRODUCT.discounts
+                  ? acc +
+                       Number(
+                          Math.round(
+                             (cart.PRODUCT_ITEM.PRODUCT.price * cart.PRODUCT_ITEM.PRODUCT.discounts.percentReduction) /
+                                100,
+                          ),
+                       ) *
+                          cart.quantity
+                  : acc + 0;
             }, 0);
 
             cartList = cartList.map((cart) => {
@@ -33,7 +54,11 @@ export default function headerWrapper(controllerFunction) {
                   },
                };
             });
+
             cartList.totalPrice = formatCurrency(total * 1000);
+            cartList.originPrice = formatCurrency(originPrice * 1000);
+            cartList.discountPrice = formatCurrency(discountPrice * 1000);
+
             console.log('cartList', cartList);
          }
          const brands = await brandService.getAllBrands();

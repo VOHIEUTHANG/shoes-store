@@ -44,6 +44,10 @@
       border-top: medium none;
       padding: 2rem 1rem;
       vertical-align: middle;
+      .discount {
+         color: green;
+         font-style: italic;
+      }
       //   font-size: 1;
    }
    .table-content table td input {

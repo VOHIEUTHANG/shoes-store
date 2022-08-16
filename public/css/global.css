@@ -700,7 +700,6 @@ body::-webkit-scrollbar-thumb {
   background-image: linear-gradient(to bottom, #a6d1e6, #eea4f5); }
 
 #root {
-  min-height: 100vh;
   display: flex;
   flex-direction: column; }
 

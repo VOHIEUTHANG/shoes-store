@@ -82,9 +82,8 @@
       left: 0;
       background-color: #f34848;
       padding: 0.5rem;
-      user-select: null; }
-      .cart .table-content table td.product-thumbnail .discount-label:hover {
-        color: white; }
+      user-select: none;
+      color: white !important; }
   .cart .table-content table td.product-remove i {
     color: #919191;
     display: inline-block;
@@ -93,6 +92,8 @@
     line-height: 40px;
     text-align: center;
     width: 40px; }
+  .cart .product-remove-btn {
+    cursor: pointer; }
   .cart .table-content table .product-price-cart .amount {
     color: #555;
     font-size: 1.8rem; }

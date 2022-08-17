@@ -101,10 +101,8 @@
          left: 0;
          background-color: $color-bg-discount;
          padding: 0.5rem;
-         user-select: null;
-         &:hover {
-            color: white;
-         }
+         user-select: none;
+         color: white !important;
       }
    }
    .table-content table td.product-remove i {
@@ -115,6 +113,9 @@
       line-height: 40px;
       text-align: center;
       width: 40px;
+   }
+   .product-remove-btn {
+      cursor: pointer;
    }
    .table-content table .product-price-cart .amount {
       color: #555;

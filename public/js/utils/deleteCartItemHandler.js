@@ -1,4 +1,4 @@
-export default async function deleteCartItemOnLick(_this, privateRequestHandler, formatToCurrency) {
+export default async function deleteCartItemOnLick(_this, privateRequestHandler, formatToCurrency, successHandler) {
    const cartItem = $(_this).closest('.single-product-cart');
    const productItemID = _this.dataset.productId;
    let cartItemPrice = _this.dataset.cartPrice;
@@ -33,6 +33,7 @@ export default async function deleteCartItemOnLick(_this, privateRequestHandler,
                     </div>
                  `;
             }
+            successHandler && successHandler(productItemID);
          }
       });
    } catch (error) {

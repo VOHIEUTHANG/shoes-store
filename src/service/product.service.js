@@ -1,12 +1,15 @@
+import sequelize, { Op } from 'sequelize';
 import Models from '../database/sequelize';
-import formatCurrency from '../helpers/formatCurrency';
 import createSlug from '../helpers/createSlug';
+import formatCurrency from '../helpers/formatCurrency';
+import { calculatePriceAfterApplyDiscount, calculateDiscountPrice } from '../helpers/discountHandler';
 const productModel = Models.product;
 const categoryModel = Models.category;
 const brandModel = Models.brand;
 const productCategoryModel = Models.product_category;
 const productImagesModel = Models.product_images;
 const productItemModel = Models.product_items;
+const discountModel = Models.discount;
 
 class productService {
    async getAll() {
@@ -50,7 +53,7 @@ class productService {
          return null;
       }
    }
-   async update(data){
+   async update(data) {
       try {
          let product = await productModel.upsert({
             ID: data.id,
@@ -70,17 +73,24 @@ class productService {
          return null;
       }
    }
-   async getOneJoin(id){
-    let product = productModel.findOne(
-    { include:[{model: brandModel, as :'BRAND' },
-     {model: productCategoryModel,as:'product_categories',include:[{model: categoryModel, as:'CATEGORY'}]
-      }],
-      where: {ID:id}
-    });
-     return product;
+   async getOneJoin(id) {
+      let product = productModel.findOne({
+         include: [
+            { model: brandModel, as: 'BRAND' },
+            {
+               model: productCategoryModel,
+               as: 'product_categories',
+               include: [{ model: categoryModel, as: 'CATEGORY' }],
+            },
+         ],
+         where: { ID: id },
+      });
+      return product;
    }
    async getActiveProduct({ offset = 0, limit = 5 }) {
       const filterPropertis = { isSelling: true };
+      const timeNow = new Date();
+
       try {
          const { count, rows } = await productModel.findAndCountAll({
             attributes: {
@@ -96,19 +106,48 @@ class productService {
                   model: productImagesModel,
                   as: 'product_images',
                },
+               {
+                  model: discountModel,
+                  required: false,
+                  as: 'discounts',
+                  where: {
+                     isApply: true,
+                     [Op.and]: [sequelize.where(sequelize.fn('date', sequelize.col('endDate')), '>', timeNow)],
+                  },
+               },
             ],
             where: filterPropertis,
             order: ['ID'],
             limit: limit,
             offset: offset,
          });
-         const products = rows.map((product) => ({
+         let products = rows.map((product) => ({
             ...product.dataValues,
             BRAND: product.dataValues.BRAND.brandName,
             product_images: product.dataValues.product_images[0]?.imageURL,
-            price: formatCurrency(product.dataValues.price * 1000),
+            price: product.dataValues.price,
+            discounts: product.dataValues?.discounts[0]?.dataValues || null,
          }));
-         return { total: count, products };
+
+         const calculatePriceAfterDiscount = products.map((product) => {
+            return {
+               ...product,
+               price: formatCurrency(product.price * 1000),
+               discounts: !!product.discounts
+                  ? {
+                       ...product.discounts,
+                       priceAfterApplyDiscount: formatCurrency(
+                          calculatePriceAfterApplyDiscount(product.price, product.discounts.percentReduction),
+                       ),
+                       discountPrice: formatCurrency(
+                          calculateDiscountPrice(product.price, product.discounts.percentReduction),
+                       ),
+                    }
+                  : null,
+            };
+         });
+         console.log('calculatePriceAfterDiscount', calculatePriceAfterDiscount);
+         return { total: count, products: calculatePriceAfterDiscount };
       } catch (error) {
          console.log('🚀 ~ file: product.service.js ~ line 63 ~ productService ~ error', error);
          return null;
@@ -134,6 +173,11 @@ class productService {
                   as: 'product_items',
                   attributes: ['inventory', 'size', 'ID'],
                },
+               {
+                  model: discountModel,
+                  required: false,
+                  as: 'discounts',
+               },
             ],
             where: { slug: slug },
          });
@@ -148,6 +192,18 @@ class productService {
                product_items: productResult.dataValues.product_items.map((product) => {
                   return product.dataValues;
                }),
+               discounts:
+                  productResult.dataValues.discounts.length > 0
+                     ? {
+                          percentReduction: productResult.dataValues.discounts[0].dataValues?.percentReduction,
+                          priceAfterApplyDiscount: formatCurrency(
+                             calculatePriceAfterApplyDiscount(
+                                productResult.dataValues.price,
+                                productResult.dataValues.discounts[0].dataValues.percentReduction,
+                             ),
+                          ),
+                       }
+                     : null,
             };
             return formatedProduct;
          } else {
@@ -158,7 +214,6 @@ class productService {
          return false;
       }
    }
-
 }
 
 module.exports = new productService();

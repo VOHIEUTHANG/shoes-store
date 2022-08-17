@@ -50,4 +50,4 @@ class product_itemService{
           }
     }
 }
-module.exports = new product_itemService;
+module.exports = new product_itemService();

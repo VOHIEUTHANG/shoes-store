@@ -267,6 +267,30 @@
          height: 100%;
          overflow: hidden;
          position: relative;
+         .product-discount-label {
+            position: absolute;
+            top: 0;
+            right: 14px;
+            width: fit-content;
+            padding: 1rem;
+            color: white;
+            width: 60px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 1.8rem;
+            white-space: nowrap;
+            background-color: rgb(255, 118, 118);
+            &::after {
+               position: absolute;
+               content: '';
+               top: 100%;
+               left: 0;
+               width: 100%;
+               height: 2rem;
+               background-color: inherit;
+               clip-path: polygon(100% 0, 100% 100%, 50% 0, 0 100%, 0 0);
+            }
+         }
       }
 
       .product-action {
@@ -320,6 +344,10 @@
          white-space: nowrap;
          user-select: none;
          font-weight: 500;
+         &.remove {
+            text-decoration: line-through;
+            opacity: 0.4;
+         }
       }
       .product-content {
          display: flex;

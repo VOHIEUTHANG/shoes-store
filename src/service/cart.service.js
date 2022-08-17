@@ -1,10 +1,13 @@
 import Models from '../database/sequelize';
 import { createResponse } from '../helpers/responseCreator';
-import formatCurrency from '../helpers/formatCurrency';
+import sequelize, { Op } from 'sequelize';
+import { calculatePriceAfterApplyDiscount, calculateDiscountPrice } from '../helpers/discountHandler';
+import formatToCurrency from '../helpers/formatCurrency';
 const CartModel = Models.cart;
 const ProductItemModel = Models.product_items;
 const productModel = Models.product;
 const productImageModel = Models.product_images;
+const discountModel = Models.discount;
 
 class Cart {
    async addCart(username, productItemID, quantity) {
@@ -36,6 +39,7 @@ class Cart {
       }
    }
    async getAllCartByUsername(username) {
+      const timeNow = new Date();
       if (username) {
          try {
             const cartListResult = await CartModel.findAll({
@@ -48,27 +52,56 @@ class Cart {
                   include: {
                      model: productModel,
                      as: 'PRODUCT',
-                     attributes: ['name', 'price'],
-                     include: {
-                        model: productImageModel,
-                        as: 'product_images',
-                        attributes: ['imageURL'],
-                     },
+                     attributes: ['name', 'price', 'slug'],
+                     include: [
+                        {
+                           model: productImageModel,
+                           as: 'product_images',
+                           attributes: ['imageURL'],
+                        },
+                        {
+                           model: discountModel,
+                           required: false,
+                           as: 'discounts',
+                           where: {
+                              isApply: true,
+                              [Op.and]: [sequelize.where(sequelize.fn('date', sequelize.col('endDate')), '>', timeNow)],
+                           },
+                        },
+                     ],
                   },
                },
             });
 
             const cartFormated = cartListResult.map((cart) => {
+               const thisProduct = cart.dataValues.PRODUCT_ITEM.dataValues.PRODUCT.dataValues;
                return {
                   ...cart.dataValues,
                   PRODUCT_ITEM: {
                      ...cart.dataValues.PRODUCT_ITEM.dataValues,
                      PRODUCT: {
-                        name: cart.dataValues.PRODUCT_ITEM.dataValues.PRODUCT.dataValues.name,
-                        price: cart.dataValues.PRODUCT_ITEM.dataValues.PRODUCT.dataValues.price,
-                        imageURL:
-                           cart.dataValues.PRODUCT_ITEM.dataValues.PRODUCT.dataValues.product_images[0].dataValues
-                              .imageURL,
+                        name: thisProduct.name,
+                        price: thisProduct.price,
+                        slug: thisProduct.slug,
+                        imageURL: thisProduct.product_images[0].dataValues.imageURL,
+                        discounts:
+                           thisProduct.discounts.length > 0
+                              ? {
+                                   ...thisProduct?.discounts[0]?.dataValues,
+                                   priceAfterApplyDiscount: formatToCurrency(
+                                      calculatePriceAfterApplyDiscount(
+                                         thisProduct.price,
+                                         thisProduct.discounts[0].dataValues.percentReduction,
+                                      ),
+                                   ),
+                                   discountPrice: formatToCurrency(
+                                      calculateDiscountPrice(
+                                         thisProduct.price,
+                                         thisProduct.discounts[0].dataValues.percentReduction,
+                                      ),
+                                   ),
+                                }
+                              : null,
                      },
                   },
                };

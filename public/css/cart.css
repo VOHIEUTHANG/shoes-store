@@ -36,6 +36,9 @@
     border-top: medium none;
     padding: 2rem 1rem;
     vertical-align: middle; }
+    .cart .table-content table td .discount {
+      color: green;
+      font-style: italic; }
   .cart .table-content table td input {
     background: #e5e5e5 none repeat scroll 0 0;
     border: medium none;
@@ -57,7 +60,10 @@
   .cart .table-content table td.product-name a:hover {
     color: #050035; }
   .cart .table-content table td.product-name {
-    width: 270px; }
+    max-width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
   .cart .table-content table td.product-thumbnail {
     width: 130px; }
     .cart .table-content table td.product-thumbnail a {
@@ -91,6 +97,8 @@
     background-color: #f6f6f6; }
   .cart .cart-page-total li:last-child {
     border-bottom: none; }
+  .cart .table-content table tr:not(:last-child) {
+    border-bottom: 1px solid #ccc; }
   .cart .cart-page-total {
     padding-top: 50px;
     display: flex;

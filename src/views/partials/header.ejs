@@ -50,15 +50,25 @@
                               </div>
                               <% } else { %>
                               <div class="cart-scroll-list">
-                                 <% cartList.forEach((cart,index)=>{ %>
+                                 <% cartList.forEach((cart)=>{ %>
                                  <li class="single-product-cart">
                                     <div class="cart-img">
-                                       <a href="#"><img src="<%= cart.PRODUCT_ITEM.PRODUCT.imageURL %>" alt="" /></a>
+                                       <a href="/product/<%= cart.PRODUCT_ITEM.PRODUCT.slug  %>"
+                                          ><img src="<%= cart.PRODUCT_ITEM.PRODUCT.imageURL %>" alt=""
+                                       /></a>
                                     </div>
                                     <div class="cart-title">
-                                       <h5><a href="#"><%= cart.PRODUCT_ITEM.PRODUCT.name %> </a></h5>
+                                       <h5>
+                                          <a href="/product/<%= cart.PRODUCT_ITEM.PRODUCT.slug  %>"
+                                             ><%= cart.PRODUCT_ITEM.PRODUCT.name %>
+                                          </a>
+                                       </h5>
                                        <h6>SIZE <%= cart.PRODUCT_ITEM.size %></h6>
-                                       <span><%= cart.PRODUCT_ITEM.PRODUCT.price %> x <%= cart.quantity %> </span>
+                                       <span
+                                          ><%= cart.PRODUCT_ITEM.PRODUCT.discounts !== null ?
+                                          cart.PRODUCT_ITEM.PRODUCT.discounts.priceAfterApplyDiscount :
+                                          cart.PRODUCT_ITEM.PRODUCT.price %> x <%= cart.quantity %>
+                                       </span>
                                     </div>
                                     <div
                                        class="cart-delete"
@@ -186,7 +196,7 @@
                   <a href="/all-product" class="menu-link">All product</a>
                </li>
                <li class="menu-item">
-                  <a href="#" class="wow tada menu-link menu-link--sale">sale</a>
+                  <a href="#" class="wow tada menu-link menu-link--sale">Discount</a>
                </li>
             </ul>
          </div>

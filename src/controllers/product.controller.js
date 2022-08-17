@@ -1,15 +1,17 @@
 import productService from '../service/product.service';
 const product_itemService = require('../service/product_item.service');
 const product_categoryService = require('../service/product_category.service');
+const product_imagesService = require('../service/product_images.service');
 const { ideahub_v1alpha } = require('googleapis');
-
-
 class productController {
    async create(req, res) {
-      let product_itemList = req.body.data;
-
+        res.send({'res': 'ok'});
+      let product_itemList =JSON.parse(req.body.items);
       try {
          let product = await productService.save(req.body);
+         req.files.forEach(element => {
+          product_imagesService.save(product.dataValues.ID,`assets/uploads/${element.filename}`);
+         });
          let product_category = await product_categoryService.save(product.dataValues.ID, req.body.category);
          for (let element of product_itemList) {
             await product_itemService.save(product.dataValues.ID, element.inventory, element.size);
@@ -25,7 +27,7 @@ class productController {
             message: 'Tạo thất bại!',
          });
       }
-   }
+    }
    async getActiveProducts(req, res) {
       const pageNumber = req.query.page;
       const limit = req.query.limit || 5;
@@ -52,17 +54,25 @@ class productController {
         
    }
    async update(req,res){
+      let product_itemList = req.body.item;
        try {
          let product= await productService.update(req.body);
          let product_category = await product_categoryService.update(req.body.id, req.body.category);
+         product_itemService.deleteByProductId(req.body.id);
+         for (let element of product_itemList) {
+            await product_itemService.update(req.body.id, element.size, element.inventory);
+         }
          res.status(200).json({
             title: 'success',
             message: 'Sửa thành công!'
          });
        } catch (error) {
-         console.log('🚀 ~ file: product.controller.js ~ method update ~ productController ~ error', err);
+         res.status(500).json({
+            title: 'fail',
+            message: 'Sửa thất bại!',
+         });
+         console.log('🚀 ~ file: product.controller.js ~ method update ~ productController ~ error', error);
        }
     }
 }
-
 module.exports = new productController();

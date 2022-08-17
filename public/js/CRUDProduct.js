@@ -1,3 +1,5 @@
+
+
 const $tableID = $('#table');
 const newTr = `
 <tr>
@@ -52,6 +54,7 @@ function deleteDataModal(){
     </thead>`;
 }
 function createProduct (){
+    const form = new FormData();
     let name= document.getElementById('name').value;
     let price= document.getElementById('price').value;
     let date = document.getElementById('date').value;
@@ -61,20 +64,48 @@ function createProduct (){
     let isSelling= document.getElementById ('isSelling').value;
     let category = document.getElementById('category').value;
     let brand = document.getElementById('brand').value;
-    axios.post('/api/product/create',{
-        name,
-        price,
-        date,
-        sex,
-        des,
-        detail,
-        isSelling,
-        brand,
-        category,
-        data:getProductItem(),
-    }).then ((res)=>{
-        alert(res.data);
+    form.append('name',name);
+    form.append('price',price);
+    form.append('date',date);
+    form.append('sex', sex);
+    form.append('des', des);
+    form.append('detail', detail);
+    form.append('isSelling', isSelling);
+    form.append('category',category);
+    form.append('brand', brand);
+    form.append('items',JSON.stringify(getProductItem()));
+    const fileUpload = document.getElementById('fileImages').files;
+    for(let i = 0; i< fileUpload.length;i++)
+    {
+        form.append('file',fileUpload[i])
+    }  
+    axios.request({
+        method: 'post',
+        url: '/api/product/create',
+        data: form,
+        headers: {
+            "Content-Type": "multipart/form-data",
+          }
+    }).then((data)=>{
+        console.log(data);
+    }).catch((err)=>{
+        console.log(err);
     })
+    // axios.post('/api/product/create',{
+    //     name,
+    //     price,
+    //     date,
+    //     sex,
+    //     des,
+    //     detail,
+    //     isSelling,
+    //     brand,
+    //     category,
+    //     item:getProductItem(),
+    // }).then ((res)=>{
+    //     alert(res.data);
+    // });
+   
 }
 window.onload = function(){ 
  
@@ -140,6 +171,7 @@ function modifyProduct(){
     let isSelling= document.getElementById ('isSelling').value;
     let category = document.getElementById('category').value;
     let brand = document.getElementById('brand').value;
+    
     axios.post('/api/product/update',{
         id:id_product,
         name,
@@ -151,6 +183,7 @@ function modifyProduct(){
         isSelling,
         brand,
         category,
+        item:getProductItem(),
     }).then ((res)=>{
        alert(res.data);
     }).catch((err)=>{
@@ -158,6 +191,7 @@ function modifyProduct(){
     })
 }
 function add(arr,object){
+    if (object.size==0) return;
     for(element of arr){
       if(object.size==element.size){
         return 

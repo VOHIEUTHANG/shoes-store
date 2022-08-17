@@ -24,9 +24,30 @@ class product_itemService{
             });
              return product_categories;
         } catch (error) {
-            console.log('🚀 ~ file: product_item.service.js ~ line 10 ~ product_itemService ~ error', err);
+            console.log('🚀 ~ file: product_item.service.js ~ line 10 ~ product_itemService ~ error', error);
             return null;
         }
+    }
+    async update(productId, size,inventory){
+          try {
+            this.save(productId,inventory,size);
+            }
+           catch (error) {
+            console.log('🚀 ~ file: product_item.service.js ~ line 41 ~ product_itemService ~ error', error);
+          }
+    }
+    async deleteByProductId(productId){
+        try {
+            await product_itemModel.destroy({
+                where: {
+                    PRODUCT_ID: productId,
+                  },
+                  force: true
+            });
+            }
+           catch (error) {
+            console.log('🚀 ~ file: product_item.service.js ~ line 51 ~ product_itemService ~ error', error);
+          }
     }
 }
 module.exports = new product_itemService;

@@ -41,22 +41,34 @@
                                  </thead>
                                  <tbody>
                                        <% cartList.forEach(cart=>{ %>
-                                          <tr>
+                                          <tr data-product-id="<%= cart.PRODUCT_ITEMS_ID %>" >
                                              <td class="product-remove">
-                                                <a href="#"><i class="ti-close"></i></a>
+                                                <div class="product-remove-btn" data-cart-price="<%= cart.PRODUCT_ITEM.PRODUCT.price  %>" data-product-id="<%= cart.PRODUCT_ITEMS_ID %>">
+                                                   <i class="ti-close"></i>
+                                                </div>
                                              </td>
                                              <td class="product-thumbnail">
                                                 <a href="/product/<%= cart.PRODUCT_ITEM.PRODUCT.slug %>"
                                                    ><img
                                                       src="<%= cart.PRODUCT_ITEM.PRODUCT.imageURL  %>"
                                                       alt=""
-                                                /></a>
+                                                />
+                                             <% if(cart.PRODUCT_ITEM.PRODUCT.discounts) {%>
+                                               <div class="discount-label">
+                                                -
+                                                <span class="cart-discount">
+                                                   <%= cart.PRODUCT_ITEM.PRODUCT.discounts.percentReduction  %>
+                                                </span>
+                                                %
+                                                </div>
+                                             <% } %>
+                                             </a>
                                              </td>
                                              <td class="product-name">
                                                 <a href="/product/<%= cart.PRODUCT_ITEM.PRODUCT.slug %>"> <%= cart.PRODUCT_ITEM.PRODUCT.name %> </a>
                                              </td>
                                              <td class="product-price-cart">
-                                                <span class="amount"><%= cart.PRODUCT_ITEM.PRODUCT.price %></span>
+                                                <span  class="amount cart-price"><%= cart.PRODUCT_ITEM.PRODUCT.price %></span>
                                              </td>
                                              <td class="product-quantity">
                                                 <input value="<%= cart.quantity || 1 %>" type="number" />
@@ -65,7 +77,11 @@
                                                 <div><%= cart.PRODUCT_ITEM.size %></div>
                                              </td>
                                              <td >
-                                                <div class="discount">- <%= cart.PRODUCT_ITEM.PRODUCT.discounts ? cart.PRODUCT_ITEM.thisDiscountPrice : ''   %></div>
+                                                <div class="discount">- 
+                                                   <span class="cart-discount-price">
+                                                      <%= cart.PRODUCT_ITEM.PRODUCT.discounts ? cart.PRODUCT_ITEM.thisDiscountPrice : ''   %>
+                                                   </span>
+                                                </div>
                                              </td>
                                              <td class="product-subtotal">
                                                 <%= cart.PRODUCT_ITEM.thisPrice %>
@@ -102,5 +118,31 @@
          <%- include('../../partials/footer') %>
       </div>
       <%- include('../../partials/foot') %>
+      <script type="module">
+         import { privateRequestHandler, formatToCurrency } from '/js/utils/index.js';
+         import deleteCartItemOnLick from '/js/utils/deleteCartItemHandler.js';
+         $(() => {
+         const deleteCartBtn = $('.product-remove-btn');
+         deleteCartBtn?.click(function(){
+            const productID = this.dataset.productId;
+            const buttonRemoveItem =  $(`.cart-delete[data-product-id="${productID}"]`);
+               // buttonRemoveItem[0].click();
+               const cartRow = $(this).closest('tr');
+               console.log(cartRow);
+               const originPrice = cartRow.find('.cart-price').first()?.text()?.trim() || 0;
+               const quantity = cartRow.find('.product-quantity > input').first()?.val()?.trim() || 1;
+               const discount = cartRow.find('.cart-discount-price').first()?.text()?.trim() || 0;
+               const finalPrice = cartRow.find('.product-subtotal').first()?.text()?.trim() || 0;
+               console.log({
+                  originPrice,
+                  quantity,
+                  discount,
+                  finalPrice
+               })
+               // cartRow.remove();
+               // $(this).remove();
+         });
+   });
+      </script>
    </body>
 </html>

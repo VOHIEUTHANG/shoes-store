@@ -435,6 +435,7 @@
             const warningMessageBtn = $('.warning-message');
             sizeItems.click(function () {
                if (!$(this).hasClass('disable')) {
+                  $('#product-count').val(1);
                   addToCartBtn.removeClass('disable');
                   warningMessageBtn.removeClass('active');
                   sizeItems.removeClass('active');
@@ -496,7 +497,7 @@
 
                   const productImage = $('.main-image').attr('src');
                   const productName = $('#product-name').text();
-                  let productPrice = $('.details-price > span').text();
+                  let productPrice = $('.details-price span:not(.remove)').text();
                   productPrice = convertFromStringToNumber(productPrice);
                   let productTotalPrice = productPrice * quantity;
 

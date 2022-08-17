@@ -279,7 +279,7 @@
             font-weight: 500;
             font-size: 1.8rem;
             white-space: nowrap;
-            background-color: rgb(255, 118, 118);
+            background-color: $color-bg-discount;
             &::after {
                position: absolute;
                content: '';

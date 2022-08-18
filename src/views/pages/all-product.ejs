@@ -12,8 +12,8 @@
                <div class="shop-page-wrapper">
                   <div class="container">
                      <div class="row gx-5">
-                        <div class="col-lg-3">
-                           <div class="shop-sidebar">
+                        <div class="col-lg-3" id="sticky-parent">
+                           <div class="shop-sidebar" id="sticky-element">
                               <div class="sidebar-widget mb-50">
                                  <h3 class="sidebar-title">Tìm kiếm</h3>
                                  <div class="sidebar-search">
@@ -80,7 +80,10 @@
                                  <div class="shop-bar pb-60">
                                     <div class="shop-found-selector">
                                        <div class="shop-found">
-                                          <p><span>23</span> Product Found of <span>50</span></p>
+                                          <p>
+                                             <span><%= productList.products.length %></span> Product Found of
+                                             <span><%= productList.total %></span>
+                                          </p>
                                        </div>
                                        <div class="shop-selector">
                                           <span class="nowrap">Sắp xếp: </span>
@@ -100,29 +103,22 @@
                                           <div class="col-lg-4 col-md-6">
                                              <div class="product-wrapper product-box-style mb-30">
                                                 <div class="product-img">
-                                                   <a href="#">
+                                                   <a href="/product/<%= product.slug%>">
                                                       <img src="<%= product.product_images %>" alt="" />
                                                    </a>
                                                    <div class="product-action">
                                                       <a class="animate-left" title="Wishlist" href="#">
                                                          <i class="fa-regular fa-heart"></i>
                                                       </a>
-                                                      <a class="animate-top" title="Add To Cart" href="#">
+                                                      <a class="animate-right" title="Add To Cart" href="#">
                                                          <i class="ti-shopping-cart"></i>
-                                                      </a>
-                                                      <a
-                                                         class="animate-right"
-                                                         title="Quick View"
-                                                         data-toggle="modal"
-                                                         data-target="#exampleModal"
-                                                         href="#"
-                                                      >
-                                                         <i class="fa-regular fa-eye"></i>
                                                       </a>
                                                    </div>
                                                 </div>
                                                 <div class="product-content">
-                                                   <h4><a href="#"><%= product.name %></a></h4>
+                                                   <h4>
+                                                      <a href="/product/<%= product.slug %>"><%= product.name %></a>
+                                                   </h4>
                                                    <span><%= product.price %></span>
                                                 </div>
                                              </div>
@@ -290,6 +286,41 @@
          <%- include('../partials/footer') %>
       </div>
       <%- include('../partials/foot') %>
+      <script>
+         const stickyElement = $('#sticky-element');
+         const stickyParent = $('#sticky-parent');
+         const headerHeight = $('.header')[0].offsetHeight;
+         const screenHeight = window.screen.height;
+         const footer = $('#footer');
+         let isFixedSidebar = false;
+         let fixedTranformValue = 0;
+
+         $(document).on('scroll', () => {
+            const { top: parentStickyTop } = stickyParent[0].getBoundingClientRect();
+            const { top: footerTop } = footer[0].getBoundingClientRect();
+
+            let tranformTopValue;
+            if (parentStickyTop <= headerHeight) {
+               tranformTopValue = headerHeight - parentStickyTop;
+            } else {
+               tranformTopValue = 0;
+            }
+
+            stickyElement.css({
+               transform: `translateY(${tranformTopValue}px)`,
+            });
+
+            if (footerTop <= screenHeight) {
+               if (isFixedSidebar == false) {
+                  fixedTranformValue = tranformTopValue;
+               }
+               isFixedSidebar = true;
+               stickyElement.css({
+                  transform: `translateY(${fixedTranformValue}px)`,
+               });
+            }
+         });
+      </script>
       <script type="module">
          import { formatToCurrency } from '/js/utils/index.js';
          rangeSlider(document.querySelector('.amount-range-slider'), {

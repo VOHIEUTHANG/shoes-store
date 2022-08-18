@@ -17,6 +17,17 @@
 .all-product .range-slider .range-slider__range {
   background-color: #a6d1e6; }
 
+.all-product #sticky-element {
+  padding: 20px 0;
+  background-color: white; }
+
+.all-product .sticky-style {
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  padding: 10px;
+  z-index: 1000; }
+
 .all-product .section-title > h2 {
   display: inline-block;
   font-size: 36px;
@@ -43,9 +54,13 @@
   top: 19px;
   width: 70px; }
 
-.all-product .product-wrapper,
 .all-product .product-img {
-  position: relative; }
+  position: relative;
+  border: 1px solid #eeeeee; }
+
+.all-product .product-wrapper {
+  height: 100%;
+  padding-bottom: 20px; }
 
 .all-product .product-action {
   bottom: 30px;

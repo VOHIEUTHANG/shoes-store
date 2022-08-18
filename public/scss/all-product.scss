@@ -23,6 +23,17 @@
          background-color: $color-palette-lightBlue;
       }
    }
+   #sticky-element {
+      padding: 20px 0;
+      background-color: white;
+   }
+   .sticky-style {
+      position: fixed;
+      bottom: 0;
+      background-color: white;
+      padding: 10px;
+      z-index: 1000;
+   }
    .section-title > h2 {
       display: inline-block;
       font-size: 36px;
@@ -49,10 +60,15 @@
       top: 19px;
       width: 70px;
    }
-   .product-wrapper,
    .product-img {
       position: relative;
+      border: 1px solid rgb(238, 238, 238);
    }
+   .product-wrapper {
+      height: 100%;
+      padding-bottom: 20px;
+   }
+
    .product-action {
       bottom: 30px;
       display: inline-block;

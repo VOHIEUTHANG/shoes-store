@@ -13,12 +13,12 @@
                   <div class="row">
                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <h1 class="cart-heading">Giỏ hàng</h1>
-                        <form action="#">
+                        <form action="#" id="main-form">
                            <% if(cartList.length === 0) { %>
-                              <div
+                           <div
                               style="flex-direction: column"
                               class="d-flex justify-content-center align-items-center"
-                           >
+                              >
                               <i style="font-size: 6rem !important" class="ti-face-sad"> </i>
                               <p style="text-align: center; margin-top: 4rem;font-size:2.4rem" class="nothing-title">
                                  Bạn không có sản phẩm nào trong giỏ hàng !
@@ -99,8 +99,10 @@
                                     <div class="cart-page-total">
                                        <h2>Đơn hàng</h2>
                                        <ul>
-                                          <li>Tổng tiền hàng<span class="origin-price"><%= cartList.originPrice %></span></li>
-                                          <li>Giảm giá sản phẩm<span class="discount">-<%= cartList.discountPrice %></span></li>
+                                          <li>Tổng tiền hàng<span class="origin-price-total origin-price"><%= cartList.originPrice %></span></li>
+                                          <li>Giảm giá sản phẩm<span class=" discount">-
+                                             <span class="discount-total"><%= cartList.discountPrice %></span>
+                                          </span></li>
                                           <li>Phí vận chuyển<span class="shipment">+ 30.000 VND</span></li>
                                           <li>Tổng tiền thực thanh toán<span class="payment-total"><%= cartList.totalPrice %></span></li>
                                        </ul>
@@ -123,24 +125,70 @@
          import deleteCartItemOnLick from '/js/utils/deleteCartItemHandler.js';
          $(() => {
          const deleteCartBtn = $('.product-remove-btn');
+
+         function convertFromStringToNumber(stringNumber) {
+         const removeUnit = stringNumber.slice(0, stringNumber.length - 4);
+         let numberArray = removeUnit.split('.');
+         numberArray = numberArray.join('');
+         return Number(numberArray);
+         }
+
          deleteCartBtn?.click(function(){
             const productID = this.dataset.productId;
+            const cartProductCount = $('.table-content tbody > tr').length;
             const buttonRemoveItem =  $(`.cart-delete[data-product-id="${productID}"]`);
-               // buttonRemoveItem[0].click();
-               const cartRow = $(this).closest('tr');
-               console.log(cartRow);
-               const originPrice = cartRow.find('.cart-price').first()?.text()?.trim() || 0;
-               const quantity = cartRow.find('.product-quantity > input').first()?.val()?.trim() || 1;
-               const discount = cartRow.find('.cart-discount-price').first()?.text()?.trim() || 0;
-               const finalPrice = cartRow.find('.product-subtotal').first()?.text()?.trim() || 0;
-               console.log({
-                  originPrice,
-                  quantity,
-                  discount,
-                  finalPrice
-               })
-               // cartRow.remove();
-               // $(this).remove();
+            const mainForm = $('#main-form');
+            const mainTable = $('.table-content');
+
+            const cartRow = $(this).closest('tr');
+            let originPrice = cartRow.find('.cart-price').first()?.text()?.trim() || 0;
+            let quantity = cartRow.find('.product-quantity > input').first()?.val()?.trim() || 1;
+            let discount = cartRow.find('.cart-discount-price').first()?.text()?.trim() || 0;
+            let finalPrice = cartRow.find('.product-subtotal').first()?.text()?.trim() || 0;
+            
+
+            buttonRemoveItem[0]?.click();
+            if(cartProductCount === 1){
+               mainTable.remove();
+               mainForm.html(`
+               <div
+                  style="flex-direction: column"
+                  class="d-flex justify-content-center align-items-center"
+                  >
+                  <i style="font-size: 6rem !important" class="ti-face-sad"> </i>
+                  <p style="text-align: center; margin-top: 4rem;font-size:2.4rem" class="nothing-title">
+                     Bạn không có sản phẩm nào trong giỏ hàng !
+                  </p>
+               </div>
+               `);
+
+            }else{
+               let originPriceTotal = $('.origin-price-total').text().trim();
+               let discountTotal = $('.discount-total').text().trim() || 0;
+               let finalPriceTotal = $('.payment-total').text().trim();
+               originPriceTotal = convertFromStringToNumber(originPriceTotal);
+              
+               discountTotal = convertFromStringToNumber(discountTotal);
+               finalPriceTotal = convertFromStringToNumber(finalPriceTotal);
+               quantity = Number(quantity);
+               originPrice = convertFromStringToNumber(originPrice);
+               if(discount !== 0){
+                  discount = convertFromStringToNumber(discount);
+               }
+               finalPrice = convertFromStringToNumber(finalPrice);
+
+               const totalOriginAmountRemaining = formatToCurrency(originPriceTotal - originPrice) ;
+               const totalDiscountAmountRemaining = formatToCurrency(discountTotal - discount);
+               const totalFinalAmountRemaining = formatToCurrency(finalPriceTotal - finalPrice);
+
+               $('.origin-price-total').text(totalOriginAmountRemaining);
+               $('.discount-total').text(totalDiscountAmountRemaining);
+               $('.payment-total').text(totalFinalAmountRemaining);
+               
+               cartRow.remove();
+            }
+              
+           
          });
    });
       </script>

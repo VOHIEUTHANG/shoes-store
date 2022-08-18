@@ -93,7 +93,9 @@
     text-align: center;
     width: 40px; }
   .cart .product-remove-btn {
-    cursor: pointer; }
+    cursor: pointer;
+    width: fit-content;
+    margin: 0 auto; }
   .cart .table-content table .product-price-cart .amount {
     color: #555;
     font-size: 1.8rem; }

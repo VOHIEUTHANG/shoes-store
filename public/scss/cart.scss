@@ -116,6 +116,8 @@
    }
    .product-remove-btn {
       cursor: pointer;
+      width: fit-content;
+      margin: 0 auto;
    }
    .table-content table .product-price-cart .amount {
       color: #555;

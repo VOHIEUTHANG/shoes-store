@@ -37,7 +37,12 @@
    $(() => {
       const deleteCartBtn = $('.cart-delete');
       deleteCartBtn?.click(function () {
-         deleteCartItemOnLick(this, privateRequestHandler, formatToCurrency);
+         deleteCartItemOnLick(this, privateRequestHandler, formatToCurrency, (productItemID) => {
+            const bodyRemoveItem = $(`.product-remove-btn[data-product-id="${productItemID}"]`);
+            if (bodyRemoveItem.length > 0) {
+               bodyRemoveItem[0]?.click();
+            }
+         });
       });
    });
 </script>

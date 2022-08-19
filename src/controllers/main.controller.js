@@ -110,10 +110,17 @@ const mainController = () => ({
    get401Page: (req, res) => {
       res.render('pages/401');
    },
-   getAllProductPage: (req, res) => {
+   getAllProductPage: async (req, res) => {
       const user = req.user;
       const payloadInfo = req.payload;
       const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
+      const productList = await ProductService.getActiveProduct({ offset: 0, limit: 9 });
+      console.log('🚀 ~ file: main.controller.js ~ line 118 ~ productList', productList);
+      if (productList) {
+         payload.productList = productList;
+      } else {
+         res.json(createResponse('error', 'Get ProductList occured error !'));
+      }
       if (user) {
          payload.user = user;
          payload.isLoggedIn = true;

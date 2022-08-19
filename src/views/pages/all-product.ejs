@@ -12,8 +12,8 @@
                <div class="shop-page-wrapper">
                   <div class="container">
                      <div class="row gx-5">
-                        <div class="col-lg-3">
-                           <div class="shop-sidebar">
+                        <div class="col-lg-3" id="sticky-parent">
+                           <div class="shop-sidebar" id="sticky-element">
                               <div class="sidebar-widget mb-50">
                                  <h3 class="sidebar-title">Tìm kiếm</h3>
                                  <div class="sidebar-search">
@@ -80,7 +80,10 @@
                                  <div class="shop-bar pb-60">
                                     <div class="shop-found-selector">
                                        <div class="shop-found">
-                                          <p><span>23</span> Product Found of <span>50</span></p>
+                                          <p>
+                                             <span><%= productList.products.length %></span> Product Found of
+                                             <span><%= productList.total %></span>
+                                          </p>
                                        </div>
                                        <div class="shop-selector">
                                           <span class="nowrap">Sắp xếp: </span>
@@ -95,308 +98,36 @@
                                  <div class="shop-product-content tab-content">
                                     <div id="grid-sidebar7" class="tab-pane fade active show">
                                        <div class="row">
+                                          <% if(productList.products.length > 0) { %> <%
+                                          productList.products.forEach(product=>{ %>
                                           <div class="col-lg-4 col-md-6">
                                              <div class="product-wrapper product-box-style mb-30">
                                                 <div class="product-img">
-                                                   <a href="#">
-                                                      <img
-                                                         src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_c78e0f98-7af4-471e-ab55-82a7d560bc44_1296x.jpg?v=1656275051"
-                                                         alt=""
-                                                      />
+                                                   <a href="/product/<%= product.slug%>">
+                                                      <img src="<%= product.product_images %>" alt="" />
                                                    </a>
-                                                   <span>hot</span>
                                                    <div class="product-action">
-                                                      <a class="animate-left" title="Wishlist" href="#">
+                                                      <div class="animate-left add-to-wishlist"  title="Wishlist" data-product-id="<%= product.ID %>" ">
                                                          <i class="fa-regular fa-heart"></i>
-                                                      </a>
-                                                      <a class="animate-top" title="Add To Cart" href="#">
-                                                         <i class="ti-shopping-cart"></i>
-                                                      </a>
+                                                      </div>
                                                       <a
                                                          class="animate-right"
-                                                         title="Quick View"
-                                                         data-toggle="modal"
-                                                         data-target="#exampleModal"
-                                                         href="#"
+                                                         title="Add To Cart"
+                                                         href="/product/<%= product.slug %>"
                                                       >
-                                                         <i class="fa-regular fa-eye"></i>
+                                                         <i class="ti-shopping-cart"></i>
                                                       </a>
                                                    </div>
                                                 </div>
                                                 <div class="product-content">
-                                                   <h4><a href="#">Homme Tapered Smart </a></h4>
-                                                   <span>$115.00</span>
+                                                   <h4>
+                                                      <a href="/product/<%= product.slug %>"><%= product.name %></a>
+                                                   </h4>
+                                                   <span><%= product.price %></span>
                                                 </div>
                                              </div>
                                           </div>
-                                          <div class="col-lg-4 col-md-6">
-                                             <div class="product-wrapper product-box-style mb-30">
-                                                <div class="product-img">
-                                                   <a href="#">
-                                                      <img
-                                                         src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_6d97da49-df0b-4631-9fa6-8b2925058d82_large.jpg?v=1657098342"
-                                                         alt=""
-                                                      />
-                                                   </a>
-                                                   <div class="product-action">
-                                                      <a class="animate-left" title="Wishlist" href="#">
-                                                         <i class="fa-regular fa-heart"></i>
-                                                      </a>
-                                                      <a class="animate-top" title="Add To Cart" href="#">
-                                                         <i class="ti-shopping-cart"></i>
-                                                      </a>
-                                                      <a
-                                                         class="animate-right"
-                                                         title="Quick View"
-                                                         data-toggle="modal"
-                                                         data-target="#exampleModal"
-                                                         href="#"
-                                                      >
-                                                         <i class="fa-regular fa-eye"></i>
-                                                      </a>
-                                                   </div>
-                                                </div>
-                                                <div class="product-content">
-                                                   <h4><a href="#">Denim Stonewash</a></h4>
-                                                   <span>$115.00</span>
-                                                </div>
-                                             </div>
-                                          </div>
-                                          <div class="col-lg-4 col-md-6">
-                                             <div class="product-wrapper product-box-style mb-30">
-                                                <div class="product-img">
-                                                   <a href="#">
-                                                      <img
-                                                         src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_6d97da49-df0b-4631-9fa6-8b2925058d82_large.jpg?v=1657098342"
-                                                         alt=""
-                                                      />
-                                                   </a>
-                                                   <span>new</span>
-                                                   <div class="product-action">
-                                                      <a class="animate-left" title="Wishlist" href="#">
-                                                         <i class="fa-regular fa-heart"></i>
-                                                      </a>
-                                                      <a class="animate-top" title="Add To Cart" href="#">
-                                                         <i class="ti-shopping-cart"></i>
-                                                      </a>
-                                                      <a
-                                                         class="animate-right"
-                                                         title="Quick View"
-                                                         data-toggle="modal"
-                                                         data-target="#exampleModal"
-                                                         href="#"
-                                                      >
-                                                         <i class="fa-regular fa-eye"></i>
-                                                      </a>
-                                                   </div>
-                                                </div>
-                                                <div class="product-content">
-                                                   <h4><a href="#">Mini Waffle 5 Pack</a></h4>
-                                                   <span>$115.00</span>
-                                                </div>
-                                             </div>
-                                          </div>
-                                          <div class="col-lg-4 col-md-6">
-                                             <div class="product-wrapper product-box-style mb-30">
-                                                <div class="product-img">
-                                                   <a href="#">
-                                                      <img
-                                                         src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_6d97da49-df0b-4631-9fa6-8b2925058d82_large.jpg?v=1657098342"
-                                                         alt=""
-                                                      />
-                                                   </a>
-                                                   <div class="product-action">
-                                                      <a class="animate-left" title="Wishlist" href="#">
-                                                         <i class="fa-regular fa-heart"></i>
-                                                      </a>
-                                                      <a class="animate-top" title="Add To Cart" href="#">
-                                                         <i class="ti-shopping-cart"></i>
-                                                      </a>
-                                                      <a
-                                                         class="animate-right"
-                                                         title="Quick View"
-                                                         data-toggle="modal"
-                                                         data-target="#exampleModal"
-                                                         href="#"
-                                                      >
-                                                         <i class="fa-regular fa-eye"></i>
-                                                      </a>
-                                                   </div>
-                                                </div>
-                                                <div class="product-content">
-                                                   <h4><a href="#">Dagger Smart Trousers</a></h4>
-                                                   <span>$115.00</span>
-                                                </div>
-                                             </div>
-                                          </div>
-                                          <div class="col-lg-4 col-md-6">
-                                             <div class="product-wrapper product-box-style mb-30">
-                                                <div class="product-img">
-                                                   <a href="#">
-                                                      <img
-                                                         src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_8473598a-fa5c-4ecd-85a2-96ef85efeaf2_large.jpg?v=1656589015"
-                                                         alt=""
-                                                      />
-                                                   </a>
-                                                   <div class="product-action">
-                                                      <a class="animate-left" title="Wishlist" href="#">
-                                                         <i class="fa-regular fa-heart"></i>
-                                                      </a>
-                                                      <a class="animate-top" title="Add To Cart" href="#">
-                                                         <i class="ti-shopping-cart"></i>
-                                                      </a>
-                                                      <a
-                                                         class="animate-right"
-                                                         title="Quick View"
-                                                         data-toggle="modal"
-                                                         data-target="#exampleModal"
-                                                         href="#"
-                                                      >
-                                                         <i class="fa-regular fa-eye"></i>
-                                                      </a>
-                                                   </div>
-                                                </div>
-                                                <div class="product-content">
-                                                   <h4><a href="#">Homme Tapered Smart</a></h4>
-                                                   <span>$115.00</span>
-                                                </div>
-                                             </div>
-                                          </div>
-                                          <div class="col-lg-4 col-md-6">
-                                             <div class="product-wrapper product-box-style mb-30">
-                                                <div class="product-img">
-                                                   <a href="#">
-                                                      <img
-                                                         src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_43347cfe-9cd5-4888-b3f9-1f07c9494d4d_large.jpg?v=1656648673"
-                                                         alt=""
-                                                      />
-                                                   </a>
-                                                   <span>sell</span>
-                                                   <div class="product-action">
-                                                      <a class="animate-left" title="Wishlist" href="#">
-                                                         <i class="fa-regular fa-heart"></i>
-                                                      </a>
-                                                      <a class="animate-top" title="Add To Cart" href="#">
-                                                         <i class="ti-shopping-cart"></i>
-                                                      </a>
-                                                      <a
-                                                         class="animate-right"
-                                                         title="Quick View"
-                                                         data-toggle="modal"
-                                                         data-target="#exampleModal"
-                                                         href="#"
-                                                      >
-                                                         <i class="fa-regular fa-eye"></i>
-                                                      </a>
-                                                   </div>
-                                                </div>
-                                                <div class="product-content">
-                                                   <h4><a href="#">Skinny Jeans Terry</a></h4>
-                                                   <span>$115.00</span>
-                                                </div>
-                                             </div>
-                                          </div>
-                                          <div class="col-lg-4 col-md-6">
-                                             <div class="product-wrapper product-box-style mb-30">
-                                                <div class="product-img">
-                                                   <a href="#">
-                                                      <img
-                                                         src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_e6cc4d63-d366-45dc-ab50-514a07a11358_large.jpg?v=1656739225"
-                                                         alt=""
-                                                      />
-                                                   </a>
-                                                   <div class="product-action">
-                                                      <a class="animate-left" title="Wishlist" href="#">
-                                                         <i class="fa-regular fa-heart"></i>
-                                                      </a>
-                                                      <a class="animate-top" title="Add To Cart" href="#">
-                                                         <i class="ti-shopping-cart"></i>
-                                                      </a>
-                                                      <a
-                                                         class="animate-right"
-                                                         title="Quick View"
-                                                         data-toggle="modal"
-                                                         data-target="#exampleModal"
-                                                         href="#"
-                                                      >
-                                                         <i class="fa-regular fa-eye"></i>
-                                                      </a>
-                                                   </div>
-                                                </div>
-                                                <div class="product-content">
-                                                   <h4><a href="#">Navy Bird Print</a></h4>
-                                                   <span>$115.00</span>
-                                                </div>
-                                             </div>
-                                          </div>
-                                          <div class="col-lg-4 col-md-6">
-                                             <div class="product-wrapper product-box-style mb-30">
-                                                <div class="product-img">
-                                                   <a href="#">
-                                                      <img
-                                                         src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_e6cc4d63-d366-45dc-ab50-514a07a11358_large.jpg?v=1656739225"
-                                                         alt=""
-                                                      />
-                                                   </a>
-                                                   <span>hot</span>
-                                                   <div class="product-action">
-                                                      <a class="animate-left" title="Wishlist" href="#">
-                                                         <i class="fa-regular fa-heart"></i>
-                                                      </a>
-                                                      <a class="animate-top" title="Add To Cart" href="#">
-                                                         <i class="ti-shopping-cart"></i>
-                                                      </a>
-                                                      <a
-                                                         class="animate-right"
-                                                         title="Quick View"
-                                                         data-toggle="modal"
-                                                         data-target="#exampleModal"
-                                                         href="#"
-                                                      >
-                                                         <i class="fa-regular fa-eye"></i>
-                                                      </a>
-                                                   </div>
-                                                </div>
-                                                <div class="product-content">
-                                                   <h4><a href="#">Leg Smart Trousers </a></h4>
-                                                   <span>$115.00</span>
-                                                </div>
-                                             </div>
-                                          </div>
-                                          <div class="col-lg-4 col-md-6">
-                                             <div class="product-wrapper product-box-style mb-30">
-                                                <div class="product-img">
-                                                   <a href="#">
-                                                      <img
-                                                         src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_e6cc4d63-d366-45dc-ab50-514a07a11358_large.jpg?v=1656739225"
-                                                         alt=""
-                                                      />
-                                                   </a>
-                                                   <span>hot</span>
-                                                   <div class="product-action">
-                                                      <a class="animate-left" title="Wishlist" href="#">
-                                                         <i class="fa-regular fa-heart"></i>
-                                                      </a>
-                                                      <a class="animate-top" title="Add To Cart" href="#">
-                                                         <i class="ti-shopping-cart"></i>
-                                                      </a>
-                                                      <a
-                                                         class="animate-right"
-                                                         title="Quick View"
-                                                         data-toggle="modal"
-                                                         data-target="#exampleModal"
-                                                         href="#"
-                                                      >
-                                                         <i class="fa-regular fa-eye"></i>
-                                                      </a>
-                                                   </div>
-                                                </div>
-                                                <div class="product-content">
-                                                   <h4><a href="#">Black Faux Suede</a></h4>
-                                                   <span>$115.00</span>
-                                                </div>
-                                             </div>
-                                          </div>
+                                          <% }) %> <% } %>
                                        </div>
                                     </div>
                                     <div id="grid-sidebar8" class="tab-pane fade">
@@ -536,19 +267,8 @@
                                  </div>
                               </div>
                            </div>
-                           <div class="pagination-style mt-10 text-center">
-                              <ul>
-                                 <li>
-                                    <a href="#"><i class="ti-angle-left"></i></a>
-                                 </li>
-                                 <li><a href="#">1</a></li>
-                                 <li><a href="#">2</a></li>
-                                 <li><a href="#">...</a></li>
-                                 <li><a href="#">19</a></li>
-                                 <li class="active">
-                                    <a href="#"><i class="ti-angle-right"></i></a>
-                                 </li>
-                              </ul>
+                           <div class="pagination-style mt-10 text-center" id="pagination">
+                              <ul class="pagination-tabs-list"></ul>
                            </div>
                         </div>
                      </div>
@@ -559,6 +279,43 @@
          <%- include('../partials/footer') %>
       </div>
       <%- include('../partials/foot') %>
+      <!-- STICKY SIDER BAER HANLDER -->
+      <script>
+         const stickyElement = $('#sticky-element');
+         const stickyParent = $('#sticky-parent');
+         const headerHeight = $('.header')[0].offsetHeight;
+         const screenHeight = window.screen.height;
+         const footer = $('#footer');
+         let isFixedSidebar = false;
+         let fixedTranformValue = 0;
+
+         $(document).on('scroll', () => {
+            const { top: parentStickyTop } = stickyParent[0].getBoundingClientRect();
+            const { top: footerTop } = footer[0].getBoundingClientRect();
+
+            let tranformTopValue;
+            if (parentStickyTop <= headerHeight) {
+               tranformTopValue = headerHeight - parentStickyTop;
+            } else {
+               tranformTopValue = 0;
+            }
+
+            stickyElement.css({
+               transform: `translateY(${tranformTopValue}px)`,
+            });
+
+            if (footerTop <= screenHeight) {
+               if (isFixedSidebar == false) {
+                  fixedTranformValue = tranformTopValue;
+               }
+               isFixedSidebar = true;
+               stickyElement.css({
+                  transform: `translateY(${fixedTranformValue}px)`,
+               });
+            }
+         });
+      </script>
+      <!-- FILTER PRICE INPUT RANGE HANDLER -->
       <script type="module">
          import { formatToCurrency } from '/js/utils/index.js';
          rangeSlider(document.querySelector('.amount-range-slider'), {
@@ -572,6 +329,79 @@
                endPrice.text(formatToCurrency(valueSet[1] * 100000));
             },
          });
+      </script>
+      <!-- ADD PRODUCT TO WISHLIST -->
+      <script type="module">
+            import {privateRequestHandler} from '/js/utils/index.js';
+           $(".add-to-wishlist").click(async function (){
+               const PRODUCT_ID = this.dataset.productId;
+               try {
+                  await privateRequestHandler(`/api/user/add-to-wishlist/${PRODUCT_ID}`,'post',{},(data,status)=>{
+                  toastr[data.status](data.message);
+               })
+               } catch (error) {
+                  toastr.error("Có lỗi xảy ra, vui lòng liên hệ quản trị viên !");
+               }
+            })
+      </script>
+      <!-- PAGINATION MODULE -->
+      <script>
+         const pagination = $('#pagination');
+       
+         const PAGE_SIZE = 9;
+         const urlParams = new URLSearchParams(window.location.search);
+         let currentPageNumber = Number(urlParams.get('page')) || 1;
+            
+         $(()=>{
+            let productList = `<%- JSON.stringify(productList) %>`;
+            productList = JSON.parse(productList);
+            const {total : totalDataCount } = productList;
+            const totalPageCount = Number(Math.ceil(totalDataCount / PAGE_SIZE));
+            if(currentPageNumber > totalPageCount ){
+               currentPageNumber = totalPageCount;
+            }
+            if(productList){
+               // IIFE
+               (()=>{
+                  return {
+                     renderPaginationTabs(){
+                        const paginationList = $('.pagination-tabs-list');
+                        let paginationTabHtml =`<li class="pagination-control previous-page ${currentPageNumber === 1 ? 'disable' : ''}"><a href="#"><i class="ti-angle-left"></i></a></li>`;
+                        for(let i=1;i<=totalPageCount;i++){
+                           paginationTabHtml += `<li class="pageNumber ${i===currentPageNumber ? 'active' : ''}"><a href="/all-product?page=${i}">${i}</a></li>`;
+                        }
+                        paginationTabHtml+= `<li class="pagination-control next-page ${currentPageNumber === totalPageCount ? 'disable' : ''}"><a href="#"><i class="ti-angle-right"></i></a>`;
+                        paginationList.html(paginationTabHtml);
+                     },
+                     activePageClickHandler(){
+                        const activePageTab = $('.pageNumber.active');
+                        activePageTab?.click((e)=>{
+                           e.preventDefault();
+                        })
+                     },
+                     controlTabClickHandler(){
+                        const controlTabs = $('.pagination-control');
+                        controlTabs.click(function(e){
+                           e.preventDefault();
+                           if(!$(this).hasClass('disable')){
+                             if($(this).hasClass('next-page')){
+                                window.location.href= `/all-product?page=${currentPageNumber + 1}`;
+                             }
+                             if($(this).hasClass('previous-page')){
+                                window.location.href= `/all-product?page=${currentPageNumber - 1}`;
+                             }
+                           }
+                        })
+                     },
+                     run(){
+                        this.renderPaginationTabs();
+                        this.activePageClickHandler();
+                        this.controlTabClickHandler();
+                     }
+                  }
+               })().run();
+            }
+         })
       </script>
    </body>
 </html>

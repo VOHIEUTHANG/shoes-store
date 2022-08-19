@@ -17,6 +17,17 @@
 .all-product .range-slider .range-slider__range {
   background-color: #a6d1e6; }
 
+.all-product #sticky-element {
+  padding: 20px 0;
+  background-color: white; }
+
+.all-product .sticky-style {
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  padding: 10px;
+  z-index: 1000; }
+
 .all-product .section-title > h2 {
   display: inline-block;
   font-size: 36px;
@@ -43,9 +54,13 @@
   top: 19px;
   width: 70px; }
 
-.all-product .product-wrapper,
 .all-product .product-img {
-  position: relative; }
+  position: relative;
+  border: 1px solid #eeeeee; }
+
+.all-product .product-wrapper {
+  height: 100%;
+  padding-bottom: 20px; }
 
 .all-product .product-action {
   bottom: 30px;
@@ -139,8 +154,12 @@
 
 .all-product .product-tags ul li {
   display: inline-block;
+  border: 1px solid #ccc;
   margin: 0 10px 0 0;
   text-transform: capitalize; }
+  .all-product .product-tags ul li.active a {
+    background-color: #3f3f3f;
+    color: #fff; }
 
 .all-product .product-tags ul li a {
   color: #888;
@@ -148,9 +167,6 @@
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.4px; }
-
-.all-product .product-tags ul li a:hover {
-  color: #050035; }
 
 .all-product .sidebar-search form {
   position: relative; }
@@ -379,6 +395,9 @@
     .all-product .pagination-style ul li {
       display: inline-block;
       margin: 0 3px; }
+      .all-product .pagination-style ul li.active a {
+        background-color: #3f3f3f;
+        color: #fff; }
       .all-product .pagination-style ul li a {
         background-color: #f6f6f6;
         color: #3f3f3f;
@@ -403,7 +422,13 @@
 .all-product .product-content {
   color: #222; }
   .all-product .product-content a {
-    color: inherit; }
+    color: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical; }
 
 .all-product .product-list-info > h4 {
   color: #191919;
@@ -497,7 +522,8 @@
 .all-product .breadcrumb-padding .container-fluid {
   padding: 0 100px; }
 
-.all-product .product-box-style .product-action a {
+.all-product .product-box-style .product-action a,
+.all-product .product-box-style .product-action div {
   margin: 0 7px; }
 
 .all-product .product-action {
@@ -511,19 +537,33 @@
   text-align: center;
   transition: all 0.3s ease 0s; }
 
-.all-product .product-action a {
+.all-product .product-action a,
+.all-product .product-action div {
   background-color: #383838;
   border-radius: 100%;
   color: #f7f7f7;
   display: inline-block;
   font-size: 24px;
   height: 45px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   margin: 0 15px;
   width: 45px; }
 
-.all-product .product-action a:hover {
-  background-color: #050035;
-  color: #fff; }
+.all-product .product-action a:hover,
+.all-product .product-action div:hover {
+  color: #050035;
+  background-color: #fff; }
+
+.all-product .pagination-control {
+  border: 1px solid #ccc; }
+  .all-product .pagination-control.disable {
+    opacity: 0.3; }
+    .all-product .pagination-control.disable a {
+      cursor: default; }
+      .all-product .pagination-control.disable a:hover {
+        background-color: #f6f6f6 !important;
+        color: #3f3f3f !important; }

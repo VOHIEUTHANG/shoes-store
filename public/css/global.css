@@ -116,7 +116,7 @@
   position: sticky;
   top: 0;
   left: 0;
-  z-index: 1000; }
+  z-index: 9999999999; }
   .header__container {
     padding-top: 12px;
     padding-bottom: 6px;
@@ -420,7 +420,7 @@
         opacity: 1;
         transform: translate(-50%, 0); }
       .header__menu .menu-link--sale {
-        background-color: red;
+        background-color: #f34848;
         padding: 0.3rem 1.4rem;
         margin: 0 0.5rem;
         font-weight: 600;

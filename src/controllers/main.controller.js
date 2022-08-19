@@ -112,7 +112,7 @@ const mainController = () => ({
    },
    getAllProductPage: async (req, res) => {
       const user = req.user;
-      const { page, sort } = req.query;
+      const { page = 1, sort } = req.query;
       const offset = (page - 1) * 9;
       const payloadInfo = req.payload;
       const payload = { user: {}, isLoggedIn: false, ...payloadInfo };

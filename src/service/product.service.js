@@ -131,7 +131,6 @@ class productService {
             price: product.dataValues.price,
             discounts: product.dataValues?.discounts[0]?.dataValues || null,
          }));
-
          const calculatePriceAfterDiscount = products.map((product) => {
             return {
                ...product,

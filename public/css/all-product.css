@@ -348,9 +348,9 @@
   display: flex; }
 
 .all-product .shop-found > p {
-  color: #6c6c6c;
+  color: #999;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
   margin: 0; }
 
 .all-product .shop-found > p span {
@@ -378,6 +378,7 @@
 
 .all-product .sort-select {
   font-size: inherit;
+  min-width: 18rem;
   padding: 0.375rem 3rem 0.375rem 0.75rem; }
 
 .all-product .shop-tab a:first-child {

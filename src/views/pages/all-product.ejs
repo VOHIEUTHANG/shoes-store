@@ -81,16 +81,16 @@
                                     <div class="shop-found-selector">
                                        <div class="shop-found">
                                           <p>
-                                             <span><%= productList.products.length %></span> Product Found of
-                                             <span><%= productList.total %></span>
+                                             <span class="" style="color:#6c6c6c; font-weight:500 "><%= productList.products.length %></span> Sản phẩm tìm thấy trong
+                                             <span class="" style="color: #6c6c6c; font-weight:500"><%= productList.total %></span> sản phẩm
                                           </p>
                                        </div>
                                        <div class="shop-selector">
                                           <span class="nowrap">Sắp xếp: </span>
                                           <select class="form-select sort-select" aria-label="Default select example">
                                              <option selected>Mặc định</option>
-                                             <option value="1">Giá thấp -> cao</option>
-                                             <option value="2">Giá cao -> Thấp</option>
+                                             <option value="ASC">Giá Thấp -> Cao</option>
+                                             <option value="DESC">Giá Cao -> Thấp</option>
                                           </select>
                                        </div>
                                     </div>
@@ -363,6 +363,7 @@
             if(productList){
                // IIFE
                (()=>{
+                  const sortByPriceSelectNode = $('.sort-select');
                   return {
                      renderPaginationTabs(){
                         const paginationList = $('.pagination-tabs-list');
@@ -373,10 +374,23 @@
                         paginationTabHtml+= `<li class="pagination-control next-page ${currentPageNumber === totalPageCount ? 'disable' : ''}"><a href="#"><i class="ti-angle-right"></i></a>`;
                         paginationList.html(paginationTabHtml);
                      },
+                     renderSortOptions(){
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const sortType = urlParams.get('sort');
+                        $(`.sort-select option[value="${sortType}"]`)?.attr('selected', true);
+                     },
                      activePageClickHandler(){
                         const activePageTab = $('.pageNumber.active');
                         activePageTab?.click((e)=>{
                            e.preventDefault();
+                        })
+                     },
+                     sortSelectHandler(){
+                        sortByPriceSelectNode.on('change',function(){
+                           const sortType = $(this).val();
+                           const url = new URL(window.location.href);
+                           url.searchParams.set('sort', sortType);
+                           window.location.href = url.href;
                         })
                      },
                      controlTabClickHandler(){
@@ -395,8 +409,10 @@
                      },
                      run(){
                         this.renderPaginationTabs();
+                        this.renderSortOptions();
                         this.activePageClickHandler();
                         this.controlTabClickHandler();
+                        this.sortSelectHandler();
                      }
                   }
                })().run();

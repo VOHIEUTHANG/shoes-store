@@ -360,9 +360,9 @@
       display: flex;
    }
    .shop-found > p {
-      color: #6c6c6c;
+      color: #999;
       font-size: 18px;
-      font-weight: 600;
+      font-weight: 400;
       margin: 0;
    }
    .shop-found > p span {
@@ -390,6 +390,7 @@
    }
    .sort-select {
       font-size: inherit;
+      min-width: 18rem;
       padding: 0.375rem 3rem 0.375rem 0.75rem;
    }
    .shop-tab a:first-child {

@@ -87,12 +87,12 @@ class productService {
       });
       return product;
    }
-   async getActiveProduct({ offset = 0, limit = 5 }) {
+   async getActiveProduct({ offset = 0, limit = 5, sort }) {
       const filterPropertis = { isSelling: true };
       const timeNow = new Date();
 
       try {
-         const { count, rows } = await productModel.findAndCountAll({
+         const queryOptions = {
             attributes: {
                exclude: ['BRAND_ID', 'sellStartDate', 'specifications', 'descriptions'],
             },
@@ -117,10 +117,13 @@ class productService {
                },
             ],
             where: filterPropertis,
-            order: ['ID'],
             limit: limit,
             offset: offset,
-         });
+         };
+         if (sort == 'ASC' || sort == 'DESC') {
+            queryOptions.order = [['price', sort]];
+         }
+         const { count, rows } = await productModel.findAndCountAll(queryOptions);
          let products = rows.map((product) => ({
             ...product.dataValues,
             BRAND: product.dataValues.BRAND.brandName,

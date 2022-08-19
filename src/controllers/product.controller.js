@@ -10,7 +10,7 @@ class productController {
       try {
          let product = await productService.save(req.body);
          req.files.forEach(element => {
-          product_imagesService.save(product.dataValues.ID,`assets/uploads/${element.filename}`);
+          product_imagesService.save(product.dataValues.ID,`/assets/uploads/${element.filename}`);
          });
          let product_category = await product_categoryService.save(product.dataValues.ID, req.body.category);
          for (let element of product_itemList) {

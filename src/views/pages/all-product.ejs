@@ -107,10 +107,14 @@
                                                       <img src="<%= product.product_images %>" alt="" />
                                                    </a>
                                                    <div class="product-action">
-                                                      <a class="animate-left" title="Wishlist" href="#">
+                                                      <div class="animate-left add-to-wishlist"  title="Wishlist" data-product-id="<%= product.ID %>" ">
                                                          <i class="fa-regular fa-heart"></i>
-                                                      </a>
-                                                      <a class="animate-right" title="Add To Cart" href="#">
+                                                      </div>
+                                                      <a
+                                                         class="animate-right"
+                                                         title="Add To Cart"
+                                                         href="/product/<%= product.slug %>"
+                                                      >
                                                          <i class="ti-shopping-cart"></i>
                                                       </a>
                                                    </div>
@@ -263,19 +267,8 @@
                                  </div>
                               </div>
                            </div>
-                           <div class="pagination-style mt-10 text-center">
-                              <ul>
-                                 <li>
-                                    <a href="#"><i class="ti-angle-left"></i></a>
-                                 </li>
-                                 <li><a href="#">1</a></li>
-                                 <li><a href="#">2</a></li>
-                                 <li><a href="#">...</a></li>
-                                 <li><a href="#">19</a></li>
-                                 <li class="active">
-                                    <a href="#"><i class="ti-angle-right"></i></a>
-                                 </li>
-                              </ul>
+                           <div class="pagination-style mt-10 text-center" id="pagination">
+                              <ul class="pagination-tabs-list"></ul>
                            </div>
                         </div>
                      </div>
@@ -286,6 +279,7 @@
          <%- include('../partials/footer') %>
       </div>
       <%- include('../partials/foot') %>
+      <!-- STICKY SIDER BAER HANLDER -->
       <script>
          const stickyElement = $('#sticky-element');
          const stickyParent = $('#sticky-parent');
@@ -321,6 +315,7 @@
             }
          });
       </script>
+      <!-- FILTER PRICE INPUT RANGE HANDLER -->
       <script type="module">
          import { formatToCurrency } from '/js/utils/index.js';
          rangeSlider(document.querySelector('.amount-range-slider'), {
@@ -334,6 +329,79 @@
                endPrice.text(formatToCurrency(valueSet[1] * 100000));
             },
          });
+      </script>
+      <!-- ADD PRODUCT TO WISHLIST -->
+      <script type="module">
+            import {privateRequestHandler} from '/js/utils/index.js';
+           $(".add-to-wishlist").click(async function (){
+               const PRODUCT_ID = this.dataset.productId;
+               try {
+                  await privateRequestHandler(`/api/user/add-to-wishlist/${PRODUCT_ID}`,'post',{},(data,status)=>{
+                  toastr[data.status](data.message);
+               })
+               } catch (error) {
+                  toastr.error("Có lỗi xảy ra, vui lòng liên hệ quản trị viên !");
+               }
+            })
+      </script>
+      <!-- PAGINATION MODULE -->
+      <script>
+         const pagination = $('#pagination');
+       
+         const PAGE_SIZE = 9;
+         const urlParams = new URLSearchParams(window.location.search);
+         let currentPageNumber = Number(urlParams.get('page')) || 1;
+            
+         $(()=>{
+            let productList = `<%- JSON.stringify(productList) %>`;
+            productList = JSON.parse(productList);
+            const {total : totalDataCount } = productList;
+            const totalPageCount = Number(Math.ceil(totalDataCount / PAGE_SIZE));
+            if(currentPageNumber > totalPageCount ){
+               currentPageNumber = totalPageCount;
+            }
+            if(productList){
+               // IIFE
+               (()=>{
+                  return {
+                     renderPaginationTabs(){
+                        const paginationList = $('.pagination-tabs-list');
+                        let paginationTabHtml =`<li class="pagination-control previous-page ${currentPageNumber === 1 ? 'disable' : ''}"><a href="#"><i class="ti-angle-left"></i></a></li>`;
+                        for(let i=1;i<=totalPageCount;i++){
+                           paginationTabHtml += `<li class="pageNumber ${i===currentPageNumber ? 'active' : ''}"><a href="/all-product?page=${i}">${i}</a></li>`;
+                        }
+                        paginationTabHtml+= `<li class="pagination-control next-page ${currentPageNumber === totalPageCount ? 'disable' : ''}"><a href="#"><i class="ti-angle-right"></i></a>`;
+                        paginationList.html(paginationTabHtml);
+                     },
+                     activePageClickHandler(){
+                        const activePageTab = $('.pageNumber.active');
+                        activePageTab?.click((e)=>{
+                           e.preventDefault();
+                        })
+                     },
+                     controlTabClickHandler(){
+                        const controlTabs = $('.pagination-control');
+                        controlTabs.click(function(e){
+                           e.preventDefault();
+                           if(!$(this).hasClass('disable')){
+                             if($(this).hasClass('next-page')){
+                                window.location.href= `/all-product?page=${currentPageNumber + 1}`;
+                             }
+                             if($(this).hasClass('previous-page')){
+                                window.location.href= `/all-product?page=${currentPageNumber - 1}`;
+                             }
+                           }
+                        })
+                     },
+                     run(){
+                        this.renderPaginationTabs();
+                        this.activePageClickHandler();
+                        this.controlTabClickHandler();
+                     }
+                  }
+               })().run();
+            }
+         })
       </script>
    </body>
 </html>

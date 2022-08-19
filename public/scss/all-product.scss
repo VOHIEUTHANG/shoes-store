@@ -162,8 +162,13 @@
    }
    .product-tags ul li {
       display: inline-block;
+      border: 1px solid #ccc;
       margin: 0 10px 0 0;
       text-transform: capitalize;
+      &.active a {
+         background-color: #3f3f3f;
+         color: #fff;
+      }
    }
    .product-tags ul li a {
       color: #888;
@@ -171,9 +176,6 @@
       font-size: 15px;
       font-weight: 600;
       letter-spacing: 0.4px;
-   }
-   .product-tags ul li a:hover {
-      color: #050035;
    }
    .sidebar-search form {
       position: relative;
@@ -405,6 +407,12 @@
          li {
             display: inline-block;
             margin: 0 3px;
+            &.active {
+               a {
+                  background-color: #3f3f3f;
+                  color: #fff;
+               }
+            }
             a {
                background-color: #f6f6f6;
                color: #3f3f3f;
@@ -434,6 +442,7 @@
       color: $color-text-primary;
       a {
          color: inherit;
+         @include limitTextRows();
       }
    }
    .product-list-info > h4 {
@@ -529,7 +538,8 @@
    .breadcrumb-padding .container-fluid {
       padding: 0 100px;
    }
-   .product-box-style .product-action a {
+   .product-box-style .product-action a,
+   .product-box-style .product-action div {
       margin: 0 7px;
    }
    .product-action {
@@ -543,21 +553,38 @@
       text-align: center;
       transition: all 0.3s ease 0s;
    }
-   .product-action a {
+   .product-action a,
+   .product-action div {
       background-color: #383838;
       border-radius: 100%;
       color: #f7f7f7;
       display: inline-block;
       font-size: 24px;
       height: 45px;
+      @include transition;
+      cursor: pointer;
       display: inline-flex;
       justify-content: center;
       align-items: center;
       margin: 0 15px;
       width: 45px;
    }
-   .product-action a:hover {
-      background-color: #050035;
-      color: #fff;
+   .product-action a:hover,
+   .product-action div:hover {
+      color: #050035;
+      background-color: #fff;
+   }
+   .pagination-control {
+      border: 1px solid #ccc;
+      &.disable {
+         opacity: 0.3;
+         a {
+            cursor: default;
+            &:hover {
+               background-color: #f6f6f6 !important;
+               color: #3f3f3f !important;
+            }
+         }
+      }
    }
 }

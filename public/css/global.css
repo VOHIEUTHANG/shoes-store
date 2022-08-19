@@ -116,7 +116,7 @@
   position: sticky;
   top: 0;
   left: 0;
-  z-index: 1000; }
+  z-index: 9999999999; }
   .header__container {
     padding-top: 12px;
     padding-bottom: 6px;

@@ -1,5 +1,3 @@
-
-
 const $tableID = $('#table');
 const newTr = `
 <tr>
@@ -52,6 +50,7 @@ function deleteDataModal(){
             <th class="text-center">Số lượng</th>
         </tr>
     </thead>`;
+    document.getElementsByClassName('input-images-2')[0].innerHTML='';
 }
 function createProduct (){
     const form = new FormData();
@@ -91,21 +90,6 @@ function createProduct (){
     }).catch((err)=>{
         console.log(err);
     })
-    // axios.post('/api/product/create',{
-    //     name,
-    //     price,
-    //     date,
-    //     sex,
-    //     des,
-    //     detail,
-    //     isSelling,
-    //     brand,
-    //     category,
-    //     item:getProductItem(),
-    // }).then ((res)=>{
-    //     alert(res.data);
-    // });
-   
 }
 window.onload = function(){ 
  
@@ -157,8 +141,17 @@ function getOneProduct(id){
             <td  contenteditable="true">${element.inventory}</td>
             `;
             product_item_table.appendChild(tr);
+        });   
+    });
+    axios.get('/api/product_img/get',{params:{id:id}}).then((res)=>{
+        console.log(res.data)
+        $('.input-images-2').imageUploader({
+            preloaded: res.data,
+            imagesInputName: 'photos',
+            preloadedInputName: 'old'
         });
-        
+    }).catch((err)=>{
+        console.log(err)
     })
 }
 function modifyProduct(){
@@ -171,7 +164,6 @@ function modifyProduct(){
     let isSelling= document.getElementById ('isSelling').value;
     let category = document.getElementById('category').value;
     let brand = document.getElementById('brand').value;
-    
     axios.post('/api/product/update',{
         id:id_product,
         name,

@@ -17,10 +17,10 @@
                               <div class="sidebar-widget mb-50">
                                  <h3 class="sidebar-title">Tìm kiếm</h3>
                                  <div class="sidebar-search">
-                                    <form action="#">
+                                    <div class="search-input-wrapper">
                                        <input placeholder="Jordan..." type="text" />
-                                       <button><i class="ti-search"></i></button>
-                                    </form>
+                                       <button id="search-btn"><i class="ti-search"></i></button>
+                                    </div>
                                  </div>
                               </div>
                               <div class="sidebar-widget mb-40">
@@ -81,8 +81,8 @@
                                     <div class="shop-found-selector">
                                        <div class="shop-found">
                                           <p>
-                                             <span class="" style="color:#6c6c6c; font-weight:500 "><%= productList.products.length %></span> Sản phẩm tìm thấy trong
-                                             <span class="" style="color: #6c6c6c; font-weight:500"><%= productList.total %></span> sản phẩm
+                                             <span class="" style="color:#6c6c6c; font-weight:500 "><%= productList.total %></span> Sản phẩm tìm thấy trong
+                                             <span class="" style="color: #6c6c6c; font-weight:500"><%= totalActiveProductsCount %></span> sản phẩm
                                           </p>
                                        </div>
                                        <div class="shop-selector">
@@ -364,12 +364,13 @@
                // IIFE
                (()=>{
                   const sortByPriceSelectNode = $('.sort-select');
+                  const url = new URL(window.location.href);
                   return {
                      renderPaginationTabs(){
                         const paginationList = $('.pagination-tabs-list');
                         let paginationTabHtml =`<li class="pagination-control previous-page ${currentPageNumber === 1 ? 'disable' : ''}"><a href="#"><i class="ti-angle-left"></i></a></li>`;
                         for(let i=1;i<=totalPageCount;i++){
-                           paginationTabHtml += `<li class="pageNumber ${i===currentPageNumber ? 'active' : ''}"><a href="/all-product?page=${i}">${i}</a></li>`;
+                           paginationTabHtml += `<li class="pageNumber ${i===currentPageNumber ? 'active' : ''}" data-page-number="${i}"><a href="">${i}</a></li>`;
                         }
                         paginationTabHtml+= `<li class="pagination-control next-page ${currentPageNumber === totalPageCount ? 'disable' : ''}"><a href="#"><i class="ti-angle-right"></i></a>`;
                         paginationList.html(paginationTabHtml);
@@ -388,7 +389,6 @@
                      sortSelectHandler(){
                         sortByPriceSelectNode.on('change',function(){
                            const sortType = $(this).val();
-                           const url = new URL(window.location.href);
                            url.searchParams.set('sort', sortType);
                            window.location.href = url.href;
                         })
@@ -399,20 +399,32 @@
                            e.preventDefault();
                            if(!$(this).hasClass('disable')){
                              if($(this).hasClass('next-page')){
-                                window.location.href= `/all-product?page=${currentPageNumber + 1}`;
+                                url.searchParams.set('page', `${currentPageNumber + 1}`);
                              }
                              if($(this).hasClass('previous-page')){
-                                window.location.href= `/all-product?page=${currentPageNumber - 1}`;
+                                url.searchParams.set('page', `${currentPageNumber - 1}`);
                              }
+                             window.location.href = url.href;
                            }
+                        })
+                     },
+                     pageTabHandler(){
+                        const url = new URL(window.location.href);
+                        const switchPageTab = $('.pageNumber:not(.active)');
+                        switchPageTab.click(function(e){  
+                           e.preventDefault();
+                           const pageNumber = this.dataset.pageNumber;
+                           url.searchParams.set('page', `${pageNumber}`);
+                           window.location.href = url.href;
                         })
                      },
                      run(){
                         this.renderPaginationTabs();
                         this.renderSortOptions();
-                        this.activePageClickHandler();
                         this.controlTabClickHandler();
                         this.sortSelectHandler();
+                        this.pageTabHandler();
+                        this.activePageClickHandler();
                      }
                   }
                })().run();

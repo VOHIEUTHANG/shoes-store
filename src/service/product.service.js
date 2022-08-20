@@ -155,6 +155,12 @@ class productService {
          return null;
       }
    }
+   async getTotalOfProductCount() {
+      const count = await productModel.count({
+         where: { isSelling: 1 },
+      });
+      return count;
+   }
    async getDetailProductBySlug(slug) {
       try {
          const productResult = await productModel.findOne({

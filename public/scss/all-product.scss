@@ -177,35 +177,39 @@
       font-weight: 600;
       letter-spacing: 0.4px;
    }
-   .sidebar-search form {
+   .sidebar-search .search-input-wrapper {
       position: relative;
+      border: 1px solid #ccc;
    }
-   .sidebar-search form input {
-      background: #f1f1f1 none repeat scroll 0 0;
+   .sidebar-search .search-input-wrapper input {
+      background: white;
       border: medium none;
       box-shadow: none;
-      color: #8e8d8d;
+      color: $color-text-primary;
+      text-transform: initial;
       width: 100%;
       min-height: 4.5rem;
-      font-size: 13px;
+      font-size: 1.6rem;
       padding-left: 15px;
       padding-right: 55px;
    }
-   .sidebar-search form > button {
-      background-color: #dedede;
+   .sidebar-search .search-input-wrapper #search-btn {
       border: medium none;
       color: #050035;
       cursor: pointer;
       font-size: 18px;
       height: 45px;
+      border-left: 1px solid #ccc;
       line-height: 50px;
       padding: 0 16px;
       position: absolute;
       right: 0;
       top: 0;
       transition: all 0.3s ease 0s;
-   }
-   .product-img {
+      &:hover {
+         background-color: #050035;
+         color: white;
+      }
    }
    .price_slider_amount {
       display: block;

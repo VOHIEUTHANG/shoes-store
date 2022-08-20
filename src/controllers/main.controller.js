@@ -112,13 +112,12 @@ const mainController = () => ({
    },
    getAllProductPage: async (req, res) => {
       const user = req.user;
-      const { page = 1, sort } = req.query;
+      const { page = 1, sort, search } = req.query;
       const offset = (page - 1) * 9;
-
       const payloadInfo = req.payload;
       const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
       const totalActiveProductsCount = await ProductService.getTotalOfProductCount();
-      const productList = await ProductService.getActiveProduct({ offset, limit: 9, sort });
+      const productList = await ProductService.getActiveProduct({ offset, limit: 9, sort, search });
       if (productList) {
          payload.productList = productList;
          payload.totalActiveProductsCount = totalActiveProductsCount;

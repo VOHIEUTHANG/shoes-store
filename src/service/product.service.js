@@ -87,10 +87,14 @@ class productService {
       });
       return product;
    }
-   async getActiveProduct({ offset = 0, limit = 5, sort }) {
-      const filterPropertis = { isSelling: true };
+   async getActiveProduct({ offset = 0, limit = 5, sort, search }) {
+      const queryConditions = { isSelling: true };
       const timeNow = new Date();
-
+      if (search) {
+         queryConditions.name = {
+            [Op.like]: `%${search}%`,
+         };
+      }
       try {
          const queryOptions = {
             attributes: {
@@ -116,13 +120,14 @@ class productService {
                   },
                },
             ],
-            where: filterPropertis,
+            where: queryConditions,
             limit: limit,
             offset: offset,
          };
          if (sort == 'ASC' || sort == 'DESC') {
             queryOptions.order = [['price', sort]];
          }
+
          const { count, rows } = await productModel.findAndCountAll(queryOptions);
          let products = rows.map((product) => ({
             ...product.dataValues,

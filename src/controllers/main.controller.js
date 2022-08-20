@@ -112,12 +112,14 @@ const mainController = () => ({
    },
    getAllProductPage: async (req, res) => {
       const user = req.user;
-      const { page = 1, sort, search } = req.query;
+      const { page = 1, sort, search, priceFrom = 0, priceTo = 1000 } = req.query;
+      const priceRange = { priceFrom, priceTo };
+      console.log('🚀 ~ file: main.controller.js ~ line 117 ~ priceRange', priceRange);
       const offset = (page - 1) * 9;
       const payloadInfo = req.payload;
       const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
       const totalActiveProductsCount = await ProductService.getTotalOfProductCount();
-      const productList = await ProductService.getActiveProduct({ offset, limit: 9, sort, search });
+      const productList = await ProductService.getActiveProduct({ offset, limit: 9, sort, search, priceRange });
       if (productList) {
          payload.productList = productList;
          payload.totalActiveProductsCount = totalActiveProductsCount;

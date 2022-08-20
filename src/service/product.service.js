@@ -87,12 +87,18 @@ class productService {
       });
       return product;
    }
-   async getActiveProduct({ offset = 0, limit = 5, sort, search }) {
+   async getActiveProduct({ offset = 0, limit = 5, sort, search, priceRange }) {
       const queryConditions = { isSelling: true };
       const timeNow = new Date();
       if (search) {
          queryConditions.name = {
             [Op.like]: `%${search}%`,
+         };
+      }
+      if (priceRange) {
+         queryConditions.price = {
+            [Op.gte]: Number(priceRange.priceFrom) * 100,
+            [Op.lte]: Number(priceRange.priceTo) * 100,
          };
       }
       try {

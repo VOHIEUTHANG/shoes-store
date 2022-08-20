@@ -32,8 +32,9 @@
                                           <div class="amount-range-slider"></div>
                                        </div>
                                        <label>
-                                          <span id="start-price">1.000.000 VND</span> -
-                                          <span id="end-price">10.000.000 VND</span>
+                                          <span id="start-price">0 VND</span>
+                                          -
+                                          <span id="end-price">0 VND</span>
                                        </label>
                                     </div>
                                  </div>
@@ -155,8 +156,7 @@
          <%- include('../partials/footer') %>
       </div>
       <%- include('../partials/foot') %>
-      <!-- STICKY SIDER BAER HANLDER -->
-      <script>
+      <!-- STICKY SIDER BAER HANLDER --><script>
          const stickyElement = $('#sticky-element');
          const stickyParent = $('#sticky-parent');
          const headerHeight = $('.header')[0].offsetHeight;
@@ -191,21 +191,6 @@
             }
          });
       </script>
-      <!-- FILTER PRICE INPUT RANGE HANDLER -->
-      <script type="module">
-         import { formatToCurrency } from '/js/utils/index.js';
-         rangeSlider(document.querySelector('.amount-range-slider'), {
-            min: 0,
-            max: 200,
-            value: [10, 100],
-            onInput: function (valueSet) {
-               const startPrice = $('#start-price');
-               const endPrice = $('#end-price');
-               startPrice.text(formatToCurrency(valueSet[0] * 100000));
-               endPrice.text(formatToCurrency(valueSet[1] * 100000));
-            },
-         });
-      </script>
       <!-- ADD PRODUCT TO WISHLIST -->
       <script type="module">
             import {privateRequestHandler} from '/js/utils/index.js';
@@ -221,9 +206,9 @@
             })
       </script>
       <!-- PAGINATION MODULE -->
-      <script>
+      <script type="module">
+         import { formatToCurrency } from '/js/utils/index.js';
          const pagination = $('#pagination');
-       
          const PAGE_SIZE = 9;
          const urlParams = new URLSearchParams(window.location.search);
          let currentPageNumber = Number(urlParams.get('page')) || 1;
@@ -239,10 +224,55 @@
             if(productList){
                // IIFE
                (()=>{
+                  const startPrice = $('#start-price');
+                  const endPrice = $('#end-price');
                   const sortByPriceSelectNode = $('.sort-select');
                   const url = new URL(window.location.href);
                   const urlParams = new URLSearchParams(window.location.search);
+                  let lastPriceValueSet;
                   return {
+                     changePriceInputRangeHandler(){
+                        const appendParamsIntoURL = (valueSet)=>{
+                           const fromPrice = valueSet[0];
+                           const toPrice = valueSet[1];
+                           url.searchParams.set('priceFrom', String(fromPrice));
+                           url.searchParams.set('priceTo', toPrice.toString());
+                           url.searchParams.set('page', 1);
+                           window.location.href = url.href;
+                        }
+                        
+                        const priceFrom = Number(urlParams.get("priceFrom") ) || 0;
+                        const priceTo = Number(urlParams.get("priceTo")) || 100;
+
+                        startPrice.text(formatToCurrency(priceFrom * 100000));
+                        endPrice.text(formatToCurrency(priceTo * 100000));
+                        
+                        rangeSlider(document.querySelector('.amount-range-slider'), {
+                           min: 0,
+                           max: 200,
+                           value: [priceFrom,priceTo],
+                           onInput: function (valueSet) {
+                              startPrice.text(formatToCurrency(valueSet[0] * 100000));
+                              endPrice.text(formatToCurrency(valueSet[1] * 100000));
+                           },
+                           onThumbDragEnd(valueSet){
+                              if(valueSet){
+                                 lastPriceValueSet = valueSet;
+                              }
+                              if(valueSet==undefined){
+                                 appendParamsIntoURL(lastPriceValueSet);
+                              }
+                           },
+                           onRangeDragEnd(valueSet){
+                              if(valueSet){
+                                 lastPriceValueSet = valueSet;
+                              }
+                              if(valueSet==undefined){
+                                 appendParamsIntoURL(lastPriceValueSet);
+                              }
+                           },
+                        });
+                     },
                      renderPaginationTabs(){
                         const paginationList = $('.pagination-tabs-list');
                         let paginationTabHtml =`<li class="pagination-control previous-page ${currentPageNumber === 1 ? 'disable' : ''}"><a href="#"><i class="ti-angle-left"></i></a></li>`;
@@ -302,7 +332,7 @@
                         const searchBtn  = $('#search-btn');
                         const searchActions = ()=>{
                            let keyword = searchInput.val().trim();
-                              !(formatKeyword = ()=>{
+                              (()=>{
                               const keywordArray = keyword.split(' ');
                               keyword = keywordArray.reduce((acc,keyword)=>{
                                  if(keyword !== ''){
@@ -323,6 +353,7 @@
                         });
                      },
                      run(){
+                        this.changePriceInputRangeHandler();
                         this.renderPaginationTabs();
                         this.renderSortOptions();
                         this.renderSearchInputValue();

@@ -59,8 +59,31 @@
   border: 1px solid #eeeeee; }
 
 .all-product .product-wrapper {
+  position: relative;
   height: 100%;
   padding-bottom: 20px; }
+  .all-product .product-wrapper .product-discount-label {
+    position: absolute;
+    top: 0;
+    right: 14px;
+    width: fit-content;
+    padding: 1rem;
+    color: white;
+    width: 60px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.8rem;
+    white-space: nowrap;
+    background-color: #f34848; }
+    .all-product .product-wrapper .product-discount-label::after {
+      position: absolute;
+      content: '';
+      top: 99%;
+      left: 0;
+      width: 100%;
+      height: 2rem;
+      background-color: inherit;
+      clip-path: polygon(100% 0, 100% 100%, 50% 0, 0 100%, 0 0); }
 
 .all-product .product-action {
   bottom: 30px;
@@ -249,7 +272,7 @@
   cursor: pointer;
   transition: all 0.3s ease-in-out; }
   .all-product .sidebar-categories li:hover, .all-product .sidebar-categories li.active {
-    background-color: #3f3f3f; }
+    background-color: #111111; }
     .all-product .sidebar-categories li:hover a, .all-product .sidebar-categories li.active a {
       color: #fff; }
 
@@ -313,7 +336,7 @@
   width: 5rem;
   height: 5rem; }
   .all-product .size-item.active a {
-    background-color: #3f3f3f;
+    background-color: #111111;
     color: #fff; }
 
 .all-product .product-size li a {
@@ -330,7 +353,7 @@
   font-weight: 600;
   text-transform: uppercase; }
   .all-product .product-size li a:hover {
-    background-color: #3f3f3f;
+    background-color: #111111;
     color: #fff; }
 
 .all-product .single-top-rated {

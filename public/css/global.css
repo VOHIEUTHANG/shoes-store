@@ -136,7 +136,7 @@
     .header__logobar .logo-wrapper a {
       display: inline-block; }
       .header__logobar .logo-wrapper a span {
-        background-color: #3f3f3f;
+        background-color: #111111;
         clip-path: polygon(6% 0, 100% 0, 94% 100%, 0 100%);
         font-style: italic;
         font-size: 1.8rem;
@@ -247,7 +247,7 @@
       top: 10%;
       left: 80%;
       height: 25px;
-      background-color: #3f3f3f;
+      background-color: #111111;
       border-radius: 50px;
       color: #fff;
       display: inline-block;
@@ -434,7 +434,7 @@
   #footer:last-child {
     margin-top: auto; }
   #footer .footer-top {
-    background-color: #3f3f3f;
+    background-color: #111111;
     padding: 5rem 0; }
   #footer .footer-bottom {
     background-color: #fff;
@@ -778,15 +778,15 @@ input.input-feild {
   cursor: pointer;
   overflow: hidden;
   outline: none;
-  background-color: #3f3f3f;
+  background-color: #111111;
   color: #fff;
-  border: 1px solid #3f3f3f;
+  border: 1px solid #111111;
   z-index: 1; }
   .button.light {
-    color: #3f3f3f;
+    color: #111111;
     background-color: #fff; }
     .button.light::after {
-      background-color: #3f3f3f; }
+      background-color: #111111; }
     .button.light:hover {
       color: #fff !important; }
   .button.full {
@@ -808,7 +808,7 @@ input.input-feild {
     transition: all 0.3s ease-in-out;
     transform: translateX(-50%); }
   .button:hover {
-    color: #3f3f3f !important; }
+    color: #111111 !important; }
     .button:hover::after {
       width: 110%; }
   .button.disable {

@@ -6,13 +6,8 @@
                <div class="col">
                   <div class="nav-wrapper flex-start">
                      <ul class="nav-list">
-                        <li class="nav-item nav-item__search">
-                           <div class="search-wrapper">
-                              <input type="text" placeholder="Tìm kiếm..." class="search-input" />
-                              <div class="search-btn">
-                                 <i class="fa-solid fa-magnifying-glass"></i>
-                              </div>
-                           </div>
+                        <li class="nav-item search-section">
+                           <a class="nav-link" href="/products/search"><i class="ti-search"></i></a>
                         </li>
                      </ul>
                   </div>
@@ -20,10 +15,6 @@
                <div class="col">
                   <div class="logo-wrapper wow flipInY">
                      <a href="/" class="main-logo">
-                        <!-- <img
-                           src="https://cdn.shopify.com/s/files/1/0603/3031/1875/files/oie_Ve8rF3FmVBr7_500x.png?v=1646492695"
-                           alt="main logo"
-                        /> -->
                         <span> Devostack </span>
                      </a>
                   </div>
@@ -192,11 +183,8 @@
                   </ul>
                   <% } %>
                </li>
-               <li class="menu-item">
-                  <a href="/all-product" class="menu-link">Sản phẩm</a>
-               </li>
-               <li class="menu-item">
-                  <a href="#" class="wow tada menu-link menu-link--sale">Discount</a>
+               <li class="menu-item" id="discount-btn">
+                  <a href="" class="wow tada menu-link menu-link--sale">Discount</a>
                </li>
             </ul>
          </div>

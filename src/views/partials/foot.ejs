@@ -47,3 +47,13 @@
       });
    });
 </script>
+<script type="module">
+   const discountBtn = $('#discount-btn');
+   const searchButton = $('.search-section.nav-item > a');
+   console.log('searchButton');
+
+   discountBtn.click(function (e) {
+      e.preventDefault();
+      window.location.href = '/products/search?discount=true';
+   });
+</script>

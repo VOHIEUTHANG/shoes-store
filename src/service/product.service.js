@@ -87,7 +87,7 @@ class productService {
       });
       return product;
    }
-   async getActiveProduct({ offset = 0, limit = 5, sort, search, priceRange, cateID, size }) {
+   async getActiveProduct({ offset = 0, limit = 5, sort, search, priceRange, cateID, size, discount }) {
       const queryConditions = { isSelling: true };
       const productCategoryConditions = {};
       const sizeAvaliableConditions = {};
@@ -139,7 +139,7 @@ class productService {
                },
                {
                   model: discountModel,
-                  required: false,
+                  required: discount === 'true' ? true : false,
                   as: 'discounts',
                   where: {
                      isApply: true,

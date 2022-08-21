@@ -97,12 +97,12 @@
     visibility: hidden;
     opacity: 0;
     cursor: pointer;
-    background-color: #030021;
+    background-color: #3f3f3f;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px 10px; }
     .wishlist .add-to-cart:hover {
       background-color: white; }
       .wishlist .add-to-cart:hover i {
-        color: #030021; }
+        color: #3f3f3f; }
     .wishlist .add-to-cart i {
       font-size: 2.9rem;
       color: white; }

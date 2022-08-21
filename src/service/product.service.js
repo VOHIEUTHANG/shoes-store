@@ -87,8 +87,10 @@ class productService {
       });
       return product;
    }
-   async getActiveProduct({ offset = 0, limit = 5, sort, search, priceRange }) {
+   async getActiveProduct({ offset = 0, limit = 5, sort, search, priceRange, cateID, size }) {
       const queryConditions = { isSelling: true };
+      const productCategoryConditions = {};
+      const sizeAvaliableConditions = {};
       const timeNow = new Date();
       if (search) {
          queryConditions.name = {
@@ -99,6 +101,15 @@ class productService {
          queryConditions.price = {
             [Op.gte]: Number(priceRange.priceFrom) * 100,
             [Op.lte]: Number(priceRange.priceTo) * 100,
+         };
+      }
+      if (cateID && cateID !== 'all') {
+         productCategoryConditions.CATEGORY_ID = cateID;
+      }
+      if (size && size !== '~') {
+         sizeAvaliableConditions.size = size;
+         sizeAvaliableConditions.inventory = {
+            [Op.gt]: 0,
          };
       }
       try {
@@ -115,6 +126,16 @@ class productService {
                {
                   model: productImagesModel,
                   as: 'product_images',
+               },
+               {
+                  model: productCategoryModel,
+                  as: 'product_categories',
+                  where: productCategoryConditions,
+               },
+               {
+                  model: productItemModel,
+                  as: 'product_items',
+                  where: sizeAvaliableConditions,
                },
                {
                   model: discountModel,

@@ -255,10 +255,23 @@
       transition: all 0.3s ease 0s;
    }
    .sidebar-categories li {
-      margin-bottom: 16px;
+      padding: 1.4rem 2rem;
+      cursor: pointer;
+      @include transition;
+      &:hover,
+      &.active {
+         background-color: $color-bg-dark;
+         a {
+            color: $color-white;
+         }
+      }
    }
    .sidebar-categories li a {
       color: #888888;
+      display: flex;
+      @include transition;
+      align-items: center;
+      justify-content: space-between;
       font-size: 15px;
       font-weight: 600;
       line-height: 1;
@@ -309,25 +322,29 @@
    .sidebar-title {
       margin-bottom: 2rem;
    }
-   .size-item.active {
-      a {
-         border-color: $color-black;
-         color: $color-black;
+   .size-item {
+      width: 5rem;
+      height: 5rem;
+      &.active {
+         a {
+            background-color: $color-bg-dark;
+            color: $color-white;
+         }
       }
    }
    .product-size li a {
       color: #888888;
       font-size: 15px;
       @include centerFlexItems;
-      width: 5rem;
-      height: 4rem;
+      @include transition;
       border: 1px solid #ccc;
+      width: 100%;
+      height: 100%;
       font-weight: 600;
       text-transform: uppercase;
-      @include transition;
       &:hover {
-         border-color: $color-black;
-         color: $color-black;
+         background-color: $color-bg-dark;
+         color: $color-white;
       }
    }
    .single-top-rated {

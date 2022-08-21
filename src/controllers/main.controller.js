@@ -1,7 +1,8 @@
 import UserService from '../service/user.service';
 import ProductService from '../service/product.service';
+import CategoryService from '../service/category.service';
+
 import { createResponse } from '../helpers/responseCreator';
-import userService from '../service/user.service';
 import convertFromStringToNumber from '../helpers/convertCurrencyFromStringToNmber';
 import formatToCurrency from '../helpers/formatCurrency';
 
@@ -47,7 +48,7 @@ const mainController = () => ({
       payload.isLoggedIn = true;
       const username = user?.userName;
       try {
-         const wishList = await userService.getAllProductsWishList(username);
+         const wishList = await UserService.getAllProductsWishList(username);
          payload.wishlist = wishList;
       } catch (error) {
          res.json(createResponse('error', 'Query wishlist xảy ra lỗi !'));
@@ -112,14 +113,23 @@ const mainController = () => ({
    },
    getAllProductPage: async (req, res) => {
       const user = req.user;
-      const { page = 1, sort, search, priceFrom = 0, priceTo = 1000 } = req.query;
+      const { page = 1, sort, search, priceFrom = 0, priceTo = 1000, cateID, size } = req.query;
       const priceRange = { priceFrom, priceTo };
-      console.log('🚀 ~ file: main.controller.js ~ line 117 ~ priceRange', priceRange);
       const offset = (page - 1) * 9;
       const payloadInfo = req.payload;
       const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
+      const categoriesData = await CategoryService.getAllCategoryAndCountProductsBelongTo();
       const totalActiveProductsCount = await ProductService.getTotalOfProductCount();
-      const productList = await ProductService.getActiveProduct({ offset, limit: 9, sort, search, priceRange });
+      const productList = await ProductService.getActiveProduct({
+         offset,
+         limit: 9,
+         sort,
+         search,
+         priceRange,
+         cateID,
+         size,
+      });
+      payload.categoriesData = categoriesData;
       if (productList) {
          payload.productList = productList;
          payload.totalActiveProductsCount = totalActiveProductsCount;

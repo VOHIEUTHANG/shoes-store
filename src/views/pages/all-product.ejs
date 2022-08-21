@@ -43,18 +43,14 @@
                                  <h3 class="sidebar-title">Danh mục</h3>
                                  <div class="sidebar-categories">
                                     <ul>
-                                       <li>
-                                          <a href="#">Sneaker <span>4</span></a>
+                                       <li class="category-tab default"  data-id="all">
+                                          <a href="#">Tất cả<span><%= totalActiveProductsCount %></span></a>
                                        </li>
-                                       <li>
-                                          <a href="#">Boots <span>9</span></a>
-                                       </li>
-                                       <li>
-                                          <a href="#">sandals <span>5</span> </a>
-                                       </li>
-                                       <li>
-                                          <a href="#">Giày tây <span>3</span></a>
-                                       </li>
+                                       <% categoriesData.forEach(category=>{ %>
+                                          <li class="category-tab" data-id="<%= category.ID %>">
+                                             <a href="#"><%= category.name %><span><%= category.productCount %></span></a>
+                                          </li>
+                                       <% }) %>
                                     </ul>
                                  </div>
                               </div>
@@ -62,6 +58,7 @@
                                  <h3 class="sidebar-title">size</h3>
                                  <div class="product-size">
                                     <ul>
+                                       <li class="size-item default"><a href="#">~</a></li>
                                        <li class="size-item"><a href="#">38</a></li>
                                        <li class="size-item"><a href="#">39</a></li>
                                        <li class="size-item"><a href="#">40</a></li>
@@ -101,7 +98,7 @@
                                        <div class="row">
                                           <% if(productList.products.length > 0) { %> 
                                           <%productList.products.forEach(product=>{ %>
-                                          <div class="col-lg-4 col-md-6">
+                                          <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
                                              <div class="product-wrapper product-box-style mb-30">
                                                 <div class="product-img">
                                                    <a href="/product/<%= product.slug%>">
@@ -156,7 +153,8 @@
          <%- include('../partials/footer') %>
       </div>
       <%- include('../partials/foot') %>
-      <!-- STICKY SIDER BAER HANLDER --><script>
+      <!-- STICKY SIDER BAR HANLDER -->
+      <script>
          const stickyElement = $('#sticky-element');
          const stickyParent = $('#sticky-parent');
          const headerHeight = $('.header')[0].offsetHeight;
@@ -164,30 +162,27 @@
          const footer = $('#footer');
          let isFixedSidebar = false;
          let fixedTranformValue = 0;
+         const stickyElementHeight = stickyElement[0].offsetHeight;
+         const stickyParentHeight = stickyParent[0].offsetHeight;
+         const maximunTranslateValue = Number(stickyParentHeight)-Number(stickyElementHeight);
 
          $(document).on('scroll', () => {
+            if(window.innerWidth > 990){
             const { top: parentStickyTop } = stickyParent[0].getBoundingClientRect();
             const { top: footerTop } = footer[0].getBoundingClientRect();
 
-            let tranformTopValue;
+            let transformTopValue;
             if (parentStickyTop <= headerHeight) {
-               tranformTopValue = headerHeight - parentStickyTop;
+               transformTopValue = headerHeight - parentStickyTop;
             } else {
-               tranformTopValue = 0;
+               transformTopValue = 0;
             }
 
-            stickyElement.css({
-               transform: `translateY(${tranformTopValue}px)`,
-            });
-
-            if (footerTop <= screenHeight) {
-               if (isFixedSidebar == false) {
-                  fixedTranformValue = tranformTopValue;
-               }
-               isFixedSidebar = true;
-               stickyElement.css({
-                  transform: `translateY(${fixedTranformValue}px)`,
-               });
+            if(transformTopValue < maximunTranslateValue){
+               stickyElement.css({transform: `translateY(${transformTopValue}px)`});
+            }else{
+               stickyElement.css({transform: `translateY(${maximunTranslateValue}px)`});
+            }
             }
          });
       </script>
@@ -282,6 +277,45 @@
                         paginationTabHtml+= `<li class="pagination-control next-page ${currentPageNumber === totalPageCount ? 'disable' : ''}"><a href="#"><i class="ti-angle-right"></i></a>`;
                         paginationList.html(paginationTabHtml);
                      },
+                     sizeClickHandler(){
+                      const sizeItems = $('.size-item');
+                      const sizeValue  =  urlParams.get('size');
+                      if(sizeValue){
+                        [...sizeItems].forEach(sizeItem=>{
+                           if($(sizeItem).text() === sizeValue){
+                              $('.size-item.active').removeClass('active');
+                              $(sizeItem).addClass('active');
+                           }
+                        })
+                      }else{
+                        $('.size-item.default').addClass('active');
+                      }
+                      sizeItems.click(function(e){
+                        e.preventDefault();
+                        $('.size-item.active').removeClass('active');
+                        $(this).addClass('active');
+                        const sizeValue = $(this).text();
+                        url.searchParams.set('size', `${sizeValue}`);
+                        window.location.href = url.href;
+                      })
+                     },
+                     categoryHandler(){
+                        const categoryTabs = $('.category-tab');
+                        const currentCateID  =  urlParams.get('cateID');
+                        if(currentCateID){
+                           $('.category-tab.active').removeClass('active');
+                           $(`.category-tab[data-id=${currentCateID}]`).addClass('active');
+                        }else{
+                           $(`.category-tab.default`).addClass('active');
+                        }
+
+                        categoryTabs.click(function(e) {
+                           e.preventDefault();
+                           const cateID = this.dataset.id;
+                           url.searchParams.set('cateID',cateID);
+                           window.location.href = url.href;
+                        })
+                     },
                      renderSortOptions(){
                         const sortType = urlParams.get('sort');
                         $(`.sort-select option[value="${sortType}"]`)?.attr('selected', true);
@@ -359,6 +393,8 @@
                         this.renderSearchInputValue();
                         this.controlTabClickHandler();
                         this.sortSelectHandler();
+                        this.sizeClickHandler();
+                        this.categoryHandler();
                         this.pageTabHandler();
                         this.activePageClickHandler();
                         this.searchHandler();

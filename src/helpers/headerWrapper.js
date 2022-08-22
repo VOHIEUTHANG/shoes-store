@@ -63,9 +63,7 @@ export default function headerWrapper(controllerFunction) {
          }
          const brands = await brandService.getAllBrands();
          const categorys = await categoryService.getAllCategory();
-         const brandNameList = brands.map((brand) => brand.brandName);
-         const categoryNameList = categorys.map((category) => category.name);
-         req.payload = { brandNameList, categoryNameList, cartList };
+         req.payload = { brands, categorys, cartList };
       } catch (error) {
          console.log('error', error);
          res.status(400).json({ status: 'Select brand or category occured error!' });

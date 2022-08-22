@@ -40,7 +40,7 @@
       border: 1px solid #767676; }
       #product-detail-page .product-details .size-list .size-item.active {
         color: #fff;
-        background-color: #3f3f3f; }
+        background-color: #111111; }
       #product-detail-page .product-details .size-list .size-item.disable {
         opacity: 0.3;
         cursor: not-allowed; }
@@ -49,7 +49,7 @@
           color: inherit !important; }
       #product-detail-page .product-details .size-list .size-item:hover {
         color: #fff;
-        background-color: #3f3f3f; }
+        background-color: #111111; }
   #product-detail-page .product-details .swiper-pagination {
     right: 0; }
   #product-detail-page .product-details .swiper-pagination-bullet-active {

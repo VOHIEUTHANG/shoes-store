@@ -123,6 +123,11 @@
                                                    </h4>
                                                    <span><%= product.price %></span>
                                                 </div>
+                                                <% if(product.discounts !== null) {%>
+                                                   <div class="product-discount-label">
+                                                      -<%= product.discounts.percentReduction %>%
+                                                   </div>
+                                                <% } %> 
                                              </div>
                                           </div>
                                           <% }) %> 

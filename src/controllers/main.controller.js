@@ -5,6 +5,7 @@ import CategoryService from '../service/category.service';
 import { createResponse } from '../helpers/responseCreator';
 import convertFromStringToNumber from '../helpers/convertCurrencyFromStringToNmber';
 import formatToCurrency from '../helpers/formatCurrency';
+import getPrivatePageHandler from '../helpers/getPrivatePageHandler';
 
 const mainController = () => ({
    getHomePage: async (req, res) => {
@@ -113,7 +114,18 @@ const mainController = () => ({
    },
    getAllProductPage: async (req, res) => {
       const user = req.user;
-      const { page = 1, sort, search, priceFrom = 0, priceTo = 1000, cateID, size } = req.query;
+      const {
+         page = 1,
+         sort,
+         search,
+         discount,
+         priceFrom = 0,
+         priceTo = 1000,
+         cateID,
+         size,
+         brandID,
+         categoryID,
+      } = req.query;
       const priceRange = { priceFrom, priceTo };
       const offset = (page - 1) * 9;
       const payloadInfo = req.payload;
@@ -128,6 +140,9 @@ const mainController = () => ({
          priceRange,
          cateID,
          size,
+         discount,
+         brandID,
+         categoryID,
       });
       payload.categoriesData = categoriesData;
       if (productList) {
@@ -169,23 +184,14 @@ const mainController = () => ({
       res.render('pages/user-pages/profile', payload);
    },
    getChangePasswordPage: async (req, res) => {
-      const user = req.user;
-      if (!user) return res.redirect('/');
-      const payloadInfo = req.payload;
-      const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
-      payload.user = user;
-      payload.isLoggedIn = true;
+      const payload = getPrivatePageHandler(req, res);
       res.render('pages/user-pages/change-password', payload);
    },
    gePurchaseOrderPage: async (req, res) => {
-      const user = req.user;
-      if (!user) return res.redirect('/');
-      const payloadInfo = req.payload;
-      const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
-      payload.user = user;
-      payload.isLoggedIn = true;
+      const payload = getPrivatePageHandler(req, res);
       res.render('pages/user-pages/purchase-order', payload);
    },
+   getDiscountProductPage() {},
 });
 
 export default mainController();

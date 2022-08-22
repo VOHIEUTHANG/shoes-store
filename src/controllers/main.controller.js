@@ -114,7 +114,18 @@ const mainController = () => ({
    },
    getAllProductPage: async (req, res) => {
       const user = req.user;
-      const { page = 1, sort, search, discount, priceFrom = 0, priceTo = 1000, cateID, size } = req.query;
+      const {
+         page = 1,
+         sort,
+         search,
+         discount,
+         priceFrom = 0,
+         priceTo = 1000,
+         cateID,
+         size,
+         brandID,
+         categoryID,
+      } = req.query;
       const priceRange = { priceFrom, priceTo };
       const offset = (page - 1) * 9;
       const payloadInfo = req.payload;
@@ -130,6 +141,8 @@ const mainController = () => ({
          cateID,
          size,
          discount,
+         brandID,
+         categoryID,
       });
       payload.categoriesData = categoriesData;
       if (productList) {

@@ -87,15 +87,20 @@ class productService {
       });
       return product;
    }
-   async getActiveProduct({ offset = 0, limit = 5, sort, search, priceRange, cateID, size, discount }) {
+
+   async getActiveProduct({ offset = 0, limit = 5, sort, search, priceRange, cateID, size, discount, brandID }) {
       const queryConditions = { isSelling: true };
       const productCategoryConditions = {};
       const sizeAvaliableConditions = {};
+      const belongToCertainBrandConditions = {};
       const timeNow = new Date();
       if (search) {
          queryConditions.name = {
             [Op.like]: `%${search}%`,
          };
+      }
+      if (brandID) {
+         belongToCertainBrandConditions.ID = brandID;
       }
       if (priceRange) {
          queryConditions.price = {
@@ -122,6 +127,7 @@ class productService {
                {
                   model: brandModel,
                   as: 'BRAND',
+                  where: belongToCertainBrandConditions,
                },
                {
                   model: productImagesModel,
@@ -187,6 +193,25 @@ class productService {
          return null;
       }
    }
+   async getAllProductByBrand(brandID) {
+      if (brandID) {
+         try {
+            const produtList = await productModel.findAll({
+               include: [
+                  {
+                     model: brandModel,
+                     as: 'BRAND',
+                     required: true,
+                     where: {
+                        ID: brandID,
+                     },
+                  },
+               ],
+            });
+         } catch (error) {}
+      } else {
+      }
+   }
    async getTotalOfProductCount() {
       const count = await productModel.count({
          where: { isSelling: 1 },
@@ -194,6 +219,7 @@ class productService {
       return count;
    }
    async getDetailProductBySlug(slug) {
+      const timeNow = new Date();
       try {
          const productResult = await productModel.findOne({
             attributes: {
@@ -215,8 +241,12 @@ class productService {
                },
                {
                   model: discountModel,
-                  required: false,
                   as: 'discounts',
+                  required: false,
+                  where: {
+                     isApply: true,
+                     [Op.and]: [sequelize.where(sequelize.fn('date', sequelize.col('endDate')), '>', timeNow)],
+                  },
                },
             ],
             where: { slug: slug },

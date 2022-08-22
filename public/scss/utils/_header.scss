@@ -319,6 +319,7 @@
          }
          &-item {
             position: relative;
+
             .dropdown-menu {
                border: none;
                box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -341,7 +342,31 @@
                   left: 0;
                }
                .dropdown-item {
+                  position: relative;
                   padding: 1rem 3rem;
+                  @include transition;
+                  &:hover {
+                     span::after {
+                        width: 100%;
+                     }
+                  }
+                  span {
+                     position: relative;
+                     &::after {
+                        @include transition;
+                        position: absolute;
+                        content: '';
+                        width: 0;
+                        height: 2px;
+                        background-color: #000;
+                        top: 100%;
+                        left: 0;
+                     }
+                  }
+                  &:hover {
+                     color: inherit;
+                     background-color: white;
+                  }
                }
             }
             &:hover > .dropdown-menu {

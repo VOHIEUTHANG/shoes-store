@@ -17,8 +17,10 @@ const mainController = () => ({
          payload.isLoggedIn = true;
       }
       const products = await ProductService.getActiveProduct({ offset: 0, limit: 10 });
+      const latestProducts = await ProductService.getLatestProduct();
       if (products) {
          payload.productsData = products;
+         payload.latestProducts = latestProducts;
       }
       res.render('pages/home', { ...payload });
    },

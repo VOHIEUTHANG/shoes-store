@@ -138,6 +138,7 @@
             font-size: 2.8rem;
          }
          &-item {
+            position: relative;
             border: 1px solid $color-gray;
             border-radius: 4px;
             overflow: hidden;
@@ -155,6 +156,7 @@
             }
          }
          &__desc {
+            position: relative;
             border-top: 1px solid $color-gray;
             color: $color-text-primary;
             @include centerFlexItems;
@@ -178,7 +180,7 @@
             font-size: larger;
             text-align: center;
             color: $color-text-primary;
-            @include limitTextRows(3);
+            @include limitTextRows(2);
             font-weight: 600;
          }
          &__price {
@@ -186,6 +188,27 @@
             font-size: 1.8rem;
             & > span {
                color: $color-text-primary;
+               &.remove {
+                  display: none;
+               }
+            }
+         }
+         .product-discount-label {
+            position: absolute;
+            left: 0;
+            top: 20%;
+            background-color: $color-bg-discount;
+            color: white;
+            padding: 1rem;
+            &::after {
+               content: '';
+               position: absolute;
+               left: 80%;
+               top: 0;
+               width: 2rem;
+               height: 100%;
+               clip-path: polygon(0 0, 100% 0, 50% 51%, 100% 100%, 0 100%);
+               background-color: inherit;
             }
          }
       }

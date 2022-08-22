@@ -87,114 +87,40 @@
                         <div class="glide category-product">
                            <div class="glide__track" data-glide-el="track">
                               <ul class="glide__slides">
+                                 <% if(latestProducts){ %> <% latestProducts.forEach(product =>{ %>
                                  <li class="glide__slide">
                                     <div class="category-item wow fadeInLeft">
-                                       <a href="#" class="product-link">
+                                       <a href="/product/<%= product.slug %>" class="product-link">
                                           <div class="category__image">
-                                             <img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/DM7866-162_1f5d2cdf-4e3e-44cb-9c84-5a507b81bcdb_540x.jpg?v=1657780747"
-                                                alt=""
-                                             />
+                                             <img src="<%= product.product_images %>" alt="" />
                                           </div>
                                        </a>
                                        <div class="category__desc">
-                                          <a href="#">
-                                             <div class="category__brand">Jordan</div>
+                                          <a href="/products/search?brandID=<%= product.brandID %>">
+                                             <div class="category__brand"><%= product.brandName %></div>
                                           </a>
                                           <a href="#">
-                                             <div class="category__name">Air Jordan 1 Low SE New Emerald</div>
-                                          </a>
-                                          <div class="category__price">
-                                             GIÁ
-                                             <span>$204.00</span>
-                                          </div>
-                                       </div>
-                                       <div class="category__foot" style="height: 1rem"></div>
-                                    </div>
-                                 </li>
-                                 <li class="glide__slide">
-                                    <div class="category-item wow fadeInLeft">
-                                       <a href="#" class="product-link">
-                                          <div class="category__image">
-                                             <img
-                                                src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_e15467ab-0b9e-41e7-86d4-eb5ec4fb4056_large.jpg?v=1656297147"
-                                                alt=""
-                                             />
-                                          </div>
-                                       </a>
-                                       <div class="category__desc">
-                                          <a href="#">
-                                             <div class="category__brand">Vans</div>
-                                          </a>
-                                          <a href="#">
-                                             <div class="category__name">
-                                                Vans Unisex Old Skool Low-Top Green/Brown VN0A5JMI94R
-                                             </div>
+                                             <div class="category__name"><%= product.name %></div>
                                           </a>
                                           <div class="category__price">
                                              GIÁ
-                                             <span>2.195.000 VND</span>
+                                             <span class="<%= product.discounts !== null ? 'remove' : '' %>"
+                                                ><%= product.price %></span
+                                             >
+                                             <% if(product.discounts) { %>
+                                             <span><%= product.discounts.priceAfterApplyDiscount %></span>
+                                             <% } %>
                                           </div>
                                        </div>
+                                       <% if(product.discounts !== null) {%>
+                                       <div class="product-discount-label">
+                                          -<%= product.discounts.percentReduction %>%
+                                       </div>
+                                       <% } %>
                                        <div class="category__foot" style="height: 1rem"></div>
                                     </div>
                                  </li>
-                              </li>
-                              <li class="glide__slide">
-                                 <div class="category-item wow fadeInLeft">
-                                    <a href="#" class="product-link">
-                                       <div class="category__image">
-                                          <img
-                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_496ffd78-16e7-4faf-9454-99ca5d5703d9_1296x.jpg?v=1656274890"
-                                             alt=""
-                                          />
-                                       </div>
-                                    </a>
-                                    <div class="category__desc">
-                                       <a href="#">
-                                          <div class="category__brand">Nike</div>
-                                       </a>
-                                       <a href="#">
-                                          <div class="category__name">
-                                             Nike Kyrie Flytrap III EP Black Court Purple CD0191-006
-                                          </div>
-                                       </a>
-                                       <div class="category__price">
-                                          GIÁ
-                                          <span>2.984.000 VND</span>
-                                       </div>
-                                    </div>
-                                    <div class="category__foot" style="height: 1rem"></div>
-                                 </div>
-                              </li>
-                           </li>
-                           <li class="glide__slide">
-                              <div class="category-item wow fadeInLeft">
-                                 <a href="#" class="product-link">
-                                    <div class="category__image">
-                                       <img
-                                          src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_81a8612d-f41a-410d-81da-c5c5b4e915db_large.jpg?v=1658316951"
-                                          alt=""
-                                       />
-                                    </div>
-                                 </a>
-                                 <div class="category__desc">
-                                    <a href="#">
-                                       <div class="category__brand">Nike</div>
-                                    </a>
-                                    <a href="#">
-                                       <div class="category__name">
-                                          Nike Kyrie Flytrap 3 EP 'South Beach' White CD0191-104
-                                       </div>
-                                    </a>
-                                    <div class="category__price">
-                                       GIÁ
-                                       <span>1.924.000 VND</span>
-                                    </div>
-                                 </div>
-                                 <div class="category__foot" style="height: 1rem"></div>
-                              </div>
-                           </li>
+                                 <% }) %> <% } %>
                               </ul>
                            </div>
                            <div class="glide__arrows" data-glide-el="controls">
@@ -216,31 +142,44 @@
                      <div class="brand-logo-active glide__track" data-glide-el="track">
                         <div class="glide__slides">
                            <div class="single-brand glide__slide">
-                              <img src="/assets/images/brand-logo/adidas.jpg" alt="" />
+                              <a href="/products/search?brandID=1"
+                                 ><img src="/assets/images/brand-logo/adidas.jpg" alt=""
+                              /></a>
                            </div>
                            <div class="single-brand glide__slide">
-                              <img src="/assets/images/brand-logo/converse.jpg" alt="" />
+                              <a href="/products/search?brandID=4">
+                                 <img src="/assets/images/brand-logo/converse.jpg" alt="" />
+                              </a>
                            </div>
                            <div class="single-brand glide__slide">
-                              <img src="/assets/images/brand-logo/fila.jpg" alt="" />
+                              <a href="/products/search?brandID=2">
+                                 <img src="/assets/images/brand-logo/fila.jpg" alt="" />
+                              </a>
                            </div>
                            <div class="single-brand glide__slide">
-                              <img src="/assets/images/brand-logo/gucci.jpg" alt="" />
+                              <a href="/products/search?brandID=6">
+                                 <img src="/assets/images/brand-logo/jordan.jpg" alt="" />
+                              </a>
                            </div>
                            <div class="single-brand glide__slide">
-                              <img src="/assets/images/brand-logo/jordan.jpg" alt="" />
+                              <a href="/products/search?brandID=5">
+                                 <img src="/assets/images/brand-logo/louis-vuitton.jpg" alt="" />
+                              </a>
                            </div>
                            <div class="single-brand glide__slide">
-                              <img src="/assets/images/brand-logo/louis-vuitton.jpg" alt="" />
+                              <a href="/products/search?brandID=6">
+                                 <img src="/assets/images/brand-logo/nike.jpg" alt="" />
+                              </a>
                            </div>
                            <div class="single-brand glide__slide">
-                              <img src="/assets/images/brand-logo/nike.jpg" alt="" />
+                              <a href="/products/search?brandID=8">
+                                 <img src="/assets/images/brand-logo/supreme.jpg" alt="" />
+                              </a>
                            </div>
                            <div class="single-brand glide__slide">
-                              <img src="/assets/images/brand-logo/supreme.jpg" alt="" />
-                           </div>
-                           <div class="single-brand glide__slide">
-                              <img src="/assets/images/brand-logo/vans.jpg" alt="" />
+                              <a href="/products/search?brandID=10">
+                                 <img src="/assets/images/brand-logo/vans.jpg" alt="" />
+                              </a>
                            </div>
                         </div>
                      </div>
@@ -256,47 +195,52 @@
                      <div class="product-style">
                         <div class="custom-row">
                            <% productsData.products.forEach(function(product){%>
-                              <div class="custom-col-5 custom-col-style mb-4 wow fadeInUp">
-                                 <div class="product-wrapper">
-                                    <div class="product-img">
-                                       <a href="/product/<%= product.slug %>">
-                                          <img
-                                             src="<%= product.product_images %>"
-                                             alt=""
-                                          />
+                           <div class="custom-col-5 custom-col-style mb-4 wow fadeInUp">
+                              <div class="product-wrapper">
+                                 <div class="product-img">
+                                    <a href="/product/<%= product.slug %>">
+                                       <img src="<%= product.product_images %>" alt="" />
+                                    </a>
+                                    <div class="product-action">
+                                       <div
+                                          class="animate-left add-to-wishlist"
+                                          title="Wishlist"
+                                          data-product-id="<%= product.ID %>"
+                                       >
+                                          <i class="fa-regular fa-heart"></i>
+                                       </div>
+                                       <a
+                                          href="/product/<%= product.slug %>"
+                                          class="animate-right"
+                                          title="Add To Cart"
+                                          data-product-id="<%= product.ID %>"
+                                       >
+                                          <i class="ti-shopping-cart"></i>
                                        </a>
-                                       <div class="product-action">
-                                          <div class="animate-left add-to-wishlist"  title="Wishlist" data-product-id="<%= product.ID %>">
-                                             <i class="fa-regular fa-heart"></i>
-                                          </div>
-                                          <a href="/product/<%= product.slug %>" class="animate-right" title="Add To Cart" data-product-id="<%= product.ID %>" >
-                                             <i class="ti-shopping-cart"></i>
-                                          </>
-                                       </div>
                                     </div>
-                                    <div class="product-content">
-                                       <div class="category__brand"><%=product.BRAND %></div>
-                                       <h4>
-                                          <a href="/product/<%= product.slug%>"><%= product.name %></a>
-                                       </h4>
-                                       <span class="<%= product.discounts !== null ? 'remove' : '' %>"><%= product.price %></span>
-                                       <% if(product.discounts) { %>
-                                       <span><%= product.discounts.priceAfterApplyDiscount  %></span>
-                                       <% } %>
-                                    </div>
-                                    <% if(product.discounts !== null) {%>
-                                       <div class="product-discount-label">
-                                          -<%= product.discounts.percentReduction %>%
-                                       </div>
-                                    <% } %> 
                                  </div>
+                                 <div class="product-content">
+                                    <div class="category__brand"><%=product.BRAND %></div>
+                                    <h4>
+                                       <a href="/product/<%= product.slug%>"><%= product.name %></a>
+                                    </h4>
+                                    <span class="<%= product.discounts !== null ? 'remove' : '' %>"
+                                       ><%= product.price %></span
+                                    >
+                                    <% if(product.discounts) { %>
+                                    <span><%= product.discounts.priceAfterApplyDiscount %></span>
+                                    <% } %>
+                                 </div>
+                                 <% if(product.discounts !== null) {%>
+                                 <div class="product-discount-label">-<%= product.discounts.percentReduction %>%</div>
+                                 <% } %>
                               </div>
+                           </div>
                            <% }); %>
                         </div>
                      </div>
                      <div class="load-more">
-                        <div class="button">
-                           Load More</div>
+                        <div class="button">Load More</div>
                      </div>
                   </div>
                </div>
@@ -307,7 +251,7 @@
       <%- include('../partials/foot'); %>
       <script src="js/library/glide.min.js"></script>
       <script type="module">
-         import {privateRequestHandler} from '/js/utils/index.js';
+         import { privateRequestHandler } from '/js/utils/index.js';
          new Glide('.glide', {
             type: 'carousel',
             autoplay: 5000,
@@ -334,20 +278,20 @@
          const productNodeList = $('.custom-row');
          let pageNumber = 2;
          const limit = 5;
-         loadMoreBtn.click(async function(){
-            if(!$(this).hasClass('disable')){
+         loadMoreBtn.click(async function () {
+            if (!$(this).hasClass('disable')) {
                pageNumber++;
                try {
                   const productResult = await axios.get(`/api/product?page=${pageNumber || 1}&&limit=5`);
-                  const totalProducts = productResult.data.total; 
+                  const totalProducts = productResult.data.total;
                   const endProductIndex = (pageNumber - 1) * limit + limit;
-                  if(endProductIndex >= totalProducts){
+                  if (endProductIndex >= totalProducts) {
                      $(this).addClass('disable');
                   }
                   const products = productResult.data.products;
-                  const productsHtml = products.forEach((product)=>{
-                     const productItem = document.createElement("div");
-                     productItem.classList.add("custom-col-5",'custom-col-style','mb-4');
+                  const productsHtml = products.forEach((product) => {
+                     const productItem = document.createElement('div');
+                     productItem.classList.add('custom-col-5', 'custom-col-style', 'mb-4');
                      productItem.innerHTML = `<div class="product-wrapper">
                            <div class="product-img">
                               <a href="/product/${product.slug}">
@@ -357,10 +301,14 @@
                                  />
                               </a>
                               <div class="product-action">
-                                 <div class="animate-left add-to-wishlist" title="Wishlist" data-product-id="${product.ID}">
+                                 <div class="animate-left add-to-wishlist" title="Wishlist" data-product-id="${
+                                    product.ID
+                                 }">
                                     <i class="fa-regular fa-heart"></i>
                                  </div>
-                                 <a href="/product/${product.slug}" class="animate-right" title="Add To Cart" data-product-id="${product.ID}">
+                                 <a href="/product/${
+                                    product.slug
+                                 }" class="animate-right" title="Add To Cart" data-product-id="${product.ID}">
                                     <i class="ti-shopping-cart"></i>
                                  </a>
                               </div>
@@ -372,44 +320,40 @@
                                     >${product.name}</a
                                  >
                               </h4>
-                              <span class="${product.discounts ? 'remove': ''}">${product.price}</span>
-                              ${
-                                 product.discounts ? 
-                                 `<span>${product.discounts.priceAfterApplyDiscount}</span>`
-                                 : 
-                                 '' 
-                              }
+                              <span class="${product.discounts ? 'remove' : ''}">${product.price}</span>
+                              ${product.discounts ? `<span>${product.discounts.priceAfterApplyDiscount}</span>` : ''}
                            </div>
                            ${
-                              product.discounts !== null  ? `
+                              product.discounts !== null
+                                 ? `
                               <div class="product-discount-label">
                                  -${product.discounts.percentReduction}%
-                              </div>` : ''
-                        
+                              </div>`
+                                 : ''
                            }
                         </div>`;
-                        productNodeList[0].appendChild(productItem);
+                     productNodeList[0].appendChild(productItem);
                   });
                   reloadProductLogic();
                } catch (error) {
                   toastr.error('Xảy ra lỗi khi load sản phẩm !');
                }
-            }else{
+            } else {
                toastr.warning('Đã hết sản phẩm để hiện thị !');
             }
          });
 
-         function reloadProductLogic(){
-            $(".add-to-wishlist").click(async function (){
+         function reloadProductLogic() {
+            $('.add-to-wishlist').click(async function () {
                const PRODUCT_ID = this.dataset.productId;
                try {
-                  await privateRequestHandler(`/api/user/add-to-wishlist/${PRODUCT_ID}`,'post',{},(data,status)=>{
-                  toastr[data.status](data.message);
-               })
+                  await privateRequestHandler(`/api/user/add-to-wishlist/${PRODUCT_ID}`, 'post', {}, (data, status) => {
+                     toastr[data.status](data.message);
+                  });
                } catch (error) {
-                  toastr.error("Có lỗi xảy ra, vui lòng liên hệ quản trị viên !");
+                  toastr.error('Có lỗi xảy ra, vui lòng liên hệ quản trị viên !');
                }
-            })
+            });
          }
          reloadProductLogic();
       </script>

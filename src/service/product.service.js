@@ -88,7 +88,18 @@ class productService {
       return product;
    }
 
-   async getActiveProduct({ offset = 0, limit = 5, sort, search, priceRange, cateID, size, discount, brandID }) {
+   async getActiveProduct({
+      offset = 0,
+      limit = 5,
+      sort,
+      search,
+      priceRange,
+      cateID,
+      size,
+      discount,
+      brandID,
+      isGetlatestProduct,
+   }) {
       const queryConditions = { isSelling: true };
       const productCategoryConditions = {};
       const sizeAvaliableConditions = {};
@@ -117,6 +128,7 @@ class productService {
             [Op.gt]: 0,
          };
       }
+
       try {
          const queryOptions = {
             attributes: {
@@ -160,7 +172,11 @@ class productService {
          if (sort == 'ASC' || sort == 'DESC') {
             queryOptions.order = [['price', sort]];
          }
-
+         if (isGetlatestProduct) {
+            const orderOption = ['sellStartDate', 'DESC'];
+            queryOptions.order = queryOptions.order ? [...queryOptions.order, orderOption] : [orderOption];
+         }
+         console.log('queryOptions.order', queryOptions.order);
          const { count, rows } = await productModel.findAndCountAll(queryOptions);
          let products = rows.map((product) => ({
             ...product.dataValues,
@@ -192,6 +208,65 @@ class productService {
          console.log('🚀 ~ file: product.service.js ~ line 63 ~ productService ~ error', error);
          return null;
       }
+   }
+   async getLatestProduct() {
+      const timeNow = new Date();
+      const productList = await productModel.findAll({
+         where: {
+            isSelling: true,
+         },
+         include: [
+            {
+               model: brandModel,
+               as: 'BRAND',
+            },
+            {
+               model: productImagesModel,
+               as: 'product_images',
+            },
+            {
+               model: discountModel,
+               required: false,
+               as: 'discounts',
+               where: {
+                  isApply: true,
+                  [Op.and]: [sequelize.where(sequelize.fn('date', sequelize.col('endDate')), '>', timeNow)],
+               },
+            },
+         ],
+         order: [['sellStartDate', 'DESC']],
+         limit: 5,
+      });
+      const formatedProductList = productList.map((product) => {
+         return {
+            ID: product.dataValues.ID,
+            name: product.dataValues.name,
+            price: product.dataValues.price,
+            slug: product.dataValues.slug,
+            brandName: product.dataValues.BRAND?.dataValues.brandName,
+            brandID: product.dataValues.BRAND?.dataValues.ID,
+            product_images: product.dataValues.product_images[0].dataValues.imageURL,
+            discounts: product.dataValues?.discounts[0]?.dataValues || null,
+         };
+      });
+      const calculatePriceAfterDiscount = formatedProductList.map((product) => {
+         return {
+            ...product,
+            price: formatCurrency(product.price * 1000),
+            discounts: !!product.discounts
+               ? {
+                    ...product.discounts,
+                    priceAfterApplyDiscount: formatCurrency(
+                       calculatePriceAfterApplyDiscount(product.price, product.discounts.percentReduction),
+                    ),
+                    discountPrice: formatCurrency(
+                       calculateDiscountPrice(product.price, product.discounts.percentReduction),
+                    ),
+                 }
+               : null,
+         };
+      });
+      return calculatePriceAfterDiscount;
    }
    async getAllProductByBrand(brandID) {
       if (brandID) {

@@ -174,232 +174,45 @@
                         <h2>Sản phẩm liên quan</h2>
                      </div>
                      <div class="product-style">
-                        <div class="glide related-products">
-                           <div class="related-product-active glide__track" data-glide-el="track">
-                              <div class="glide__slides">
-                                 <div class="product-wrapper glide__slide">
-                                    <div class="product-img">
-                                       <a href="#">
-                                          <img
-                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_b99ea025-62e2-4457-8c7d-31afc7c47590_1296x.jpg?v=1657526503"
-                                             alt=""
-                                          />
-                                       </a>
-                                       <span>hot</span>
-                                       <div class="product-action">
-                                          <a class="animate-left" title="Wishlist" href="#">
-                                             <i class="fa-regular fa-heart"></i>
-                                          </a>
-                                          <a class="animate-top" title="Add To Cart" href="#">
-                                             <i class="ti-shopping-cart"></i>
-                                          </a>
-                                          <a
-                                             class="animate-right"
-                                             title="Quick View"
-                                             data-toggle="modal"
-                                             data-target="#exampleModal"
-                                             href="#"
-                                          >
-                                             <i class="fa-regular fa-eye"></i>
+                        <div class="related-products">
+                           <% if(relatedProducts.length > 0) {%>
+                           <div class="related-product-active">
+                              <div class="row gy-4">
+                                 <% relatedProducts.map(product=>{ %>
+                                 <div class="col col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                                    <div class="product-wrapper">
+                                       <div class="product-img">
+                                          <a href="/product/<%= product.slug %>">
+                                             <img src="<%= product.product_images %>" alt="" />
                                           </a>
                                        </div>
-                                    </div>
-                                    <div class="product-content">
-                                       <h4><a href="#">Arifo Stylas Dress</a></h4>
-                                       <span>$115.00</span>
-                                    </div>
-                                 </div>
-                                 <div class="product-wrapper glide__slide">
-                                    <div class="product-img">
-                                       <a href="#">
-                                          <img
-                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_e6cc4d63-d366-45dc-ab50-514a07a11358_large.jpg?v=1656739225"
-                                             alt=""
-                                          />
-                                       </a>
-                                       <div class="product-action">
-                                          <a class="animate-left" title="Wishlist" href="#">
-                                             <i class="fa-regular fa-heart"></i>
-                                          </a>
-                                          <a class="animate-top" title="Add To Cart" href="#">
-                                             <i class="ti-shopping-cart"></i>
-                                          </a>
-                                          <a
-                                             class="animate-right"
-                                             title="Quick View"
-                                             data-toggle="modal"
-                                             data-target="#exampleModal"
-                                             href="#"
+                                       <div class="product-content">
+                                          <h4><a href="/product/<%= product.slug %>"><%= product.name %></a></h4>
+                                          <% if(product.discounts) { %>
+                                          <span><%= product.discounts.priceAfterApplyDiscount %></span>
+                                          <% } %>
+                                          <span class="<%= product.discounts ? 'remove' : '' %>"
+                                             ><%= product.price %></span
                                           >
-                                             <i class="fa-regular fa-eye"></i>
-                                          </a>
                                        </div>
-                                    </div>
-                                    <div class="product-content">
-                                       <h4><a href="#">Arifo Stylas Dress</a></h4>
-                                       <span>$115.00</span>
+                                       <% if(product.discounts !== null) {%>
+                                       <div class="product-discount-label">
+                                          -<%= product.discounts.percentReduction %>%
+                                       </div>
+                                       <% } %>
                                     </div>
                                  </div>
-                                 <div class="product-wrapper glide__slide">
-                                    <div class="product-img">
-                                       <a href="#">
-                                          <img
-                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_14961e9a-1e1b-4d1e-a8d2-2e4fedf3bc91_large.jpg?v=1656283010"
-                                             alt=""
-                                          />
-                                       </a>
-                                       <span>hot</span>
-                                       <div class="product-action">
-                                          <a class="animate-left" title="Wishlist" href="#">
-                                             <i class="fa-regular fa-heart"></i>
-                                          </a>
-                                          <a class="animate-top" title="Add To Cart" href="#">
-                                             <i class="ti-shopping-cart"></i>
-                                          </a>
-                                          <a
-                                             class="animate-right"
-                                             title="Quick View"
-                                             data-toggle="modal"
-                                             data-target="#exampleModal"
-                                             href="#"
-                                          >
-                                             <i class="fa-regular fa-eye"></i>
-                                          </a>
-                                       </div>
-                                    </div>
-                                    <div class="product-content">
-                                       <h4><a href="#">Arifo Stylas Dress</a></h4>
-                                       <span>$115.00</span>
-                                    </div>
-                                 </div>
-                                 <div class="product-wrapper glide__slide">
-                                    <div class="product-img">
-                                       <a href="#">
-                                          <img
-                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_2d012beb-bf98-4485-8fed-14a6c37be834_large.jpg?v=1656588942"
-                                             alt=""
-                                          />
-                                       </a>
-                                       <div class="product-action">
-                                          <a class="animate-left" title="Wishlist" href="#">
-                                             <i class="fa-regular fa-heart"></i>
-                                          </a>
-                                          <a class="animate-top" title="Add To Cart" href="#">
-                                             <i class="ti-shopping-cart"></i>
-                                          </a>
-                                          <a
-                                             class="animate-right"
-                                             title="Quick View"
-                                             data-toggle="modal"
-                                             data-target="#exampleModal"
-                                             href="#"
-                                          >
-                                             <i class="fa-regular fa-eye"></i>
-                                          </a>
-                                       </div>
-                                    </div>
-                                    <div class="product-content">
-                                       <h4><a href="#">Arifo Stylas Dress</a></h4>
-                                       <span>$115.00</span>
-                                    </div>
-                                 </div>
-                                 <div class="product-wrapper glide__slide">
-                                    <div class="product-img">
-                                       <a href="#">
-                                          <img
-                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_b0789392-9e1f-44f8-ad9b-b346a0453fca_large.jpg?v=1656305785"
-                                             alt=""
-                                          />
-                                       </a>
-                                       <span>hot</span>
-                                       <div class="product-action">
-                                          <a class="animate-left" title="Wishlist" href="#">
-                                             <i class="fa-regular fa-heart"></i>
-                                          </a>
-                                          <a class="animate-top" title="Add To Cart" href="#">
-                                             <i class="ti-shopping-cart"></i>
-                                          </a>
-                                          <a
-                                             class="animate-right"
-                                             title="Quick View"
-                                             data-toggle="modal"
-                                             data-target="#exampleModal"
-                                             href="#"
-                                          >
-                                             <i class="fa-regular fa-eye"></i>
-                                          </a>
-                                       </div>
-                                    </div>
-                                    <div class="product-content">
-                                       <h4><a href="#">Arifo Stylas Dress</a></h4>
-                                       <span>$115.00</span>
-                                    </div>
-                                 </div>
-                                 <div class="product-wrapper glide__slide">
-                                    <div class="product-img">
-                                       <a href="#">
-                                          <img
-                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_2d012beb-bf98-4485-8fed-14a6c37be834_large.jpg?v=1656588942"
-                                             alt=""
-                                          />
-                                       </a>
-                                       <div class="product-action">
-                                          <a class="animate-left" title="Wishlist" href="#">
-                                             <i class="fa-regular fa-heart"></i>
-                                          </a>
-                                          <a class="animate-top" title="Add To Cart" href="#">
-                                             <i class="ti-shopping-cart"></i>
-                                          </a>
-                                          <a
-                                             class="animate-right"
-                                             title="Quick View"
-                                             data-toggle="modal"
-                                             data-target="#exampleModal"
-                                             href="#"
-                                          >
-                                             <i class="fa-regular fa-eye"></i>
-                                          </a>
-                                       </div>
-                                    </div>
-                                    <div class="product-content">
-                                       <h4><a href="#">Arifo Stylas Dress</a></h4>
-                                       <span>$115.00</span>
-                                    </div>
-                                 </div>
-                                 <div class="product-wrapper glide__slide">
-                                    <div class="product-img">
-                                       <a href="#">
-                                          <img
-                                             src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_b99ea025-62e2-4457-8c7d-31afc7c47590_1296x.jpg?v=1657526503"
-                                             alt=""
-                                          />
-                                       </a>
-                                       <span>hot</span>
-                                       <div class="product-action">
-                                          <a class="animate-left" title="Wishlist" href="#">
-                                             <i class="fa-regular fa-heart"></i>
-                                          </a>
-                                          <a class="animate-top" title="Add To Cart" href="#">
-                                             <i class="ti-shopping-cart"></i>
-                                          </a>
-                                          <a
-                                             class="animate-right"
-                                             title="Quick View"
-                                             data-toggle="modal"
-                                             data-target="#exampleModal"
-                                             href="#"
-                                          >
-                                             <i class="fa-regular fa-eye"></i>
-                                          </a>
-                                       </div>
-                                    </div>
-                                    <div class="product-content">
-                                       <h4><a href="#">Arifo Stylas Dress</a></h4>
-                                       <span>$115.00</span>
-                                    </div>
-                                 </div>
+                                 <% }) %>
                               </div>
                            </div>
+                           <% } else {%>
+                           <div style="flex-direction: column" class="d-flex justify-content-center align-items-center">
+                              <i style="font-size: 6rem !important" class="ti-dropbox"> </i>
+                              <p style="text-align: center; margin-top: 4rem; font-size: 2.2rem" class="nothing-title">
+                                 Hiện tại không có sản phẩm nào liên quan !
+                              </p>
+                           </div>
+                           <% } %>
                         </div>
                      </div>
                   </div>
@@ -413,12 +226,6 @@
       <script type="module">
          import { formatToCurrency, privateRequestHandler } from '/js/utils/index.js';
          import deleteCartItemOnLick from '/js/utils/deleteCartItemHandler.js';
-
-         new Glide('.glide.related-products', {
-            type: 'carousel',
-            perView: 4,
-            gap: 20,
-         }).mount();
 
          const swiper = new Swiper('.swiper.product-images-slide', {
             direction: 'vertical',

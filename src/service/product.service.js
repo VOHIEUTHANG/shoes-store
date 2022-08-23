@@ -99,6 +99,8 @@ class productService {
       discount,
       brandID,
       isGetlatestProduct,
+      suitableFor = 'both',
+      excluded,
    }) {
       const queryConditions = { isSelling: true };
       const productCategoryConditions = {};
@@ -117,6 +119,14 @@ class productService {
          queryConditions.price = {
             [Op.gte]: Number(priceRange.priceFrom) * 100,
             [Op.lte]: Number(priceRange.priceTo) * 100,
+         };
+      }
+      if ((suitableFor === 'male', suitableFor === 'female')) {
+         queryConditions.suitableFor = suitableFor;
+      }
+      if (excluded) {
+         queryConditions.slug = {
+            [Op.ne]: excluded.slug,
          };
       }
       if (cateID && cateID !== 'all') {
@@ -181,6 +191,7 @@ class productService {
          let products = rows.map((product) => ({
             ...product.dataValues,
             BRAND: product.dataValues.BRAND.brandName,
+            brandID: product.dataValues.BRAND.ID,
             product_images: product.dataValues.product_images[0]?.imageURL,
             price: product.dataValues.price,
             discounts: product.dataValues?.discounts[0]?.dataValues || null,
@@ -357,6 +368,54 @@ class productService {
       } catch (error) {
          console.log('🚀 ~ file: product.service.js ~ line 109 ~ productService ~ error', error);
          return false;
+      }
+   }
+   async getRelatedProductBySlug(slug) {
+      if (slug) {
+         try {
+            const targetProduct = await productModel.findOne({
+               where: {
+                  slug,
+               },
+               include: [
+                  {
+                     model: brandModel,
+                     as: 'BRAND',
+                  },
+                  {
+                     model: categoryModel,
+                     as: 'belong_category',
+                  },
+               ],
+               attributes: ['BRAND_ID', 'suitableFor'],
+            });
+            const branIDAndCategoryIDOfTargetProduct = {
+               brandID: targetProduct.dataValues.BRAND_ID,
+               suitableFor: targetProduct.dataValues.suitableFor,
+               categoryID:
+                  targetProduct.dataValues.belong_category.length > 0
+                     ? targetProduct.dataValues.belong_category[0].dataValues.ID
+                     : null,
+            };
+            const relatedProductOptions = {
+               suitableFor: branIDAndCategoryIDOfTargetProduct.suitableFor,
+               excluded: { slug },
+            };
+            if (branIDAndCategoryIDOfTargetProduct.brandID)
+               relatedProductOptions.brandID = branIDAndCategoryIDOfTargetProduct.brandID;
+            if (branIDAndCategoryIDOfTargetProduct.categoryID)
+               relatedProductOptions.cateID = branIDAndCategoryIDOfTargetProduct.categoryID;
+
+            const relatedProducts = await this.getActiveProduct(relatedProductOptions);
+            const relatedProductsFormated = relatedProducts.products.map((product) => {
+               const { product_categories, product_items, ...neededProperties } = product;
+               return neededProperties;
+            });
+            return relatedProductsFormated;
+         } catch (error) {
+            console.log('🚀 ~ file: product.service.js ~ line 367 ~ productService ~ error', error);
+            return null;
+         }
       }
    }
 }

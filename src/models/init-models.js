@@ -55,7 +55,7 @@ export default function initModels(sequelize) {
       otherKey: 'PRODUCT_ITEMS_ID',
    });
    product.belongsToMany(category, {
-      as: 'CATEGORY_ID_categories',
+      as: 'belong_category',
       through: product_category,
       foreignKey: 'PRODUCT_ID',
       otherKey: 'CATEGORY_ID',

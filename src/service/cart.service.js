@@ -25,7 +25,6 @@ class Cart {
                   PRODUCT_ITEMS_ID: productItemID,
                   quantity,
                });
-               console.log('🚀 ~ file: cart.service.js ~ line 20 ~ Cart ~ insertCartResult', insertCartResult);
                return true;
             }
             return createResponse('warning', 'Sản phẩm này đã được thêm vào giỏ hàng !');

@@ -17,8 +17,11 @@ const mainController = () => ({
          payload.isLoggedIn = true;
       }
       const products = await ProductService.getActiveProduct({ offset: 0, limit: 10 });
+      console.log('products ===> ', products);
+      const latestProducts = await ProductService.getLatestProduct();
       if (products) {
          payload.productsData = products;
+         payload.latestProducts = latestProducts;
       }
       res.render('pages/home', { ...payload });
    },
@@ -160,6 +163,7 @@ const mainController = () => ({
    getProductDetailsPage: async (req, res, next) => {
       const { slug } = req.params;
       const targetProduct = await ProductService.getDetailProductBySlug(slug);
+      const relatedProducts = await ProductService.getRelatedProductBySlug(slug);
       if (!targetProduct) {
          return next();
       }
@@ -171,7 +175,8 @@ const mainController = () => ({
          payload.isLoggedIn = true;
       }
       payload.productDetail = targetProduct;
-      console.log(payload.productDetail);
+      payload.relatedProducts = relatedProducts;
+      console.log('relatedProducts ==========> ', relatedProducts);
       res.render('pages/product-detail', payload);
    },
    getProfilePage: async (req, res) => {

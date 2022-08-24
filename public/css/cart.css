@@ -40,15 +40,10 @@
       color: green;
       font-style: italic; }
   .cart .table-content table td input {
-    background: #e5e5e5 none repeat scroll 0 0;
-    border: medium none;
-    border-radius: 3px;
     color: #6f6f6f;
     font-size: 15px;
     font-weight: normal;
-    height: 40px;
-    padding: 0 5px 0 10px;
-    width: 60px; }
+    height: 40px; }
   .cart .table-content table td.product-subtotal {
     color: #555;
     font-size: 15px;
@@ -165,3 +160,46 @@
       margin: 3rem auto;
       max-width: 50%;
       min-width: 30rem; }
+  .cart input.cart-plus-minus-box {
+    background: transparent none repeat scroll 0 0;
+    border: medium none;
+    float: left;
+    font-size: 16px;
+    height: 25px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    width: 25px; }
+  .cart .cart-plus-minus *::-moz-selection {
+    background: transparent none repeat scroll 0 0;
+    color: #333;
+    text-shadow: none; }
+  .cart .cart-plus-minus {
+    border: 1px solid #dcdcdc;
+    overflow: hidden;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 80px; }
+  .cart .qtybutton {
+    color: #727272;
+    cursor: pointer;
+    font-size: 2rem;
+    font-weight: 600;
+    height: 20px;
+    user-select: none;
+    width: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out; }
+    .cart .qtybutton:hover {
+      color: #000; }
+    .cart .qtybutton.disable {
+      opacity: 0.5;
+      cursor: default; }
+      .cart .qtybutton.disable:hover {
+        color: #727272; }

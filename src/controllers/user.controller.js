@@ -183,6 +183,18 @@ const userController = () => ({
          res.json(createResponse('erorr', 'Xóa sản phẩm ra khỏi giỏ hàng thất bại !'));
       }
    },
+   async editCart(req, res) {
+      const username = req.user.userName;
+      const { productItemID, quantity } = req.body;
+      console.log({ productItemID, quantity });
+      const updateResult = await userService.editCartByUsernameAndProductItemID({ username, productItemID, quantity });
+      console.log('🚀 ~ file: user.controller.js ~ line 191 ~ updateResult', updateResult);
+      if (updateResult) {
+         res.json(createResponse('success', 'Update cart successfully !'));
+      } else {
+         res.json(createResponse('error', 'Udpate cart failured !'));
+      }
+   },
 });
 
 export default userController();

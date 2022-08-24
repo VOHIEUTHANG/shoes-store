@@ -71,13 +71,24 @@
                                                 <span  class="amount cart-price"><%= cart.PRODUCT_ITEM.PRODUCT.price %></span>
                                              </td>
                                              <td class="product-quantity">
-                                                <input value="<%= cart.quantity || 1 %>" type="number" />
+                                                <div class="cart-plus-minus" data-origin-price="<%= cart.PRODUCT_ITEM.PRODUCT.price %>"  data-product-count="<%= cart.quantity %>" data-subtotal="<%= cart.PRODUCT_ITEM.thisPrice %>" data-discount="<%= cart.PRODUCT_ITEM?.thisDiscountPrice %>" data-username="<%= cart.username %>" data-product-id="<%= cart.PRODUCT_ITEMS_ID %>" data-inventory="<%= cart.PRODUCT_ITEM.inventory %>">
+                                                   <div class="dec qtybutton">-</div>
+                                                   <input
+                                                      type="text"
+                                                      value="<%= cart.quantity || 1 %>"
+                                                      name="qtybutton"
+                                                      class="cart-plus-minus-box"
+                                                      class="product-count"
+                                                   />
+                                                   <div class="inc qtybutton">+</div>
+                                                </div>
                                              </td>
                                              <td class="amount">
                                                 <div><%= cart.PRODUCT_ITEM.size %></div>
                                              </td>
                                              <td >
-                                                <div class="discount">- 
+                                                <div class="discount" style="display:flex">
+                                                   - 
                                                    <span class="cart-discount-price">
                                                       <%= cart.PRODUCT_ITEM.PRODUCT.discounts ? cart.PRODUCT_ITEM.thisDiscountPrice : ''   %>
                                                    </span>
@@ -106,7 +117,7 @@
                                           <li>Phí vận chuyển<span class="shipment">+ 30.000 VND</span></li>
                                           <li>Tổng tiền thực thanh toán<span class="payment-total"><%= cartList.totalPrice %></span></li>
                                        </ul>
-                                       <div class="button btn-checkout large">Mua hàng</a>
+                                       <div id="purchase" class="button btn-checkout large">Mua hàng</a>
                                     </div>
                                  </div>
                               </div>
@@ -120,19 +131,13 @@
          <%- include('../../partials/footer') %>
       </div>
       <%- include('../../partials/foot') %>
+      <!-- REMOVE CART HANLDER -->
       <script type="module">
          import { privateRequestHandler, formatToCurrency } from '/js/utils/index.js';
+         import convertFromStringToNumber from '/js/utils/convertNumber.js'; 
          import deleteCartItemOnLick from '/js/utils/deleteCartItemHandler.js';
          $(() => {
          const deleteCartBtn = $('.product-remove-btn');
-
-         function convertFromStringToNumber(stringNumber) {
-         const removeUnit = stringNumber.slice(0, stringNumber.length - 4);
-         let numberArray = removeUnit.split('.');
-         numberArray = numberArray.join('');
-         return Number(numberArray);
-         }
-
          deleteCartBtn?.click(function(){
             const productID = this.dataset.productId;
             const cartProductCount = $('.table-content tbody > tr').length;
@@ -145,7 +150,6 @@
             let quantity = cartRow.find('.product-quantity > input').first()?.val()?.trim() || 1;
             let discount = cartRow.find('.cart-discount-price').first()?.text()?.trim() || 0;
             let finalPrice = cartRow.find('.product-subtotal').first()?.text()?.trim() || 0;
-            
 
             buttonRemoveItem[0]?.click();
             if(cartProductCount === 1){
@@ -184,13 +188,141 @@
                $('.origin-price-total').text(totalOriginAmountRemaining);
                $('.discount-total').text(totalDiscountAmountRemaining);
                $('.payment-total').text(totalFinalAmountRemaining);
-               
                cartRow.remove();
             }
               
            
          });
    });
+      </script>
+      <!-- MODIFY QUANTITY OF GOODS HANLDER -->
+      <script type="module">
+         import { privateRequestHandler,formatToCurrency } from '/js/utils/index.js';
+         import convertFromStringToNumber from '/js/utils/convertNumber.js'; 
+
+         const plusBtn = $('.inc.qtybutton');
+         const minusBtn = $('.dec.qtybutton');
+
+         (function renderEditCartProductQuantity(){
+            [...$('.cart-plus-minus')].forEach(productNode=>{
+               const inventory = Number(productNode.dataset.inventory);
+               const minusBtn = $(productNode).find(".dec.qtybutton");
+               const plusBtn = $(productNode).find('.inc.qtybutton');
+
+               const currentProductCount = Number($(productNode).find('.cart-plus-minus-box').val());
+               if(currentProductCount <= 1){
+                  minusBtn.addClass('disable');
+               }
+               if(currentProductCount >= inventory){
+                  plusBtn.addClass('dchildrensisable');
+               }
+
+            })
+         })();
+
+         minusBtn.click(async function() {
+            if(!$(this).hasClass('disable')){
+            const parentElement = $(this).parents(".cart-plus-minus"); 
+            const inventory = parentElement[0].dataset.inventory;
+            
+            const productCount = parentElement.find('.cart-plus-minus-box');
+            const plusBtn = parentElement.find('.inc.qtybutton');
+            plusBtn.removeClass("disable");
+            let productCountNumber = Number(productCount.val());
+            
+            if(productCountNumber > 1){
+               productCountNumber--;
+               productCount.val(productCountNumber);
+
+               const productItemID = parentElement[0].dataset.productId;
+
+               await privateRequestHandler('/api/user/edit-cart', 'patch', {productItemID,quantity:productCountNumber}, (data, status) => {
+                  console.log(data);
+                  if(data.status === 'error'){
+                     toastr[data.status](data.message);
+                  }
+               });
+
+               const tableRow = $(this).parents('tr');
+
+               let discountPrice = parentElement[0].dataset.discount || '0';
+               let subtotalPrice = parentElement[0].dataset.subtotal;
+               const productQuantity = Number(parentElement[0].dataset.productCount);
+
+               const discountPriceNode = tableRow.find('.cart-discount-price');
+               const subtotalPriceNode = tableRow.find('.product-subtotal');
+
+               discountPrice = convertFromStringToNumber(discountPrice);
+               subtotalPrice = convertFromStringToNumber(subtotalPrice);
+
+               const discountPriceUnit =  discountPrice/productQuantity;
+               const productPriceUnit = subtotalPrice/productQuantity;
+
+               const remainingDiscountPrice = formatToCurrency(productCountNumber * discountPriceUnit);
+               const remainingProductPrice = formatToCurrency(productCountNumber * productPriceUnit);
+
+               discountPriceNode.text(remainingDiscountPrice);
+               subtotalPriceNode.text(remainingProductPrice);
+
+               let originTotalPrice = $('.origin-price-total').text().trim();
+               let discountTotalPrice = $('.discount-total').text().trim();
+               let paymentTotalPrice = $('.payment-total').text().trim();
+
+               originTotalPrice = convertFromStringToNumber(originTotalPrice);
+               discountTotalPrice = convertFromStringToNumber(discountTotalPrice);
+               paymentTotalPrice = convertFromStringToNumber(paymentTotalPrice);
+               
+               // $('.origin-price-total').text(formatToCurrency());
+               $('.discount-total').text(formatToCurrency(discountTotalPrice - discountPriceUnit));
+               $('.payment-total').text(formatToCurrency(paymentTotalPrice - productPriceUnit));
+
+            }
+
+            if(productCountNumber === 1) {
+               $(this).addClass('disable');
+            }
+            }
+         });
+
+         plusBtn.click(async function() {
+            if(!$(this).hasClass('disable')){
+               const parentElement = $(this).parents(".cart-plus-minus"); 
+            const inventory = parentElement[0].dataset.inventory;
+            const productCount = parentElement.find('.cart-plus-minus-box');
+            const minusBtn = parentElement.find('.dec.qtybutton');
+            minusBtn.removeClass('disable');
+
+            let productCountNumber = Number(productCount.val());
+
+            if (productCountNumber <  Number(inventory)) {
+               productCountNumber++;
+               productCount.val(productCountNumber);
+               
+               const productItemID = parentElement[0].dataset.productId;
+
+               await privateRequestHandler('/api/user/edit-cart', 'patch', {productItemID,quantity:productCountNumber}, (data, status) => {
+                  console.log(data);
+                  if(data.status === 'error'){
+                     toastr[data.status](data.message);
+                  }
+               });
+
+
+
+            }
+
+            if(productCountNumber ===  Number(inventory) ){
+               $(this).addClass('disable');
+            }
+            }
+         });
+      </script>
+      <!-- PURCHASE HANLDER -->
+      <script type="module">
+         const purchaseBtn = $('#purchase');
+         purchaseBtn.click(function(e){
+            console.log(this);
+         })
       </script>
    </body>
 </html>

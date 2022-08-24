@@ -16,5 +16,6 @@ router.post('/add-to-wishlist/:productID', validateToken, userController.addToWi
 router.delete('/delete-from-wishlist/:productID', validateToken, userController.deleteFromWishList);
 router.delete('/delete-cart-item/:productItemID', validateToken, userController.deleteCartItem);
 router.post('/add-to-cart', validateToken, userController.addCart);
+router.patch('/edit-cart', validateToken, userController.editCart);
 
 export default router;

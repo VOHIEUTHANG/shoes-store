@@ -8,6 +8,7 @@ const AccountModel = Models.account;
 const wishListModel = Models.wish_list;
 const BrandModel = Models.brand;
 const ProductImagesModel = Models.product_images;
+const cartModel = Models.cart;
 
 import PasswordHandler from '../helpers/passwordHandler';
 import { createResponse } from '../helpers/responseCreator';
@@ -244,6 +245,30 @@ class userService {
          }
       } else {
          console.log('Missing username !');
+         return false;
+      }
+   }
+
+   async editCartByUsernameAndProductItemID({ productItemID, username, quantity }) {
+      if (productItemID && username && quantity) {
+         try {
+            const updateRows = await cartModel.update(
+               {
+                  quantity: quantity,
+               },
+               {
+                  where: {
+                     username: username,
+                     PRODUCT_ITEMS_ID: productItemID,
+                  },
+               },
+            );
+            return updateRows > 0;
+         } catch (error) {
+            console.log('🚀 ~ file: user.service.js ~ line 256 ~ userService ~ error', error);
+            return false;
+         }
+      } else {
          return false;
       }
    }

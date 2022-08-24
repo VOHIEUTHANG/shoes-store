@@ -1,4 +1,5 @@
 @import './variable';
+@import './mixi';
 .cart {
    padding: 8rem 0;
    .cart-heading {
@@ -51,15 +52,10 @@
       //   font-size: 1;
    }
    .table-content table td input {
-      background: #e5e5e5 none repeat scroll 0 0;
-      border: medium none;
-      border-radius: 3px;
       color: #6f6f6f;
       font-size: 15px;
       font-weight: normal;
       height: 40px;
-      padding: 0 5px 0 10px;
-      width: 60px;
    }
    .table-content table td.product-subtotal {
       color: #555;
@@ -208,6 +204,50 @@
          margin: 3rem auto;
          max-width: 50%;
          min-width: 30rem;
+      }
+   }
+   input.cart-plus-minus-box {
+      background: transparent none repeat scroll 0 0;
+      border: medium none;
+      float: left;
+      font-size: 16px;
+      height: 25px;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      width: 25px;
+   }
+   .cart-plus-minus *::-moz-selection {
+      background: transparent none repeat scroll 0 0;
+      color: #333;
+      text-shadow: none;
+   }
+   .cart-plus-minus {
+      border: 1px solid #dcdcdc;
+      overflow: hidden;
+      margin: 0 auto;
+      @include centerFlexItems;
+      width: 80px;
+   }
+   .qtybutton {
+      color: #727272;
+      cursor: pointer;
+      font-size: 2rem;
+      font-weight: 600;
+      height: 20px;
+      user-select: none;
+      width: 20px;
+      @include centerFlexItems;
+      @include transition;
+      &:hover {
+         color: $color-black;
+      }
+      &.disable {
+         opacity: 0.5;
+         cursor: default;
+         &:hover {
+            color: #727272;
+         }
       }
    }
 }

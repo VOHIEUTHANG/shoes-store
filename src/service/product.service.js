@@ -10,6 +10,9 @@ const productCategoryModel = Models.product_category;
 const productImagesModel = Models.product_images;
 const productItemModel = Models.product_items;
 const discountModel = Models.discount;
+const productReviewModel = Models.product_review;
+const userModel = Models.user;
+const accountModel = Models.account;
 
 class productService {
    async getAll() {
@@ -219,6 +222,75 @@ class productService {
          console.log('🚀 ~ file: product.service.js ~ line 63 ~ productService ~ error', error);
          return null;
       }
+   }
+   async insertProductComment({ userName, productID, content, imageURL }) {
+      try {
+         const insertResult = await productReviewModel.create({
+            username: userName,
+            PRODUCT_ID: productID,
+            content: content,
+            imageURL: imageURL ? imageURL : null,
+         });
+         return insertResult?.dataValues.id;
+      } catch (error) {
+         return false;
+      }
+   }
+   async getAllProductCommentsByID(PRODUCT_ID, username) {
+      if (PRODUCT_ID) {
+         try {
+            const comments = await productReviewModel.findAll({
+               where: {
+                  PRODUCT_ID,
+               },
+               include: [
+                  {
+                     model: userModel,
+                     as: 'username_user',
+                     include: {
+                        model: accountModel,
+                        as: 'username_account',
+                     },
+                  },
+               ],
+               order: [['id', 'DESC']],
+            });
+
+            const formatedComments = comments?.map((comment) => {
+               return {
+                  ID: comment.dataValues.id,
+                  username: comment.dataValues.username,
+                  userAvatar: comment.dataValues.username_user.dataValues.username_account.dataValues.avatar,
+                  content: comment.dataValues.content,
+                  imageURL: comment.dataValues.imageURL,
+                  isBelongCurrentUser: comment.dataValues.username === username,
+               };
+            });
+            return formatedComments;
+         } catch (error) {
+            console.log('🚀 ~ file: product.service.js ~ line 255 ~ productService ~ error', error);
+            return null;
+         }
+      } else {
+         return null;
+      }
+   }
+   async deleteCommentByID(commentID, username) {
+      if (commentID && username) {
+         try {
+            const deletResult = await productReviewModel.destroy({
+               where: {
+                  id: commentID,
+                  username,
+               },
+            });
+            console.log('deletResult ===> ', deletResult);
+            return true;
+         } catch (error) {
+            return false;
+         }
+      }
+      return false;
    }
    async getLatestProduct() {
       const timeNow = new Date();

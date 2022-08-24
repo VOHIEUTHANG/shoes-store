@@ -71,7 +71,7 @@ const mainController = () => ({
       let cartList = payloadInfo.cartList;
       console.log('cartList', cartList);
 
-      const cartListFormated = cartList.map((cart) => {
+      const cartListFormated = cartList?.map((cart) => {
          let quantity = cart.quantity;
          let price = cart.PRODUCT_ITEM.PRODUCT.price;
          let discountPrice = cart.PRODUCT_ITEM.PRODUCT?.discounts?.discountPrice || null;
@@ -160,23 +160,26 @@ const mainController = () => ({
       }
       res.render('pages/all-product', payload);
    },
-   getProductDetailsPage: async (req, res, next) => {
+   getProductDetailsPage: async (req, res) => {
       const { slug } = req.params;
       const targetProduct = await ProductService.getDetailProductBySlug(slug);
       const relatedProducts = await ProductService.getRelatedProductBySlug(slug);
       if (!targetProduct) {
-         return next();
+         return res.json(createResponse('error', 'Get target product occured error !'));
       }
       const user = req.user;
       const payloadInfo = req.payload;
       const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
+
+      const comments = await ProductService.getAllProductCommentsByID(targetProduct.ID, user.userName);
+      console.log('comments ===> ', comments);
       if (user) {
          payload.user = user;
          payload.isLoggedIn = true;
       }
       payload.productDetail = targetProduct;
       payload.relatedProducts = relatedProducts;
-      console.log('relatedProducts ==========> ', relatedProducts);
+      payload.comments = comments;
       res.render('pages/product-detail', payload);
    },
    getProfilePage: async (req, res) => {

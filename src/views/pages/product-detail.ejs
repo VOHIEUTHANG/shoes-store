@@ -144,25 +144,83 @@
                <div class="product-description-review-area">
                   <div class="container">
                      <div class="product-description-review text-center">
-                        <div class="description-review-title nav" role="tablist">
-                           <a class="active" href="#pro-dec" data-bs-toggle="list" role="tab" aria-selected="true">
-                              Mô tả sản phẩm
-                           </a>
-                           <a href="#pro-review" data-bs-toggle="list" role="tab" aria-selected="false">
-                              Đánh giá (0)
-                           </a>
-                        </div>
-                        <div class="description-review-text tab-content">
-                           <div class="tab-pane active show fade" id="pro-dec" role="tabpanel">
-                              <p>
+                        <!-- <div class="description-review-title nav" role="tablist"></div> -->
+                        <div class="description-review-text">
+                           <div class="section-title-3">
+                              <h2>Mô tả sản phẩm</h2>
+                           </div>
+                           <div>
+                              <p class="product-desc">
                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
                                  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                                  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
                                  dolor in
                               </p>
                            </div>
-                           <div class="tab-pane fade" id="pro-review" role="tabpanel">
-                              <a class="button" href="#">Trở thành người đầu tiên viết đánh giá cho sản phẩm !</a>
+                           <hr />
+                           <div class="section-title-3">
+                              <h2>Đánh giá</h2>
+                           </div>
+                           <div class="">
+                              <div class="current-comment-wrapper">
+                                 <div class="current-user">
+                                    <img src="<%= user.avatar %>" alt="" />
+                                 </div>
+                                 <div class="current-content-wrapper">
+                                    <input id="comment-content" type="text" placeholder="Viết bình luận" />
+                                    <div class="content-body d-flex justify-content-between">
+                                       <div class="current-image">
+                                          <div class="image-placeholder" style="position: relative">
+                                             <input type="file" name="" id="image-review" hidden />
+                                             <label for="image-review">
+                                                <div class="plus-icon">
+                                                   <i class="ti-plus"></i>
+                                                </div>
+                                             </label>
+                                             <img
+                                                id="image-preview"
+                                                src=""
+                                                style="position: absolute; top: 0; left: 0; z-index: 100"
+                                                width="100%"
+                                                height="100%"
+                                                alt=""
+                                                class="hidden"
+                                             />
+                                          </div>
+                                       </div>
+                                       <div class="submit-image" data-product-id="<%= productDetail.ID %>">
+                                          <div class="button">Bình luận</div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <hr />
+
+                              <div class="comment-container">
+                                 <div class="comment-list">
+                                    <% if(comments.length > 0){ %> <% comments.forEach(comment => { %>
+                                    <div class="comment-item">
+                                       <div class="comment-avatar">
+                                          <img src="<%= comment.userAvatar %>" alt="" />
+                                       </div>
+                                       <div class="comment-content">
+                                          <div class="user-name"><%= comment.username %></div>
+                                          <div class="comment-title"><%= comment.content %></div>
+                                          <% if(comment.imageURL) {%>
+                                          <div class="comment-images-wrapper">
+                                             <img src="<%=  comment.imageURL %>" alt="" />
+                                          </div>
+                                          <% } %>
+                                       </div>
+                                       <% if(comment.isBelongCurrentUser) { %>
+                                       <div class="delete-comment" data-comment-id="<%= comment.ID %>">
+                                          <i class="ti-close"></i>
+                                       </div>
+                                       <% } %>
+                                    </div>
+                                    <% }) %> <% } %>
+                                 </div>
+                              </div>
                            </div>
                         </div>
                      </div>
@@ -409,6 +467,114 @@
                   toastr.error('Có lỗi xảy ra, vui lòng liên hệ quản trị viên !');
                }
             });
+         });
+      </script>
+      <script type="module">
+         import {
+            configHeaders,
+            responseHandler,
+            privateRequestHandler,
+            refreshTokenHandler,
+         } from '/js/utils/index.js';
+
+         const submitCommentBtn = $('.submit-image');
+         const commentInput = $('#comment-content');
+         const imageNode = $('#image-preview');
+         const imageReviewInput = $('#image-review');
+         imageReviewInput.on('change', function () {
+            const [file] = this.files;
+            const url = URL.createObjectURL(file);
+            imageNode.removeClass('hidden');
+            imageNode?.attr('src', url);
+         });
+         commentInput.on('input', function () {
+            $(this).removeClass('warning');
+         });
+         function deleteCommentLogical() {
+            $('.delete-comment').click(async function (e) {
+               const commentID = this.dataset.commentId;
+               if (commentID) {
+                  await privateRequestHandler(
+                     `/api/product/delete-comment/${commentID}`,
+                     'delete',
+                     {},
+                     (data, status) => {
+                        // toastr[data.status](data.message);
+                        if (data.status === 'success') {
+                           const commentItem = $(this).parents('.comment-item');
+                           commentItem?.remove();
+                        }
+                     },
+                  );
+               }
+            });
+         }
+         deleteCommentLogical();
+         submitCommentBtn.click(async function () {
+            const productID = this.dataset.productId;
+            const formData = new FormData();
+            const data = {};
+
+            if (imageReviewInput[0]?.files?.length > 0) {
+               formData.append('image', imageReviewInput[0].files[0]);
+            } else {
+            }
+            if (commentInput.val()) {
+               formData.append('comment', commentInput.val());
+               formData.append('productID', productID);
+               try {
+                  await privateRequestHandler('/api/product/add-comment', 'post', formData, (data, status) => {
+                     data = JSON.parse(data);
+                     // toastr[data.status](data.message), 'multipart/form-data';
+                     if (data.status === 'success') {
+                        console.log(data);
+                        const content = data.payload.content;
+                        const image = data.payload?.image;
+                        const commentID = data.payload.id;
+                        const commentList = $('.comment-list');
+                        const userAvatar = $('.current-user > img').attr('src');
+                        const username = `<%- JSON.stringify(user.userName) %>`;
+
+                        const currentCommentHTML = `
+                        <div class="comment-item">
+                           <div class="comment-avatar">
+                              <img src="${userAvatar}" alt="" />
+                           </div>
+                           <div class="comment-content">
+                              <div class="user-name">${JSON.parse(username)}</div>
+                              <div class="comment-title">${content}</div>
+                              ${
+                                 image
+                                    ? ` 
+                                    <div class="comment-images-wrapper">
+                                       <img src="${image}" alt="" />
+                                    </div>
+                                    `
+                                    : ''
+                              }
+                           </div>
+                           <div class="delete-comment" data-comment-id="${commentID}">
+                              <i class="ti-close"></i>
+                           </div>
+                        </div>
+                        `;
+                        const currentCommentListHTMl = commentList.html();
+                        const html = currentCommentHTML + currentCommentListHTMl;
+                        commentList.html(html);
+                        // reset comment input
+                        commentInput.val('');
+                        imageReviewInput.val(undefined);
+                        imageNode.addClass('hidden');
+                        deleteCommentLogical();
+                     }
+                  });
+               } catch (error) {
+                  toastr.error('Thêm bình luận cho sản phẩm này xảy ra lỗi !');
+               }
+            } else {
+               commentInput.addClass('warning');
+               commentInput.focus();
+            }
          });
       </script>
    </body>

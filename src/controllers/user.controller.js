@@ -1,5 +1,6 @@
 import userService from '../service/user.service';
 import cartService from '../service/cart.service';
+import formatPath from '../helpers/pathFormated.js';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../helpers/tokenHandler';
 import { createResponse } from '../helpers/responseCreator';
 import passport from 'passport';
@@ -98,9 +99,10 @@ const userController = () => ({
       let { userInfo } = req.body;
       userInfo = JSON.parse(userInfo);
       const username = req.user.userName;
+
       if (!!avatar) {
-         const avatarPathFormated = '/' + avatar.path.replaceAll('\\', '/');
-         userInfo.avatar = avatarPathFormated.slice(avatarPathFormated.indexOf('assets') - 1);
+         const path = formatPath(avatar);
+         userInfo.avatar = path;
       }
       userInfo.username = username;
       const updateUserResult = await userService.updateUserInfo(userInfo);

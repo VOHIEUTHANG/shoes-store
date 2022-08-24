@@ -19,6 +19,10 @@
    visibility: hidden;
    opacity: 0;
 }
+@mixin show() {
+   visibility: visible;
+   opacity: 1;
+}
 @mixin transition($target: all, $duration: 0.3s, $motionType: ease-in-out) {
    transition: all $duration $motionType;
 }

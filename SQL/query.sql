@@ -114,7 +114,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `shoe_store`.`CATEGORY` (
   `ID` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
-  `desciptions` VARCHAR(100) NULL,
+  `descriptions` VARCHAR(100) NULL,
   PRIMARY KEY (`ID`))
 ENGINE = InnoDB;
 

@@ -27,7 +27,7 @@ function getProductItem(){
     const headers = [];
     const data = []; // Get the headers
     $rows.each(function() {
-        const $td = $(this).find('td');
+        const $td = $(btn).find('td');
         const h = {size:$td.eq(0).text(),inventory:$td.eq(1).text()}; 
         add(data,h);
     });
@@ -129,7 +129,6 @@ function getOneProduct(id){
         document.getElementById('date').value= datestart.toLocaleDateString('en-CA');
         document.getElementById('brand').value= res.data.product.BRAND.ID;
         document.getElementById('sex').value= res.data.product.suitableFor;
-        document.getElementById('category').value= res.data.product.product_categories[0].CATEGORY.ID;
         document.getElementById('description').value= res.data.product.descriptions;
         document.getElementById('detail').value= res.data.product.specifications;
         document.getElementById('btn-save').onclick= modifyProduct;
@@ -142,6 +141,7 @@ function getOneProduct(id){
             `;
             product_item_table.appendChild(tr);
         });   
+        document.getElementById('category').value= res.data.product.product_categories[0].CATEGORY.ID;
     });
     axios.get('/api/product_img/get',{params:{id:id}}).then((res)=>{
         console.log(res.data)
@@ -191,4 +191,10 @@ function add(arr,object){
     }
      arr.push(object);
   }
-  
+
+function deleteImage(btn){
+    let parent =  btn.closest('div').
+    let link =parent.querySelector('img').src;
+    let position = link.indexOf('/assets');
+    if(parent.)
+}

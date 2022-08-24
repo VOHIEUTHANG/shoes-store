@@ -3,7 +3,6 @@ const productController = require('../controllers/product.controller');
 import { multipleFileUpload } from '../middlewares/uploadFiles';
 import { signleFileUpload } from '../middlewares/uploadFiles';
 import validateToken from '../middlewares/validateToken';
-
 const router = express.Router();
 router.get('/get', productController.get);
 router.post('/create', multipleFileUpload('file'), productController.create);

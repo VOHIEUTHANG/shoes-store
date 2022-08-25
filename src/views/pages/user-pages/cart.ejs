@@ -87,10 +87,10 @@
                                                 <div><%= cart.PRODUCT_ITEM.size %></div>
                                              </td>
                                              <td >
-                                                <div class="discount" style="display:flex">
+                                                <div class="discount d-flex justify-content-center">
                                                    - 
                                                    <span class="cart-discount-price">
-                                                      <%= cart.PRODUCT_ITEM.PRODUCT.discounts ? cart.PRODUCT_ITEM.thisDiscountPrice : ''   %>
+                                                      <%= cart.PRODUCT_ITEM.PRODUCT.discounts ? cart.PRODUCT_ITEM.thisDiscountPrice : '0VND'   %>
                                                    </span>
                                                 </div>
                                              </td>
@@ -147,7 +147,9 @@
 
             const cartRow = $(this).closest('tr');
             let originPrice = cartRow.find('.cart-price').first()?.text()?.trim() || 0;
-            let quantity = cartRow.find('.product-quantity > input').first()?.val()?.trim() || 1;
+            console.log("🚀 ~ file: cart.ejs ~ line 150 ~ originPrice", originPrice)
+            let quantity = cartRow.find('.product-quantity input').first()?.val()?.trim() || 1;
+            console.log('quantity',quantity)
             let discount = cartRow.find('.cart-discount-price').first()?.text()?.trim() || 0;
             let finalPrice = cartRow.find('.product-subtotal').first()?.text()?.trim() || 0;
 
@@ -181,7 +183,7 @@
                }
                finalPrice = convertFromStringToNumber(finalPrice);
 
-               const totalOriginAmountRemaining = formatToCurrency(originPriceTotal - originPrice) ;
+               const totalOriginAmountRemaining = formatToCurrency(originPriceTotal - originPrice * quantity) ;
                const totalDiscountAmountRemaining = formatToCurrency(discountTotal - discount);
                const totalFinalAmountRemaining = formatToCurrency(finalPriceTotal - finalPrice);
 
@@ -213,12 +215,72 @@
                if(currentProductCount <= 1){
                   minusBtn.addClass('disable');
                }
+
                if(currentProductCount >= inventory){
-                  plusBtn.addClass('dchildrensisable');
+                  plusBtn.addClass('disable');
                }
 
             })
          })();
+
+         const ModifyQuantityHandler = (productCountNumber,buttonNode,parentElement,type='minus')=>{
+            return {
+               async callUpdateCartAPI(){
+                  const productItemID = parentElement[0].dataset.productId;
+                  await privateRequestHandler('/api/user/edit-cart', 'patch', {productItemID,quantity:productCountNumber}, (data, status) => {
+                     console.log(data);
+                     if(data.status === 'error'){
+                        toastr[data.status](data.message);
+                     }
+                  });
+               },
+               renderPrice(){
+                  const tableRow = $(buttonNode).parents('tr');
+
+                  let originPrice = parentElement[0].dataset.originPrice;
+                  let discountPrice = parentElement[0].dataset.discount || '0';
+                  let subtotalPrice = parentElement[0].dataset.subtotal;
+                  const productQuantity = Number(parentElement[0].dataset.productCount);
+
+                  const discountPriceNode = tableRow.find('.cart-discount-price');
+                  const subtotalPriceNode = tableRow.find('.product-subtotal');
+
+                  discountPrice = convertFromStringToNumber(discountPrice);
+                  subtotalPrice = convertFromStringToNumber(subtotalPrice);
+                  originPrice = convertFromStringToNumber(originPrice);
+
+                  const discountPriceUnit =  discountPrice/productQuantity;
+                  const productPriceUnit = subtotalPrice/productQuantity;
+
+                  const remainingDiscountPrice = formatToCurrency(productCountNumber * discountPriceUnit);
+                  const remainingProductPrice = formatToCurrency(productCountNumber * productPriceUnit);
+
+                  discountPriceNode.text(remainingDiscountPrice);
+                  subtotalPriceNode.text(remainingProductPrice);
+
+                  let originTotalPrice = $('.origin-price-total').text().trim();
+                  let discountTotalPrice = $('.discount-total').text().trim();
+                  let paymentTotalPrice = $('.payment-total').text().trim();
+
+                  originTotalPrice = convertFromStringToNumber(originTotalPrice);
+                  discountTotalPrice = convertFromStringToNumber(discountTotalPrice);
+                  paymentTotalPrice = convertFromStringToNumber(paymentTotalPrice);
+
+                  const priceCalculaterByType = (totalPrice,priceAdjustment,type='minus') => {
+                     return type==='minus' ? totalPrice - priceAdjustment : totalPrice + priceAdjustment;
+                  }
+
+                  $('.origin-price-total').text(formatToCurrency(priceCalculaterByType(originTotalPrice,originPrice,type)));
+                  $('.discount-total').text(formatToCurrency(priceCalculaterByType(discountTotalPrice,discountPriceUnit,type)));
+                  $('.payment-total').text(formatToCurrency(priceCalculaterByType(paymentTotalPrice,productPriceUnit,type)));
+
+               },
+               async run(){
+                  await this.callUpdateCartAPI();
+                  this.renderPrice();
+               }
+            }
+         }
 
          minusBtn.click(async function() {
             if(!$(this).hasClass('disable')){
@@ -234,48 +296,7 @@
                productCountNumber--;
                productCount.val(productCountNumber);
 
-               const productItemID = parentElement[0].dataset.productId;
-
-               await privateRequestHandler('/api/user/edit-cart', 'patch', {productItemID,quantity:productCountNumber}, (data, status) => {
-                  console.log(data);
-                  if(data.status === 'error'){
-                     toastr[data.status](data.message);
-                  }
-               });
-
-               const tableRow = $(this).parents('tr');
-
-               let discountPrice = parentElement[0].dataset.discount || '0';
-               let subtotalPrice = parentElement[0].dataset.subtotal;
-               const productQuantity = Number(parentElement[0].dataset.productCount);
-
-               const discountPriceNode = tableRow.find('.cart-discount-price');
-               const subtotalPriceNode = tableRow.find('.product-subtotal');
-
-               discountPrice = convertFromStringToNumber(discountPrice);
-               subtotalPrice = convertFromStringToNumber(subtotalPrice);
-
-               const discountPriceUnit =  discountPrice/productQuantity;
-               const productPriceUnit = subtotalPrice/productQuantity;
-
-               const remainingDiscountPrice = formatToCurrency(productCountNumber * discountPriceUnit);
-               const remainingProductPrice = formatToCurrency(productCountNumber * productPriceUnit);
-
-               discountPriceNode.text(remainingDiscountPrice);
-               subtotalPriceNode.text(remainingProductPrice);
-
-               let originTotalPrice = $('.origin-price-total').text().trim();
-               let discountTotalPrice = $('.discount-total').text().trim();
-               let paymentTotalPrice = $('.payment-total').text().trim();
-
-               originTotalPrice = convertFromStringToNumber(originTotalPrice);
-               discountTotalPrice = convertFromStringToNumber(discountTotalPrice);
-               paymentTotalPrice = convertFromStringToNumber(paymentTotalPrice);
-               
-               // $('.origin-price-total').text(formatToCurrency());
-               $('.discount-total').text(formatToCurrency(discountTotalPrice - discountPriceUnit));
-               $('.payment-total').text(formatToCurrency(paymentTotalPrice - productPriceUnit));
-
+               await ModifyQuantityHandler(productCountNumber,this,parentElement).run();
             }
 
             if(productCountNumber === 1) {
@@ -297,17 +318,8 @@
             if (productCountNumber <  Number(inventory)) {
                productCountNumber++;
                productCount.val(productCountNumber);
-               
-               const productItemID = parentElement[0].dataset.productId;
 
-               await privateRequestHandler('/api/user/edit-cart', 'patch', {productItemID,quantity:productCountNumber}, (data, status) => {
-                  console.log(data);
-                  if(data.status === 'error'){
-                     toastr[data.status](data.message);
-                  }
-               });
-
-
+               await ModifyQuantityHandler(productCountNumber,this,parentElement,'plus').run();
 
             }
 

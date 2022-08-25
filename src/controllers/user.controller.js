@@ -4,6 +4,7 @@ import formatPath from '../helpers/pathFormated.js';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../helpers/tokenHandler';
 import { createResponse } from '../helpers/responseCreator';
 import passport from 'passport';
+import { response } from 'express';
 
 const userController = () => ({
    async login(req, res, next) {
@@ -194,6 +195,29 @@ const userController = () => ({
       } else {
          res.json(createResponse('error', 'Udpate cart failured !'));
       }
+   },
+   async addAddress(req, res) {
+      const addressData = req.body;
+      const username = req.user?.userName;
+      console.log({
+         addressData,
+         username,
+      });
+      const insertAddressResult = await userService.addDeliveryAddressByUsername({ addressData, username });
+      if (insertAddressResult) {
+         return res.json(createResponse('success', 'Thêm địa chỉ giao hàng thành công !'));
+      } else {
+         return res.json(createResponse('error', 'Thêm địa chỉ thất bại !'));
+      }
+   },
+   async deleteDeliveryAddress(req, res) {
+      const addressID = req.params.addressID;
+      const username = req.user?.userName;
+
+      const deleteResult = await userService.deleteAddressByID(addressID, username);
+      return deleteResult
+         ? res.json(createResponse('success', 'Xóa địa chỉ thành công !'))
+         : res.json(createResponse('error', 'Xóa địa chỉ thất bại !'));
    },
 });
 

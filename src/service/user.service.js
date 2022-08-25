@@ -9,6 +9,7 @@ const wishListModel = Models.wish_list;
 const BrandModel = Models.brand;
 const ProductImagesModel = Models.product_images;
 const cartModel = Models.cart;
+const deliverAddressModel = Models.delivery_address;
 
 import PasswordHandler from '../helpers/passwordHandler';
 import { createResponse } from '../helpers/responseCreator';
@@ -267,6 +268,62 @@ class userService {
          } catch (error) {
             console.log('🚀 ~ file: user.service.js ~ line 256 ~ userService ~ error', error);
             return false;
+         }
+      } else {
+         return false;
+      }
+   }
+   async addDeliveryAddressByUsername({ addressData, username }) {
+      if (addressData && username) {
+         try {
+            const insertRow = await deliverAddressModel.create({
+               province: addressData.province || null,
+               district: addressData.district || null,
+               wards: addressData.ward || null,
+               address_detail: addressData.detailAddress || null,
+               username,
+            });
+            return true;
+         } catch (error) {
+            console.log('🚀 ~ file: user.service.js ~ line 280 ~ userService ~ error', error);
+            return false;
+         }
+      }
+      return false;
+   }
+   async getAllDeliveryAddressByUsername(username) {
+      if (username) {
+         try {
+            const addressResult = await deliverAddressModel.findAll({
+               where: {
+                  username,
+               },
+            });
+            const addressResultFormated = addressResult.map((address) => {
+               return address.dataValues;
+            });
+            return addressResultFormated;
+         } catch (error) {
+            console.log('🚀 ~ file: user.service.js ~ line 299 ~ userService ~ error', error);
+            return false;
+         }
+      } else {
+         return null;
+      }
+   }
+   async deleteAddressByID(addressID, username) {
+      if (username && addressID) {
+         try {
+            const deleteRow = await deliverAddressModel.destroy({
+               where: {
+                  username,
+                  ID: addressID,
+               },
+            });
+            return deleteRow > 0;
+         } catch (error) {
+            console.log('🚀 ~ file: user.service.js ~ line 319 ~ userService ~ error', error);
+            return true;
          }
       } else {
          return false;

@@ -1,0 +1,243 @@
+<html lang="en">
+   <head>
+      <%- include('../../partials/head'); %>
+      <title>CHANGE PASSWORD</title>
+      <link rel="stylesheet" href="/css/delivery-address.css" />
+   </head>
+   <body>
+      <div id="root">
+         <%- include('../../partials/header',{user,isLoggedIn}) %>
+         <div id="main">
+            <div class="delivery-address">
+               <div class="container">
+                  <div class="row">
+                     <div class="delivery-address-container">
+                        <div class="wrapper">
+                           <div class="head d-flex justify-content-between align-items-center">
+                              <div class="title">Địa chỉ giao hàng</div>
+                              <button class="button" id="add-address">
+                                 <i class="ti-plus"></i>
+                                 <span style="margin-left: 3px">Thêm địa chỉ</span>
+                              </button>
+                           </div>
+                           <div class="body">
+                              <ul class="address-list">
+                                 <% if(addressList.length > 0) {%> <% addressList.forEach(address => { %>
+                                 <li class="address-item d-flex justify-content-between">
+                                    <div class="content" style="text-align: left">
+                                       <div class="sub-addres"><%= address.address_detail %></div>
+                                       <div class="main-address">
+                                          <span class="ward"><%= address.wards %></span>
+                                          ,
+                                          <span class="district"><%= address.district %></span>
+                                          ,
+                                          <span class="province"><%= address.province %></span>
+                                       </div>
+                                    </div>
+                                    <div class="edit">
+                                       <div class="update button light button--modify">
+                                          <i class="fa-solid fa-pen-to-square"></i>
+                                          Cập nhật
+                                       </div>
+                                       <div
+                                          data-address-id="<%= address.ID %>"
+                                          class="remove button button--danger delete-address"
+                                       >
+                                          <i class="fa-solid fa-trash-can"></i>
+                                          Xóa
+                                       </div>
+                                    </div>
+                                 </li>
+                                 <% }) %> <% }else{ %>
+                                 <div
+                                    style="flex-direction: column"
+                                    class="d-flex justify-content-center align-items-center"
+                                 >
+                                    <p
+                                       style="text-align: center; margin-top: 2rem; font-size: 2rem"
+                                       class="nothing-title"
+                                    >
+                                       Bạn không có địa chỉ nhận hàng nào !
+                                    </p>
+                                 </div>
+                                 <% } %>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div id="add-address-modal" class="">
+                  <div class="my-overlay">
+                     <div class="my-modal">
+                        <form id="form-address">
+                           <div class="head">
+                              <div class="title">Địa chỉ mới</div>
+                           </div>
+                           <div class="body">
+                              <div class="province-picker">
+                                 <select id="province" name="province"></select>
+                              </div>
+                              <div class="district-picker">
+                                 <select id="district" name="district"></select>
+                              </div>
+                              <div class="ward-picker">
+                                 <select id="ward" name="ward"></select>
+                              </div>
+                              <div>
+                                 <input
+                                    id="detail-address"
+                                    class="input-address"
+                                    placeholder="Nhập địa chỉ cụ thể"
+                                    type="text"
+                                    name="detail-address"
+                                 />
+                              </div>
+                           </div>
+                           <div class="foot">
+                              <button class="button" type="submit">Thêm địa chỉ</button>
+                           </div>
+                           <div class="btn-close-modal">
+                              <div class="ti-close"></div>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <%- include('../../partials/footer') %>
+      </div>
+      <%- include('../../partials/foot') %>
+      <script src="/js/library/localPicker.js"></script>
+      <script type="module">
+         import { privateRequestHandler } from '/js/utils/index.js';
+         import { getFormData } from '/js/utils/index.js';
+         $(() => {
+            (() => {
+               const modal = $('#add-address-modal');
+               return {
+                  addAddressModalControl() {
+                     const showButton = $('#add-address');
+                     const modalContainer = $('.my-modal');
+                     const closeBtn = $('.btn-close-modal');
+                     const overlay = $('.my-overlay');
+                     showButton.click(function (e) {
+                        modal.addClass('show');
+                     });
+                     closeBtn.click(() => {
+                        modal.removeClass('show');
+                     });
+                     overlay.mousedown(() => {
+                        modal.removeClass('show');
+                     });
+                     modalContainer.click((e) => {
+                        e.stopPropagation();
+                     });
+                     modalContainer.mousedown((e) => {
+                        e.stopPropagation();
+                     });
+                  },
+                  validate() {
+                     const validate = new window.JustValidate('#form-address');
+                     validate
+                        .addField('#detail-address', [
+                           {
+                              rule: 'required',
+                              errorMessage: 'Không được để trống dòng này !',
+                           },
+                        ])
+                        .addField('#province', [
+                           {
+                              rule: 'required',
+                              errorMessage: 'KHông được để trống dòng này !',
+                           },
+                        ])
+                        .addField('#district', [
+                           {
+                              rule: 'required',
+                              errorMessage: 'KHông được để trống dòng này !',
+                           },
+                        ])
+                        .addField('#ward', [
+                           {
+                              rule: 'required',
+                              errorMessage: 'KHông được để trống dòng này !',
+                           },
+                        ])
+                        .onSuccess(async (e) => {
+                           const province = $('#province').find(':selected').text();
+                           const ward = $('#ward').find(':selected').text();
+                           const district = $('#district').find(':selected').text();
+                           const detailAddress = $('#detail-address').val().trim();
+
+                           const addressData = {
+                              province,
+                              district,
+                              ward,
+                              detailAddress,
+                           };
+
+                           await privateRequestHandler('/api/user/add-address', 'post', addressData, (data, status) => {
+                              console.log(data);
+                              if (data.status === 'success') {
+                                 modal.removeClass('show');
+                              }
+                              toastr[data.status](data.message);
+                           });
+                        });
+                  },
+                  deleteAddress() {
+                     const deleteButton = $('.delete-address');
+                     deleteButton.click(async function () {
+                        const addressList = $('.address-list');
+                        const addressID = this.dataset.addressId;
+                        const addressItem = $(this).parents('.address-item');
+
+                        await privateRequestHandler(
+                           `/api/user/delete-address/${addressID}`,
+                           'delete',
+                           {},
+                           (data, status) => {
+                              toastr[data?.status || 'error'](data.message);
+                              if (data?.status === 'success') {
+                                 addressItem.remove();
+                                 if (addressList.children().length === 0) {
+                                    addressList.html(`
+                                    <div
+                                       style="flex-direction: column"
+                                       class="d-flex justify-content-center align-items-center"
+                                    >
+                                       <p
+                                          style="text-align: center; margin-top: 2rem; font-size: 2rem"
+                                          class="nothing-title"
+                                       >
+                                          Bạn không có địa chỉ nhận hàng nào !
+                                       </p>
+                                    </div>
+                                    `);
+                                 }
+                              }
+                           },
+                        );
+                     });
+                  },
+                  run() {
+                     this.addAddressModalControl();
+                     this.validate();
+                     this.deleteAddress();
+                  },
+               };
+            })().run();
+         });
+      </script>
+      <script>
+         var localpicker = new LocalPicker({
+            province: 'province',
+            district: 'district',
+            ward: 'ward',
+            provincePrefix: true,
+         });
+      </script>
+   </body>
+</html>

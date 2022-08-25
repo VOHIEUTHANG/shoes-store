@@ -1,4 +1,3 @@
-import UserService from '../service/user.service';
 import ProductService from '../service/product.service';
 import CategoryService from '../service/category.service';
 
@@ -6,6 +5,7 @@ import { createResponse } from '../helpers/responseCreator';
 import convertFromStringToNumber from '../helpers/convertCurrencyFromStringToNmber';
 import formatToCurrency from '../helpers/formatCurrency';
 import getPrivatePageHandler from '../helpers/getPrivatePageHandler';
+import userService from '../service/user.service';
 
 const mainController = () => ({
    getHomePage: async (req, res) => {
@@ -171,7 +171,7 @@ const mainController = () => ({
       const payloadInfo = req.payload;
       const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
 
-      const comments = await ProductService.getAllProductCommentsByID(targetProduct.ID, user.userName);
+      const comments = await ProductService.getAllProductCommentsByID(targetProduct.ID, user?.userName);
       console.log('comments ===> ', comments);
       if (user) {
          payload.user = user;
@@ -199,7 +199,14 @@ const mainController = () => ({
       const payload = getPrivatePageHandler(req, res);
       res.render('pages/user-pages/purchase-order', payload);
    },
-   getDiscountProductPage() {},
+   getDeliveryAddressPage: async (req, res) => {
+      const payload = getPrivatePageHandler(req, res);
+      const username = req.user?.userName;
+      const addressList = await userService.getAllDeliveryAddressByUsername(username);
+      console.log('🚀 ~ file: main.controller.js ~ line 207 ~ addressList', addressList);
+      payload.addressList = addressList;
+      res.render('pages/user-pages/delivery-address', payload);
+   },
 });
 
 export default mainController();

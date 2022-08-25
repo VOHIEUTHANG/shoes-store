@@ -5,7 +5,6 @@ import accountRoute from './account.route';
 import adminRoute from './admin.route';
 import productRoute from './product.route';
 import product_images from './product_img.route';
-
 export default function initWebRoutes(app) {
    app.use('/api/user/', userRoute);
    app.use('/api/account/', accountRoute);

@@ -45,7 +45,8 @@
          }
       }
    }
-   #add-address-modal {
+   #add-address-modal,
+   #update-address-modal {
       &.show {
          .my-overlay {
             @include show();

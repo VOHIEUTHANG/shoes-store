@@ -3,8 +3,8 @@ import cartService from '../service/cart.service';
 import formatPath from '../helpers/pathFormated.js';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../helpers/tokenHandler';
 import { createResponse } from '../helpers/responseCreator';
+import convertFromStringToNumber from '../helpers/convertCurrencyFromStringToNmber';
 import passport from 'passport';
-import { response } from 'express';
 
 const userController = () => ({
    async login(req, res, next) {
@@ -245,6 +245,27 @@ const userController = () => ({
          res.json(JSON.stringify(createResponse('success', 'Cập nhật địa chỉ nhận hàng thành công !', addressData)));
       } else {
          res.json(createResponse('error', 'Update delivery address failed !'));
+      }
+   },
+   async createOrder(req, res) {
+      const addressID = req.body?.addressID;
+      const username = req.user?.userName;
+      if (username) {
+         const { cartList } = req.payload;
+         console.log({ addressID, username, cartList });
+         const orderData = {
+            username,
+            toatalMoney: Number(Math.round(convertFromStringToNumber(cartList?.totalPrice) / 1000)),
+            paymentStatus: false,
+            diliveryStatus: null,
+            orderStatus: 'processing',
+            orderTime: new Date(),
+            paymentTime: null,
+            DELIVERY_ADDRESS_ID: Number(addressID),
+         };
+         console.log(orderData);
+      } else {
+         res.redirect('/login');
       }
    },
 });

@@ -67,6 +67,8 @@ const mainController = () => ({
       if (user) {
          payload.user = user;
          payload.isLoggedIn = true;
+         const addressList = await userService.getAllDeliveryAddressByUsername(user.userName);
+         payload.addressList = addressList;
       }
       let cartList = payloadInfo.cartList;
       console.log('cartList', cartList);

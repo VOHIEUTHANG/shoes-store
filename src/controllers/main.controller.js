@@ -52,7 +52,7 @@ const mainController = () => ({
       payload.isLoggedIn = true;
       const username = user?.userName;
       try {
-         const wishList = await UserService.getAllProductsWishList(username);
+         const wishList = await userService.getAllProductsWishList(username);
          payload.wishlist = wishList;
       } catch (error) {
          res.json(createResponse('error', 'Query wishlist xảy ra lỗi !'));
@@ -185,7 +185,7 @@ const mainController = () => ({
    getProfilePage: async (req, res) => {
       const user = req.user;
       if (!user) return res.redirect('/login');
-      const userInfo = await UserService.getUserInfo(user.userName);
+      const userInfo = await userService.getUserInfo(user.userName);
       user.avatar = userInfo.avatar;
       const payloadInfo = req.payload;
       const payload = { user, isLoggedIn: true, userInfo, ...payloadInfo };

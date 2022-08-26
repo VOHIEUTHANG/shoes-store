@@ -9,6 +9,7 @@ router.post('/login', userController.login);
 router.post('/register', userController.register);
 router.post('/refresh-token', userController.getNewAccessToken);
 router.delete('/logout', userController.logout);
+router.get('/logout-backup', userController.logoutBackup);
 // PRIVATE ROUTES ------------------------------
 router.put('/update-info', validateToken, signleFileUpload('avatar'), userController.updateInfo);
 router.put('/change-password', validateToken, userController.changePassword);
@@ -19,5 +20,7 @@ router.post('/add-to-cart', validateToken, userController.addCart);
 router.patch('/edit-cart', validateToken, userController.editCart);
 router.post('/add-address', validateToken, userController.addAddress);
 router.delete('/delete-address/:addressID', validateToken, userController.deleteDeliveryAddress);
+router.get('/address/:addressID', userController.getAddress);
+router.put('/update-address', validateToken, userController.updateAddress);
 
 export default router;

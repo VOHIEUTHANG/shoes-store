@@ -72,6 +72,15 @@ const userController = () => ({
          });
       });
    },
+   async logoutBackup(req, res) {
+      req.logout((err) => {
+         if (!err) {
+            res.status(200).json('success');
+         } else {
+            res.status(400).json('error');
+         }
+      });
+   },
    async getNewAccessToken(req, res, next) {
       const { refreshToken } = req.body;
       if (!refreshToken) res.status(401).json(createResponse('error', 'Missing refresh token !'));
@@ -203,9 +212,9 @@ const userController = () => ({
          addressData,
          username,
       });
-      const insertAddressResult = await userService.addDeliveryAddressByUsername({ addressData, username });
-      if (insertAddressResult) {
-         return res.json(createResponse('success', 'Thêm địa chỉ giao hàng thành công !'));
+      const newAddress = await userService.addDeliveryAddressByUsername({ addressData, username });
+      if (newAddress) {
+         return res.json(JSON.stringify(createResponse('success', 'Thêm địa chỉ giao hàng thành công !', newAddress)));
       } else {
          return res.json(createResponse('error', 'Thêm địa chỉ thất bại !'));
       }
@@ -218,6 +227,25 @@ const userController = () => ({
       return deleteResult
          ? res.json(createResponse('success', 'Xóa địa chỉ thành công !'))
          : res.json(createResponse('error', 'Xóa địa chỉ thất bại !'));
+   },
+   async getAddress(req, res) {
+      const addressID = req.params.addressID;
+      const address = await userService.getAddressByID(addressID);
+      if (address) {
+         res.json(JSON.stringify(address));
+      } else {
+         res.json(createResponse('error', 'Get new address failured !'));
+      }
+   },
+   async updateAddress(req, res) {
+      const addressData = req.body;
+      const updateResult = await userService.updateAddressByID(addressData);
+      console.log('🚀 ~ file: user.controller.js ~ line 243 ~ updateResult', updateResult);
+      if (updateResult) {
+         res.json(JSON.stringify(createResponse('success', 'Cập nhật địa chỉ nhận hàng thành công !', addressData)));
+      } else {
+         res.json(createResponse('error', 'Update delivery address failed !'));
+      }
    },
 });
 

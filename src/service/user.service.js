@@ -264,7 +264,7 @@ class userService {
                   },
                },
             );
-            return updateRows > 0;
+            return updateRows[0] > 0;
          } catch (error) {
             console.log('🚀 ~ file: user.service.js ~ line 256 ~ userService ~ error', error);
             return false;
@@ -283,7 +283,7 @@ class userService {
                address_detail: addressData.detailAddress || null,
                username,
             });
-            return true;
+            return insertRow.dataValues;
          } catch (error) {
             console.log('🚀 ~ file: user.service.js ~ line 280 ~ userService ~ error', error);
             return false;
@@ -298,6 +298,7 @@ class userService {
                where: {
                   username,
                },
+               order: [['ID', 'DESC']],
             });
             const addressResultFormated = addressResult.map((address) => {
                return address.dataValues;
@@ -327,6 +328,54 @@ class userService {
          }
       } else {
          return false;
+      }
+   }
+   async getAddressByID(addressID) {
+      if (addressID) {
+         try {
+            const targetAddress = await deliverAddressModel.findOne({
+               where: {
+                  ID: addressID,
+               },
+            });
+            if (targetAddress) {
+               return targetAddress.dataValues;
+            } else {
+               console.log('Not found !');
+               return null;
+            }
+         } catch (error) {
+            console.log('🚀 ~ file: user.service.js ~ line 338 ~ userService ~ error', error);
+            return null;
+         }
+      } else {
+         return null;
+      }
+   }
+   async updateAddressByID(addressData) {
+      console.log(addressData);
+      if (addressData) {
+         try {
+            const updateRows = await deliverAddressModel.update(
+               {
+                  province: addressData.province,
+                  district: addressData.district,
+                  wards: addressData.ward,
+                  address_detail: addressData.detailAddress,
+               },
+               {
+                  where: {
+                     ID: Number(addressData.ID),
+                  },
+               },
+            );
+            return true;
+         } catch (error) {
+            console.log('error ===> ', error);
+            return null;
+         }
+      } else {
+         return null;
       }
    }
 }

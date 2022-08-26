@@ -3,6 +3,7 @@ import { createResponse } from '../helpers/responseCreator';
 
 export default function validateTokenMiddleware(req, res, next) {
    passport.authenticate('jwt', { session: false }, (error, user, info, status) => {
+      console.log('[Check token] : error ==> ', error);
       console.log('Current user ===> ', user);
       if (!user) {
          if (info?.message === 'No auth token') {

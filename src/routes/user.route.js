@@ -2,6 +2,7 @@ import express from 'express';
 import userController from '../controllers/user.controller';
 import { signleFileUpload } from '../middlewares/uploadFiles';
 import validateToken from '../middlewares/validateToken';
+import headerWrapper from '../helpers/headerWrapper';
 
 const router = express.Router();
 // PUBLIC ROUTES --------------------------------
@@ -22,5 +23,6 @@ router.post('/add-address', validateToken, userController.addAddress);
 router.delete('/delete-address/:addressID', validateToken, userController.deleteDeliveryAddress);
 router.get('/address/:addressID', userController.getAddress);
 router.put('/update-address', validateToken, userController.updateAddress);
+router.post('/order', validateToken, headerWrapper(userController.createOrder));
 
 export default router;

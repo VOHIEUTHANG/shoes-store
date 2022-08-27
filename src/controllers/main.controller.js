@@ -6,6 +6,7 @@ import convertFromStringToNumber from '../helpers/convertCurrencyFromStringToNmb
 import formatToCurrency from '../helpers/formatCurrency';
 import getPrivatePageHandler from '../helpers/getPrivatePageHandler';
 import userService from '../service/user.service';
+import orderService from '../service/order.service';
 
 const mainController = () => ({
    getHomePage: async (req, res) => {
@@ -199,6 +200,18 @@ const mainController = () => ({
    },
    gePurchaseOrderPage: async (req, res) => {
       const payload = getPrivatePageHandler(req, res);
+      try {
+         const username = req.user?.userName;
+         const orderList = await orderService.getAllOrderByUsername(username);
+         console.log('orderList ===> ');
+         orderList.forEach((order) => {
+            console.log(order.productItems);
+         });
+         payload.orderList = orderList;
+      } catch (error) {
+         console.log('🚀 ~ file: main.controller.js ~ line 205 ~ error', error);
+         return res.json(createResponse('error', 'Select order list failured !'));
+      }
       res.render('pages/user-pages/purchase-order', payload);
    },
    getDeliveryAddressPage: async (req, res) => {

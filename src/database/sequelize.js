@@ -17,3 +17,4 @@ const sequelize = new Sequelize(mysqlInfo.database, mysqlInfo.user, mysqlInfo.pa
 })();
 
 export default initModels(sequelize);
+export { sequelize };

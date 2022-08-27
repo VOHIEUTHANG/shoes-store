@@ -164,7 +164,10 @@
                                     </div>
                                  <% }) %>
                                  <% } else {%>
-                                    Bạn chưa có địa chỉ nào ?
+                                   <div style="height: 50%;font-size:2rem;display:flex;justify-content:center;">
+                                    <div style="text-align:center;margin-bottom:2rem;margin-right:1rem">Bạn chưa có địa chỉ nào ?</div>
+                                    <a style="text-transform: initial;text-decoration: underline;color:dodgerblue;" href="/delivery-address">Thêm địa chỉ mới</a>
+                                   </div>
                                  <% } %>
                                  </div>
                            </div>
@@ -409,16 +412,22 @@
          purchaseBtn.click(function(e){
             chooseAddressModal.addClass('show');
          })
-         orderBtn.click(async function(e){
+
+         orderBtn?.click(async function(e){
             e.preventDefault();
             const checkedAddress = $('.form-check-input:checked'); 
-            const addressID = checkedAddress[0].dataset.addressId;
-            if(addressID){
-               await privateRequestHandler('/api/user/order','post',{addressID},(data,status)=>{
-                  console.log('data ===> ', data);
-               });
+
+            if(checkedAddress.length > 0){
+               const addressID = checkedAddress[0].dataset.addressId;
+               if(addressID){
+                  await privateRequestHandler('/api/user/order','post',{addressID},(data,status)=>{
+                     console.log('data ===> ', data);
+                  });
+               }else{
+                  toastr.error('Missing delivery address !');
+               }
             }else{
-               toastr.error('Missing delivery address !');
+               toastr.warning('Vui lòng thêm địa chỉ nhận hàng để tiếp tục !');
             }
          })
       </script>

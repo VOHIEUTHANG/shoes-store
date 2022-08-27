@@ -1,5 +1,8 @@
 import userService from '../service/user.service';
 import cartService from '../service/cart.service';
+import orderService from '../service/order.service';
+import { sequelize } from '../database/sequelize';
+
 import formatPath from '../helpers/pathFormated.js';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../helpers/tokenHandler';
 import { createResponse } from '../helpers/responseCreator';
@@ -248,14 +251,17 @@ const userController = () => ({
       }
    },
    async createOrder(req, res) {
+      const createOrderTransaction = await sequelize.transaction();
+
       const addressID = req.body?.addressID;
       const username = req.user?.userName;
+      const priceFormated = (stringPrice) => Number(Math.round(convertFromStringToNumber(stringPrice) / 1000));
       if (username) {
          const { cartList } = req.payload;
          console.log({ addressID, username, cartList });
          const orderData = {
             username,
-            toatalMoney: Number(Math.round(convertFromStringToNumber(cartList?.totalPrice) / 1000)),
+            totalMoney: priceFormated(cartList.totalPrice),
             paymentStatus: false,
             diliveryStatus: null,
             orderStatus: 'processing',
@@ -263,7 +269,53 @@ const userController = () => ({
             paymentTime: null,
             DELIVERY_ADDRESS_ID: Number(addressID),
          };
-         console.log(orderData);
+         console.log('cartList ===> ', cartList);
+         cartList.forEach((cart) => {
+            console.log(cart.PRODUCT_ITEM.PRODUCT);
+         });
+
+         try {
+            const orderID = await orderService.createOrder(orderData, createOrderTransaction);
+            if (orderID) {
+               const orderDetailFormatedData = cartList.map((cartItem) => {
+                  const productItem = cartItem.PRODUCT_ITEM;
+                  const product = productItem.PRODUCT;
+                  const discount = product.discounts;
+
+                  return {
+                     PRODUCT_ITEMS_ID: productItem.ID,
+                     ORDER_ID: orderID,
+                     quantity: cartItem.quantity,
+                     price: priceFormated(product.price),
+                     discount_percent: discount ? discount.percentReduction : 0,
+                     intoMoney: discount
+                        ? priceFormated(discount.priceAfterApplyDiscount) * cartItem.quantity
+                        : priceFormated(product.price) * cartItem.quantity,
+                  };
+               });
+               console.log('orderDetailFormatedData ===> ', orderDetailFormatedData);
+               const orderDetailListResult = await orderService.createOrderDetail(
+                  orderDetailFormatedData,
+                  createOrderTransaction,
+               );
+               console.log('Order detail list ===>', orderDetailListResult);
+               if (orderDetailListResult) {
+                  await createOrderTransaction.commit();
+                  return res.json(
+                     JSON.stringify(createResponse('success', 'Tạo đơn hàng thành công !', orderDetailListResult)),
+                  );
+               } else {
+                  await createOrderTransaction.rollback();
+                  return res.json(createResponse('error', 'Tạo đơn hàng thất bại !'));
+               }
+            } else {
+               await createOrderTransaction.rollback();
+               return res.json(createResponse('error', 'Tạo đơn hàng thất bại !'));
+            }
+         } catch (error) {
+            console.log('🚀 ~ file: user.controller.js ~ line 315 ~ error', error);
+            await createOrderTransaction.rollback();
+         }
       } else {
          res.redirect('/login');
       }

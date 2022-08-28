@@ -117,7 +117,18 @@ input.input-feild {
    background-color: $color-bg-dark;
    color: $color-white;
    border: 1px solid $color-bg-dark;
+   @include transition;
    z-index: 1;
+   &.button--danger {
+      &:hover {
+         border-color: $color-bg-danger !important;
+         color: $color-bg-danger !important;
+      }
+   }
+   &.button--modify {
+      color: var(--bs-info) !important;
+      border-color: var(--bs-info);
+   }
    &.light {
       color: $color-bg-dark;
       background-color: $color-white;

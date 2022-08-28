@@ -228,10 +228,17 @@
             align-items: flex-start;
             margin-bottom: 20px;
             padding-bottom: 20px;
-            .cart-img img {
-               width: 100px;
-               height: 100px;
-               object-fit: cover;
+            .cart-img {
+               a {
+                  width: 100px;
+                  height: 100px;
+                  overflow: hidden;
+                  img {
+                     width: 100%;
+                     height: 100%;
+                     object-fit: cover;
+                  }
+               }
             }
          }
          .single-product-cart:last-child {

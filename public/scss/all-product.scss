@@ -63,6 +63,11 @@
    .product-img {
       position: relative;
       border: 1px solid rgb(238, 238, 238);
+      a {
+         aspect-ratio: 1/1;
+         display: flex;
+         align-items: center;
+      }
    }
    .product-wrapper {
       position: relative;

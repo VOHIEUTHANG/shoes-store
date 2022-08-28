@@ -1,4 +1,3 @@
-import UserService from '../service/user.service';
 import ProductService from '../service/product.service';
 import CategoryService from '../service/category.service';
 
@@ -6,6 +5,8 @@ import { createResponse } from '../helpers/responseCreator';
 import convertFromStringToNumber from '../helpers/convertCurrencyFromStringToNmber';
 import formatToCurrency from '../helpers/formatCurrency';
 import getPrivatePageHandler from '../helpers/getPrivatePageHandler';
+import userService from '../service/user.service';
+import orderService from '../service/order.service';
 
 const mainController = () => ({
    getHomePage: async (req, res) => {
@@ -52,7 +53,7 @@ const mainController = () => ({
       payload.isLoggedIn = true;
       const username = user?.userName;
       try {
-         const wishList = await UserService.getAllProductsWishList(username);
+         const wishList = await userService.getAllProductsWishList(username);
          payload.wishlist = wishList;
       } catch (error) {
          res.json(createResponse('error', 'Query wishlist xảy ra lỗi !'));
@@ -67,6 +68,8 @@ const mainController = () => ({
       if (user) {
          payload.user = user;
          payload.isLoggedIn = true;
+         const addressList = await userService.getAllDeliveryAddressByUsername(user.userName);
+         payload.addressList = addressList;
       }
       let cartList = payloadInfo.cartList;
       console.log('cartList', cartList);
@@ -171,7 +174,7 @@ const mainController = () => ({
       const payloadInfo = req.payload;
       const payload = { user: {}, isLoggedIn: false, ...payloadInfo };
 
-      const comments = await ProductService.getAllProductCommentsByID(targetProduct.ID, user.userName);
+      const comments = await ProductService.getAllProductCommentsByID(targetProduct.ID, user?.userName);
       console.log('comments ===> ', comments);
       if (user) {
          payload.user = user;
@@ -185,7 +188,7 @@ const mainController = () => ({
    getProfilePage: async (req, res) => {
       const user = req.user;
       if (!user) return res.redirect('/login');
-      const userInfo = await UserService.getUserInfo(user.userName);
+      const userInfo = await userService.getUserInfo(user.userName);
       user.avatar = userInfo.avatar;
       const payloadInfo = req.payload;
       const payload = { user, isLoggedIn: true, userInfo, ...payloadInfo };
@@ -197,9 +200,46 @@ const mainController = () => ({
    },
    gePurchaseOrderPage: async (req, res) => {
       const payload = getPrivatePageHandler(req, res);
+      try {
+         const username = req.user?.userName;
+         const orderList = await orderService.getAllOrderByUsername(username);
+         console.log('orderList ===> ');
+         const orderListFormated = orderList.map((order) => {
+            return {
+               ...order,
+               totalMoney: formatToCurrency(order.totalMoney * 1000),
+               productItems: order.productItems.map((productItem) => {
+                  return {
+                     ...productItem,
+                     order_detail: {
+                        ...productItem.order_detail,
+                        price: formatToCurrency(productItem.order_detail.price * 1000),
+                        intoMoney: formatToCurrency(productItem.order_detail.intoMoney * 1000),
+                     },
+                  };
+               }),
+            };
+         });
+         console.log('orderListFormated product Items ===> ', orderListFormated);
+         orderListFormated.forEach((order) => {
+            console.log('order prodict items ===> ', order.productItems);
+         });
+
+         payload.orderList = orderListFormated;
+      } catch (error) {
+         console.log('🚀 ~ file: main.controller.js ~ line 205 ~ error', error);
+         return res.json(createResponse('error', 'Select order list failured !'));
+      }
       res.render('pages/user-pages/purchase-order', payload);
    },
-   getDiscountProductPage() {},
+   getDeliveryAddressPage: async (req, res) => {
+      const payload = getPrivatePageHandler(req, res);
+      const username = req.user?.userName;
+      const addressList = await userService.getAllDeliveryAddressByUsername(username);
+      console.log('🚀 ~ file: main.controller.js ~ line 207 ~ addressList', addressList);
+      payload.addressList = addressList;
+      res.render('pages/user-pages/delivery-address', payload);
+   },
 });
 
 export default mainController();

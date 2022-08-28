@@ -365,6 +365,11 @@
         height: 2rem;
         background-color: inherit;
         clip-path: polygon(100% 0, 100% 100%, 50% 0, 0 100%, 0 0); }
+  #product-detail-page .product-area .product-img a {
+    display: block;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center; }
   #product-detail-page .product-area .product-img img {
     transition: all 0.3s ease-in-out; }
   #product-detail-page .product-area .product-img:hover img {

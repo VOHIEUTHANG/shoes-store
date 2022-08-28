@@ -142,7 +142,7 @@
                   </div>
                </div>
                <div class="product-description-review-area">
-                  <div class="container">
+                  <div class="container" id="comment">
                      <div class="product-description-review text-center">
                         <!-- <div class="description-review-title nav" role="tablist"></div> -->
                         <div class="description-review-text">
@@ -162,6 +162,7 @@
                               <h2>Đánh giá</h2>
                            </div>
                            <div class="">
+                              <% if(user.avatar) { %>
                               <div class="current-comment-wrapper">
                                  <div class="current-user">
                                     <img src="<%= user.avatar %>" alt="" />
@@ -194,8 +195,12 @@
                                     </div>
                                  </div>
                               </div>
+                              <% } else { %>
+                              <a href="/login">
+                                 <div class="button">Viết đánh giá</div>
+                              </a>
+                              <% } %>
                               <hr />
-
                               <div class="comment-container">
                                  <div class="comment-list">
                                     <% if(comments.length > 0){ %> <% comments.forEach(comment => { %>

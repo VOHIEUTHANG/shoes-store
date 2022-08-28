@@ -9,6 +9,7 @@ const wishListModel = Models.wish_list;
 const BrandModel = Models.brand;
 const ProductImagesModel = Models.product_images;
 const cartModel = Models.cart;
+const deliverAddressModel = Models.delivery_address;
 
 import PasswordHandler from '../helpers/passwordHandler';
 import { createResponse } from '../helpers/responseCreator';
@@ -263,13 +264,118 @@ class userService {
                   },
                },
             );
-            return updateRows > 0;
+            return updateRows[0] > 0;
          } catch (error) {
             console.log('🚀 ~ file: user.service.js ~ line 256 ~ userService ~ error', error);
             return false;
          }
       } else {
          return false;
+      }
+   }
+   async addDeliveryAddressByUsername({ addressData, username }) {
+      if (addressData && username) {
+         try {
+            const insertRow = await deliverAddressModel.create({
+               province: addressData.province || null,
+               district: addressData.district || null,
+               wards: addressData.ward || null,
+               address_detail: addressData.detailAddress || null,
+               username,
+            });
+            return insertRow.dataValues;
+         } catch (error) {
+            console.log('🚀 ~ file: user.service.js ~ line 280 ~ userService ~ error', error);
+            return false;
+         }
+      }
+      return false;
+   }
+   async getAllDeliveryAddressByUsername(username) {
+      if (username) {
+         try {
+            const addressResult = await deliverAddressModel.findAll({
+               where: {
+                  username,
+               },
+               order: [['ID', 'DESC']],
+            });
+            const addressResultFormated = addressResult.map((address) => {
+               return address.dataValues;
+            });
+            return addressResultFormated;
+         } catch (error) {
+            console.log('🚀 ~ file: user.service.js ~ line 299 ~ userService ~ error', error);
+            return false;
+         }
+      } else {
+         return null;
+      }
+   }
+   async deleteAddressByID(addressID, username) {
+      if (username && addressID) {
+         try {
+            const deleteRow = await deliverAddressModel.destroy({
+               where: {
+                  username,
+                  ID: addressID,
+               },
+            });
+            return deleteRow > 0;
+         } catch (error) {
+            console.log('🚀 ~ file: user.service.js ~ line 319 ~ userService ~ error', error);
+            return true;
+         }
+      } else {
+         return false;
+      }
+   }
+   async getAddressByID(addressID) {
+      if (addressID) {
+         try {
+            const targetAddress = await deliverAddressModel.findOne({
+               where: {
+                  ID: addressID,
+               },
+            });
+            if (targetAddress) {
+               return targetAddress.dataValues;
+            } else {
+               console.log('Not found !');
+               return null;
+            }
+         } catch (error) {
+            console.log('🚀 ~ file: user.service.js ~ line 338 ~ userService ~ error', error);
+            return null;
+         }
+      } else {
+         return null;
+      }
+   }
+   async updateAddressByID(addressData) {
+      console.log(addressData);
+      if (addressData) {
+         try {
+            const updateRows = await deliverAddressModel.update(
+               {
+                  province: addressData.province,
+                  district: addressData.district,
+                  wards: addressData.ward,
+                  address_detail: addressData.detailAddress,
+               },
+               {
+                  where: {
+                     ID: Number(addressData.ID),
+                  },
+               },
+            );
+            return true;
+         } catch (error) {
+            console.log('error ===> ', error);
+            return null;
+         }
+      } else {
+         return null;
       }
    }
 }

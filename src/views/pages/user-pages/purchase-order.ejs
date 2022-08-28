@@ -18,221 +18,93 @@
                         <ul class="purchase-tabs d-flex">
                            <li class="purchase-item col active">Tất cả</li>
                            <li class="purchase-item col">Chờ xác nhận</li>
-                           <li class="purchase-item col">Chờ lấy hàng</li>
-                           <li class="purchase-item col">Đăng giao</li>
                            <li class="purchase-item col">Đã giao</li>
                            <li class="purchase-item col">Đã hủy</li>
                         </ul>
                      </div>
                      <div class="row mt-1">
                         <div class="purchase-container">
-                           <div class="purchase-wrapper">
+                           <% if(orderList?.length > 0){ %> <% orderList.forEach(order => { %>
+                           <div
+                              class="purchase-wrapper <%= order.orderStatus === 'cancle' ? 'cancel' : order.orderStatus == 'success' ? 'success' : '' %>"
+                           >
                               <div class="purchase-head">
                                  <div class="d-flex justify-content-between">
                                     <div>
                                        Mã đơn hàng:
-                                       <span># N19DCPT070</span>
+                                       <span><%= order.ID %></span>
                                     </div>
                                     <div class="purchase-info d-flex">
                                        <div class="purchase-order-time">
-                                          <span>08/08/2022</span>
+                                          <span
+                                             ><%= order.orderTime.getDate() %>/<%= order.orderTime.getMonth() + 1 %>/<%=
+                                             order.orderTime.getFullYear() %></span
+                                          >
                                        </div>
                                        <div class="divider-vertical"></div>
-                                       <div class="purchase-status">Đang giao</div>
+                                       <div class="purchase-status"><%= order.diliveryStatus ?? 'Đang xử lý ' %></div>
                                     </div>
                                  </div>
                               </div>
                               <div class="purchase-body">
                                  <div class="purchase-product-list">
+                                    <% order.productItems.forEach(product=>{ %>
                                     <div class="purchase-product-item d-flex justify-content-between">
                                        <div class="left-section d-flex">
                                           <div class="product-img">
-                                             <a href="" #>
+                                             <a href="/product/<%= product?.PRODUCT?.slug %>">
                                                 <img
-                                                   src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_14961e9a-1e1b-4d1e-a8d2-2e4fedf3bc91_1296x.jpg?v=1656283010"
-                                                   alt="jordan1"
+                                                   src="<%= product?.PRODUCT?.product_images %>"
+                                                   alt="<%= product?.PRODUCT?.name  %>"
                                                 />
                                              </a>
                                           </div>
                                           <div class="product-info">
-                                             <a href="#">
-                                                <p class="name">Air Jordan 1 Mid Diamond Shorts</p>
+                                             <a href="/product/<%= product?.PRODUCT?.slug %>">
+                                                <p class="name"><%= product?.PRODUCT?.name %></p>
                                              </a>
-                                             <p class="size">Size: 40</p>
+                                             <p class="price">Giá: <%= product.order_detail.price %></p>
+                                             <p class="size">Size: <%= product.size %></p>
                                              <p class="quantity">
                                                 <span class="denind-uppercase">x</span>
-                                                <span>1</span>
+                                                <span><%= product.order_detail.quantity %></span>
                                              </p>
                                           </div>
                                        </div>
-                                       <div class="right-section">
-                                          <!-- <div class="origin-price">2.300.000 VND</div> -->
-                                          <!-- <div class="discount">- 7 %</div> -->
-                                          <div class="last-price">2.739.000 VND</div>
-                                       </div>
-                                    </div>
-                                    <div class="purchase-product-item d-flex justify-content-between">
-                                       <div class="left-section d-flex">
-                                          <div class="product-img">
-                                             <a href="" #>
-                                                <img
-                                                   src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_fbafebba-0799-4c6e-aee5-8888a82184bc_1296x.jpg?v=1656298494"
-                                                   alt="jordan1"
-                                                />
-                                             </a>
-                                          </div>
-                                          <div class="product-info">
-                                             <a href="#">
-                                                <p class="name">Air Jordan 1 Retro High OG Heritage 555088-161</p>
-                                             </a>
-                                             <p class="size">Size: 42</p>
-                                             <p class="quantity">
-                                                <span class="denind-uppercase">x</span>
-                                                <span>1</span>
-                                             </p>
-                                          </div>
+                                       <div class="center-section">
+                                          <a href="/product/<%= product?.PRODUCT?.slug %>#comment">
+                                             <button class="button light">Đánh giá</button>
+                                          </a>
                                        </div>
                                        <div class="right-section">
-                                          <div class="origin-price">2.300.000 VND</div>
-                                          <div class="discount">- 6 %</div>
-                                          <div class="last-price">2.139.000 VND</div>
+                                          <% if(product.order_detail.discount_percent > 0) { %>
+                                          <div class="origin-price">
+                                             <%= product.order_detail?.price %> x <%= product.order_detail.quantity %>
+                                          </div>
+                                          <div class="discount">- <%= product.order_detail?.discount_percent %> %</div>
+                                          <% } else {%>
+                                          <div>-</div>
+                                          <div>-</div>
+                                          <% } %>
+                                          <div class="last-price"><%= product.order_detail?.intoMoney %></div>
                                        </div>
                                     </div>
+                                    <% }) %>
                                  </div>
                               </div>
                               <div class="purchase-foot">
                                  <div class="d-flex justify-content-between">
-                                    <div>
-                                       <button class="button">Đánh giá</button>
-                                       <button class="button light">Mua lại</button>
-                                    </div>
+                                    <div></div>
                                     <div class="total-price">
                                        Tổng tiền
-                                       <span>4.878.000 VND</span>
+                                       <span><%= order.totalMoney %></span>
                                     </div>
                                  </div>
                               </div>
                            </div>
-                           <div class="purchase-wrapper success">
-                              <div class="purchase-head">
-                                 <div class="d-flex justify-content-between">
-                                    <div>
-                                       Mã đơn hàng:
-                                       <span># N19DCPT070</span>
-                                    </div>
-                                    <div class="purchase-info d-flex">
-                                       <div class="purchase-order-time">
-                                          <span>08/08/2022</span>
-                                       </div>
-                                       <div class="divider-vertical"></div>
-                                       <div class="purchase-status">Đã giao</div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="purchase-body">
-                                 <div class="purchase-product-list">
-                                    <div class="purchase-product-item d-flex justify-content-between">
-                                       <div class="left-section d-flex">
-                                          <div class="product-img">
-                                             <a href="" #>
-                                                <img
-                                                   src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_fbafebba-0799-4c6e-aee5-8888a82184bc_1296x.jpg?v=1656298494"
-                                                   alt="jordan1"
-                                                />
-                                             </a>
-                                          </div>
-                                          <div class="product-info">
-                                             <a href="#">
-                                                <p class="name">Air Jordan 1 Retro High OG Heritage 555088-161</p>
-                                             </a>
-                                             <p class="size">Size: 42</p>
-                                             <p class="quantity">
-                                                <span class="denind-uppercase">x</span>
-                                                <span>1</span>
-                                             </p>
-                                          </div>
-                                       </div>
-                                       <div class="right-section">
-                                          <div class="origin-price">2.300.000 VND</div>
-                                          <div class="discount">- 6 %</div>
-                                          <div class="last-price">2.139.000 VND</div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="purchase-foot">
-                                 <div class="d-flex justify-content-between">
-                                    <div>
-                                       <button class="button">Đánh giá</button>
-                                       <button class="button light">Mua lại</button>
-                                    </div>
-                                    <div class="total-price">
-                                       Tổng tiền
-                                       <span>2.139.000 VND</span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="purchase-wrapper cancel">
-                              <div class="purchase-head">
-                                 <div class="d-flex justify-content-between">
-                                    <div>
-                                       Mã đơn hàng:
-                                       <span># N19DCPT070</span>
-                                    </div>
-                                    <div class="purchase-info d-flex">
-                                       <div class="purchase-order-time">
-                                          <span>08/08/2022</span>
-                                       </div>
-                                       <div class="divider-vertical"></div>
-                                       <div class="purchase-status">Đã hủy</div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="purchase-body">
-                                 <div class="purchase-product-list">
-                                    <div class="purchase-product-item d-flex justify-content-between">
-                                       <div class="left-section d-flex">
-                                          <div class="product-img">
-                                             <a href="" #>
-                                                <img
-                                                   src="https://cdn.shopify.com/s/files/1/0603/3031/1875/products/main-square_d67321ba-a1e9-4f7a-8071-45ea8190385e_1296x.jpg?v=1656232769"
-                                                   alt="jordan1"
-                                                />
-                                             </a>
-                                          </div>
-                                          <div class="product-info">
-                                             <a href="#">
-                                                <p class="name">Air Jordan 1 Mid Diamond Shorts</p>
-                                             </a>
-                                             <p class="size">Size: 40</p>
-                                             <p class="quantity">
-                                                <span class="denind-uppercase">x</span>
-                                                <span>1</span>
-                                             </p>
-                                          </div>
-                                       </div>
-                                       <div class="right-section">
-                                          <div class="origin-price">2.300.000 VND</div>
-                                          <div class="discount">- 1 %</div>
-                                          <div class="last-price">2.277.000 VND</div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="purchase-foot">
-                                 <div class="d-flex justify-content-between">
-                                    <div>
-                                       <button class="button">Đánh giá</button>
-                                       <button class="button light">Mua lại</button>
-                                    </div>
-                                    <div class="total-price">
-                                       Tổng tiền
-                                       <span>2.307.000 VND</span>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
+                           <% }) %> <% } else { %>
+                           <h3 style="margin-top: 2rem; text-align: center">Bạn không có đơn hàng nào !</h3>
+                           <% } %>
                         </div>
                      </div>
                   </div>

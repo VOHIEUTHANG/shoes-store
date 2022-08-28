@@ -16,7 +16,6 @@ export default async function deleteCartItemOnLick(_this, privateRequestHandler,
    $('.cart-price h4').text(formatToCurrency(newPrice));
    try {
       await privateRequestHandler(`/api/user/delete-cart-item/${productItemID}`, 'delete', {}, (data, status) => {
-         toastr[data.status](data.message);
          if (data.status === 'success') {
             cartItem.remove();
             const currentCartCount = Number($('.shop-count.pink').text());
@@ -34,6 +33,8 @@ export default async function deleteCartItemOnLick(_this, privateRequestHandler,
                  `;
             }
             successHandler && successHandler(productItemID);
+         } else {
+            toastr[data.status](data.message);
          }
       });
    } catch (error) {

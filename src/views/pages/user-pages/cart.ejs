@@ -12,17 +12,17 @@
                <div class="container">
                   <div class="row">
                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <h1 class="cart-heading">Giỏ hàng</h1>
                         <form action="#" id="main-form">
                            <% if(cartList.length === 0) { %>
                            <div
-                              style="flex-direction: column"
+                              style="flex-direction: column;min-height: 50vh;"
                               class="d-flex justify-content-center align-items-center"
                               >
-                              <i style="font-size: 6rem !important" class="ti-face-sad"> </i>
-                              <p style="text-align: center; margin-top: 4rem;font-size:2.4rem" class="nothing-title">
+                              <img width="200px" src="/assets/images/noPurchase/emptyCart.png"/>
+                              <p style="text-align: center; margin-top: 4rem;font-size:1.8rem" class="nothing-title">
                                  Bạn không có sản phẩm nào trong giỏ hàng !
                               </p>
+                              <a href="/" class="button light" style="margin-top: 2rem;">Mua hàng</a>
                            </div>
                            <% } else{ %>
                            <div class="table-content table-responsive">
@@ -215,13 +215,14 @@
                mainTable.remove();
                mainForm.html(`
                <div
-                  style="flex-direction: column"
+                  style="flex-direction: column;min-height: 50vh;"
                   class="d-flex justify-content-center align-items-center"
                   >
-                  <i style="font-size: 6rem !important" class="ti-face-sad"> </i>
-                  <p style="text-align: center; margin-top: 4rem;font-size:2.4rem" class="nothing-title">
+                  <img width="200px" src="/assets/images/noPurchase/emptyCart.png"/>
+                  <p style="text-align: center; margin-top: 4rem;font-size:1.8rem" class="nothing-title">
                      Bạn không có sản phẩm nào trong giỏ hàng !
                   </p>
+                  <a href="/" class="button light" style="margin-top: 2rem;">Mua hàng</a>
                </div>
                `);
 

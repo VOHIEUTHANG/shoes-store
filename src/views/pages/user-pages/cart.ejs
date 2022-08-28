@@ -373,9 +373,7 @@
             if (productCountNumber <  Number(inventory)) {
                productCountNumber++;
                productCount.val(productCountNumber);
-
                await ModifyQuantityHandler(productCountNumber,this,parentElement,'plus').run();
-
             }
 
             if(productCountNumber ===  Number(inventory) ){
@@ -421,7 +419,10 @@
                const addressID = checkedAddress[0].dataset.addressId;
                if(addressID){
                   await privateRequestHandler('/api/user/order','post',{addressID},(data,status)=>{
-                     console.log('data ===> ', data);
+                     const convertDataToObject = JSON.parse(data);
+                     if(convertDataToObject.status === 'success'){
+                        window.location.href = '/purchase-order';
+                     }
                   });
                }else{
                   toastr.error('Missing delivery address !');

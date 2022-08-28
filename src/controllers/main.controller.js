@@ -204,10 +204,28 @@ const mainController = () => ({
          const username = req.user?.userName;
          const orderList = await orderService.getAllOrderByUsername(username);
          console.log('orderList ===> ');
-         orderList.forEach((order) => {
-            console.log(order.productItems);
+         const orderListFormated = orderList.map((order) => {
+            return {
+               ...order,
+               totalMoney: formatToCurrency(order.totalMoney * 1000),
+               productItems: order.productItems.map((productItem) => {
+                  return {
+                     ...productItem,
+                     order_detail: {
+                        ...productItem.order_detail,
+                        price: formatToCurrency(productItem.order_detail.price * 1000),
+                        intoMoney: formatToCurrency(productItem.order_detail.intoMoney * 1000),
+                     },
+                  };
+               }),
+            };
          });
-         payload.orderList = orderList;
+         console.log('orderListFormated product Items ===> ', orderListFormated);
+         orderListFormated.forEach((order) => {
+            console.log('order prodict items ===> ', order.productItems);
+         });
+
+         payload.orderList = orderListFormated;
       } catch (error) {
          console.log('🚀 ~ file: main.controller.js ~ line 205 ~ error', error);
          return res.json(createResponse('error', 'Select order list failured !'));

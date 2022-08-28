@@ -83,11 +83,11 @@ class OrderService {
                where: {
                   username,
                },
+               order: [['ID', 'DESC']],
             });
-            console.log('orderList ===> ', orderList);
             const formatedData = orderList.map((order) => {
                const orderVal = order.dataValues;
-               return {
+               let result = {
                   ...orderVal,
                   productItems: orderVal.PRODUCT_ITEMS_ID_product_items_order_details?.map((productItem) => {
                      return {
@@ -101,7 +101,10 @@ class OrderService {
                      };
                   }),
                };
+               delete result.PRODUCT_ITEMS_ID_product_items_order_details;
+               return result;
             });
+            console.log('formatedData ===> ', formatedData);
             return formatedData;
          } catch (error) {
             console.log('🚀 ~ file: order.service.js ~ line 69 ~ OrderService ~ error', error);

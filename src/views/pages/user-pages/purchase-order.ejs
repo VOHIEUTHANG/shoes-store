@@ -16,10 +16,10 @@
                   <div class="container">
                      <div class="row">
                         <ul class="purchase-tabs d-flex">
-                           <li class="purchase-item col active">Tất cả</li>
-                           <li class="purchase-item col">Chờ xác nhận</li>
-                           <li class="purchase-item col">Đã giao</li>
-                           <li class="purchase-item col">Đã hủy</li>
+                           <li id="all" class="purchase-item col active">Tất cả</li>
+                           <li id="processing" class="purchase-item col">Chờ xác nhận</li>
+                           <li id="success" class="purchase-item col">Đã giao</li>
+                           <li id="cancel" class="purchase-item col">Đã hủy</li>
                         </ul>
                      </div>
                      <div class="row mt-1">
@@ -114,5 +114,155 @@
          <%- include('../../partials/footer') %>
       </div>
       <%- include('../../partials/foot') %>
+      <script type="module">
+         const tabs = $('.purchase-item');
+         const loadingHTML = `<div class="d-flex justify-content-center align-items-center" style="height:500px; max-height:50vh;border-radius:8px;border:1px solid #ccc;flex-direction:column">
+            <div class="spinner-border text-secondary" style="width: 5rem; height: 5rem;"  role="status">
+            <span class="visually-hidden">Loading...</span>
+            </div>
+         </div>`;
+         tabs.click(function (e) {
+            tabs.removeClass('active');
+            $(this).addClass('active');
+            const id = $(this).attr('id');
+            const purchaseContainer = $('.purchase-container');
+            let purchaseData = JSON.parse(`<%- JSON.stringify(orderList) %>`);
+            switch (id) {
+               case 'all':
+                  break;
+               case 'processing':
+                  purchaseData = purchaseData.filter((order) => order.orderStatus === 'processing');
+                  break;
+               case 'success':
+                  purchaseData = purchaseData.filter((order) => order.orderStatus === 'success');
+                  break;
+               case 'cancel':
+                  purchaseData = purchaseData.filter((order) => order.orderStatus === 'cancle');
+                  break;
+               default:
+                  console.log('Invalid tabs ');
+            }
+            let purchaseHTML = '';
+            if (purchaseData.length > 0) {
+               purchaseHTML = purchaseData.reduce((acc, purchase) => {
+                  return (
+                     acc +
+                     `
+                  <div
+                     class="purchase-wrapper ${
+                        purchase.orderStatus === 'cancle'
+                           ? 'cancel'
+                           : purchase.orderStatus == 'success'
+                           ? 'success'
+                           : ''
+                     }"
+                  >
+                     <div class="purchase-head">
+                        <div class="d-flex justify-content-between">
+                           <div>
+                              Mã đơn hàng:
+                              <span>${purchase.ID}</span>
+                           </div>
+                           <div class="purchase-info d-flex">
+                              <div class="purchase-order-time">
+                                 <span
+                                    >${
+                                       String(new Date(purchase.orderTime).getDate()) +
+                                       '/' +
+                                       String(new Date(purchase.orderTime).getMonth() + 1) +
+                                       '/' +
+                                       String(new Date(purchase.orderTime).getFullYear())
+                                    }</span
+                                 >
+                              </div>
+                              <div class="divider-vertical"></div>
+                              <div class="purchase-status"> ${purchase.diliveryStatus ?? 'Đang xử lý '} </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="purchase-body">
+                        <div class="purchase-product-list">
+                           ${purchase.productItems.reduce((acc, product) => {
+                              return (
+                                 acc +
+                                 `
+                                 <div class="purchase-product-item d-flex justify-content-between">
+                                    <div class="left-section d-flex">
+                                       <div class="product-img">
+                                          <a href="/product/${product?.PRODUCT?.slug}">
+                                             <img
+                                                src="${product?.PRODUCT?.product_images}"
+                                                alt="${product?.PRODUCT?.name}"
+                                             />
+                                          </a>
+                                       </div>
+                                       <div class="product-info">
+                                          <a href="/product/${product?.PRODUCT?.slug}">
+                                             <p class="name">${product?.PRODUCT?.name}</p>
+                                          </a>
+                                          <p class="price">Giá: ${product.order_detail.price}</p>
+                                          <p class="size">Size: ${product.size}</p>
+                                          <p class="quantity">
+                                             <span class="denind-uppercase">x</span>
+                                             <span>${product.order_detail.quantity}</span>
+                                          </p>
+                                       </div>
+                                    </div>
+                                    <div class="center-section">
+                                       <a href="/product/${product?.PRODUCT?.slug}#comment">
+                                          <button class="button light">Đánh giá</button>
+                                       </a>
+                                    </div>
+                                    <div class="right-section">
+                                       ${
+                                          product.order_detail.discount_percent > 0
+                                             ? `
+                                          <div class="origin-price">
+                                          ${product.order_detail?.price} x ${product.order_detail.quantity}
+                                          </div>
+                                          <div class="discount">- ${product.order_detail?.discount_percent} %</div>
+                                          `
+                                             : `
+                                          <div>-</div>
+                                          <div>-</div>
+                                          `
+                                       }
+                                       <div class="last-price">${product.order_detail?.intoMoney}</div>
+                                    </div>
+                                 </div>
+                                 `
+                              );
+                           }, '')}
+                        </div>
+                     </div>
+                     <div class="purchase-foot">
+                        <div class="d-flex justify-content-between">
+                           <div></div>
+                           <div class="total-price">
+                              Tổng tiền
+                              <span>${purchase.totalMoney} </span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               `
+                  );
+               }, '');
+            } else {
+               purchaseHTML = `<div class="d-flex justify-content-center align-items-center" style="height:500px; max-height:50vh;border-radius:8px;border:1px solid #ccc;flex-direction:column">
+                        <div style="max-width:140px;"" ><img style="max-width:100%" src="/assets/images/noPurchase/noPurchase.png" alt="" /></div>
+                        <h3 style="text-align:center;margin-top:2rem;text-transform: initial;font-weight:400">Chưa có đơn hàng</h3>
+                  </div>`;
+            }
+
+            const createWaiting = (miliseconds) => new Promise((resolve) => setTimeout(resolve, miliseconds));
+
+            (async () => {
+               purchaseContainer.html(loadingHTML);
+               await createWaiting(500);
+               purchaseContainer.html(purchaseHTML);
+            })();
+         });
+      </script>
    </body>
 </html>

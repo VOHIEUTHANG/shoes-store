@@ -421,6 +421,10 @@
                   await privateRequestHandler('/api/user/order','post',{addressID},(data,status)=>{
                      const convertDataToObject = JSON.parse(data);
                      if(convertDataToObject.status === 'success'){
+                        const cartDeleteBtns = $('.cart-delete');
+                        [...cartDeleteBtns].forEach(deleteBtn => {
+                           deleteBtn?.click();
+                        })
                         window.location.href = '/purchase-order';
                      }
                   });

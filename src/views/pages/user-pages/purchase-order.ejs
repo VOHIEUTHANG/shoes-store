@@ -176,7 +176,13 @@
                                  >
                               </div>
                               <div class="divider-vertical"></div>
-                              <div class="purchase-status"> ${purchase.diliveryStatus ?? 'Đang xử lý '} </div>
+                              <div class="purchase-status"> ${
+                                 purchase.orderStatus === 'processing'
+                                    ? 'Đang xử lý '
+                                    : purchase.orderStatus === 'success'
+                                    ? 'Thành công'
+                                    : 'Bị Hủy'
+                              } </div>
                            </div>
                         </div>
                      </div>

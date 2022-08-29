@@ -2,16 +2,23 @@
 
 <head>
     <link rel="stylesheet" href="/css/admin-product.css">
-    <%- include('../partials/head-admin') %>
+    <%- include('../../partials/head-admin') %>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="/css/image-uploader.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
-        <title>CRUD Products</title>
+        <link rel="stylesheet" href="/css/image-uploader.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+        <title>Manage Products</title>
 </head>
 
 <body>
-
+     <%- include('../../partials/header-admin') %>
+ 
+    </style>
     <div class="modal-custom" id="myModal">
+        <div aria-live="polite" aria-atomic="true" class=" toast-custom">
+            <div class="toast-container position-absolute top-0 end-0 p-3 " id="showToast">
+              <!-- Then put toasts within -->
+            </div>
+          </div>
         <div class="modal-content-custom">
             <div class="close">X</div>
             <div class="input-group mb-3">
@@ -77,6 +84,7 @@
                             id="product_items">
                             <thead>
                                 <tr>
+                                    <th class="text-center ">ID</th>
                                     <th class="text-center">Size</th>
                                     <th class="text-center">Số lượng</th>
                                 </tr>
@@ -92,7 +100,7 @@
             <button id='btn-save' onclick="createProduct()">Lưu</button>
         </div>
     </div>
-    <%- include('../partials/header-admin') %>
+  
         <div class="container">
             <button id="btn-addProduct" class="btn btn-info">Thêm sản phẩm</button>
             <table class="table">
@@ -124,7 +132,7 @@
                                 <%=element.dataValues.isSelling%>
                             </td>
                             <td>
-                                <%=element.dataValues.price%> 000đ
+                                <%=element.dataValues.price%>
                             </td>
                             <td>
                                 <%=element.BRAND.dataValues.brandName%>
@@ -135,116 +143,117 @@
                                 </td>
                                 <% } else { %>
                                     <td>
-                                        Rỗng
+                                        Chưa chọn
                                     </td>
                                     <% } %>
                                         <td><button class="btn btn-info btn-modify-product"
-                                                id='<%=element.dataValues.ID%>' onclick="getOneProduct(this.id)">Chi
+                                                id='<%=element.dataValues.ID%>' onclick="getOneProduct(this.id)" >Chi
                                                 tiết</button></td>
                         </tr>
                         <% })%>
                 </tbody>
             </table>
         </div>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <!-- JavaScript Bundle with Popper -->
-        <!-- MDB -->
-<script
-type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.4.0/mdb.min.js"
-></script>
-        <script src="../../../js/CRUDProduct.js"> </script>
-        <script src="/js/library/image-uploader.min.js"></script>
-        <script>
-            $(function () {
-                $('form').on('submit', function (event) {
-    
-                    // Stop propagation
-                    event.preventDefault();
-                    event.stopPropagation();
-    
-                    // Get some vars
-                    let $form = $(this),
-                        $modal = $('.modal');
-    
-                    // Set name and description
-                    $modal.find('#display-name span').text($form.find('input[id^="name"]').val());
-                    $modal.find('#display-description span').text($form.find('input[id^="description"]').val());
-    
-                    // Get the input file
-                    let $inputImages = $form.find('input[name^="images"]');
-                    if (!$inputImages.length) {
-                        $inputImages = $form.find('input[name^="photos"]')
-                    }
-    
-                    // Get the new files names
-                    let $fileNames = $('<ul>');
-                    for (let file of $inputImages.prop('files')) {
-                        $('<li>', { text: file.name }).appendTo($fileNames);
-                    }
-    
-                    // Set the new files names
-                    $modal.find('#display-new-images').html($fileNames.html());
-    
-                    // Get the preloaded inputs
-                   let $inputPreloaded = $form.find('input[name^="old"]');
-    
-                    if ($inputPreloaded.length) {
-    
-                        // Get the ids
-                        let $preloadedIds = $('<ul>');
-                        for (let iP of $inputPreloaded) {
-                            $('<li>', { text: '#' + iP.value }).appendTo($preloadedIds);
+        <%- include('../../partials/foot-admin') %>
+            <!-- JavaScript Bundle with Popper -->
+            <!-- MDB -->
+            <script type="text/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.4.0/mdb.min.js"></script>
+            <script src="/js/manageProduct.js">
+              
+            </script>
+            <script src="/js/library/image-uploader.min.js"></script>
+
+            <script>
+                $(function () {
+                    $('form').on('submit', function (event) {
+
+                        // Stop propagation
+                        event.preventDefault();
+                        event.stopPropagation();
+
+                        // Get some vars
+                        let $form = $(this),
+                            $modal = $('.modal');
+
+                        // Set name and description
+                        $modal.find('#display-name span').text($form.find('input[id^="name"]').val());
+                        $modal.find('#display-description span').text($form.find('input[id^="description"]').val());
+
+                        // Get the input file
+                        let $inputImages = $form.find('input[name^="images"]');
+                        if (!$inputImages.length) {
+                            $inputImages = $form.find('input[name^="photos"]')
                         }
-    
-                        // Show the preloadede info and set the list of ids
-                        $modal.find('#display-preloaded-images').show().html($preloadedIds.html());
-    
-                    } else {
-    
-                        // Hide the preloaded info
-                        $modal.find('#display-preloaded-images').hide();
-    
-                    }
-                const img_file= $('.image-uploader >input')[0].files;
-                console.log(img_file);
-                });
-    
-                // Input and label handler
-                $('input').on('focus', function () {
-                    $(this).parent().find('label').addClass('active')
-                }).on('blur', function () {
-                    if ($(this).val() == '') {
-                        $(this).parent().find('label').removeClass('active');
-                    }
-                });
-    
-                // Sticky menu
-                let $nav = $('nav'),
-                    $header = $('header'),
-                    offset = 4 * parseFloat($('body').css('font-size')),
-                    scrollTop = $(this).scrollTop();
-    
-                // Initial verification
-                setNav();
-    
-                // Bind scroll
-                $(window).on('scroll', function () {
-                    scrollTop = $(this).scrollTop();
-                    // Update nav
+
+                        // Get the new files names
+                        let $fileNames = $('<ul>');
+                        for (let file of $inputImages.prop('files')) {
+                            $('<li>', { text: file.name }).appendTo($fileNames);
+                        }
+
+                        // Set the new files names
+                        $modal.find('#display-new-images').html($fileNames.html());
+
+                        // Get the preloaded inputs
+                        let $inputPreloaded = $form.find('input[name^="old"]');
+
+                        if ($inputPreloaded.length) {
+
+                            // Get the ids
+                            let $preloadedIds = $('<ul>');
+                            for (let iP of $inputPreloaded) {
+                                $('<li>', { text: '#' + iP.value }).appendTo($preloadedIds);
+                            }
+
+                            // Show the preloadede info and set the list of ids
+                            $modal.find('#display-preloaded-images').show().html($preloadedIds.html());
+
+                        } else {
+
+                            // Hide the preloaded info
+                            $modal.find('#display-preloaded-images').hide();
+
+                        }
+                        const img_file = $('.image-uploader >input')[0].files;
+                        console.log(img_file);
+                    });
+
+                    // Input and label handler
+                    $('input').on('focus', function () {
+                        $(this).parent().find('label').addClass('active')
+                    }).on('blur', function () {
+                        if ($(this).val() == '') {
+                            $(this).parent().find('label').removeClass('active');
+                        }
+                    });
+
+                    // Sticky menu
+                    let $nav = $('nav'),
+                        $header = $('header'),
+                        offset = 4 * parseFloat($('body').css('font-size')),
+                        scrollTop = $(this).scrollTop();
+
+                    // Initial verification
                     setNav();
-                });
-    
-                function setNav() {
-                    if (scrollTop > $header.outerHeight()) {
-                        $nav.css({ position: 'fixed', 'top': offset });
-                    } else {
-                        $nav.css({ position: '', 'top': '' });
+
+                    // Bind scroll
+                    $(window).on('scroll', function () {
+                        scrollTop = $(this).scrollTop();
+                        // Update nav
+                        setNav();
+                    });
+
+                    function setNav() {
+                        if (scrollTop > $header.outerHeight()) {
+                            $nav.css({ position: 'fixed', 'top': offset });
+                        } else {
+                            $nav.css({ position: '', 'top': '' });
+                        }
                     }
-                }
-            });
-        </script>
-    
+                });
+            </script>
+
 </body>
 
 </html>

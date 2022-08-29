@@ -285,6 +285,7 @@
                                     addressList.html(newHTML);
                                  }
                                  this.deleteAddress();
+                                 this.updateAddress();
                               }
                               toastr[parseData.status](parseData.message);
                            });
@@ -347,7 +348,6 @@
                                     $(`#province-${rawData.payload.ID}`).text(rawData.payload.province);
                                     $(`#district-${rawData.payload.ID}`).text(rawData.payload.district);
                                     $(`#ward-${rawData.payload.ID}`).text(rawData.payload.ward);
-
                                     toastr[rawData.status](rawData.message);
                                  } else {
                                     toastr[rawData.status](rawData.message);
@@ -392,6 +392,7 @@
                   },
                   updateAddress() {
                      const updateBtn = $('.update-address');
+
                      updateBtn.click(async function (e) {
                         const addressID = this.dataset.addressId;
                         await privateRequestHandler(`/api/user/address/${addressID}`, 'get', {}, (data, status) => {

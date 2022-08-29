@@ -7,21 +7,24 @@ const product_categoryService = require('../service/product_category.service');
 const product_imagesService = require('../service/product_images.service');
 class productController {
    async create(req, res) {
-      res.send({ res: 'ok' });
       let product_itemList = JSON.parse(req.body.items);
       try {
          let product = await productService.save(req.body);
-         req.files.forEach((element) => {
-            product_imagesService.save(product.dataValues.ID, `/assets/uploads/${element.filename}`);
-         });
-         let product_category = await product_categoryService.save(product.dataValues.ID, req.body.category);
-         for (let element of product_itemList) {
-            await product_itemService.save(product.dataValues.ID, element.inventory, element.size);
+         if (product) {
+            req.files.forEach((element) => {
+               product_imagesService.save(product.dataValues.ID, `/assets/uploads/${element.filename}`);
+            });
+            let product_category = await product_categoryService.save(product.dataValues.ID, req.body.category);
+            for (let element of product_itemList) {
+               await product_itemService.save(product.dataValues.ID, element.size, element.inventory);
+            }
+            res.status(200).json({
+               title: 'success',
+               message: 'Tạo thành công!',
+            });
+         } else {
+            return res.json(createResponse('error', 'Không thể thêm sản phẩm !'));
          }
-         res.status(200).json({
-            title: 'success',
-            message: 'Tạo thành công!',
-         });
       } catch (error) {
          console.log(error);
          res.status(500).json({
@@ -97,21 +100,23 @@ class productController {
          });
    }
    async update(req, res) {
-      let product_itemList = req.body.item;
+      let product_itemList = JSON.parse(req.body.items);
       try {
          let product = await productService.update(req.body);
          let product_category = await product_categoryService.update(req.body.id, req.body.category);
-         product_itemService.deleteByProductId(req.body.id);
          for (let element of product_itemList) {
-            await product_itemService.update(req.body.id, element.size, element.inventory);
+            await product_itemService.update(element.id, element.size, element.inventory, req.body.id);
          }
+         req.files.forEach((element) => {
+            product_imagesService.save(req.body.id, `/assets/uploads/${element.filename}`);
+         });
          res.status(200).json({
-            title: 'success',
+            title: 'Thông báo',
             message: 'Sửa thành công!',
          });
       } catch (error) {
          res.status(500).json({
-            title: 'fail',
+            title: 'Thông báo',
             message: 'Sửa thất bại!',
          });
          console.log('🚀 ~ file: product.controller.js ~ method update ~ productController ~ error', error);

@@ -13,6 +13,7 @@ const deliverAddressModel = Models.delivery_address;
 
 import PasswordHandler from '../helpers/passwordHandler';
 import { createResponse } from '../helpers/responseCreator';
+import orderService from './order.service';
 
 class userService {
    async login(username, password) {
@@ -324,12 +325,13 @@ class userService {
             return deleteRow > 0;
          } catch (error) {
             console.log('🚀 ~ file: user.service.js ~ line 319 ~ userService ~ error', error);
-            return true;
+            return false;
          }
       } else {
          return false;
       }
    }
+
    async getAddressByID(addressID) {
       if (addressID) {
          try {

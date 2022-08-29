@@ -1,0 +1,132 @@
+@import './mixi';
+@import './variable';
+
+#admin-manage-products {
+   .static-top {
+      position: sticky;
+      top: 0;
+      right: 0;
+   }
+   #content-wrapper {
+      &::-webkit-scrollbar-track {
+         background-color: #f5f5f5;
+      }
+      &::-webkit-scrollbar {
+         width: 10px;
+         background-color: #f5f5f5;
+      }
+      &::-webkit-scrollbar-thumb {
+         border-radius: 10px;
+         background-image: linear-gradient(to bottom, #a6d1e6, #eea4f5);
+      }
+   }
+   #wrapper {
+      max-height: 100vh;
+   }
+   font-size: 1.4rem;
+   text-transform: uppercase;
+   .sidebar {
+      border-right: 1px solid rgb(223, 223, 223);
+      .sidebar-brand {
+         color: inherit;
+      }
+      &.navbar-nav {
+         background-image: none;
+         background: rgb(240, 240, 240);
+         color: $color-text-primary;
+      }
+      .nav-item {
+         border-bottom: 1px solid rgb(211, 211, 211);
+         &:hover,
+         &.active {
+            background-color: white;
+            @include transition;
+         }
+         .nav-link {
+            color: inherit;
+            i {
+               color: inherit;
+               font-size: 1.2rem;
+            }
+            span {
+               font-size: 1rem;
+            }
+         }
+      }
+   }
+   .navbar {
+      background-color: white;
+      z-index: 2;
+   }
+   #content {
+      background-color: rgb(250, 250, 250);
+      .username {
+         font-size: 1rem;
+      }
+      .img-profile {
+         width: 2.5rem;
+         height: 2.5rem;
+      }
+      .add-product-wrapper {
+         margin: 3rem;
+      }
+      .button {
+         font-size: 1rem;
+         text-transform: uppercase;
+      }
+      #search-wrapper {
+         border: 1px solid #ccc;
+         .input-group-append {
+            .button {
+               border-radius: 0px;
+               padding: 0.8rem 1.2rem;
+            }
+         }
+      }
+      .product-data-container {
+         margin: 0 2rem;
+         .table {
+            border-radius: 6px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            overflow: hidden;
+            background-color: white;
+            thead {
+               tr {
+                  th {
+                     text-align: center;
+                  }
+               }
+            }
+            tbody {
+               tr {
+                  td {
+                     .product-name {
+                        max-width: 40vh;
+                        @include limitTextRows(1);
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+   .modal-content-custom {
+      position: relative;
+      padding: 3rem;
+      border-radius: 8px;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+      border: none;
+      .close {
+         position: absolute;
+         top: 12px;
+         right: 18px;
+         i {
+            font-size: 1.3rem;
+         }
+      }
+      #btn-save {
+         margin-top: 2rem;
+         font-size: 1rem;
+      }
+   }
+}

@@ -3,7 +3,7 @@
 
 #purchase-order {
    .purchase-tabs {
-      border: 1px solid #ccc;
+      border: 1px solid #ccc; 
       border-radius: 4px;
       .purchase-item {
          position: relative;
@@ -12,7 +12,7 @@
          font-weight: 400;
          padding: 1.4rem 0;
          cursor: pointer;
-         @include transition;
+         // @include transition;
          &::after {
             position: absolute;
             content: '';
@@ -20,7 +20,6 @@
             left: 50%;
             transform: translateX(-50%);
             @include hidden;
-            @include transition;
             width: 70%;
             height: 2px;
             background-color: $color-primary;

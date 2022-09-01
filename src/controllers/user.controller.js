@@ -225,7 +225,11 @@ const userController = () => ({
    async deleteDeliveryAddress(req, res) {
       const addressID = req.params.addressID;
       const username = req.user?.userName;
-
+      const isAddressUsed = await orderService.checkIsAddressUsed(addressID, username);
+      console.log('isAddressUsed => ', isAddressUsed);
+      if (isAddressUsed) {
+         return res.json(createResponse('warning', 'Địa chỉ này đã được sử dụng, không thể xóa !'));
+      }
       const deleteResult = await userService.deleteAddressByID(addressID, username);
       return deleteResult
          ? res.json(createResponse('success', 'Xóa địa chỉ thành công !'))

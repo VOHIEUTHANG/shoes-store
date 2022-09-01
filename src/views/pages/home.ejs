@@ -80,7 +80,7 @@
             <div class="container">
                <div class="main-container">
                   <div class="category">
-                     <div class="section-title text-center mb-6">
+                     <div class="section-title text-center mb-6" id="title">
                         <h2>Sản phẩm mới nhất</h2>
                      </div>
                      <div class="category__container">
@@ -346,16 +346,23 @@
          });
 
          function reloadProductLogic() {
-            $('.add-to-wishlist').click(async function () {
-               const PRODUCT_ID = this.dataset.productId;
-               try {
-                  await privateRequestHandler(`/api/user/add-to-wishlist/${PRODUCT_ID}`, 'post', {}, (data, status) => {
-                     toastr[data.status](data.message);
-                  });
-               } catch (error) {
-                  toastr.error('Có lỗi xảy ra, vui lòng liên hệ quản trị viên !');
-               }
-            });
+            $('.add-to-wishlist')
+               .unbind('click')
+               .click(async function () {
+                  const PRODUCT_ID = this.dataset.productId;
+                  try {
+                     await privateRequestHandler(
+                        `/api/user/add-to-wishlist/${PRODUCT_ID}`,
+                        'post',
+                        {},
+                        (data, status) => {
+                           toastr[data.status](data.message);
+                        },
+                     );
+                  } catch (error) {
+                     toastr.error('Có lỗi xảy ra, vui lòng liên hệ quản trị viên !');
+                  }
+               });
          }
          reloadProductLogic();
       </script>

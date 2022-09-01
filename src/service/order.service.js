@@ -63,6 +63,15 @@ class OrderService {
          return false;
       }
    }
+   async checkIsAddressUsed(addressID, username) {
+      const order = await OrderModel.findOne({
+         where: {
+            username,
+            DELIVERY_ADDRESS_ID: addressID,
+         },
+      });
+      return !!order;
+   }
    async getAllOrderByUsername(username) {
       if (username) {
          try {

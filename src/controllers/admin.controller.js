@@ -8,7 +8,7 @@ class adminController {
    async formProduct(req, res) {
       let offset =  req.param('page') || 1;
       let user= req.userInfo;
-      Promise.all([brandService.getAllBrands(), categoryService.getAllCategory(), productService.getAllJoin(Number(limit),Number((limit-1)*offset)), productService.countProduct()])
+      Promise.all([brandService.getAllBrands(), categoryService.getAllCategory(), productService.getAllJoin(Number(limit),Number(limit*(offset-1))), productService.countProduct()])
          .then((data) => {
             let brandList = data[0];
             let categoryList = data[1];

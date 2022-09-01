@@ -10,17 +10,21 @@ class productController {
       let product_itemList = JSON.parse(req.body.items);
       try {
          let product = await productService.save(req.body);
-         req.files.forEach((element) => {
-            product_imagesService.save(product.dataValues.ID, `/assets/uploads/${element.filename}`);
-         });
-         let product_category = await product_categoryService.save(product.dataValues.ID, req.body.category);
-         for (let element of product_itemList) {
-            await product_itemService.save(product.dataValues.ID, element.size,element.inventory);
+         if (product) {
+            req.files.forEach((element) => {
+               product_imagesService.save(product.dataValues.ID, `/assets/uploads/${element.filename}`);
+            });
+            let product_category = await product_categoryService.save(product.dataValues.ID, req.body.category);
+            for (let element of product_itemList) {
+               await product_itemService.save(product.dataValues.ID, element.size, element.inventory);
+            }
+            res.status(200).json({
+               title: 'success',
+               message: 'Tạo thành công!',
+            });
+         } else {
+            return res.json(createResponse('error', 'Không thể thêm sản phẩm !'));
          }
-         res.status(200).json({
-            title: 'success',
-            message: 'Tạo thành công!',
-         });
       } catch (error) {
          console.log(error);
          res.status(500).json({
@@ -117,11 +121,11 @@ class productController {
          });
          console.log('🚀 ~ file: product.controller.js ~ method update ~ productController ~ error', error);
       }
-      
    }
    async getNumProduct(req,res){
+      let limit =8;
       let numProduct = await productService.countProduct();
-      res.status(200).json({num: numProduct});
+      res.status(200).json({num: Math.ceil(numProduct/limit)});
    }
 }
 module.exports = new productController();

@@ -6,7 +6,7 @@ import validateToken from '../middlewares/validateToken';
 import checkRole from '../middlewares/checkRole';
 const router = express.Router();
 router.get('/get', productController.get);
-router.get('/getNumProduct', productController.getNumProduct);
+router.get('/getNumPage', productController.getNumProduct);
 router.post('/create',checkRole(['admin']),multipleFileUpload('file'), productController.create);
 router.post('/add-comment', validateToken, signleFileUpload('image'), productController.insertProductComment);
 router.delete('/delete-comment/:commentID', validateToken, productController.deleteComment);

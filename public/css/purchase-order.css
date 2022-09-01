@@ -7,8 +7,7 @@
     color: #5e5c5c;
     font-weight: 400;
     padding: 1.4rem 0;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out; }
+    cursor: pointer; }
     #purchase-order .purchase-tabs .purchase-item::after {
       position: absolute;
       content: '';
@@ -17,7 +16,6 @@
       transform: translateX(-50%);
       visibility: hidden;
       opacity: 0;
-      transition: all 0.3s ease-in-out;
       width: 70%;
       height: 2px;
       background-color: #030021; }

@@ -15,7 +15,6 @@ const newTr = `
   `;
 $(".table-add").on("click", "i", () => {
   const clone = $tableID.find("tbody tr").last();
-  console.log(clone);
   if ($tableID.find("tbody tr ").length === 0) {
     $("tbody").append(newTr);
   }

@@ -1,0 +1,89 @@
+<html lang="en">
+
+<head>
+    <%- include('../../partials/head-admin') %>
+        <link rel="stylesheet" href="/css/global.css" />
+        <link rel="stylesheet" href="/css/admin-restyled.css" />
+        <title>Manage brand</title>
+</head>
+
+<body>
+    <div id="admin-manage-products">
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <%- include('../../partials/menu-admin'); %>
+                <div id="content-wrapper" class="d-flex flex-column">
+                    <!-- Main Content -->
+                    <div id="content">
+                        <!-- Topbar -->
+                        <%- include('../../partials/nav-admin'); %>
+                        <div class="product-data-container">
+                            <table class="table table-bordered align-middle" id="table-brand">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Tên thương hiệu</th>
+                                        <th scope="col">Độ nổi tiếng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% brandList.forEach((element)=>{ %>
+                                        <tr>
+                                            <td>
+                                                <div class="product-name">
+                                                    <%=element.dataValues.ID%>
+                                                </div>
+                                            </td>
+                                            <td contenteditable='true'>
+                                                    <%=element.dataValues.brandName%> 
+                                            </td>
+                                            <td>
+                                                <select class="form-select">
+                                                    <option value="very_popular" <%- element.dataValues.popularLevel == 'very_popular' ? "selected": "" %> >Nổi tiếng</option>
+                                                    <option value="popular" <%- element.dataValues.popularLevel == 'popular' ? "selected": "" %> >Tương đối</option>
+                                                    <option value="medium" <%- element.dataValues.popularLevel == 'medium' ? "selected": "" %> >Bình thường</option>
+                                                    <option value="low" <%- element.dataValues.popularLevel == 'low' ? "selected": "" %> >Hơi chìm</option>
+                                                    <option value="anonymous" <%- element.dataValues.popularLevel == 'anonymous' ? "selected": "" %> >Éo ai biết</option>
+                                                </select>
+                                                    
+                                            </td>
+                                        </tr>
+                                        <% })%>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <button onclick="getData()"> Click Me</button>
+    </div>
+    <%- include('../../partials/foot-admin'); %>
+    <script>
+        const $tableID = $("#table-brand");
+jQuery.fn.shift = [].shift;
+function getData() {
+  const $rows = $tableID.find("tr");
+  console.log($rows);
+  const headers = [];
+  const data = []; // Get the headers
+  $rows.each(function() {
+    const $td = $(this).find("td");
+    const h = {
+      id: $td.eq(0).text(),
+      brandName: $td.eq(1).text(),
+      popular: $td.eq(2).find('select').val()
+    };
+    data.push(h);
+  });
+  for(element of data){
+     element.id = element.id.replace(/(\r\n|\n|\r|\s)/gm, "");
+     element.brandName = element.brandName.replace(/(\r\n|\n|\r|\s)/gm, "");
+    // console.log(element)
+  }
+  console.log(data)
+}
+    </script>
+</body>
+
+</html>

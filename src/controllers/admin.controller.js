@@ -5,7 +5,7 @@ import brandService from '../service/brand.service';
 import formatToCurrency from '../helpers/formatCurrency';
 var limit = 8;
 class adminController {
-   async formProduct(req, res) {
+   async productPage(req, res) {
       let offset =  req.param('page') || 1;
       let user= req.userInfo;
       Promise.all([brandService.getAllBrands(), categoryService.getAllCategory(), productService.getAllJoin(Number(limit),Number(limit*(offset-1))), productService.countProduct()])
@@ -25,6 +25,11 @@ class adminController {
    async homePage(req, res) {
       let user= req.userInfo;  
       res.render('pages/admin-pages/admin-home-page',{user});
+   }
+   async brandPage(req,res){
+      let user= req.userInfo;  
+      let brandList = await brandService.getAllBrands();
+      res.render('pages/admin-pages/Manage-brand',{user,brandList});
    }
 }
 module.exports = new adminController();

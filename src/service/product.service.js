@@ -24,7 +24,7 @@ class productService {
          return null;
       }
    }
-   async getAllJoin() {
+   async getAllJoin(lim,offset) {
       let products = productModel.findAll({
          include: [
             { model: brandModel, as: 'BRAND' },
@@ -34,6 +34,8 @@ class productService {
                include: [{ model: categoryModel, as: 'CATEGORY' }],
             },
          ],
+         limit: lim,
+         offset: offset
       });
       return products;
    }
@@ -488,6 +490,15 @@ class productService {
             console.log('🚀 ~ file: product.service.js ~ line 367 ~ productService ~ error', error);
             return null;
          }
+      }
+   }
+   async countProduct(){
+      try {
+         const count = await productModel.count();
+         return count;
+      } catch (error) {
+         return null;
+         console.log('🚀 ~ file: product.service.js ~ line 367 ~ productService ~ error', error);
       }
    }
 }

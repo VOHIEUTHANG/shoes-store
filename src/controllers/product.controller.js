@@ -104,9 +104,9 @@ class productController {
       try {
          let product = await productService.update(req.body);
          let product_category = await product_categoryService.update(req.body.id, req.body.category);
-         for (let element of product_itemList) {
-            await product_itemService.update(element.id, element.size, element.inventory, req.body.id);
-         }
+        for (let element of product_itemList) {
+            await product_itemService.update(element.id, element.size, element.inventory,req.body.id);
+        }
          req.files.forEach((element) => {
             product_imagesService.save(req.body.id, `/assets/uploads/${element.filename}`);
          });
@@ -121,6 +121,11 @@ class productController {
          });
          console.log('🚀 ~ file: product.controller.js ~ method update ~ productController ~ error', error);
       }
+   }
+   async getNumProduct(req,res){
+      let limit =8;
+      let numProduct = await productService.countProduct();
+      res.status(200).json({num: Math.ceil(numProduct/limit)});
    }
 }
 module.exports = new productController();

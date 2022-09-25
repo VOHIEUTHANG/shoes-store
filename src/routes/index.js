@@ -7,10 +7,12 @@ import productRoute from './product.route';
 import product_images from './product_img.route';
 import checkRole from '../middlewares/checkRole';
 import headerAdmin from '../helpers/headerAdmin';
+import brandRouter from './brand.route'
 export default function initWebRoutes(app) {
    app.use('/api/user/', userRoute);
    app.use('/api/account/', accountRoute);
    app.use('/api/product/', productRoute);
+   app.use('/api/brand',checkRole(['admin']),brandRouter);
    app.use('/admin/',checkRole(['admin']),headerAdmin,adminRoute);
    app.use('/api/product_img/', product_images);
    app.use('/', mainRouter);

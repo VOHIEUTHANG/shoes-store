@@ -154,8 +154,10 @@ function getOneProduct(id) {
             `;
       product_item_table.appendChild(tr);
     });
-    document.getElementById("category").value =
-      res.data.product.product_categories[0].CATEGORY.ID;
+    let product_categories_selected = [];
+    for (let element of res.data.product.product_categories)
+        product_categories_selected.push(element.CATEGORY_ID);
+    $("#category").val(product_categories_selected);
   });
   axios
     .get("/api/product_img/get", { params: { id: id } })
@@ -179,7 +181,13 @@ function modifyProduct() {
   let des = document.getElementById("description").value;
   let detail = document.getElementById("detail").value;
   let isSelling = document.getElementById("isSelling").value;
-  let category = document.getElementById("category").value;
+  let categoryTag = document.getElementById("category").options;
+  let category =[]
+  for (let option of categoryTag)
+  {
+    if(option.selected)
+     category.push(option.value)
+  }
   let brand = document.getElementById("brand").value;
   form.append("id", id_product);
   form.append("name", name);
@@ -189,7 +197,7 @@ function modifyProduct() {
   form.append("des", des);
   form.append("detail", detail);
   form.append("isSelling", isSelling);
-  form.append("category", category);
+  form.append("category", JSON.stringify(category));
   form.append("brand", brand);
   form.append("items", JSON.stringify(getProductItem()));
   const fileUpload = document.getElementById("image-product").files;

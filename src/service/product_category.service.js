@@ -25,6 +25,20 @@ class product_categoryService{
             return null;
         }   
     }
+    async deleteByProductId(id){
+        try {
+           let cate = await product_categoryModel.destroy({
+              where:{
+                 PRODUCT_ID:id
+              },
+              force: true
+           });
+           return cate;
+        } catch (error) {
+           console.log('🚀 ~ file: category.service.js ~ line 18 ~ CategoryService ~ error', error);
+           return null;
+        }
+     }
     
 }
 module.exports = new product_categoryService;

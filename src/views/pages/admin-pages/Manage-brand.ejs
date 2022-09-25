@@ -56,7 +56,7 @@
                     </div>
                 </div>
         </div>
-        <button onclick="getData()"> Click Me</button>
+        <button onclick="updateBrand()"> Click Me</button>
     </div>
     <%- include('../../partials/foot-admin'); %>
     <script>
@@ -79,9 +79,25 @@ function getData() {
   for(element of data){
      element.id = element.id.replace(/(\r\n|\n|\r|\s)/gm, "");
      element.brandName = element.brandName.replace(/(\r\n|\n|\r|\s)/gm, "");
-    // console.log(element)
   }
-  console.log(data)
+  data.shift()
+  return data;
+}
+function updateBrand(){
+    let data = getData();
+    axios
+    .request({
+      method: "post",
+      url: "/api/brand/update",
+      data: data,
+    })
+    .then(res => {
+      let data = res.data;
+      console.log(data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 }
     </script>
 </body>

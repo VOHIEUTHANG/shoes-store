@@ -101,9 +101,13 @@ class productController {
    }
    async update(req, res) {
       let product_itemList = JSON.parse(req.body.items);
+      let category_List =JSON.parse(req.body.category);
       try {
          let product = await productService.update(req.body);
-         let product_category = await product_categoryService.update(req.body.id, req.body.category);
+         let deleteCategory = await product_categoryService.deleteByProductId(req.body.id);
+         for ( let element of category_List){
+            let product_category = await product_categoryService.update(req.body.id, element);
+         }
         for (let element of product_itemList) {
             await product_itemService.update(element.id, element.size, element.inventory,req.body.id);
         }

@@ -12,6 +12,19 @@ class BrandService {
          return null;
       }
    }
+   async update(id,name,popular){
+      try{
+         const brand = await Brand.upsert({
+            ID: id,
+            brandName: name,
+            popularLevel: popular
+         });
+         return brand;
+      } catch(err){
+         console.log('🚀 ~ file: brand.service.js ~ line 17 ~ BrandService ~ error', err);
+         return null;
+      }
+   }
 }
 
 export default new BrandService();

@@ -18,72 +18,116 @@
                     <div id="content">
                         <!-- Topbar -->
                         <%- include('../../partials/nav-admin'); %>
-                        <div class="product-data-container">
-                            <table class="table table-bordered align-middle" id="table-brand">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Tên thương hiệu</th>
-                                        <th scope="col">Độ nổi tiếng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% brandList.forEach((element)=>{ %>
+                            <div class="product-data-container">
+                                <table class="table table-bordered align-middle" id="table-brand">
+                                    <thead class="table-dark">
                                         <tr>
-                                            <td>
-                                                <div class="product-name">
-                                                    <%=element.dataValues.ID%>
-                                                </div>
-                                            </td>
-                                            <td contenteditable='true'>
-                                                    <%=element.dataValues.brandName%> 
-                                            </td>
-                                            <td>
-                                                <select class="form-select">
-                                                    <option value="very_popular" <%- element.dataValues.popularLevel == 'very_popular' ? "selected": "" %> >Nổi tiếng</option>
-                                                    <option value="popular" <%- element.dataValues.popularLevel == 'popular' ? "selected": "" %> >Tương đối</option>
-                                                    <option value="medium" <%- element.dataValues.popularLevel == 'medium' ? "selected": "" %> >Bình thường</option>
-                                                    <option value="low" <%- element.dataValues.popularLevel == 'low' ? "selected": "" %> >Hơi chìm</option>
-                                                    <option value="anonymous" <%- element.dataValues.popularLevel == 'anonymous' ? "selected": "" %> >Éo ai biết</option>
-                                                </select>
-                                                    
-                                            </td>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Tên thương hiệu</th>
+                                            <th scope="col">Độ nổi tiếng</th>
                                         </tr>
-                                        <% })%>
-                                </tbody>
-                            </table>
-                        </div>
+                                    </thead>
+                                    <tbody>
+                                        <% brandList.forEach((element)=>{ %>
+                                            <tr>
+                                                <td>
+                                                    <div class="product-name">
+                                                        <%=element.dataValues.ID%>
+                                                    </div>
+                                                </td>
+                                                <td contenteditable='true'>
+                                                    <%=element.dataValues.brandName%>
+                                                </td>
+                                                <td>
+                                                    <select class="form-select">
+                                                        <option value="very_popular" <%-
+                                                            element.dataValues.popularLevel=='very_popular' ? "selected"
+                                                            : "" %> >Nổi tiếng</option>
+                                                        <option value="popular" <%-
+                                                            element.dataValues.popularLevel=='popular' ? "selected" : ""
+                                                            %> >Tương đối</option>
+                                                        <option value="medium" <%-
+                                                            element.dataValues.popularLevel=='medium' ? "selected" : ""
+                                                            %> >Bình thường</option>
+                                                        <option value="low" <%- element.dataValues.popularLevel=='low'
+                                                            ? "selected" : "" %> >Hơi chìm</option>
+                                                        <option value="anonymous" <%-
+                                                            element.dataValues.popularLevel=='anonymous' ? "selected"
+                                                            : "" %> >Éo ai biết</option>
+                                                    </select>
+
+                                                </td>
+                                            </tr>
+                                            <% })%>
+                                    </tbody>
+                                </table>
+                            </div>
                     </div>
                 </div>
         </div>
-        <button onclick="getData()"> Click Me</button>
+        <button onclick="updateBrand()"> Click Me</button>
     </div>
     <%- include('../../partials/foot-admin'); %>
-    <script>
-        const $tableID = $("#table-brand");
-jQuery.fn.shift = [].shift;
-function getData() {
-  const $rows = $tableID.find("tr");
-  console.log($rows);
-  const headers = [];
-  const data = []; // Get the headers
-  $rows.each(function() {
-    const $td = $(this).find("td");
-    const h = {
-      id: $td.eq(0).text(),
-      brandName: $td.eq(1).text(),
-      popular: $td.eq(2).find('select').val()
-    };
-    data.push(h);
-  });
-  for(element of data){
-     element.id = element.id.replace(/(\r\n|\n|\r|\s)/gm, "");
-     element.brandName = element.brandName.replace(/(\r\n|\n|\r|\s)/gm, "");
-    // console.log(element)
-  }
-  console.log(data)
-}
-    </script>
+        <script>
+            const $tableID = $("#table-brand");
+            jQuery.fn.shift = [].shift;
+            function getData() {
+                const $rows = $tableID.find("tr");
+                console.log($rows);
+                const headers = [];
+                const data = []; // Get the headers
+                $rows.each(function () {
+                    const $td = $(this).find("td");
+                    const h = {
+                        id: $td.eq(0).text(),
+                        brandName: $td.eq(1).text(),
+                        popular: $td.eq(2).find('select').val()
+                    };
+                    data.push(h);
+                });
+                for (element of data) {
+                    element.id = element.id.replace(/(\r\n|\n|\r|\s)/gm, "");
+                    element.brandName = getNameBrand(element.brandName.replace('\n', ""));
+                }
+                data.shift()
+                return data;
+            }
+            function updateBrand() {
+                let data = getData();
+                console.log(data);
+                axios
+                .request({
+                  method: "post",
+                  url: "/api/brand/update",
+                  data: data,
+                })
+                .then(res => {
+                  let data = res.data;
+                  console.log(data);
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+            }
+            function getNameBrand(name) {
+                let left = 0;
+                let right = name.length;
+                for (let i = 0; i < name.length; i++) {
+                    if (name[i] != ' ') {
+                        left = i;
+                        break;
+                    }
+                }
+                for (let i = name.length-1; i > 0; i--) {
+                    console.log(i);
+                    if (name[i] != ' ') {
+                        right = i;
+                        break;
+                    }
+                }
+                return name.slice(left, right);
+            }
+        </script>
 </body>
 
 </html>

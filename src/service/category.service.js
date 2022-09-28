@@ -42,6 +42,7 @@ class CategoryService {
          return null;
       }
    }
+  
 }
 
 export default new CategoryService();

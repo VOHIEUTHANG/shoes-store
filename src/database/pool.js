@@ -1,11 +1,16 @@
 import mysql from 'mysql2/promise';
-import * as mysqlInfo from '../constants';
+require('dotenv').config();
+
+const host = process.env.HOST;
+const user = process.env.USER;
+const database = process.env.DATABASE;
+const password = process.env.PASSWORD;
 
 const pool = mysql.createPool({
-   host: mysqlInfo.host,
-   user: mysqlInfo.user,
-   database: mysqlInfo.database,
-   password: mysqlInfo.password,
+   host,
+   user,
+   database,
+   password,
    waitForConnections: true,
    connectionLimit: 10,
    queueLimit: 0,

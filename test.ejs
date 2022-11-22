@@ -1,0 +1,586 @@
+<html lang="en">
+   <head>
+      <%- include('../partials/head'); %>
+      <title>PRODUCT DETAILS</title>
+      <link rel="stylesheet" href="/css/product-detail.css" />
+   </head>
+   <body>
+      <div id="root">
+         <%- include('../partials/header',{user,isLoggedIn}) %>
+         <div id="main">
+            <div id="product-detail-page">
+               <div class="product-details">
+                  <div class="container">
+                     <div class="row gx-5">
+                        <div class="col-md-12 col-lg-6 col-12">
+                           <div class="product-details-img-content">
+                              <div class="product-details-tab mr-35 product-details-tab2">
+                                 <div class="product-details-large tab-content">
+                                    <% for(let i = 0;i< productDetail.product_images.length;i++) { %>
+                                    <div
+                                       class="tab-pane fade <%= i===0 ? 'active show' : '' %>"
+                                       id="pro-details<%= i+1 %>"
+                                       role="tabpanel"
+                                    >
+                                       <div class="easyzoom easyzoom--overlay">
+                                          <a target="_blank" href="<%= productDetail.product_images[i] %>">
+                                             <img src="<%= productDetail.product_images[i] %>" alt="" />
+                                          </a>
+                                       </div>
+                                    </div>
+                                    <% }%>
+                                 </div>
+                                 <div class="product-details-small nav ml-10 product-details-2" role="tablist">
+                                    <div class="swiper product-images-slide">
+                                       <div class="swiper-wrapper">
+                                          <% productDetail.product_images?.forEach((imgURL,i)=>{ %>
+                                          <a
+                                             class="mb-10 swiper-slide <%= i===0 ? 'active' : '' %>"
+                                             href="#pro-details<%= i+1 %>"
+                                             data-bs-toggle="list"
+                                             role="tab"
+                                             aria-selected="true"
+                                          >
+                                             <img class="<%= i===0 ? 'main-image' : '' %>" src="<%= imgURL %>" alt="" />
+                                          </a>
+                                          <%}) %>
+                                       </div>
+                                       <div class="swiper-pagination"></div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6 col-12">
+                           <div class="product-details-content">
+                              <h3 id="product-name">
+                                 <%= productDetail.name %> <% if(productDetail.discounts){ %>
+                                 <span class="discount"> (-<%= productDetail.discounts?.percentReduction %>%) </span>
+                                 <% } %>
+                              </h3>
+
+                              <div class="rating-number">
+                                 <div class="quick-view-rating">
+                                    <i class="fa-solid fa-star yellow-star"></i>
+                                    <i class="fa-solid fa-star yellow-star"></i>
+                                    <i class="fa-solid fa-star yellow-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                 </div>
+                                 <div class="quick-view-number">
+                                    <span>3 sao Ratting (S)</span>
+                                 </div>
+                              </div>
+                              <div class="details-price">
+                                 <div>
+                                    <span class="<%= productDetail.discounts ? 'remove' : '' %>"
+                                       ><%= productDetail.price %></span
+                                    >
+                                 </div>
+                                 <% if(!!productDetail.discounts) {%>
+                                 <span><%= productDetail.discounts.priceAfterApplyDiscount %></span>
+                                 <% } %>
+                              </div>
+                              <p>
+                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmol tempor incidid
+                                 ut labore et dolore magna aliqua. Ut enim ad minim veni quis nostrud exercitation
+                                 ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                              </p>
+                              <div class="quick-view-select">
+                                 <div class="select-option-part">
+                                    <label>Size*</label>
+                                    <ul class="size-list row">
+                                       <% productDetail.product_items.forEach(product=>{ %>
+                                       <li
+                                          class="size-item <%= product.inventory <= 0 ? 'disable' : '' %>"
+                                          data-inventory="<%= product.inventory %>"
+                                          data-product-id="<%= product.ID %>"
+                                       >
+                                          <%= product.size %>
+                                       </li>
+                                       <% }) %>
+                                    </ul>
+                                    <div style="margin-top: 2rem">
+                                       Số lượng trong kho:
+                                       <span style="font-size: 1.8rem; font-weight: 400" class="product-quantity"
+                                          >...</span
+                                       >
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="quickview-plus-minus">
+                                 <div class="cart-plus-minus">
+                                    <div class="dec qtybutton">-</div>
+                                    <input
+                                       type="text"
+                                       value="1"
+                                       name="qtybutton"
+                                       class="cart-plus-minus-box"
+                                       id="product-count"
+                                    />
+                                    <div class="inc qtybutton">+</div>
+                                 </div>
+                                 <div class="quickview-btn-cart">
+                                    <div class="button disable" id="add-to-cart">add to cart</div>
+                                 </div>
+                                 <div class="quickview-btn-wishlist">
+                                    <div
+                                       class="btn-hover"
+                                       id="add-to-wishlist"
+                                       data-product-id="<%= productDetail.ID %>"
+                                    >
+                                       <i class="fa-regular fa-heart"></i>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div style="margin-top: 14px" class="warning-message wow shakeX">
+                                 Vui lòng chọn size !
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="product-description-review-area">
+                  <div class="container" id="comment">
+                     <div class="product-description-review text-center">
+                        <!-- <div class="description-review-title nav" role="tablist"></div> -->
+                        <div class="description-review-text">
+                           <div class="section-title-3">
+                              <h2>Mô tả sản phẩm</h2>
+                           </div>
+                           <div>
+                              <p class="product-desc">
+                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                 incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                                 dolor in
+                              </p>
+                           </div>
+                           <hr />
+                           <div class="section-title-3">
+                              <h2>Đánh giá</h2>
+                           </div>
+                           <div class="">
+                              <% if(user.avatar) { %>
+                              <div class="current-comment-wrapper">
+                                 <div class="current-user">
+                                    <img src="<%= user.avatar %>" alt="" />
+                                 </div>
+                                 <div class="current-content-wrapper">
+                                    <input id="comment-content" type="text" placeholder="Viết bình luận" />
+                                    <div class="content-body d-flex justify-content-between">
+                                       <div class="current-image">
+                                          <div class="image-placeholder" style="position: relative">
+                                             <input type="file" name="" id="image-review" hidden />
+                                             <label for="image-review">
+                                                <div class="plus-icon">
+                                                   <i class="ti-plus"></i>
+                                                </div>
+                                             </label>
+                                             <img
+                                                id="image-preview"
+                                                src=""
+                                                style="position: absolute; top: 0; left: 0; z-index: 100"
+                                                width="100%"
+                                                height="100%"
+                                                alt=""
+                                                class="hidden"
+                                             />
+                                          </div>
+                                       </div>
+                                       <div class="submit-image" data-product-id="<%= productDetail.ID %>">
+                                          <div class="button">Bình luận</div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <% } else { %>
+                              <a href="/login">
+                                 <div class="button">Viết đánh giá</div>
+                              </a>
+                              <% } %>
+                              <hr />
+                              <div class="comment-container">
+                                 <div class="comment-list">
+                                    <% if(comments.length > 0){ %> <% comments.forEach(comment => { %>
+                                    <div class="comment-item">
+                                       <div class="comment-avatar">
+                                          <img src="<%= comment.userAvatar %>" alt="" />
+                                       </div>
+                                       <div class="comment-content">
+                                          <div class="user-name"><%= comment.username %></div>
+                                          <div class="comment-title"><%= comment.content %></div>
+                                          <% if(comment.imageURL) {%>
+                                          <div class="comment-images-wrapper">
+                                             <img src="<%=  comment.imageURL %>" alt="" />
+                                          </div>
+                                          <% } %>
+                                       </div>
+                                       <% if(comment.isBelongCurrentUser) { %>
+                                       <div class="delete-comment" data-comment-id="<%= comment.ID %>">
+                                          <i class="ti-close"></i>
+                                       </div>
+                                       <% } %>
+                                    </div>
+                                    <% }) %> <% } %>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="product-area">
+                  <div class="container">
+                     <div class="section-title-3">
+                        <h2>Sản phẩm liên quan</h2>
+                     </div>
+                     <div class="product-style">
+                        <div class="related-products">
+                           <% if(relatedProducts.length > 0) {%>
+                           <div class="related-product-active">
+                              <div class="row gy-4">
+                                 <% relatedProducts.map(product=>{ %>
+                                 <div class="col col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                                    <div class="product-wrapper">
+                                       <div class="product-img">
+                                          <a href="/product/<%= product.slug %>">
+                                             <img src="<%= product.product_images %>" alt="" />
+                                          </a>
+                                       </div>
+                                       <div class="product-content">
+                                          <h4><a href="/product/<%= product.slug %>"><%= product.name %></a></h4>
+                                          <% if(product.discounts) { %>
+                                          <span><%= product.discounts.priceAfterApplyDiscount %></span>
+                                          <% } %>
+                                          <span class="<%= product.discounts ? 'remove' : '' %>"
+                                             ><%= product.price %></span
+                                          >
+                                       </div>
+                                       <% if(product.discounts !== null) {%>
+                                       <div class="product-discount-label">
+                                          -<%= product.discounts.percentReduction %>%
+                                       </div>
+                                       <% } %>
+                                    </div>
+                                 </div>
+                                 <% }) %>
+                              </div>
+                           </div>
+                           <% } else {%>
+                           <div style="flex-direction: column" class="d-flex justify-content-center align-items-center">
+                              <i style="font-size: 6rem !important" class="ti-dropbox"> </i>
+                              <p style="text-align: center; margin-top: 4rem; font-size: 2.2rem" class="nothing-title">
+                                 Hiện tại không có sản phẩm nào liên quan !
+                              </p>
+                           </div>
+                           <% } %>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <%- include('../partials/footer') %>
+      </div>
+      <%- include('../partials/foot') %>
+      <script src="/js/library/glide.min.js"></script>
+      <script type="module">
+         import { formatToCurrency, privateRequestHandler } from '/js/utils/index.js';
+         import deleteCartItemOnLick from '/js/utils/deleteCartItemHandler.js';
+
+         const swiper = new Swiper('.swiper.product-images-slide', {
+            direction: 'vertical',
+            slidesPerView: 4,
+            pagination: {
+               el: '.swiper-pagination',
+               clickable: true,
+            },
+         });
+
+         $(() => {
+            const sizeItems = $('.size-list > .size-item');
+            const addToCartBtn = $('#add-to-cart');
+            const warningMessageBtn = $('.warning-message');
+            sizeItems.click(function () {
+               if (!$(this).hasClass('disable')) {
+                  $('#product-count').val(1);
+                  addToCartBtn.removeClass('disable');
+                  warningMessageBtn.removeClass('active');
+                  sizeItems.removeClass('active');
+                  $(this).addClass('active');
+                  const inventory = this.dataset.inventory;
+                  if (Number(inventory) < Number($('#product-count').val())) {
+                     $('#product-count').val(inventory);
+                  }
+                  $('.product-quantity').text(inventory);
+                  const size = $(this).text();
+               }
+            });
+            const productCountEle = $('#product-count');
+            const plusBtn = $('.inc.qtybutton');
+            const minusBtn = $('.dec.qtybutton');
+            let currentVal = Number(productCountEle.val());
+
+            const checkActiveSelectedSize = () => {
+               if (!$('.size-item.active').length) {
+                  warningMessageBtn.addClass('active');
+               }
+               return $('.size-item.active').length;
+            };
+
+            minusBtn.click(() => {
+               const isSelectSize = checkActiveSelectedSize();
+               if (isSelectSize) {
+                  currentVal > 1 && currentVal--;
+                  productCountEle.val(currentVal);
+               }
+            });
+
+            plusBtn.click(() => {
+               const isSelectSize = checkActiveSelectedSize();
+               const currentProductCount = $('.product-quantity').text();
+
+               if (isSelectSize) {
+                  const convertNumber = Number(currentProductCount);
+                  if (currentVal < convertNumber) {
+                     currentVal++;
+                     productCountEle.val(currentVal);
+                  }
+               }
+            });
+
+            function convertFromStringToNumber(stringNumber) {
+               const removeUnit = stringNumber.slice(0, stringNumber.length - 4);
+               let numberArray = removeUnit.split('.');
+               numberArray = numberArray.join('');
+               return Number(numberArray);
+            }
+
+            addToCartBtn.click(async function () {
+               if (!$(this).hasClass('disable')) {
+                  warningMessageBtn.removeClass('active');
+                  const productItemID = $('.size-item.active')[0].dataset.productId;
+                  const quantity = $('#product-count').val();
+                  const payload = { productItemID, quantity };
+
+                  const productImage = $('.main-image').attr('src');
+                  const productName = $('#product-name').text();
+                  let productPrice = $('.details-price span:not(.remove)').text();
+                  productPrice = convertFromStringToNumber(productPrice);
+                  let productTotalPrice = productPrice * quantity;
+
+                  productPrice = formatToCurrency(productPrice);
+                  productTotalPrice = formatToCurrency(productTotalPrice);
+
+                  const productSize = $('.size-item.active').text().trim();
+                  try {
+                     await privateRequestHandler('/api/user/add-to-cart', 'post', payload, (data, status) => {
+                        toastr[data.status](data.message);
+                        if (data.status === 'success') {
+                           const cartItemQuantity = Number($('.shop-count.pink').text());
+                           $('.shop-count.pink').text(cartItemQuantity + 1);
+                           let additionHTML = '';
+                           if ($('.cart-scroll-list')?.children()?.length === 0 || !$('.cart-scroll-list').length) {
+                              additionHTML = `
+                              <div class="cart-scroll-list">
+                                 <li class="single-product-cart">
+                                    <div class="cart-img">
+                                       <a href="#"><img src="${productImage}" alt="" /></a>
+                                    </div>
+                                    <div class="cart-title">
+                                       <h5><a href="#">${productName}</a></h5>
+                                       <h6>SIZE ${productSize}</h6>
+                                       <span> ${productPrice} x  ${quantity} </span>
+                                    </div>
+                                    <div
+                                       class="cart-delete"
+                                       data-cart-price="${productPrice}"
+                                       data-product-id="${productItemID}"
+                                    >
+                                       <i class="ti-trash"></i>
+                                    </div>
+                                 </li>
+                              </div>
+                              <div class="cart-foot">
+                                 <li class="cart-space">
+                                    <div class="cart-sub">
+                                       <h4>Tổng cộng</h4>
+                                    </div>
+                                    <div class="cart-price">
+                                       <h4>${productTotalPrice}</h4>
+                                    </div>
+                                 </li>
+                                 <li class="cart-btn-wrapper">
+                                    <a class="button full" href="/cart">Xem giỏ hàng</a>
+                                 </li>
+                              </div>
+                              `;
+                              $('.cart-dropdown')[0].innerHTML = additionHTML;
+                           } else {
+                              const cartItem = document.createElement('li');
+                              cartItem.classList.add('single-product-cart');
+                              cartItem.innerHTML = `
+                              <div class="cart-img">
+                                 <a href="#"><img src="${productImage}" alt="" /></a>
+                              </div>
+                              <div class="cart-title">
+                                 <h5><a href="#">${productName}</a></h5>
+                                 <h6>SIZE ${productSize}</h6>
+                                 <span> ${productPrice} x  ${quantity} </span>
+                              </div>
+                              <div
+                                 class="cart-delete"
+                                 data-cart-price="${productPrice}"
+                                 data-product-id="${productItemID}"
+                              >
+                                 <i class="ti-trash"></i>
+                              </div>
+                              `;
+                              $('.cart-scroll-list')[0].appendChild(cartItem);
+                              const cartPrice = $('.cart-price > h4').text().trim();
+                              const totalPrice = convertFromStringToNumber(cartPrice);
+                              const additionPrice = convertFromStringToNumber(productPrice) * quantity;
+                              const newPrice = totalPrice + additionPrice;
+                              $('.cart-price > h4').text(formatToCurrency(newPrice));
+                           }
+                           //
+                           const lastCartItem = $('.single-product-cart:last-child');
+                           const deleteCartBtn = lastCartItem.find('.cart-delete');
+                           deleteCartBtn?.click(function () {
+                              deleteCartItemOnLick(this, privateRequestHandler, formatToCurrency);
+                           });
+                        }
+                     });
+                  } catch (error) {
+                     console.log('🚀 ~ file: product-detail.ejs ~ line 481 ~ error', error);
+                     toastr.error('Thêm sản phẩm xảy ra lỗi !');
+                  }
+               } else {
+                  warningMessageBtn.addClass('active');
+               }
+            });
+            const addToWishlistBtn = $('#add-to-wishlist');
+            addToWishlistBtn.click(async function () {
+               const productID = this.dataset.productId;
+               try {
+                  await privateRequestHandler(`/api/user/add-to-wishlist/${productID}`, 'post', {}, (data, status) => {
+                     toastr[data.status](data.message);
+                  });
+               } catch (error) {
+                  toastr.error('Có lỗi xảy ra, vui lòng liên hệ quản trị viên !');
+               }
+            });
+         });
+      </script>
+      <script type="module">
+         import {
+            configHeaders,
+            responseHandler,
+            privateRequestHandler,
+            refreshTokenHandler,
+         } from '/js/utils/index.js';
+
+         const submitCommentBtn = $('.submit-image');
+         const commentInput = $('#comment-content');
+         const imageNode = $('#image-preview');
+         const imageReviewInput = $('#image-review');
+         imageReviewInput.on('change', function () {
+            const [file] = this.files;
+            const url = URL.createObjectURL(file);
+            imageNode.removeClass('hidden');
+            imageNode?.attr('src', url);
+         });
+         commentInput.on('input', function () {
+            $(this).removeClass('warning');
+         });
+         function deleteCommentLogical() {
+            $('.delete-comment').click(async function (e) {
+               const commentID = this.dataset.commentId;
+               if (commentID) {
+                  await privateRequestHandler(
+                     `/api/product/delete-comment/${commentID}`,
+                     'delete',
+                     {},
+                     (data, status) => {
+                        // toastr[data.status](data.message);
+                        if (data.status === 'success') {
+                           const commentItem = $(this).parents('.comment-item');
+                           commentItem?.remove();
+                        }
+                     },
+                  );
+               }
+            });
+         }
+         deleteCommentLogical();
+         submitCommentBtn.click(async function () {
+            const productID = this.dataset.productId;
+            const formData = new FormData();
+            const data = {};
+
+            if (imageReviewInput[0]?.files?.length > 0) {
+               formData.append('image', imageReviewInput[0].files[0]);
+            } else {
+            }
+            if (commentInput.val()) {
+               formData.append('comment', commentInput.val());
+               formData.append('productID', productID);
+               try {
+                  await privateRequestHandler('/api/product/add-comment', 'post', formData, (data, status) => {
+                     data = JSON.parse(data);
+                     // toastr[data.status](data.message), 'multipart/form-data';
+                     if (data.status === 'success') {
+                        console.log(data);
+                        const content = data.payload.content;
+                        const image = data.payload?.image;
+                        const commentID = data.payload.id;
+                        const commentList = $('.comment-list');
+                        const userAvatar = $('.current-user > img').attr('src');
+                        const username = `<%- JSON.stringify(user.userName) %>`;
+
+                        const currentCommentHTML = `
+                        <div class="comment-item">
+                           <div class="comment-avatar">
+                              <img src="${userAvatar}" alt="" />
+                           </div>
+                           <div class="comment-content">
+                              <div class="user-name">${JSON.parse(username)}</div>
+                              <div class="comment-title">${content}</div>
+                              ${
+                                 image
+                                    ? ` 
+                                    <div class="comment-images-wrapper">
+                                       <img src="${image}" alt="" />
+                                    </div>
+                                    `
+                                    : ''
+                              }
+                           </div>
+                           <div class="delete-comment" data-comment-id="${commentID}">
+                              <i class="ti-close"></i>
+                           </div>
+                        </div>
+                        `;
+                        const currentCommentListHTMl = commentList.html();
+                        const html = currentCommentHTML + currentCommentListHTMl;
+                        commentList.html(html);
+                        // reset comment input
+                        commentInput.val('');
+                        imageReviewInput.val(undefined);
+                        imageNode.addClass('hidden');
+                        deleteCommentLogical();
+                     }
+                  });
+               } catch (error) {
+                  toastr.error('Thêm bình luận cho sản phẩm này xảy ra lỗi !');
+               }
+            } else {
+               commentInput.addClass('warning');
+               commentInput.focus();
+            }
+         });
+      </script>
+   </body>
+</html>

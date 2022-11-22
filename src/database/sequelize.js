@@ -1,9 +1,14 @@
 import initModels from '../models/init-models';
-import * as mysqlInfo from '../constants/index';
 import { Sequelize } from 'sequelize';
+require('dotenv').config();
 
-const sequelize = new Sequelize(mysqlInfo.database, mysqlInfo.user, mysqlInfo.password, {
-   host: 'localhost',
+const host = process.env.HOST;
+const user = process.env.USER;
+const database = process.env.DATABASE;
+const password = process.env.PASSWORD;
+
+const sequelize = new Sequelize(database, user, password, {
+   host,
    dialect: 'mysql',
 });
 
